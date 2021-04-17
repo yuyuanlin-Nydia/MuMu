@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人頁面_收藏&追蹤</title>
+    <link rel="stylesheet" href="../css/user_mainPage.css">
+    <link rel="stylesheet" href="../css/user_myFavorite.css">
+    <link rel="stylesheet" href="../css/mutual.css">
+    <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
+    <script src="../js/jquery.js"></script>
+    <script src="../js/Bootstrap/bootstrap.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+
+</head>
+
+<body>
+    <!-- 導覽列 開始 -->
+
+    <!-- 導覽列 結束 -->
+    <div class="container ">
+        <form method="post">
+            <div class="row justify-content-center ">
+                <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
+                <div class="d-none d-md-block col-md-3 emp-profile mr-5">
+                    <div class="profile-img  m-2 p-1">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                            alt="" />
+                        <br>
+                        <br>
+                        <div class="file btn btn-sm btn-primary">
+                            更改大頭貼
+                            <input type="file" name="file" />
+                        </div>
+                        <h5 class="text-center">林郁媛</h5>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="profile-work ">
+                            <!-- 前面放icon -->
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myTicket.html"
+                                    class="user_menu">我的票券</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myArticle.html"
+                                    class="user_menu">我的投稿</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myFavorite.html"
+                                    class="user_menu">收藏&追蹤</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_edit.html" class="user_menu">編輯資料</a><br />
+                            </div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登出</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 左側 結束-->
+
+                <!-- 右側 開始 -->
+                <div class="col-md-8 col-sm-12 emp-profile pl-lg-4">
+                    <h4 class="title">收藏&追蹤</h4>
+                    <div class="profile-head">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                    aria-controls="home" aria-selected="true">表演收藏</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                    aria-controls="profile" aria-selected="false">樂團追蹤</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12 ">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <button type="button" class="btn btn-info " id="addBtn">新增/編輯分類</button>
+                            <button type="button" class="btn btn-info " id="orderBtn">排序</button>
+                            <button type="button" class="btn btn-warning d-none" id="finishBtn" >完成</button>
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="d-flex flex-wrap my-3 categoryGroups">
+                                    <h5 class="col-md-12 myCategory"><b>我的最愛</b></h5><br>
+                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                        <a href="" class=" d-flex justify-content-center flex-wrap">
+                                            <img src="/image/user/005.png" class="card_img col-12" alt="">
+                                            <p class="text-center"> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
+                                        </a>
+                                    </div>
+                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                        <a href="" class=" d-flex justify-content-center flex-wrap">
+                                            <img src="/image/user/背景.jpg" class="card_img col-12" alt="">
+                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
+                                        </a>
+                                    </div>
+                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                        <a href="" class=" d-flex justify-content-center flex-wrap">
+                                            <img src="/image/user/002.png" class="card_img col-12" alt="">
+                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
+                                        </a>
+                                    </div>
+                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                        <a href="" class=" d-flex justify-content-center flex-wrap">
+                                            <img src="/image/user/001.png" class="card_img col-12" alt="">
+                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <h5 class="col-md-12 myCategory"><b>台中</b></h5>
+                                <div class="d-flex flex-wrap my-3 categoryGroups">
+                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                        <a href="" class=" d-flex justify-content-center flex-wrap">
+                                            <img src="/image/user/001.png" class="card_img col-12" alt="">
+                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
+                                        </a>
+                                    </div>
+                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                        <a href="" class=" d-flex justify-content-center flex-wrap">
+                                            <img src="/image/user/002.png" class="card_img col-12" alt="">
+                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="d-flex flex-wrap">
+                                    <div class="m-2">
+                                        <img src="/image/user/樂團/滅火器.jpg" alt="" class="band_img">
+                                        <p class="text-center ">滅火器</p>
+                                    </div>
+                                    <div class="m-2">
+                                        <img src="/image/user/樂團/美秀集團.jpg" alt="" class="band_img">
+                                        <p class="text-center ">美秀集團</p>
+                                    </div>
+                                    <div class="m-2">
+                                        <img src="/image/user/樂團/茄子蛋.jpg" alt="" class="band_img">
+                                        <p class="text-center  ">茄子蛋</p>
+                                    </div>
+                                    <div class="m-2 ">
+                                        <img src="/image/user/樂團/告五人.jpeg" alt="" class="band_img">
+                                        <p class="text-center  ">告五人</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 右側 結束 -->
+                <!-- 對話框 開始 -->
+                <div class="module_all">
+                    <div class="module_box ">
+                        <div class="module_head">
+                            <h2>我的分類</h2>
+                        </div>
+                        <div class="module_body">
+                            <p id='remind'></p>
+                            <div>
+                                <img src="../image/user/plus.jpg" class="plus_pic float-left" alt="">
+                                <p class="float-left" id="addNew">點擊建立分類</p>
+                            </div>
+                            <div>
+                                <span class="float-left categoryItem">我的最愛</span>
+                                <span class="float-right edit"><button type="button"
+                                        class=" btn btn-sm btn-outline-info">編輯</button></span>
+                            </div>
+                            <div style="clear:both">
+                                <span class="float-left categoryItem">台中</span>
+                                <span class="float-right  edit"><button type="button"
+                                        class=" btn btn-sm btn-outline-info">編輯</button></span>
+                            </div>
+                        </div>
+                        <div class="module_footer">
+                            <button type="button" class="module_cfm btn btn-dark">確認</button>
+                            <button type="button" class="module_cxl btn btn-dark">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 對話框 結束 -->
+            </div>
+
+        </form>
+    </div>
+
+
+    <!-- 頁尾  開始-->
+
+    <!-- 頁尾  結束-->
+    <!-- 一定得放這邊 不能放上面 -->
+    <script src="../plugin/vanilla-toast.js"></script>
+    <script src="../js/user_myFavorite.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+.container {
+    border: solid 1px;
+    width: 60%;
+    margin: 100px auto 50px auto;
+    padding: 60px;
+}
+
+.picbox {
+    width: 80%;
+}
+
+.picbox img {
+    width: 100%;
+}
+
+.sitetitle {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: -50px;
+}
+
+.btns {
+    float: right;
+    margin: 60px;
+}
+
+.btn a {
+    text-decoration: none;
+    color: black;
+}
+
+@media screen and (max-width:750px) {
+    .container {
+        border: none;
+        width: 80%;
+        margin: 100px auto 50px auto;
+        padding: 60px;
+    }
+}

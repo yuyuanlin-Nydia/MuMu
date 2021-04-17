@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人頁面_編輯個人資料</title>
+    <link rel="stylesheet" href="../css/user_mainPage.css">
+    <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
+    <script src="../js/jquery.js"></script>
+    <script src="../js/Bootstrap/bootstrap.js"></script>
+</head>
+<style>
+    @media (max-width:768px) {
+        .cfmBtn {
+            display: flex;
+            justify-content: center;
+        }
+    }
+</style>
+
+<body>
+    <!-- 導覽列 開始 -->
+
+    <!-- 導覽列 結束 -->
+    <div class="container ">
+        <form method="post">
+            <div class="row justify-content-center ">
+                <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
+                <div class="d-none d-md-block col-md-3 emp-profile mr-5">
+                    <div class="profile-img  m-2 p-1">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                            alt="" />
+                        <br>
+                        <br>
+                        <div class="file btn btn-sm btn-primary">
+                            更改大頭貼
+                            <input type="file" name="file" />
+                        </div>
+                        <h5 class="text-center">林郁媛</h5>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="profile-work ">
+                            <!-- 前面放icon -->
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myTicket.html"
+                                    class="user_menu">我的票券</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myArticle.html"
+                                    class="user_menu">我的投稿</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myFavorite.html"
+                                    class="user_menu">收藏&追蹤</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_edit.html" class="user_menu">編輯資料</a><br />
+                            </div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登出</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 左側 結束-->
+
+                <!-- 右側 開始 -->
+                <div class="col-md-8  emp-profile pl-5">
+                    <h4 class="title">編輯個人資料</h4>
+                    <div class="col-md-12 pl-md-5 ">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                
+                                <div class="form-group row">
+                                    <label for="birth" class="col-md-4">生日</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="date" name="birth" id="birth">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="e_mail" class="col-md-4">電子郵件</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="email" name="e_mail" id="e_mail">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="phone" class="col-md-4">手機</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="tel" name="phone" id="phone">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="city" class="col-md-4">地址</label>
+
+                                    <div class="col-sm-4 mb-sm-1">
+                                        <select class=" form-control" name="city" id="city">
+                                            <option value="台北市">台北市</option>
+                                            <option value="台中市">台中市</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control " name="town">
+                                            <option value="南屯區">南屯區</option>
+                                            <option value="潭子區">潭子區</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-8 mt-2">
+                                        <input class="form-control" type="text" name="address">
+                                    </div>
+                                </div>
+                                <div class="form-group row cfmBtn">
+                                    <input class="btn btn-primary" type="submit" value="確定">&nbsp;&nbsp;&nbsp;
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
+    </div>
+    <!-- 右側 結束 -->
+
+
+
+    </form>
+    </div>
+
+
+    <!-- 頁尾  開始-->
+
+    <!-- 頁尾  結束-->
+
+    <script>
+        $(function () {
+
+        })
+
+    </script>
+
+
+</body>
+
+</html>

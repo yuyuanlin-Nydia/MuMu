@@ -1,0 +1,58 @@
+*{
+    margin:0;
+    padding:0
+   
+}
+body{
+    border: 0;
+    line-height: 1;
+    font-family: 'Noto Sans TC','serif' !important;
+    box-sizing: border-box;
+}
+:root {
+    --main-color1: pink;
+    --main-color2: pink;
+    --main-color3: pink;
+    
+}
+ul {
+    list-style: none;
+}
+a { 
+    text-decoration: none ;
+    color:black  ;
+}
+a:hover { text-decoration: underline; }
+
+.button{
+    border:0;
+    background-color:none;
+    outline:none;
+}
+input{
+    border: none;
+    border-bottom: 1px solid lightgray;
+    appearance:none;
+    -moz-appearance:none;
+}
+input:focus{
+ outline:none;
+ padding:5px ;
+ border-bottom: 1px solid black;
+ }/*input標籤聚焦不出現預設邊框:*/
+
+ input.form_input{
+    border:2px solid lightgray;
+    border-radius: 0.5rem;
+    padding: 6px;
+    appearance:none;
+    -moz-appearance:none;
+}
+input.form_input:focus{
+ outline:none;
+ border:2px solid rgb(27, 159, 192);
+ padding: 6px;
+}
+button{
+    cursor: pointer;
+}

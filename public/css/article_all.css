@@ -1,0 +1,357 @@
+.container {
+    padding: 80px 0;
+}
+
+
+/* Content */
+
+.sectiontitle {
+    display: block;
+    max-width: 55%;
+    margin: 0 auto 80px;
+    text-align: center;
+}
+
+.ringcon {
+    display: inline-block;
+    border: 1px solid;
+    border-radius: 50%;
+}
+
+.overview>li {
+    margin-bottom: 30px;
+}
+
+.overview>li:nth-last-child(-n+3) {
+    margin-bottom: 0;
+}
+
+.overview>li:nth-child(3n+1) {
+    margin-left: 0;
+    clear: left;
+}
+
+.overview>li figure {
+    position: relative;
+    max-width: 348px;
+}
+
+.overview>li figure a::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+}
+
+.overview>li figure figcaption {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+}
+
+.overview>li figure:hover a::after,
+.overview>li figure:hover figcaption {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.overview>li figure figcaption * {
+    margin: 0;
+}
+
+.overview>li figure .heading {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.row3 {
+    color: #474747;
+    background-color: #FFFFFF;
+}
+
+
+/* Top Bar111 */
+
+.overview>li figure a::after {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.overview>li figure figcaption {
+    color: #FFFFFF;
+}
+
+.myheading {
+    text-align: center;
+    margin-bottom: -60px;
+    margin-top: 40px;
+    
+}
+
+
+/* h6,
+.heading {
+    margin: 0 0 20px 0;
+    font-size: 22px;
+    line-height: normal;
+    font-weight: normal;
+    text-transform: capitalize;
+} */
+
+.heading.nospace {
+    margin-bottom: 0;
+}
+
+.font-xs {
+    font-size: .8rem;
+}
+
+.wrapper {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.hoc {
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* HTML 5 Overrides
+--------------------------------------------------------------------------------------------------------------- */
+
+figcaption,
+figure,
+section {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Grid - RS-MQF 1140 V.2 - https://www.os-templates.com/free-basic-html5-templates/rs-mqf-1140
+--------------------------------------------------------------------------------------------------------------- */
+
+.one_third {
+    display: inline-block;
+    float: left;
+    margin: 0 0 0 4.21052%;
+    list-style: none;
+}
+
+.one_third {
+    width: 30.52631%;
+}
+
+
+/* Media Queries
+--------------------------------------------------------------------------------------------------------------- */
+
+@-ms-viewport {
+    width: device-width;
+}
+
+
+/* Max Wrapper Width - Laptop, Desktop etc.
+--------------------------------------------------------------------------------------------------------------- */
+
+@media screen and (min-width:1140px) {
+    .hoc {
+        max-width: 1140px;
+    }
+}
+
+
+/* Mobile Devices
+--------------------------------------------------------------------------------------------------------------- */
+
+@media screen and (max-width:978px) {
+    .hoc {
+        max-width: 90%;
+    }
+    #topbar {}
+    #header {}
+    #mainav {
+        padding: 15px;
+    }
+    #mainav ul {
+        display: none;
+    }
+    #mainav form {
+        display: block;
+    }
+    #breadcrumb {}
+    .container {}
+    #comments input[type="reset"] {
+        margin-top: 10px;
+    }
+    .pagination li {
+        display: inline-block;
+        margin: 0 5px 5px 0;
+    }
+    #footer {}
+    #copyright {}
+    #copyright p:first-of-type {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width:750px) {
+    .imgl,
+    .imgr {
+        display: inline-block;
+        float: none;
+        margin: 0 0 10px 0;
+    }
+    .fl_left,
+    .fl_right {
+        display: block;
+        float: none;
+    }
+    .group .group>*:last-child,
+    .clear .clear>*:last-child,
+    .clear .group>*:last-child,
+    .group .clear>*:last-child {
+        margin-bottom: 0;
+    }
+    /* Experimental - Needs more testing in different situations, stops double margin when stacking */
+    .one_third {
+        display: block;
+        float: none;
+        width: auto;
+        margin: 0 0 30px 0;
+        padding: 0;
+    }
+    #topbar {
+        padding-top: 15px;
+        text-align: center;
+    }
+    #topbar ul {
+        margin: 0 0 15px 0;
+        line-height: normal;
+    }
+    #header {}
+    #pageintro article {
+        max-width: none;
+        text-align: left;
+    }
+    #pageintro .heading {
+        font-size: 2rem;
+    }
+    #pageintro p:first-of-type {
+        font-size: 1rem;
+    }
+    .sectiontitle {
+        max-width: none;
+    }
+    .overview>li:nth-last-child(-n+3) {
+        margin-bottom: 30px;
+    }
+    #latest article {
+        max-width: 348px;
+    }
+    /* Uses the one_third width in pixels */
+    #footer {
+        padding-bottom: 50px;
+    }
+    /* Not required, just looks a little better */
+}
+
+@media screen and (max-width:450px) {
+    #topbar ul li {
+        margin-bottom: 2px;
+        padding-right: 0;
+        border-right: none;
+    }
+}
+
+
+/* Other
+--------------------------------------------------------------------------------------------------------------- */
+
+@media screen and (max-width:650px) {
+    .scrollable {
+        display: block;
+        width: 100%;
+        margin: 0 0 30px 0;
+        padding: 0 0 15px 0;
+        overflow: auto;
+        overflow-x: scroll;
+    }
+    .scrollable table {
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+    }
+    .inline li {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .pushright li {
+        margin-right: 0;
+    }
+    .font-x2 {
+        font-size: 1.4rem;
+    }
+    .font-x3 {
+        font-size: 1.6rem;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.clear,
+.group {
+    display: block;
+}
+
+.clear::before,
+.clear::after,
+.group::before,
+.group::after {
+    display: table;
+    content: "";
+}
+
+.clear,
+.clear::after,
+.group,
+.group::after {
+    clear: both;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+}
+
+img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+
+/* Fonts
+--------------------------------------------------------------------------------------------------------------- */
+
+
+/* Generalise
+--------------------------------------------------------------------------------------------------------------- */
