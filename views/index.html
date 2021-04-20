@@ -18,30 +18,13 @@
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="../css/assets/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/assets/flexslider.css">
-    <link rel="stylesheet" type="text/css" href="../css/assets/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="../css/assets/animations.css">
-    <link rel="stylesheet" type="text/css" href="../css/assets/dl-menu.css">
-    <link rel="stylesheet" type="text/css" href="../css/assets/jquery.datetimepicker.css">
-    <link rel="stylesheet" type="text/css" href="../css/assets/jquery.bxslider.css">
+
     <link rel="stylesheet" href="../css/assets/main.css">
-    <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="../css/swiper-bundle.min.css">
-
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-
-    <!-- <link rel="stylesheet" href="../Classic/assets/css/colors/blue.css"> -->
-    <!--=================================
-Place color files here ( right after main.css ) for example
-<link rel="stylesheet" type="text/css" href="assets/css/colors/color-name.css">
-===================================-->
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
     <script src="../js/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 </head>
 
@@ -58,51 +41,11 @@ Header Content
         <header id="sticktop" class="doc-header">
 
 
-            <!--Add Songs In mp3 formate here-->
-            <ul class="hidden playlist-files">
-                <li data-title="Ukulele Story" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/152256065/preview.mp3">
-                </li>
-                <li data-title="Bright and Inspiring" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/152351972/preview.mp3">
-                </li>
-                <li data-title="Indie Rock" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/162668841/preview.mp3">
-                </li>
-                <li data-title="Up in the Sky" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/69092344/preview.mp3">
-                </li>
-                <li data-title="Inspiring" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/167149310/preview.mp3">
-                </li>
-                <li data-title="Inspiring Thoughts" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/156059055/preview.mp3">
-                </li>
 
-                <li data-title="Gypsy Jazz From France" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/152733871/preview.mp3">
-                </li>
-                <li data-title="Happy" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/166500700/preview.mp3">
-                </li>
-                <li data-title="The Water Clock" data-artist="Audio Jungle"
-                    data-mp3="https://0.s3.envato.com/files/151397943/preview.mp3">
-                </li>
-
-            </ul>
-            <!--Playlist ends-->
-
-            <div class="jp-playlist">
-                <ul>
-                    <li></li>
-                </ul>
-            </div>
-
-            </section>
             <!--========================================
         Nav
         ===========================================-->
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default" id="main">
                 <div class="container">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="index.html">
@@ -114,13 +57,13 @@ Header Content
                         <button class="menuTrigger"><i class="fas fa-navicon"></i></button>
                         <div class="clearfix"></div>
                         <ul class="dl-menu">
-                            <li class="parent active"><a href="#"><img src="" alt="">首頁</a>
+                            <li class="parent active"><a href="#"><img src="" alt="">首頁{{message}}</a>
                             </li>
-                            <li><a href="albums.html"><img src="" alt="">活動</a>
+                            <li><a href=""><img src="" alt="">活動</a>
                             </li>
                             <li><a href="blog.html">樂團介紹</a></li>
                             <li><a href="gallery.html">周邊商品</a></li>
-                            <li><a href="store.html">參加心得</a></li>
+                            <li><a href="/article">參加心得</a></li>
                             <li><a href="store.html"><img src="" alt="">登入</a></li>
 
 
@@ -143,7 +86,7 @@ Header Content
                                     <a class="btn btn-dark text-uppercase text-bold" href="#">
                                         <i class="fas fa-play"></i> 看活動
                                     </a>
-                                   
+
                                 </div>
                             </div>
 
@@ -174,7 +117,7 @@ Header Content
                                     <a class="btn btn-dark text-uppercase text-bold" href="#">
                                         <i class="fas fa-play"></i> 看活動
                                     </a>
-                                   
+
                                 </div>
                             </div>
                             <div class="flex-caption">
@@ -207,7 +150,7 @@ Header Content
                                     <a class="btn btn-dark text-uppercase text-bold" href="#">
                                         <i class="fas fa-play"></i> 看活動
                                     </a>
-                                  
+
                                 </div>
                             </div>
                             <div class="flex-caption">
@@ -281,7 +224,7 @@ Header Content
                             <div class="col-xs-12 col-sm-6 col-md-7 text-right">
                                 <div class="search-actions">
                                     <ul>
-                                        <li class="active"><a href="#">Latest</a></li>
+                                        <li class="active"><a href="#">Latest2</a></li>
                                         <li><a href="activity_all.html">Trending</a></li>
                                     </ul>
                                     <ul>
@@ -300,10 +243,12 @@ Header Content
                         <div class="col-xs-12">
                             <div class="album-grid-wrap">
                                 <a href="#" class="album-control btn xv-prev"><i class="fas fa-angle-left"></i></a>
-                                <a href="#" class="album-control btn bottom-right xv-next"><i class="fas fa-chevron-right"></i></a>
+                                <a href="#" class="album-control btn bottom-right xv-next"><i
+                                        class="fas fa-chevron-right"></i></a>
                                 <div class="album-grid text-uppercase clearfix">
                                     <a href="album-single.html" class="album-unit">
-                                        <figure><img src=" " width="265" height="265" alt="" />
+                                        <figure><img src="../image/activity/BANNER_large.jpg" width="265" height="265"
+                                                alt="" />
                                             <figcaption>
                                                 <span>Lorem</span>
                                                 <h3>Ipsum Albumb</h3>
@@ -327,7 +272,7 @@ Header Content
                                         </figure>
                                     </a>
                                     <a href="album-single.html" class="album-unit">
-                                        <figure><img src=" " width="265" height="265" alt="" />
+                                        <figure><img src="" width="265" height="265" alt="" />
                                             <figcaption>
                                                 <span>Lorem</span>
                                                 <h3>Ipsum Albumb</h3>
@@ -380,7 +325,7 @@ Header Content
                     <div class="row">
                         <div class="col-xs-12">
                             <a class="btn btn-wide btn-grey text-uppercase text-bold" href="activity_all.html">看更多2
-                                </a>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -495,7 +440,7 @@ Header Content
                                             </figcaption>
                                         </figure>
                                     </a>
-                                        <a href="album-single.html" class="album-unit">
+                                    <a href="album-single.html" class="album-unit">
                                         <figure><img src=" " width="265" height="265" alt="" />
                                             <figcaption>
                                                 <span>Lorem</span>
@@ -586,49 +531,43 @@ Footer
                 </div>
             </footer>
         </div>
-
-        <!--=================================
-Script Source
-=================================-->
-        <script src="../js/js/jquery.js"></script>
-        <script src="../js/js/ajaxify.min.js"></script>
-        <script src="../js/js/jquery.downCount.js"></script>
-        <script src="../js/js/jquery.datetimepicker.full.min.js"></script>
-        <script src="../js/js/jplayer/jquery.jplayer.min.js"></script>
-        <script src="../js/js/jplayer/jplayer.playlist.min.js"></script>
-        <script src="../js/js/jquery.flexslider-min.js"></script>
-        <script src="../js/js/jquery.stellar.min.js"></script>
-        <script src="../js/js/jquery.sticky.js"></script>
-        <script src="../js/js/jquery.waitforimages.js"></script>
-        <script src="../js/js/masonry.pkgd.min.js"></script>
-        <script src="../js/js/packery.pkgd.min.js"></script>
-        <script src="../js/js/tweetie.min.js"></script>
-        <script src="../js/js/owl.carousel.min.js"></script>
-        <script src="../js/js/jquery.bxslider.min.js"></script>
-        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&#038;sensor=false&#038;ver=3.0'></script>
-        <script src="../js/js/main.js"></script>
-
-        <!-- Swiper JS -->
-        <script src="../js/js/swiper-bundle.min.js"></script>
-
-        <!-- Initialize Swiper -->
         <script>
-            var swiper = new Swiper('.swiper-container', {
-                slidesPerView: 3,
-                spaceBetween: 30,
-                slidesPerGroup: 3,
-                loop: true,
-                loopFillGroupWithBlank: true,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
+            // $(function () {
+            //     function downloadarticleList() {
+            //         $.get("/", function (e) {
+            //             vueMain.articleList = JSON.parse(e);
+            //         })
+            //     }
+            //     downloadarticleList();
+            // })
+
+
+            var vueMain = new Vue({
+                el: "#main",
+                data: {
+                    message: "hello world",
+                    articleList: []
                 },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            });
+                // 函式
+                methods: {
+                    reverseText: function () {
+                        this.message = this.message.split('').reverse().join("");
+                    }
+                    // showdata: $.ajax({
+                    //     type: "put",
+                    //     url: "/article",
+                    //     data: newsApp.newsList[this.newsIndex]
+                    // })
+                    //     .then(function (e) {
+                    //         downloadNewsList();
+                    //     })
+                }
+            })
         </script>
+        <!--=================================
+            
+
+       
 </body>
 
 </html>

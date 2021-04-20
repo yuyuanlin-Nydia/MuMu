@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>參戰心得</title>
     <link rel="stylesheet" href="../css/article_all.css">
+   
 </head>
 
 <body>
 
 
-    <div class="wrapper row3">
-        <h2 class="myheading">參戰心得</h2>
+    <div class="wrapper row3" id="main">
+        <h2 class="myheading">參戰心得 {{message}}</h2>
         <main class="hoc container clear">
-
             <div class="sectiontitle">
 
 
@@ -24,16 +24,17 @@
             <input type="button" id="sub">
             <style id="search_style"></style> -->
             <ul class="nospace group overview">
-                <li class="one_third searchable" data-index="搖滾 x 群山 x 美食 x 露營 x 親子寵物：游牧森林音樂祭 2018 遊記">
+                <li class="one_third searchable" data-index="搖滾 x 群山 x 美食 x 露營 x 親子寵物：游牧森林音樂祭 2018 遊記"
+                    >
                     <figure>
-                        <a href="#"><img src="./img/348x261.png" alt=""></a>
+                        <a href="#"><img src="../image/article/348x261.png" alt=""></a>
                         <figcaption>
-                            <h6 class="heading">搖滾 x 群山 x 美食 x 露營 x 親子寵物：游牧森林音樂祭 2018 遊記</h6>
+                            <h6 class="heading">{{message}}搖滾 x 群山 x 美食 x 露營 x 親子寵物：游牧森林音樂祭 2018 遊記</h6>
                             <p>2018-10-15</p>
                         </figcaption>
                     </figure>
                 </li>
-                <li class="one_third searchable" data-index="What a Wonderful World!! in 沖繩 / 2016 年最後的夏日音樂祭">
+                <!-- <li class="one_third searchable" data-index="What a Wonderful World!! in 沖繩 / 2016 年最後的夏日音樂祭">
                     <figure>
                         <a href="#"><img src="./img/348x261.png" alt=""></a>
                         <figcaption>
@@ -77,7 +78,7 @@
                             <p>2016-08-18</p>
                         </figcaption>
                     </figure>
-                </li>
+                </li> -->
 
             </ul>
 
@@ -97,6 +98,33 @@
             // beware of css injections!
         });
     </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        var article = new Vue({
+            el: "#main",
+            data: {
+                message: "hello world"
+            },
+        
+            // 函式
+            methods: {
+                reverseText: function () {
+                    this.message = this.message.split('').reverse().join("");
+                }
+                // showdata: $.ajax({
+                //     type: "put",
+                //     url: "/article",
+                //     data: newsApp.newsList[this.newsIndex]
+                // })
+                //     .then(function (e) {
+                //         downloadNewsList();
+                //     })
+            }
+        })
+    </script>
 </body>
 
 </html>
