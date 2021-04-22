@@ -7,121 +7,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>參戰心得</title>
     <link rel="stylesheet" href="../css/article_all.css">
-   
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <form action="/article/upload_file" method="post" enctype="multipart/form-data">
+        <input type="file" name="myfile" accept="image/*" id="articleFile"><br><br>
+        <img id="demo"/>
+        <input type="button" value="確定">
 
-
+    </form>
     <div class="wrapper row3" id="main">
-        <h2 class="myheading">參戰心得 {{message}}</h2>
+        <h2 class="myheading">參戰心得</h2>
         <main class="hoc container clear">
             <div class="sectiontitle">
-
-
             </div>
-            <!-- <input type="text" placeholder="search" id="search">
-            <input type="button" id="sub">
-            <style id="search_style"></style> -->
-            <ul class="nospace group overview">
-                <li class="one_third searchable" data-index="搖滾 x 群山 x 美食 x 露營 x 親子寵物：游牧森林音樂祭 2018 遊記"
-                    >
-                    <figure>
-                        <a href="#"><img src="../image/article/348x261.png" alt=""></a>
-                        <figcaption>
-                            <h6 class="heading">{{message}}搖滾 x 群山 x 美食 x 露營 x 親子寵物：游牧森林音樂祭 2018 遊記</h6>
-                            <p>2018-10-15</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <!-- <li class="one_third searchable" data-index="What a Wonderful World!! in 沖繩 / 2016 年最後的夏日音樂祭">
-                    <figure>
-                        <a href="#"><img src="./img/348x261.png" alt=""></a>
-                        <figcaption>
-                            <h6 class="heading">What a Wonderful World!! in 沖繩 / 2016 年最後的夏日音樂祭</h6>
-                            <p>2016-12-01</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="one_third searchable" data-index="Summer Sonic / Sonic Mania 2018 遊記">
-                    <figure>
-                        <a href="#"><img src="./img/348x261.png" alt=""></a>
-                        <figcaption>
-                            <h6 class="heading">Summer Sonic / Sonic Mania 2018 遊記</h6>
-                            <p>2018-10-08</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="one_third searchable" data-index="Clockenflap 2018 香港音樂及藝術節參戰心得">
-                    <figure>
-                        <a href="#"><img src="./img/348x261.png" alt=""></a>
-                        <figcaption>
-                            <h6 class="heading">Clockenflap 2018 香港音樂及藝術節參戰心得</h6>
-                            <p>2018-11-25</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="one_third searchable" data-index="Summer Sonic 2016_青春奔走">
-                    <figure>
-                        <a href="#"><img src="./img/348x261.png" alt=""></a>
-                        <figcaption>
-                            <h6 class="heading">Summer Sonic 2016_青春奔走</h6>
-                            <p>2016-09-22</p>
-                        </figcaption>
-                    </figure>
-                </li>
-                <li class="one_third searchable" data-index="FUJI ROCK 音樂祭，二十周年！20_30">
-                    <figure>
-                        <a href="#"><img src="./img/348x261.png" alt=""></a>
-                        <figcaption>
-                            <h6 class="heading">FUJI ROCK 音樂祭，二十周年！20_30</h6>
-                            <p>2016-08-18</p>
-                        </figcaption>
-                    </figure>
-                </li> -->
+            <input type="text" placeholder="search" id="search">
+            <input type="button" id="sub" value="搜尋">
+            <ul class="nospace group overview" id="itemContainer">
+                <articleitem v-bind:item="article" v-for="(article,idx) in articleList" class="one_third searchable">
 
+
+                </articleitem>
             </ul>
-
-            <div class="clear"></div>
         </main>
     </div>
-    <!-- <script>
-        var searchStyle = document.getElementById('search_style');
-        document.getElementById('sub').addEventListener('click', function() {
-            var text = document.getElementById('search')
-            if (!text.value) {
-                searchStyle.innerHTML = "";
-                return;
-            }
-            // look ma, no indexOf!
-            searchStyle.innerHTML = ".searchable:not([data-index*=\"" + text.value.toLowerCase() + "\"]) { display: none; }";
-            // beware of css injections!
-        });
-    </script> -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
     <script>
-        var article = new Vue({
+        // 文章上傳預覽的功能
+        $('#articleFile').change(function () {
+            var file = $('#articleFile')[0].files[0];
+            var reader = new FileReader;
+            reader.onload = function (e) {
+                var txt2=$("<img />").attr('src', e.target.result)
+                var y=$('#articleFile').after(txt2);
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+    <script type="text/x-template" id="article">
+        <li class="one_third searchable">
+            <figure>
+                <a :href="'../article/item/'+item.articleId"><img
+                        :src="'../image/article/'+item.articleFile" alt=""></a>
+                <figcaption>
+                    <h6 class="heading">{{item.articleTitle}}</h6>
+                    <p>{{item.articleTime}}</p>
+                </figcaption>
+            </figure>
+        </li>
+    </script>
+    <script>    
+        // $.get("/article/data", function (e) {
+        //     vueMain.articleList = JSON.parse(e);
+        // })
+        Vue.component('articleitem', { //填入我們上面自訂組件的名稱
+            props: ['item'], //填上上面取名的接口名稱
+            template: '#article',
+            created: function () {
+                $.get("/article/data", function (e) {
+                    vueMain.articleList = JSON.parse(e);
+                    console.log(vueMain.articleList)
+                })
+            }
+        })
+
+        var vueMain = new Vue({
             el: "#main",
             data: {
-                message: "hello world"
+                // message: "OK",
+                articleList: [{}
+                    // { articleTitle: '心得', articleTime: '2020-10-05',articleFile:'article.jpg' },
+                    // { articleTitle: '心得2', articleTime: '2020-10-06',articleFile:'article2.jpg' }
+                ],
             },
-        
             // 函式
             methods: {
-                reverseText: function () {
-                    this.message = this.message.split('').reverse().join("");
-                }
-                // showdata: $.ajax({
-                //     type: "put",
-                //     url: "/article",
-                //     data: newsApp.newsList[this.newsIndex]
-                // })
-                //     .then(function (e) {
-                //         downloadNewsList();
-                //     })
+
             }
         })
     </script>

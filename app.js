@@ -7,10 +7,11 @@ var app = express();
 // 切出去的router
 var indexRouter=require("./routes/index");
 var articleRouter=require("./routes/article");
-// var activityRouter=require("./routes/activity");
-// var bandRouter=require("./routes/band");
-// var userRouter=require("./routes/user");
-// var companyRouter=require("./routes/company");
+var activityRouter=require("./routes/activity");
+var bandRouter=require("./routes/band");
+var userRouter=require("./routes/user");
+var companyRouter=require("./routes/company");
+var cartRouter=require("./routes/cart");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -21,21 +22,23 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-
 // Web 伺服器的靜態檔案置於 public 資料夾
-app.set('views', path.join(__dirname, './views/')); 
-app.engine('html', require('express-art-template'));
-app.use(express.static(__dirname + '/public'));
+// app.set('views', path.join(__dirname, './views/')); 
+// app.engine('html', require('express-art-template'));
+app.use( express.static( "public" ) );
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);  
+app.set('views', __dirname + '/views');
+
+// app.use(express.static(__dirname + '/public'));
 
 app.use('/', indexRouter)
 app.use("/article",articleRouter);
-// app.use("/activity",activityRouter);
-// app.use("/band",bandRouter);
-// app.use("/user",userRouter);
-// app.use("/company",companyRouter);
-
-
-
+app.use("/activity",activityRouter);
+app.use("/band",bandRouter);
+app.use("/user",userRouter);
+app.use("/company",companyRouter);
+app.use("/cart",cartRouter);
 
 
 app.listen(3000);

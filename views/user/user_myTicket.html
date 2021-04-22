@@ -5,85 +5,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人頁面_我的票券</title>
+    <title>個人頁面_我的投稿</title>
     <link rel="stylesheet" href="../css/user_mainPage.css">
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
+    <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
+
     <style>
-        /* body {
-            background-color: skyblue;
-        } */
-
-        .ticketcard {
-            display: flex;
-            background: linear-gradient(to left top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
-            border-radius: 1rem;
-            margin: calc(3200vw/1518) 0rem;
-            padding: calc(16*0.6*100vw/1518);
-            box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.8);
-            justify-content: space-between;
-            width: calc(56000vw/1518);
-            color: #426696;
-            position: relative;
-
-
-
+        .article_card {
+            border: 2px solid lightgray;
+            border-radius: 0.5rem;
         }
 
-        .cardtitle {
-            margin-bottom: calc(2000vw/1518);
-            font-size: calc(3000vw/1518);
-
-        }
-
-        .partytime {
-            font-size: calc(2000vw/1518);
-        }
-
-        .cardimg {
-            width: calc(11500vw/1518);
-            height: calc(11500vw/1518);
-            object-fit: cover;
-            border-radius: 1rem;
-
-
-        }
-
-        /* .progress {
-            background: blue;
+        .article_img {
             width: 100%;
-            height: 25%
-        } */
-
-        .clock {
-            width: calc(5500vw/1518);
-            height: calc(5500vw/1518);
-        }
-
-        .clockdiv {
-            text-align: center;
-            color: black
-        }
-
-        .place {
-            margin-bottom: calc(2000vw/1518);
-            font-size: calc(2000vw/1518);
-        }
-
-        .qrcode {
-            width: calc(5000vw/1518);
-            height: calc(5000vw/1518);
-        }
-
-        .complete {
-            position: absolute;
-            top: 0px;
-            left: calc(20000vw/1518);
-            width: calc(20000vw/1518);
-            height: calc(15000vw/1518);
+            height: 130px;
             object-fit: cover;
-            opacity: 0.7;
+            object-position: 50% 30%;
+        }
+
+        .article_content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
         }
     </style>
 </head>
@@ -102,7 +49,7 @@
                             alt="" />
                         <br>
                         <br>
-                        <div class="file btn btn-sm btn-primary">
+                        <div class="file btn btn-sm btn-primary ">
                             更改大頭貼
                             <input type="file" name="file" />
                         </div>
@@ -112,13 +59,13 @@
                     <div class="col-md-12">
                         <div class="profile-work ">
                             <!-- 前面放icon -->
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myTicket.html"
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket"
                                     class="user_menu">我的票券</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myArticle.html"
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle"
                                     class="user_menu">我的投稿</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_myFavorite.html"
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite"
                                     class="user_menu">收藏&追蹤</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user_edit.html" class="user_menu">編輯個人資料</a><br />
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu">編輯資料</a><br />
                             </div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登出</a></div>
                         </div>
@@ -129,256 +76,96 @@
 
                 <!-- 右側 開始 -->
                 <div class="col-md-8 emp-profile pl-5">
-                    <h4 class="title">我的票券</h4>
-                    <div class="profile-head">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                    aria-controls="home" aria-selected="true">已購票</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                    aria-controls="profile" aria-selected="false">已參加</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-10 pl-5 ">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <!-- 頁籤底下的內容 -->
-                                <div class='cards'></div>
-                                <div class="ticketcard">
-
-                                    <img class="cardimg" src="45012226.jpg">
-
-                                    <div class="cardcontent">
-                                        <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                        <h5 class='place'>場地:台北小巨蛋</h5>
-                                        <h5 class="partytime">日期:2016/12/31</h5>
-                                        <!-- <div class="progress"></div> -->
-                                    </div>
-                                    <div class='clockdiv'>
-                                        <img class='clock' src="xcwGh1.png">
-                                        <div class="percentage"><b>20:30</b></div>
-                                        <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                    </div>
-                                </div>
-                                <div class="ticketcard">
-
-                                    <img class="cardimg" src="45012226.jpg">
-
-                                    <div class="cardcontent">
-                                        <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                        <h5 class='place'>場地:台北小巨蛋</h5>
-                                        <h5 class="partytime">日期:2016/12/31</h5>
-                                        <!-- <div class="progress"></div> -->
-                                    </div>
-                                    <div class='clockdiv'>
-                                        <img class='clock' src="xcwGh1.png">
-                                        <div class="percentage"><b>20:30</b></div>
-                                        <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                    </div>
-                                </div>
-                                <div class="ticketcard">
-
-                                    <img class="cardimg" src="45012226.jpg">
-
-                                    <div class="cardcontent">
-                                        <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                        <h5 class='place'>場地:台北小巨蛋</h5>
-                                        <h5 class="partytime">日期:2016/12/31</h5>
-                                        <!-- <div class="progress"></div> -->
-                                    </div>
-                                    <div class='clockdiv'>
-                                        <img class='clock' src="xcwGh1.png">
-                                        <div class="percentage"><b>20:30</b></div>
-                                        <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                    </div>
-                                </div>
-                                <div class="ticketcard">
-
-                                    <img class="cardimg" src="45012226.jpg">
-
-                                    <div class="cardcontent">
-                                        <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                        <h5 class='place'>場地:台北小巨蛋</h5>
-                                        <h5 class="partytime">日期:2016/12/31</h5>
-                                        <!-- <div class="progress"></div> -->
-                                    </div>
-                                    <div class='clockdiv'>
-                                        <img class='clock' src="xcwGh1.png">
-                                        <div class="percentage"><b>20:30</b></div>
-                                        <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <!-- 頁籤底下的內容 -->
-                                <div class='cards'>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                    <div class="ticketcard">
-                                        <img class="cardimg" src="45012226.jpg">
-                                        <img class="complete" src="completed-stamp-1-1024x788.png">
-                                        <div class="cardcontent">
-                                            <h3 class='cardtitle'>節目:嘻哈搖滾音樂季</h3>
-                                            <h5 class='place'>場地:台北小巨蛋</h5>
-                                            <h5 class="partytime">日期:2016/12/31</h5>
-                                            <!-- <div class="progress"></div> -->
-                                        </div>
-                                        <div class='clockdiv'>
-                                            <img class='clock' src="xcwGh1.png">
-                                            <div class="percentage"><b>20:30</b></div>
-                                            <img class="qrcode" src="220px-QRcode_image.svg.png">
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
+                    <div class="d-flex pr-3">
+                        <h4 class="title">我的投稿</h4>
+                        <div class="ml-auto">
+                            <input type="submit" class="btn btn-outline-primary" name="btnAddArticle" value="發表文章" />
                         </div>
                     </div>
 
+                    <div class="col-md-12">
+                        <div class="d-flex flex-wrap mb-3 p-2 article_card">
+                            <div class="article_box col-md-12">
+                                <h5><b>所謂音樂祭 心得分享</b>
+                                    <div class="float-right">
+                                        <span>
+                                            <button type="button" class="edit btn-sm btn-secondary"><i
+                                                    class="far fa-edit"></i></button>
+                                        </span>&nbsp;
+                                        <span>
+                                            <button type="button" class="delete btn-sm btn-secondary"><i
+                                                    class="far fa-trash-alt"></i></button>
+                                        </span>
+                                    </div>
+                            </div>
+                            </h5>
+                            <div class=" d-flex col-md-12">
+                                <div class=" col-md-4 ">
+                                    <img src="/image/user/背景.jpg" alt="" class="article_img">
+                                </div>
+                                <div class="col-md-8 ">
+                                    <p class="article_content">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                        Necessitatibus,
+                                        quae amet possimus earum explicabo magnam. Adipisci voluptate dicta mollitia
+                                        id, consectetur quibusdam corporis aspernatur esse ipsam, excepturi
+                                        reiciendis explicabo molestias?
+                                    </p>
+                                    <a href="" class="float-right">看更多......</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="d-flex flex-wrap mb-3 p-2 article_card">
+                            <div class="article_box col-md-12">
+                                <h5><b>所謂音樂祭 心得分享</b>
+                                    <div class="float-right">
+                                        <span>
+                                            <button type="button" class="edit btn-sm btn-secondary"><i
+                                                    class="far fa-edit"></i></button>
+                                        </span>&nbsp;
+                                        <span>
+                                            <button type="button" class="delete btn-sm btn-secondary"><i
+                                                    class="far fa-trash-alt"></i></button>
+                                        </span>
+                                    </div>
+                            </div>
+                            </h5>
+                            <div class=" d-flex col-md-12">
+                                <div class=" col-md-4 ">
+                                    <img src="/image/user/op_01.jpg" alt="" class="article_img">
+                                </div>
+                                <div class="col-md-8 ">
+                                    <p class="article_content">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                        Necessitatibus,
+                                        quae amet possimus earum explicabo magnam. Adipisci voluptate dicta mollitia
+                                        id, consectetur quibusdam corporis aspernatur esse ipsam, excepturi
+                                        reiciendis explicabo molestias?
+                                    </p>
+                                    <a href="" class="float-right">看更多......</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+
+                        </div>
+                        <div class="row">
+
+                        </div>
+
+
+                    </div>
                 </div>
+
             </div>
-            <!-- 右側 結束 -->
+    </div>
+    <!-- 右側 結束 -->
 
 
 
-        </form>
+    </form>
     </div>
 
 
@@ -388,7 +175,12 @@
 
     <script>
         $(function () {
-
+            $('.delete').each(function (idx, elm) {
+                $(elm).on('click', function () {
+                    $('.article_card').eq(idx).remove();
+                    console.log(idx);
+                })
+            })
         })
 
     </script>

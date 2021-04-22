@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .navbar {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            right: 2px;
+        }
+        
+        .navbar a {
+            float: right;
+            display: block;
+            text-align: center;
+            margin: 10px 15px;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: #56555b;
+        }
+        
+        .navbar a.right {
+            float: left;
+        }
+        /* 如果在這一頁文字變黃 以活動為例  hover效果取消*/
+        
+        .navbar a:not(#activity):hover {
+            background-color: #56555b;
+            color: #E4E5E7;
+        }
+        
+        #activity {
+            color: #ae8313;
+            border-bottom: 2px solid #ae8313;
+        }
+        /* #activity:hover {
+            pointer-events: none;
+        } */
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="#">購票車</a>
+        <a href="#">會員專區</a>
+        <a href="#">參戰心得</a>
+        <a href="#">樂團簡介</a>
+        <a id="activity" href="#">活動專區</a>
+        <a href="#" class="right">logo</a>
+    </div>
+
+</body>
+
+</html>
