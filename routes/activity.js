@@ -3,8 +3,13 @@ var router = express.Router();
 var conn = require("../db");
 // 依 HTTP 的 Method (POST/GET/PUT/DELETE) 進行增查修刪
 router.get("/", function (req, res) {
+<<<<<<< HEAD
 
 	conn.query('select * from activityinfo',
+=======
+	
+	conn.query('select * from articleinfo',
+>>>>>>> d3e80a2 (加入活動頁)
 		'',
 		function (err, rows) {
 			if (err) {
@@ -18,8 +23,13 @@ router.get("/", function (req, res) {
 
 })
 router.get("/single", function (req, res) {
+<<<<<<< HEAD
 
 	conn.query('select * from activityinfo',
+=======
+	
+	conn.query('select * from articleinfo',
+>>>>>>> d3e80a2 (加入活動頁)
 		'',
 		function (err, rows) {
 			if (err) {
@@ -32,6 +42,7 @@ router.get("/single", function (req, res) {
 	);
 
 })
+<<<<<<< HEAD
 router.get("/create", function (req, res) {
 
 	conn.query('select * from activityinfo',
@@ -83,6 +94,21 @@ router.get("/data", function (req, res) {
 //     })
 // })
 
+=======
+// router.get("/", function(req, res) {
+//     res.redirect("/1") //如果後面沒有指定數字 就到編號1的文章
+// })
+// router.get("/:id", function(req, res) {
+//     conn.connect(function(err) {
+//             // res.send(JSON.stringify(err));
+//         })
+//         //傳達指令
+//     conn.query("select * from articleinfo where articleId=?", [req.params.id], function(err, result) {
+//             res.send(JSON.stringify(result));
+//         })
+
+// })
+>>>>>>> d3e80a2 (加入活動頁)
 
 
 
