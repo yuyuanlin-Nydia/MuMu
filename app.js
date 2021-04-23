@@ -23,15 +23,12 @@ app.use(session({
     saveUninitialized: false
 }));
 // Web 伺服器的靜態檔案置於 public 資料夾
-// app.set('views', path.join(__dirname, './views/')); 
-// app.engine('html', require('express-art-template'));
 app.use( express.static( "public" ) );
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);  
 app.set('views', __dirname + '/views');
 
 // app.use(express.static(__dirname + '/public'));
-
 app.use('/', indexRouter)
 app.use("/article",articleRouter);
 app.use("/activity",activityRouter);

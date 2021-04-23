@@ -1,23 +1,46 @@
+.banner {
+    width: 100%;
+    height: 200px;
+    background-color: tomato;
+}
+.whole{
+    width: 100%;
+    height: 100%;
+    background-color: var(--color4);
+    
+}
 .posting,
 .heading {
     width: 80%;
     margin: 20px auto 0;
 }
+.form_input{
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    margin: 0px !important;
+    border-radius: 0.5rem !important;
 
+}
 .title,
 .article {
-    display: block;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 20px !important          ;
     padding: 15px;
-    border: solid 1px;
+    border: 2px solid var(--color4);
+    border-radius: 0.5rem;
+
 }
 
 .article {
     height: 300px;
     resize: none;
 }
-
+.del_img_icon{
+    position: absolute;
+    top: 0;
+    right:0;
+}
 .btn {
     float: right;
 }
@@ -37,10 +60,17 @@
 }
 
 .all {
-    border: solid 1px;
-    width: 60%;
-    margin: 100px auto 50px auto;
+    width: 80%;
+    margin: 0px auto ;
     padding: 60px;
+  
+}
+.pre_pic{
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    margin: 10px;
+    position: relative;
 }
 
 @media screen and (max-width:750px) {

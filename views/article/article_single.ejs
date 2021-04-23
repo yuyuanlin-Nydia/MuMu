@@ -4,62 +4,164 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./article.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>參戰心得</title>
+    <link rel="stylesheet" href="../../css/mutual.css">
+    <link rel="stylesheet" href="../../css/article_single.css">
+    <link rel="stylesheet" href="../../css/Bootstrap/bootstrap.css">
+    <script src="../../js/jquery.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <style>
+        .banner {
+            width: 100%;
+            height: 200px;
+            background-color: tomato;
+        }
+
+        .head_img {
+            vertical-align: center;
+            width: 50px !important;
+            height: 50px !important;
+        }
+
+        .msg_no {
+            font-size: 24px;
+            padding: 20px;
+            border-bottom: 2px solid var(--color4);
+            margin-bottom: 20px;
+        }
+
+        .msg_sec {
+            padding: 20px;
+        }
+
+        .msg_sec>div>div>p {
+            line-height: 30px;
+        }
+
+        .btn_grey {
+            background-color: var(--color4);
+            padding: 10px;
+        }
+
+        textarea {
+            padding: 15px;
+            font-size: 18px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1 class="sitetitle">參戰心得</h1>
-    <div class="container" id="test">
-        <%= article %>
-            <%= comment %>
-                {{articleContent}}
-                <h2 class="heading">
-                    搖滾 x 群山 x 美食 x 露營 x 親子寵物：游牧森林音樂祭 2018 遊記</h2>
-                <p class="date">2018-10-15</p>
-                <img src="" alt="">
-                <p class="article">
-                    游牧森林音樂祭的前身 Nomad 全台戶外咖啡大賽，今年 10 月 13 日至 14
-                    日於南投舉辦的第二屆才轉型為音樂祭，並結合露營等活動，首度以此形式舉辦就獲得非常成功的迴響，可以說是第一個真正會讓人聯想到日本
-                    FUJI ROCK 的台灣南投版戶外音樂祭。
-                    就連過去主辦火球祭十分成功的滅火器主唱大正也在表演時大讚游牧森林音樂祭的執行力。完全是去過一次就會上癮的等級，即使是非樂迷朋友也十分推薦前往體驗！本篇將深入淺出的介紹此音樂祭的特色、陣容、週邊，以及與日本大型戶外音樂祭
-                    FUJI ROCK 的比較。
-                </p>
-                <div class="picbox"><img src="./img/expic1.jpg" alt=""></div>
-                <p>游牧森林音樂祭的前身 Nomad 全台戶外咖啡大賽，今年 10 月 13 日至 14
-                    日於南投舉辦的第二屆才轉型為音樂祭，並結合露營等活動，首度以此形式舉辦就獲得非常成功的迴響，可以說是第一個真正會讓人聯想到日本
-                    FUJI ROCK 的台灣南投版戶外音樂祭。
-                    就連過去主辦火球祭十分成功的滅火器主唱大正也在表演時大讚游牧森林音樂祭的執行力。完全是去過一次就會上癮的等級，即使是非樂迷朋友也十分推薦前往體驗！本篇將深入淺出的介紹此音樂祭的特色、陣容、週邊，以及與日本大型戶外音樂祭
-                    FUJI
-                    ROCK 的比較。
-                </p>
-                <div class="picbox"><img src="./img/expic2.jpg" alt=""></div>
-                <p>我很喜歡游牧森林如何把一個音樂祭只專注在幾個主題上，並試著做到最好。沒有大雜燴，沒有過多的資訊，可以跟家人朋友一起在大自然與音樂的包圍下，卻又不缺乏生活機能的場所中好好放鬆、好好享受單純美好的時間。以一個中型音樂祭來說，這樣不就足夠了嗎？
-                </p>
-    </div>
-    <div class='posts'> HI</div>
-</body>
-<script>
-    var vueMain = new Vue({
-        el: "#test",
-        data: {
-            // test: "OK"
-            articleContent: []
-        },
-        methods: {
-            mounted: function () {
-                $.get("/article/item/1", function (e) {
-                    this.articleContent = JSON.parse(e);
-                    cosole.log(this.articleContent)
-                })
-            }
-        }
+    <%-include ("../nav.ejs")%>
+        <!-- 內容換行符號 照片資料庫設定 時間顯示處理 上傳圖片功能  下一篇連結消失-->
+        <!-- 為什麼2和5沒有 東西  因為沒有評論  有評論就可以顯示-->
+              
+        <div>
+            <img src="../../image/article/article2.png" alt="" class="banner" style="object-fit: cover;">
+            <p class="title">參戰心得</p>
+        </div>
 
+        <div class="container" id="main">
+
+
+                <!-- 標題/時間/PO文者 -->
+                <div class="d-flex justify-content-between">
+                    <p class="sub_title" v-if="content">{{content[0][0].articleTitle}}</p>
+
+                    <div>
+                        <img class="head_img " :src="'../../image/upload/user/'+content[0][0].userFile" alt="">
+                        <span>{{content[0][0].lastName}}{{content[0][0].firstName}}</span>
+                    </div>
+                </div>
+                <p>{{content[0][0].articleTime}}</p>
+                <br>
+                <br>
+                <br>
+                <!-- 文章內容 -->
+                <p class=" float-left">{{content[0][0].articleContent}}</p>
+
+                <br><br><br><br><br>
+                <p>{{content[1][0].articleContent}}</p>
+                <br><br><br><br><br><br>
+                <!-- 留言區 -->
+                <p class="sub_title">留言</p>
+                <div class="ml-5">
+                    <p class="msg_no">{{content[2][0].COUNT}}則留言</p>
+                    <!-- 可以留言的區塊 -->
+                    <div class="d-flex">
+                        <img :src="'../../image/upload/user/'+content[3][0].userFile" alt="" class="head_img mr-3">
+                        <div class="bg-light d">
+                            <textarea class="form_input" placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
+                            <button class="btn_grey">發佈</button>
+                        </div>
+                    </div>
+                    <!-- 別人的留言             -->
+                    <div class="msg_sec">
+                        <div class="d-flex align-items-center m-3" v-for="item in content[1]">
+                            <img :src="'../../image/upload/user/'+item.userFile" alt="" class="head_img mr-3">
+
+                            <div>
+                                <p>
+                                    <span class="text-primary">{{item.userAccount}}</span>
+                                    <span>發表於</span>
+                                    <span class=text-muted>{{item.commentTime}}</span>
+                                </p>
+                                <p>{{item.commentContent}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="d-flex justify-content-center">
+                    <li class="m-5"><a :href="'/article/item/'+index_last" id="last_arc"><i
+                                class="fas fa-angle-left"></i>上一篇</a> </li>
+                    <li class="m-5"><a href="/article/1">回列表</a> </li>
+                    <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
+                                class="fas fa-angle-right"></i></a> </li>
+                </ul>
+
+        </div>
+        <%-include ("../footer.ejs")%>
+</body>
+
+<script>
+
+    var no = location.href.split('/');
+    var index = no[no.length - 1];
+    $(function () {
+        // 第一頁的話  上一篇a連結消失
+        if (vueMain.index_last <= 0) {
+            $("#last_arc").css('display', "none");
+        }
+        // 最後一頁的話  下一篇消失 想一下最後一頁怎麼抓?
+        // else if (vueMain.index_next = vueMain.index_next) {
+        //     $("#next_arc").css('display', "none");
+        // }
+    })
+    var vueMain = new Vue({
+        el: "#main",
+        data: {
+            // content: [{}],
+            content: null,
+            index_last: 0,
+            index_next: 0
+        },
+        created: function () {
+            
+            // 去尋找網址列中是否有資料傳遞(QueryString)
+            //之後去分割字串把分割後的字串放進陣列中
+            var x = $.get("/article/item/data/" + index, function (e) {
+                // 這邊用this會失敗
+                vueMain.content = JSON.parse(e);
+                vueMain.index_last = vueMain.content[0][0].articleId - 1;
+                vueMain.index_next = vueMain.content[0][0].articleId + 1;
+
+            })
+
+        }
     })
 
 </script>
