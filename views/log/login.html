@@ -6,10 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGIN</title>
-    <script src="./_js/jquery-3.4.1.js"></script>
+    <link rel="icon" href="../image/logoImgS-bg.svg" type="image/x-icon"></head>
+    <script src="./js/jquery.js"></script>
+    <link rel="stylesheet" href="../css/mutual.css">
+    <link rel="stylesheet" href="../css/login.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
-        @import url(./css/login.css);
+        /* @import url(./css/login.css); */
         /* @import url('./reset.css'); */
 
 
@@ -21,6 +24,7 @@
 </head>
 
 <body>
+
 
     <div id="main_box">
         <!-- <img id="logo" src="./images/fake.png" alt=""> -->
@@ -39,18 +43,20 @@
                             <!-- 登入 -->
 
                             <li>
-                                <br><input type="text" placeholder="Username" name="user">
+                                <br><input type="text" placeholder="帳號" name="user">
                             </li>
                             <li>
-                                <br><input type="password" placeholder="password" name="password">
+                                <br><input type="password" placeholder="密碼" name="password">
                             </li>
                             <br>
-                            <li class="btm_text"> <input type="checkbox"> Remember me</li>
+                            <li class="btm_text"> <input type="checkbox"> 記住我</li>
+                          
+                            
 
                         </ul><!-- 登入end -->
-                        <input type="button" value="Login">
+                        <button type="submit" value="Login"> 登入</button>
+                        <br><a class="btm_text" href="#">Forgot your password?</a>
                     </form>
-                    <br><a class="btm_text" href="#">Forgot your password?</a>
                 </div>
 
 
@@ -61,25 +67,25 @@
                         <ul>
                             <!-- 註冊 -->
                             <li>
-                                <br><input type="text" placeholder="*Name" name="Name" required>
+                                <br><input type="text" placeholder="*姓名" name="Name" required>
                             </li>
                             <li>
                                 <br><input type="text" placeholder="*Email" name="Email" required>
                             </li>
 
                             <li>
-                                <br><input type="text" placeholder="*Username" name="user" required>
+                                <br><input type="text" placeholder="*帳號" name="user" required>
                             </li>
                             <li>
-                                <br><input type="password" placeholder="*password" name="password" required>
+                                <br><input type="password" placeholder="*密碼" name="password" required>
                             </li>
                             <br>
                             <li>* 為必填欄位，請填妥欄位資訊。</li>
-                            <li><input type="checkbox" required>我同意<a href="#">會員使用條款</a> </li>
+                            <li class="btm_text"><input type="checkbox" required>我同意<a href="#">會員使用條款</a> </li>
                         </ul><!-- 註冊end -->
 
-                        <input type="button" value="Get Started">
-
+                        <!-- <input type="button" value="Get Started"> -->
+                        <button type="submit" value="signup"> 加入會員</button>
                     </form>
 
                 </div> <!-- signup end -->
@@ -90,7 +96,7 @@
         </div>
 
         </form>
-
+        
         <script>
 
             $('.tab a').on('click', function (e) {
