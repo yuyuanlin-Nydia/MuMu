@@ -1,40 +1,56 @@
+* {
+    font-size: 20px;
+}
+
 /* 最外層大div */
 
 #main_box {
     width: 70vw;
     height: 680px;
-    border: 1px solid #3B0D4B;
-    margin: 4% auto;
+    border: 1px solid var(--color1);
+    margin: 2% auto;
     border-radius: 10px;
-    background: url(./images/loginBackground.jpg) no-repeat;
+    /* background: url(./images/loginBackground.jpg) no-repeat; */
+    background: url(../image/login&logout/bg1.png) no-repeat;
     background-size: cover;
-    opacity: .8;
-    
+    /* opacity: .8; */
+    background-position: center;
+}
+/* 企業 */
+#main_boxC {
+    width: 70vw;
+    height: 680px;
+    border: 1px solid var(--color1);
+    margin: 2% auto;
+    border-radius: 10px;
+    background: url(../image/login&logout/bg2.png) no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 /* tab-group 登入註冊標籤----------------------------------------------------- */
 
 .tab-group {
     list-style: none;
-    padding: 0;
+    /* padding: 0; */
     float: left;
 }
 
-.tab-group:after {
+/* .tab-group:after {
     content: "";
     display: table;
     clear: both;
-}
+} */
 
 .tab-group li a {
     display: block;
     text-decoration: none;
     padding: 15px;
-    background: rgba(144, 131, 148, 0.25);
-    color: #908394;
+    background: rgba(255, 255, 255, .5);
+    color: rgba(57, 69, 93, .5);
     font-size: 20px;
-    float: left;
-    width: 50%;
+    height: 80px;
+    width: 80px;
     text-align: center;
     cursor: pointer;
     transition: 0.5s ease;
@@ -42,78 +58,84 @@
 
 .tab-group li a:hover {
     /* background:#ffffff ; */
-    color: #3B0D4B;
+    color: var(--color1);
 }
 
 .tab-group .active a {
-    background: #FFAE57;
-    color: #3b0d4b;
+    background: var(--color2);
+    color: var(--color4);
 }
 
 /* 登入註冊內容大div(含標籤)--------------------------------------------------------------------------- */
 
 .main_content {
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
     font-family: 'Fraunces', serif;
-    background: rgba(59, 13, 75, 0.9);
-    padding: 40px;
+    /* background: rgba(59, 13, 75, 0.9); */
+    padding: 50px;
     max-width: 600px;
     margin: 10% auto;
     /* border-radius: 4px; */
-    box-shadow: 0 4px 10px 4px rgba(59, 13, 75, 0.3);
+    /* box-shadow: 0 4px 10px 4px rgba(59, 13, 75, 0.3); */
     text-align: left;
 }
 
-.main_content input[type=button]:focus {
+/* .main_content input[type=button]:focus {
+    outline: none;
+} */
+
+.main_content button:focus {
     outline: none;
 }
 
-.main_content input[type=button] {
-    width: 25vw;
+.main_content button {
+    width: 20vw;
     height: 35px;
-    background-color: #3B0D4B;
-    border: 1px solid #FFAE57;
+    color: var(--color1);
+    background-color: var(--color2);
+    border: 1px solid var(--color2);
     cursor: pointer;
     border-radius: 2px;
-    color: #FFAE57;
     font-family: 'Fraunces', serif;
     font-size: 16px;
-    /* font-weight: 400; */
-    padding: 6px;
     margin-top: 10px;
-    margin-left: 30px;
-    
 }
 
-.main_content input[type=button]:hover {
-    color: #3B0D4B;
-    background-color: #ffae57;
+.main_content button:hover {
+    background-color: var(--color1);
+    border: 1px solid var(--color2);
+    color: var(--color2);
 }
 
-#login,#signup{
+#login, #signup {
     /* text-align: center; */
     margin-left: 50px;
+    font-size: 60px;
 }
-h1{
+
+h1 {
     margin-left: 30px;
+    color: var(--color4);
+    font-size: 32px;
 }
 
 /* 登入註冊內容大div(不含標籤)--------------------------------------------------------------------------- */
 
 .tab-content {
-    margin-left: 50px;
+    margin-left: 70px;
     /* 離tab距離 */
 }
+
 .tab-content>div:last-child {
     display: none;
 }
+
 /* login ----------------------------------------------------------------------------------*/
 
 ul {
     list-style-type: none;
-    background-color: rgba(255, 255, 255, 0);
-    color: snow;
-    
+    color: var(--color5);
+    padding: 20px;
 }
 
 li {
@@ -123,12 +145,12 @@ li {
 li input {
     outline: 0;
     border-width: 0 0 2px;
-    border-color: silver;
+    border-color:var(--color4);
     background-color: rgba(255, 255, 255, 0);
 }
 
 input:focus {
-    border-color: rgb(255, 174, 87);
+    border-color: var(--color2);
 }
 
 input {
@@ -147,8 +169,12 @@ input {
     font-size: 0.5rem;
 }
 
+.btm_text input {
+    appearance:auto ;
+}
+
 a.btm_text {
-    color: #C4A3DA;
+    color: var(--color5);
     margin-left: 30px;
 }
 
@@ -156,44 +182,80 @@ a {
     color: inherit;
 }
 
-
 /* signup */
+
 .field-wrap {
     position: relative;
     margin-bottom: 40px;
 }
-
+.btm_text a {
+    font-size: 12px;
+   
+}
 /* RWD */
 
-@media screen and (max-width: 960px){
+@media screen and (max-width: 1280px) {
+    #main_box {
+        background-size: 120% 150%;
+        background-position: center;
+    }
+    #main_boxC {
+        background-size: 120% 150%;
+        background-position: center;
+    }
+}
+
+@media screen and (max-width: 960px) {
     .tab-group {
         float: none;
         display: block;
-        width:100% ;
+        width: 100%;
         margin: 0 auto;
     }
     .tab-group li a {
         padding: 0;
-       line-height: 50px;
+        line-height: 50px;
+        width: 50%;
     }
-    .tab_content{
+    .tab_content {
         margin-left: 0;
     }
-    h1{
-        margin-left: 0;
+    h1 {
+        margin-top: 50px;
+        margin-left: -5px;
+    }
+    .tab-group li a {
+        float: left;
+        height: 50%;
+    }
+    #main_box {
+        background-size: 110% 150%;
+        background-position: center;
+    }
+    #main_boxC {
+        background-size: 110% 150%;
+        background-position: center;
+    }
+    .main_content button {
+        width: 70%;
     }
 }
-@media screen and (max-width: 720px){
-   
+
+@media screen and (max-width: 720px) {
     .tab-content {
         margin-left: 0;
     }
-    form ul li{
-        margin-left: -70px;
-    }
-    h1{
+    form ul li {
         margin-left: -30px;
-        /* text-align: center; */
+       
     }
-    
+   
+    #main_box {
+        background-size: 130% 150%;
+        background-position: center;
+    }
+    #main_boxC {
+        background-size: 130% 150%;
+        background-position: center;
+    }
 }
