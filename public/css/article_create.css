@@ -70,7 +70,7 @@
     height: 400px;
     object-fit: cover;
     margin: 10px;
-    position: relative;
+
 }
 
 @media screen and (max-width:750px) {
