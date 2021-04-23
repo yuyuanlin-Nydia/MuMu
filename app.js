@@ -13,6 +13,7 @@ var bandRouter=require("./routes/band");
 var userRouter=require("./routes/user");
 var companyRouter=require("./routes/company");
 var cartRouter=require("./routes/cart");
+var logRouter=require("./routes/log");
 
 
 app.use(express.json());
@@ -39,6 +40,7 @@ app.use("/band",bandRouter);
 app.use("/user",userRouter);
 app.use("/company",companyRouter);
 app.use("/cart",cartRouter);
+app.use("/log",logRouter);
 
 
 
