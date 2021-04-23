@@ -8,10 +8,16 @@ var app = express();
 var indexRouter=require("./routes/index");
 var articleRouter=require("./routes/article");
 var activityRouter=require("./routes/activity");
+<<<<<<< HEAD
 var bandRouter=require("./routes/band");
 var userRouter=require("./routes/user");
 var companyRouter=require("./routes/company");
 var cartRouter=require("./routes/cart");
+=======
+// var bandRouter=require("./routes/band");
+// var userRouter=require("./routes/user");
+// var companyRouter=require("./routes/company");
+>>>>>>> d3e80a2 (加入活動頁)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,10 +38,19 @@ app.set('views', __dirname + '/views');
 app.use('/', indexRouter)
 app.use("/article",articleRouter);
 app.use("/activity",activityRouter);
+<<<<<<< HEAD
 app.use("/band",bandRouter);
 app.use("/user",userRouter);
 app.use("/company",companyRouter);
 app.use("/cart",cartRouter);
+=======
+// app.use("/band",bandRouter);
+// app.use("/user",userRouter);
+// app.use("/company",companyRouter);
+
+
+
+>>>>>>> d3e80a2 (加入活動頁)
 
 
 app.listen(3000);
