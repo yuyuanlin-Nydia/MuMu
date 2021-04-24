@@ -1,0 +1,83 @@
+* {
+    font-size: 20px;
+}
+
+/* 最外層大div */
+
+#main_box {
+    width: 70vw;
+    height: 680px;
+    border: 1px solid var(--color1);
+    margin: 2% auto;
+    border-radius: 10px;
+    background-color: var(--color1);
+  
+}
+.main_content{
+    margin: 10%;
+    text-align: center;
+}
+/* tab-group 登入標籤----------------------------------------------------- */
+
+.tab-group {
+    list-style: none;
+    display: flex;
+    
+}
+
+
+.tab-group li a {
+    
+    display: block;
+    border: 1px solid var(--color4);
+    text-decoration: none;
+    padding: 100px 60px;
+    
+    margin: 0 auto;
+    color:var(--color4);
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s ease;
+    
+    
+}
+
+.tab-group li a:hover {
+    background: var(--color4);
+    color: var(--color1);
+}
+
+.tab-group  a {
+   
+    color: var(--color4);
+}
+
+
+a img:nth-of-type(2){
+    display: none;
+   
+}
+
+/* RWD */
+
+@media screen and (max-width: 1280px) {
+    .tab-group li a {
+    width: 300px;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .tab-group {
+        display: block;
+    }
+    .tab-group li a {
+        padding: 15px;
+        width: 100%;
+        
+    }
+}
+
+@media screen and (max-width: 720px) {
+   
+}

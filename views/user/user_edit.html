@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
+      <!-- 不連線測試用 -->
+      <script src="../../public/js/jquery.js"></script>
+      <script src="../../public/js/Bootstrap/bootstrap.js"></script>
+      <link rel="stylesheet" href="../../public/css/user_mainPage.css">
+      <link rel="stylesheet" href="../../public/css/Bootstrap/bootstrap.css">
 </head>
 <style>
     @media (max-width:768px) {
@@ -123,7 +128,7 @@
 
     <div id="app1">
         <!-- {{ message }} -->
-        {{ message }}
+        <!-- {{ message }} -->
     </div>
     <div id="app">
         <component-layout></component-layout>
@@ -141,17 +146,17 @@
         //     }
         // });
 
-        Vue.component("component-layout", {
-            template: `<div>{{text}}</div>`,
-            data() {
-                return {
-                    text: '我是全域註冊'
-                }
-            }
-        });
-        let vm = new Vue({
-            el: "#app"
-        });
+        // Vue.component("component-layout", {
+        //     template: `<div>{{text}}</div>`,
+        //     data() {
+        //         return {
+        //             text: '我是全域註冊'
+        //         }
+        //     }
+        // });
+        // let vm = new Vue({
+        //     el: "#app"
+        // });
     </script>
 
 

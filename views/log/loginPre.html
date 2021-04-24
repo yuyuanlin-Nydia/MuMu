@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+    <link rel="icon" href="../image/logoImgS-bg.svg" type="image/x-icon">
+</head>
+<script src="./js/jquery.js"></script>
+<link rel="stylesheet" href="../css/mutual.css">
+<link rel="stylesheet" href="../css/loginPre.css">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
+    /* @import url(./css/login.css); */
+    /* @import url('./reset.css'); */
+
+
+    li:nth-of-type(5),
+    li:nth-of-type(6) {
+        font-size: 10px;
+    }
+</style>
+
+</head>
+
+<body>
+
+
+    <div id="main_box">
+
+        <div class="main_content">
+            <ul class="tab-group">
+                <li id="ologin"><a href="/log/login">
+                        <p><img src="../image/login&logout/man-1.png" alt="ordinary-login">
+                            <img src="../image/login&logout/man-1y.png" alt="ordinary-login"></p> 一般會員
+                    </a></li>
+                <li id="clogin"><a href="/log/companyLogin">
+                        <p><img src="../image/login&logout/man-3.png" alt="company-login">
+                            <img src="../image/login&logout/man-3y.png" alt="company-login"></p>企業會員
+                    </a></li>
+            </ul>
+        </div>
+
+
+
+        <script>
+            $().ready(function () {
+
+                // console.log(123);
+                $('a p').mouseover(function () {
+                   $('a img:nth-of-type(1)').css('display', 'none')
+                   $('a img:nth-of-type(2)').css('display', 'inline')
+                })
+                
+                $('a p').mouseout(function () {
+                    $('a img:nth-of-type(1)').css('display','inline' )
+                   $('a img:nth-of-type(2)').css('display', 'none')
+                });
+
+            })
+        </script>
+
+</body>
+
+</html>

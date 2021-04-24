@@ -5,10 +5,14 @@ var conn = require("../db");
 router.get("/", function (req, res) {
 
 	
-			res.render('./log/login.html')
+			res.render('./log/loginPre.html')
 	
 })
-router.get("/company", function (req, res) {
+router.get("/login", function (req, res) {
+
+	res.render('./log/login.html')
+})
+router.get("/companyLogin", function (req, res) {
 
 			res.render('./log/loginCompany.html')
 })
