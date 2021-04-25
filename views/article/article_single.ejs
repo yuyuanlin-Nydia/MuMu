@@ -14,121 +14,85 @@
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-    <style>
-        .banner {
-            width: 100%;
-            height: 200px;
-            background-color: tomato;
-        }
-
-        .head_img {
-            vertical-align: center;
-            width: 50px !important;
-            height: 50px !important;
-        }
-
-        .msg_no {
-            font-size: 24px;
-            padding: 20px;
-            border-bottom: 2px solid var(--color4);
-            margin-bottom: 20px;
-        }
-
-        .msg_sec {
-            padding: 20px;
-        }
-
-        .msg_sec>div>div>p {
-            line-height: 30px;
-        }
-
-        .btn_grey {
-            background-color: var(--color4);
-            padding: 10px;
-        }
-
-        textarea {
-            padding: 15px;
-            font-size: 18px;
-        }
-    </style>
 </head>
 
 <body>
     <%-include ("../nav.ejs")%>
-        <!-- 內容換行符號 照片資料庫設定 時間顯示處理 上傳圖片功能  下一篇連結消失-->
-        <!-- 為什麼2和5沒有 東西  因為沒有評論  有評論就可以顯示-->
-              
+        <!-- 已解決:內容換行符號 時間顯示處理 最後一篇 下一篇連結消失 發佈留言-->
+
+
+        <!-- 旁邊一直出現錯誤訊息  但可以正常顯示  我要一個一個宣告嗎?還是放物件?但怎麼放 -->
+        <!--  留言登入後可以編輯自己的訊息-->
+
         <div>
             <img src="../../image/article/article2.png" alt="" class="banner" style="object-fit: cover;">
             <p class="title">參戰心得</p>
         </div>
 
-        <div class="container" id="main">
+        <div class="box" id="main">
+            {{article}}
+            <!-- 標題/時間/PO文者 -->
+            <div class="d-flex justify-content-between">
+                <p class="sub_title">{{article.articleTitle}}</p>
 
+                <div>
+                    <img class="head_img " :src="'../../image/upload/user/'+article.userFile" alt="">
+                    <span>{{article.lastName}}{{article.firstName}}</span>
+                </div>
+            </div>
+            <p>{{showDate}}</p>
+            <br>
+            <br>
 
-                <!-- 標題/時間/PO文者 -->
-                <div class="d-flex justify-content-between">
-                    <p class="sub_title" v-if="content">{{content[0][0].articleTitle}}</p>
-
+            <!-- 文章內容 -->
+            <!-- 為了解決換行 用computed -->
+            <p v-html="lineBreak">{{lineBreak}}</p>
+            <!-- 文章圖片 -->
+            <img :src="'../../image/upload/article/'+article.articleFile" class="event_pic" alt="">
+            <!-- 留言區 -->
+            <br><br><br><br>
+            <!-- <p class="sub_title">留言</p>
+            <div class="ml-5">
+                <p class="msg_no">{{content[2][0].COUNT}}則留言</p> -->
+            <!-- 可以留言的區塊 -->
+            <div class="d-flex">
+                <img :src="'../../image/upload/user/'+user.userFile" alt="" class="head_img mr-3">
+                <div class="bg-light d">
+                    <textarea v-model="comment_text" name="comment_text" v-model="comment_text" class="form_input"
+                        placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
+                    <button class="btn_grey" v-on:click="submitHandler">發佈</button>
+                </div>
+            </div>
+            <!-- 別人的留言 -->
+            <div class="msg_sec">
+                <div class="d-flex align-items-center m-3" v-for="(item,index) in comment">
+                    <img :src="'../../image/upload/user/'+item.userFile" alt="" class="head_img mr-3">
                     <div>
-                        <img class="head_img " :src="'../../image/upload/user/'+content[0][0].userFile" alt="">
-                        <span>{{content[0][0].lastName}}{{content[0][0].firstName}}</span>
+                        <p>
+                            <span class="text-primary">{{item.userAccount}}</span>
+                            <span>發表於</span>
+                            <span class=text-muted>{{showCommentDate[index]}}</span>
+                        </p>
+                        <p>{{item.commentContent}}</p>
                     </div>
                 </div>
-                <p>{{content[0][0].articleTime}}</p>
-                <br>
-                <br>
-                <br>
-                <!-- 文章內容 -->
-                <p class=" float-left">{{content[0][0].articleContent}}</p>
-
-                <br><br><br><br><br>
-                <p>{{content[1][0].articleContent}}</p>
-                <br><br><br><br><br><br>
-                <!-- 留言區 -->
-                <p class="sub_title">留言</p>
-                <div class="ml-5">
-                    <p class="msg_no">{{content[2][0].COUNT}}則留言</p>
-                    <!-- 可以留言的區塊 -->
-                    <div class="d-flex">
-                        <img :src="'../../image/upload/user/'+content[3][0].userFile" alt="" class="head_img mr-3">
-                        <div class="bg-light d">
-                            <textarea class="form_input" placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
-                            <button class="btn_grey">發佈</button>
-                        </div>
-                    </div>
-                    <!-- 別人的留言             -->
-                    <div class="msg_sec">
-                        <div class="d-flex align-items-center m-3" v-for="item in content[1]">
-                            <img :src="'../../image/upload/user/'+item.userFile" alt="" class="head_img mr-3">
-
-                            <div>
-                                <p>
-                                    <span class="text-primary">{{item.userAccount}}</span>
-                                    <span>發表於</span>
-                                    <span class=text-muted>{{item.commentTime}}</span>
-                                </p>
-                                <p>{{item.commentContent}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <ul class="d-flex justify-content-center">
-                    <li class="m-5"><a :href="'/article/item/'+index_last" id="last_arc"><i
-                                class="fas fa-angle-left"></i>上一篇</a> </li>
-                    <li class="m-5"><a href="/article/1">回列表</a> </li>
-                    <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
-                                class="fas fa-angle-right"></i></a> </li>
-                </ul>
-
+            </div>
         </div>
+        <ul class="d-flex justify-content-center">
+            <li class="m-5"><a :href="'/article/item/'+index_last" id="last_arc"><i
+                        class="fas fa-angle-left"></i>上一篇</a> </li>
+            <li class="m-5"><a href="/article/1">回列表</a> </li>
+            <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
+                        class="fas fa-angle-right"></i></a> </li>
+        </ul>
+        </div>
+
         <%-include ("../footer.ejs")%>
 </body>
 
 <script>
-
+    // 去尋找網址列中是否有資料傳遞(QueryString)
+    //之後去分割字串把分割後的字串放進陣列中
     var no = location.href.split('/');
     var index = no[no.length - 1];
     $(function () {
@@ -136,32 +100,105 @@
         if (vueMain.index_last <= 0) {
             $("#last_arc").css('display', "none");
         }
-        // 最後一頁的話  下一篇消失 想一下最後一頁怎麼抓?
-        // else if (vueMain.index_next = vueMain.index_next) {
-        //     $("#next_arc").css('display', "none");
-        // }
+        else if (vueMain.index_next > vueMain.maxArticle) {
+            $("#next_arc").css('display', "none")
+        }
     })
+    // 重整畫面=>輸入評論後
+    function refreshPage() {
+        $.get("/article/item/data/" + index, function (e) {
+            // 這邊用this會失敗
+            vueMain.content = JSON.parse(e);
+            vueMain.index_last = vueMain.content[0][0].articleId - 1;
+            vueMain.index_next = vueMain.content[0][0].articleId + 1;
+            vueMain.comment_text = '';
+        })
+    }
     var vueMain = new Vue({
         el: "#main",
         data: {
-            // content: [{}],
-            content: null,
+            content: [{
+
+            }],
+            article: [{
+                articleId: 1,
+                articleTitle: "",
+                articleContent: "",
+                articleTime: "",
+                articleFile: "",
+                firstName: "",
+                lastName: "",
+                userFile: ""
+            }],
             index_last: 0,
-            index_next: 0
+            index_next: 0,
+            comment_text: '',
+            comment: [{
+                commentContent: "",
+                commentTime: "",
+                userAccount: "",
+                user: ""
+            }],
+
+
+            maxArticle: 0,
+            user:''
         },
         created: function () {
-            
-            // 去尋找網址列中是否有資料傳遞(QueryString)
-            //之後去分割字串把分割後的字串放進陣列中
             var x = $.get("/article/item/data/" + index, function (e) {
                 // 這邊用this會失敗
                 vueMain.content = JSON.parse(e);
-                vueMain.index_last = vueMain.content[0][0].articleId - 1;
-                vueMain.index_next = vueMain.content[0][0].articleId + 1;
-
+                vueMain.index_last = vueMain.content[0][0].articleId - 1; //上一篇
+                vueMain.index_next = vueMain.content[0][0].articleId + 1; // 下一篇
+                vueMain.article = vueMain.content[0][0];
+                vueMain.comment = vueMain.content[1];
+                vueMain.user = vueMain.content[3][0];
+                vueMain.maxArticle = vueMain.content[4][0].COUNT //計算最大篇數 消失下一篇按鈕
             })
 
+        },
+        methods: {
+            submitHandler: function () {
+                var newComment = {
+                    comment_text: this.comment_text,
+                    index: this.content[0][0].articleId
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/article/comment",
+                    data: newComment
+                }).then(function (e) {
+                    refreshPage();
+
+                    console.log("a")
+                })
+            },
+        },
+        computed: {
+            lineBreak: function () {
+                return this.article.articleContent.replace(/\n|\r\n/g, "<br />")
+            },
+            //修改日期格式
+            showDate: function () {
+                var time = this.article.articleTime;
+                var d = new Date(time);
+                var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0");
+                return times
+            },
+            showCommentDate: function () {
+                // const List = this.articleList.map(item => Object.values(item)[4]); 
+                const List = vueMain.content[1].map(item => {
+                    var d = new Date(Object.values(item)[1])
+                    var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0") + ' ' + d.getHours().toString().padStart(2, "0") + ':' + d.getMinutes().toString().padStart(2, "0") + ':' + d.getSeconds().toString().padStart(2, "0");
+                    times.toString()
+                    return times
+                }); // 0 表示第一個屬性值
+                return List
+
+            },
         }
+
+
     })
 
 </script>

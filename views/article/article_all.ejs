@@ -6,97 +6,156 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>參戰心得列表</title>
-    <link rel="stylesheet" href="../css/article_all.css">
-    <link rel="stylesheet" href="../css/mutual.css">
+    <link rel="stylesheet" href="../../css/article_all.css">
+    <link rel="stylesheet" href="../../css/mutual.css">
     <link rel="stylesheet" href="../../css/Bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
     <%-include ("../nav.ejs")%>
-    <form action="/article/upload_file/article" method="post" enctype="multipart/form-data">
-        <input type="file" name="myfile" accept="image/*" id="articleFile"><br><br>
-        <img id="demo"/>
-        <input type="submit" value="確定">
-    </form>
-    <div>
-        <img src="../../image/article/article1.jpg" alt="" class="banner" style="object-fit: cover;">
-        <p class="title">參戰心得列表</p>
-    </div>
-    <div class="wrapper row3" id="main">
-        <main class="hoc container clear">
-            <!-- 搜尋欄 -->
-            <div class="float-right mb-3 mr-4">
-                <input type="text" class="form_input" style="background-color: var(--color4);"
-                    placeholder="搜尋相關文章">
-                <i class="fas fa-search btn_search"></i>
-            </div>
-            <ul class="nospace group overview" id="itemContainer">
-                <articleitem v-bind:item="article" v-for="(article,idx) in articleList">
+        <!-- 已解決:時間格式處理=>放在component裡  用computed去改  -->
+        <!-- 待解決 {{showDate[0]}}  -->
+        <div>
+            <img src="../../image/article/article1.jpg" alt="" class="banner" style="object-fit: cover;">
+            <p class="title">參戰心得列表</p>
+        </div>
+        <div class="wrapper row3" id="main">
+            <main class="hoc container clear">
+                <!-- 搜尋欄 -->
+                <div class="float-right mb-3 mr-4">
+                    <input type="text" id="search_input" class="form_input" style="background-color: var(--color4);"
+                        placeholder="搜尋相關文章" name="search_text" v-model="search_text">
+                    <i class="fas fa-search btn_search" v-on:click="searchHandler"></i>
+                </div>
 
-                </articleitem>
-            </ul>
-        </main>
-    </div>
-    <%-include ("../footer.ejs")%>
-    <script>
-        // 文章上傳預覽的功能
-        $('#articleFile').change(function () {
-            var file = $('#articleFile')[0].files[0];
-            var reader = new FileReader;
-            reader.onload = function (e) {
-                var txt2=$("<img />").attr('src', e.target.result)
-                var y=$('#articleFile').after(txt2);
-            };
-            reader.readAsDataURL(file);
-        });
-    </script>
-    <script type="text/x-template" id="article">
-        <li class="one_third searchable">
-            <figure>
-                <a :href="'../article/item/'+item.articleId"><img
-                        :src="'../image/article/'+item.articleFile" alt=""
-                        class="arc_pic"></a>
-                <figcaption>
-                    <h6 class="heading"><b>{{item.articleTitle}}<b></h6>
-                    <p>{{item.articleTime}}</p>
-                </figcaption>
-            </figure>
-        </li>
-    </script>
-    <script>    
-        // $.get("/article/data", function (e) {
-        //     vueMain.articleList = JSON.parse(e);
-        // })
-        Vue.component('articleitem', { //填入我們上面自訂組件的名稱
-            props: ['item'], //填上上面取名的接口名稱
-            template: '#article',
-            mounted: function () {
-                $.get("/article/data", function (e) {
-                    vueMain.articleList = JSON.parse(e);
-                    console.log(vueMain.articleList)
+
+                <ul class="nospace group overview" id="itemContainer">
+                    <!-- <articleitem v-bind:item="article" v-for="(article,idx) in articleList"></articleitem> -->
+                    <articleitem v-bind:item="article" v-for="(article,idx) in filteredArticles"></articleitem>
+
+                </ul>
+
+                <div class="text-center">
+                    <% for (i=1;i<=last_page;i++){ %>
+                        <a href="/article/<%= i %>" class="text-center">
+                            <button class="btn_page"><%= i %></button>
+                        </a>
+                        <% } %>
+                </div>
+            </main>
+        </div>
+
+
+
+        <%-include ("../footer.ejs")%>
+
+
+            <script type="text/x-template" id="article">
+                <li class="one_third searchable">
+                    <figure>
+                        <a :href="'/article/item/'+item.articleId"><img
+                                :src="'../../image/upload/article/'+item.articleFile" alt=""
+                                class="arc_pic"></a>
+                        <figcaption>
+                            <h6 class="heading"><b>{{item.articleTitle}}</b></h6>
+                            <p>{{showDate[0]}}</p>
+                        </figcaption>
+                    </figure>
+                </li>
+            </script>
+            <script>
+                var no = location.href.split('/');
+                var index = no[no.length - 1];
+                console.log(index)
+                Vue.component('articleitem', { //自訂元素的名稱
+                    props: ['item'], //填上上面取名的接口名稱
+                    template: '#article',
+                    mounted: function () {
+                        $.get("/article/data/" + index, function (e) {
+                            vueMain.articleList = JSON.parse(e)[0];
+                        })
+                    },
+                    computed: {
+                        showDate: function () {
+                            // const List = this.articleList.map(item => Object.values(item)[4]); 
+                            const List = vueMain.articleList.map(item => {
+                                var d = new Date(Object.values(item)[4])
+                                var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0");
+                                times.toString()
+                                return times
+                            }); // 0 表示第一個屬性值
+                            return List
+                        },
+                    }
+
                 })
-            }
-        })
 
-        var vueMain = new Vue({
-            el: "#main",
-            data: {
-                // message: "OK",
-                articleList: [{}
-                    // { articleTitle: '心得', articleTime: '2020-10-05',articleFile:'article.jpg' },
-                    // { articleTitle: '心得2', articleTime: '2020-10-06',articleFile:'article2.jpg' }
-                ],
-            },
-            // 函式
-            methods: {
+                var vueMain = new Vue({
+                    el: "#main",
+                    data: {
+                        // message: "OK",
+                        articleList: [{}],
+                        search_text: "",
 
-            }
-        })
-    </script>
+                    },
+                    // 函式
+                    methods: {
+                        searchHandler: function () {
+                            var data = {
+                                search_text: this.search_text
+                            }
+                            $.ajax({
+                                url: "/article/search",
+                                type: "POST",
+                                data: data,
+                            }).then(function (res) {
+                                console.log(res);
+                                console.log("44");
+                                // this.articleList=res;
+                                $.post("/article/search", function (e) {
+                                    vueMain.articleList = res;
+                                    console.log(vueMain.articleList)
+                                })
+                            }).catch(err => console.log(err.response))
+                        },
+                        fasterSearch() {
+                        }
+                    },
+                    computed: {
+                        filteredArticles: function () {
+                            var articles_array = this.articleList,
+                                search_text = this.search_text;
+                            if (!search_text) {
+                                return articles_array;
+                            }
+                            search_text = search_text.trim().toLowerCase();
+                            articles_array = articles_array.filter(function (item) {
+                                if (item.articleContent.indexOf(search_text) !== -1) {
+                                    return item;
+                                }
+                            })
+                            // Return an array with the filtered data.
+                            return articles_array;
+                        }
+                    }
+                })
+                function downloadList() {
+                    $.get("/article/data/" + index, function (e) {
+                        vueMain.articleList = JSON.parse(e);
+                    })
+                }
+
+                $(document).ready(function () {
+                    downloadList();
+                })
+
+            </script>
 </body>
 
 </html>

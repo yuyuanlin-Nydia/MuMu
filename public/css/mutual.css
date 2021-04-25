@@ -266,4 +266,73 @@ button{
 .link--kukuri:hover::before {
     width: 100%;
 } */
+/* footer樣式 */
+footer {
+    background-color: #56555b;
+    height: 100px;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+.faFamily {
+    text-align: center;
+}
+
+.fa {
+    padding: 18px;
+    font-size: 20px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    color: #e4e5e7;
+}
+
+.fa:hover {
+    color: var(--color2);
+    text-decoration: none;
+}
+
+.footerText {
+    text-align: center;
+    position: relative;
+    margin: 20px;
+    bottom: 20px;
+    color: var(--color2);
+}
+
+/* 導覽列樣式 */
+.mynavbar {
+    overflow: hidden;
+    /* position: fixed; */
+    width: 100%;
+    height: 70px;
+}
+
+.mynavbar a {
+    float: right;
+    display: block;
+    text-align: center;
+    margin: 10px 15px;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: #56555b;
+}
+
+.mynavbar a.right {
+    float: left;
+}
+/* 如果在這一頁文字變黃 以活動為例  hover效果取消*/
+
+.mynavbar a:not(#activity):hover {
+    background-color: #56555b;
+    color: #E4E5E7;
+}
+
+#activity {
+    color: var(--color2);
+    border-bottom: 2px solid var(--color2);
+}
+
 
