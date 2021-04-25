@@ -1,96 +1,150 @@
-body{
-    background:url(/image/user/dinosaur.png) no-repeat center/80%;
-    background-size: cover;
-    font-family: 'Noto Sans TC','serif' !important;
+body {
+    font-family: 'Noto Sans TC', 'serif' !important;
     min-height: 100vh;
-    
-}
-.user_menu:hover {
-    text-decoration:none !important;
-    color:lightcoral !important;
 }
 
-.emp-profile{
+/* left----------------------------------------------------------------------- */
+
+.emp-profile {
     padding: 3% 0%;
-    margin-top: 3%;
-    border-radius: 1rem;
-    background: rgba(252, 252, 252, 0.8);
+    height: 100vh;
+    background: var(--color1);
+    margin-left: -60px;
 }
 
-.profile-img{
+.profile-img {
     text-align: center;
 }
-.profile-img img{
+
+.profile-img img {
     width: 120px;
     height: 120px;
     object-fit: cover;
     border-radius: 50%;
 }
+
+/* 換頭貼 */
+
+.profile-pic {
+
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog');
+    background-size: cover;
+    background-position: center;
+    /* 圓 */
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+
+    background-blend-mode: multiply;
+    vertical-align: middle;
+    text-align: center;
+    color: transparent;
+
+    transition: all .3s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile-pic:hover {
+    background-color: rgba(0,0,0,.5);
+    z-index: 10000;
+    color: #fff;
+    transition: all .3s ease;
+    text-decoration: none;
+}
+
+/* 更換圖片文字 */
+.profile-pic span {
+    display: inline-block;
+    padding-top: 4.5em;
+    padding-bottom: 4.5em;
+}
+
+/* 隱藏 */
+form input[type="file"] {
+          display: none;
+          cursor: pointer;
+ }
+
+
+/* btn */
+
 .profile-img .file {
     position: relative;
     overflow: hidden;
-    margin-top: -20%;
-    width: 70%;
+    width: 65%;
     border: none;
     border-radius: 0;
     font-size: 15px;
     background: #212529b8;
 }
+
 .profile-img .file input {
     position: absolute;
     opacity: 0;
     right: 0;
     top: 0;
 }
-.profile-head h5{
-    color: #333;
+.select_left{
+    margin: 0 20px;
+    
+} 
+.select_left .profile-work{
+    display: inline;
+    
 }
-.profile-head h6{
-    color: black;
-}
-.profile-edit-btn{
-    border: none;
-    border-radius: 1.5rem;
-    width: 70%;
-    padding: 2%;
-    font-weight: 600;
-    color: #6c757d;
-    cursor: pointer;
-}
-
-.profile-head .nav-tabs{
-    margin-bottom:5%;
-}
-.profile-head .nav-tabs .nav-link{
-    font-weight:600;
-    border: none;
-}
-.profile-head .nav-tabs .nav-link.active{
-    border: none;
-    border-bottom:2px solid #0062cc;
-}
-.profile-work{
-    padding: 10%;
-    margin-top: -15%;
+.select_left .profile-work div{
+    text-align: center;
+    
 
 }
-.profile-work a{
+
+
+.profile-work a {
     text-decoration: none;
-    color: #495057;
+    color: var(--color5);
     font-weight: 600;
     font-size: 16px;
 }
 
-.profile-work div:hover {
-   border-left: 3px solid black;
+/* .profile-work div:hover {
+   border-left: 3px solid var(--color2);
+} */
+
+.profile-work a:hover {
+    color: var(--color2);
+    text-decoration: none;
 }
 
-.profile-tab p{
+.profile-tab p {
     font-weight: 600;
     color: black;
 }
-h4.title{
+
+h4.title {
     border-left: 3px solid black;
     padding-left: 20px;
     margin-bottom: 20px;
+}
+
+/* right----------------------------------------------------------------------- */
+
+.right_box {
+    margin-top: 5%;
+}
+
+.btn_blue2 {
+    cursor: pointer !important;
+    margin-right: 0px !important;
+}
+
+.okbtn{
+    text-align: end;
+}
+/* RWD------------------------------------------------------------------------ */
+
+@media screen and (max-width: 1000px) {
+    .emp-profile {
+        margin-left: -40px;
+    }
 }

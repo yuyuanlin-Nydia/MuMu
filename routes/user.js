@@ -70,7 +70,7 @@ router.get("/myArticle/data", function(req, res) {
 //收藏活動樂團
 router.get("/favorite", function(req, res) {
 
-    res.render('./user/user_myFavorite.html')
+    res.render('./user/user_myFavorite.ejs')
 
 })
 //收藏data
@@ -132,7 +132,7 @@ router.post("/favorite/event", function (request, response) {
 //個人資料
 router.get("/profile", function(req, res) {
     
-    res.render('./user/user_edit.html')
+    res.render('./user/user_edit.ejs')
     // res.send(JSON.stringify(Pdata));
 });
 
