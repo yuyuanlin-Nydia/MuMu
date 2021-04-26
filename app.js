@@ -1,6 +1,7 @@
 var express=require("express");
 var session = require('express-session');
 var path=require("path");
+var bodyParser = require('body-parser');
 var app = express();
 
 
@@ -18,6 +19,7 @@ var logRouter=require("./routes/log");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // 以 express-session 管理狀態資訊
 app.use(session({
@@ -43,7 +45,18 @@ app.use("/cart",cartRouter);
 app.use("/log",logRouter);
 
 
+app.use(session({
+	secret: "",
+    resave:true,
+    saveUninitialized: true,
 
+    cookie:{
+        path:'/',
+        httpOnly:true,
+        secure:false,
+        maxAge: 5*1000
+    }
+}))
 
 
 

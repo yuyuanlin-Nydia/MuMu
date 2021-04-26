@@ -80,15 +80,16 @@
     text-align: left;
 }
 
-/* .main_content input[type=button]:focus {
-    outline: none;
-} */
-
-.main_content button:focus {
+.main_content input[type=button]:focus {
     outline: none;
 }
 
+/* .main_content button:focus {
+    outline: none;
+} */
+
 .main_content button {
+/* .main_content input[type=button] { */
     width: 20vw;
     height: 35px;
     color: var(--color1);

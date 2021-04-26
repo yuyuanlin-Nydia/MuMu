@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
+    <title>一般會員登入</title>
     <link rel="icon" href="../image/logoImgS-bg.svg" type="image/x-icon">
 </head>
 <script src="../js/jquery.js"></script>
@@ -45,10 +45,10 @@
                             <!-- 登入 -->
 
                             <li>
-                                <br><input type="text" placeholder="帳號" name="username" class="username">
+                                <br><input type="text" placeholder="帳號" name="username" class="username" required>
                             </li>
                             <li>
-                                <br><input type="password" placeholder="密碼" name="password" class="password">
+                                <br><input type="password" placeholder="密碼" name="password" class="password" required>
                             </li>
                             <br>
                             <li class="btm_text"> <input type="checkbox"> 記住我</li>
@@ -70,17 +70,19 @@
                         <ul>
                             <!-- 註冊 -->
                             <li>
-                                <br><input type="text" placeholder="*姓名" name="Name" required>
+                                <br><input type="text" placeholder="*姓名" name="firstName" required>
                             </li>
                             <li>
-                                <br><input type="text" placeholder="*Email" name="Email" required>
+                                <br><input type="email" placeholder="*Email" name="userEmail" required>
                             </li>
 
                             <li>
-                                <br><input type="text" placeholder="*帳號" name="user" required>
+                                <!-- 至少8位英數 -->
+                                <br><input type="text" placeholder="*帳號" name="userAccount" pattern="[a-zA-Z0-9]{8,}" maxlength="15" >
                             </li>
                             <li>
-                                <br><input type="password" placeholder="*密碼" name="password" required>
+                                <!-- 至少8位英數 -->
+                                <br><input type="password" placeholder="*密碼" name="userPassword"  pattern="[a-zA-Z0-9]{8,}" maxlength="15">
                             </li>
                             <br>
                             <li>* 為必填欄位，請填妥欄位資訊。</li>
@@ -88,7 +90,7 @@
                         </ul><!-- 註冊end -->
 
                         <!-- <input type="button" value="加入會員" class="signUp"> -->
-                        <button type="button" value="signup"  id="signupSub"> 加入會員</button>
+                        <button type="submit" value="signup"  id="signupSub"> 加入會員</button>
                     </form>
 
                 </div> <!-- signup end -->
@@ -124,31 +126,30 @@
 
                 var data = $('#signupForm').serializeArray()
                 // console.log(data);
-                JSONdata = serializeToJSON(data)
-                // console.log(JSONdata);
-            })
+                JSONData = serializeToJSON(data)
+                console.log(JSONData);
+           
 
             //ajax請求
             $.ajax({
-                url: "/add",
+                url: "/log/login",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSONData,
-                success:function(res){
+                success: function(res) {
                     var res = JSON.parse(res)
-                    
-                    if(res.errno === 1 ){
+                    if(res.errno === 1) {
                         alert("註冊成功!")
-                    }else if(res.errno === 0 ){
-                        alert("註冊失敗")
+                        location.reload("/")
+                    } else if(res.errno === 0) {
+                        alert("註冊失敗!")
                     }
                 },
-                error: function(){
-                    alert("系統錯誤")
+                error: function() {
+                    alert("系統錯誤!")
                 }
             })
-
-
+        })
 
             // 轉JSON
             function serializeToJSON(data){
