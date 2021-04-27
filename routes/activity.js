@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 // var conn = require("../db");
 // 依 HTTP 的 Method (POST/GET/PUT/DELETE) 進行增查修刪
-var { Success, Error } = require('../response')
+var { Success, Error } = require('./response')
 var connection = require("../db");
 
 var sql = `
