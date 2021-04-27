@@ -41,13 +41,13 @@ router.get('/data/:page', function (req, res) {
 	SELECT COUNT(*) AS COUNT FROM articleinfo;
 	select * from articleinfo where articleDelete = ?`
 
-	conn.query(sql, [0,0], function (err, rows) {
+	conn.query(sql, [0, 0], function (err, rows) {
 		if (err) { console.log(err); };
-		// var last_page = Math.ceil((rows[1][0].COUNT) / count)
-		// // 	如果超過最大頁數 就到編號1的文章
-		// if (page > last_page || page < 1) {
-		// 	res.redirect("/article/1")
-		// }
+		var last_page = Math.ceil((rows[1][0].COUNT) / count)
+		// 	如果超過最大頁數 就到編號1的文章
+		if (page > last_page || page < 1) {
+			res.redirect("/article/1")
+		}
 		res.send(JSON.stringify(rows));
 	});
 })
@@ -59,6 +59,16 @@ router.post("/search", function (req, res) {
 
 	conn.query("select * from articleinfo where instr(articleContent,?)",
 		[req.body.search_text], function (err, rows) {
+			if (err) {
+				console.log(JSON.stringify(err))
+			}
+			res.send(JSON.stringify(rows))
+		})
+})
+// 標籤路由
+router.get("/search/port", function (req, res) {
+	conn.query("select * from articleinfo where articleTitle LIKE '%大港開唱%'",
+		[], function (err, rows) {
 			if (err) {
 				console.log(JSON.stringify(err))
 			}
@@ -123,7 +133,7 @@ router.post("/upload", function (req, res) {
 	var req = req.body
 	console.log(req.title)
 	conn.query('insert into articleInfo (userId,articleTitle,articleContent,articleTime,articleFile)values ((SELECT userId FROM userinfo WHERE userAccount="abc123"),?,?,?,?)',
-		[req.title, req.content, "2021-04-24", req.image], function (err, rows) {
+		[req.title, req.content, new Date(), req.image], function (err, rows) {
 			if (err) {
 				console.log(JSON.stringify(err));
 				return;
@@ -150,7 +160,7 @@ var upload = multer({
 	storage: myStorage, // 設置 storage
 });
 
-router.post('/upload/file', upload.array('file',3), function (req, res, next) {
+router.post('/upload/file', upload.array('file', 3), function (req, res, next) {
 	res.send("上傳成功");
 });
 

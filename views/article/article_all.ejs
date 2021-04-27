@@ -20,13 +20,17 @@
 <body>
     <%-include ("../nav.ejs")%>
         <!-- 已解決:時間格式處理=>放在component裡  用computed去改  -->
-        <!-- 待解決 {{showDate[0]}}  -->
+        <!-- 待解決 {{showDate[0]}}  標籤   -->
         <div>
-            <img src="../../image/article/article1.jpg" alt="" class="banner" style="object-fit: cover;">
-            <p class="title">參戰心得列表</p>
+            <img src="../../image/banner/article.jpg" alt="" class="banner" style="object-fit: cover;">
+            <p class="title ">參戰心得列表</p>
         </div>
         <div class="wrapper row3" id="main">
             <main class="hoc container clear">
+                <div style="padding-left:10px;">
+                    <a href="" class="tags" v-on:click="portHandler">大港開唱</a>
+                    <a href="" class="tags">覺醒音樂祭</a>
+                </div>
                 <!-- 搜尋欄 -->
                 <div class="float-right mb-3 mr-4">
                     <input type="text" id="search_input" class="form_input" style="background-color: var(--color4);"
@@ -37,14 +41,16 @@
 
                 <ul class="nospace group overview" id="itemContainer">
                     <!-- <articleitem v-bind:item="article" v-for="(article,idx) in articleList"></articleitem> -->
-                    <articleitem v-bind:item="article" v-for="(article,idx) in filteredArticles"></articleitem>
+                    <articleitem id="allArticle"v-bind:item="article" v-for="(article,index) in filteredArticles"></articleitem>
 
                 </ul>
 
                 <div class="text-center">
                     <% for (i=1;i<=last_page;i++){ %>
                         <a href="/article/<%= i %>" class="text-center">
-                            <button class="btn_page"><%= i %></button>
+                            <button class="btn_page">
+                                <%= i %>
+                            </button>
                         </a>
                         <% } %>
                 </div>
@@ -59,8 +65,9 @@
             <script type="text/x-template" id="article">
                 <li class="one_third searchable">
                     <figure>
-                        <a :href="'/article/item/'+item.articleId"><img
-                                :src="'../../image/upload/article/'+item.articleFile" alt=""
+                        <a :href="'/article/item/'+item.articleId">
+                            <img v-if="item.articleFile"
+                             :src="'../../image/upload/article/'+item.articleFile" alt=""
                                 class="arc_pic"></a>
                         <figcaption>
                             <h6 class="heading"><b>{{item.articleTitle}}</b></h6>
@@ -72,18 +79,12 @@
             <script>
                 var no = location.href.split('/');
                 var index = no[no.length - 1];
-                console.log(index)
                 Vue.component('articleitem', { //自訂元素的名稱
                     props: ['item'], //填上上面取名的接口名稱
                     template: '#article',
-                    mounted: function () {
-                        $.get("/article/data/" + index, function (e) {
-                            vueMain.articleList = JSON.parse(e)[0];
-                        })
-                    },
+
                     computed: {
                         showDate: function () {
-                            // const List = this.articleList.map(item => Object.values(item)[4]); 
                             const List = vueMain.articleList.map(item => {
                                 var d = new Date(Object.values(item)[4])
                                 var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0");
@@ -99,32 +100,38 @@
                 var vueMain = new Vue({
                     el: "#main",
                     data: {
-                        // message: "OK",
-                        articleList: [{}],
+                        articleList: [],
                         search_text: "",
-
+                    },
+                    mounted: function () {
+                        $.get("/article/data/" + index, function (e) {
+                            vueMain.articleList = JSON.parse(e)[0];
+                        })
                     },
                     // 函式
                     methods: {
                         searchHandler: function () {
-                            var data = {
-                                search_text: this.search_text
-                            }
-                            $.ajax({
-                                url: "/article/search",
-                                type: "POST",
-                                data: data,
-                            }).then(function (res) {
-                                console.log(res);
-                                console.log("44");
-                                // this.articleList=res;
-                                $.post("/article/search", function (e) {
-                                    vueMain.articleList = res;
-                                    console.log(vueMain.articleList)
-                                })
-                            }).catch(err => console.log(err.response))
+                            // var data = {
+                            //     search_text: this.search_text
+                            // }
+                            // $.ajax({
+                            //     url: "/article/search",
+                            //     type: "POST",
+                            //     data: data,
+                            // }).then(function (res) {
+                            //     // this.articleList=res;
+                            //     $.post("/article/search", function (e) {
+                            //         vueMain.articleList = res;
+                            //         console.log(vueMain.articleList)
+                            //     })
+                            // }).catch(err => console.log(err.response))
                         },
-                        fasterSearch() {
+                        portHandler: function () {
+                            console.log("a")
+                            $.get("/article/search/port", function (e) {
+                                this.articleList = JSON.parse(e)[0];
+                                // alert(e)
+                            })
                         }
                     },
                     computed: {
@@ -134,7 +141,6 @@
                             if (!search_text) {
                                 return articles_array;
                             }
-                            search_text = search_text.trim().toLowerCase();
                             articles_array = articles_array.filter(function (item) {
                                 if (item.articleContent.indexOf(search_text) !== -1) {
                                     return item;
@@ -142,17 +148,21 @@
                             })
                             // Return an array with the filtered data.
                             return articles_array;
+
+                        }, filteredPort: function () {
+                            var articles_array = this.articleList,
+                                // if (!search_text) {
+                                //     return articles_array;
+                                // }
+                                articles_array = articles_array.filter(function (item) {
+                                    if (item.articleContent.indexOf("大港開唱") !== -1) {
+                                        return item;
+                                    }
+                                })
+                            // Return an array with the filtered data.
+                            return articles_array;
                         }
                     }
-                })
-                function downloadList() {
-                    $.get("/article/data/" + index, function (e) {
-                        vueMain.articleList = JSON.parse(e);
-                    })
-                }
-
-                $(document).ready(function () {
-                    downloadList();
                 })
 
             </script>

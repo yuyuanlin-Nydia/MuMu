@@ -20,74 +20,76 @@
     <%-include ("../nav.ejs")%>
         <!-- 已解決:內容換行符號 時間顯示處理 最後一篇 下一篇連結消失 發佈留言-->
 
-
-        <!-- 旁邊一直出現錯誤訊息  但可以正常顯示  我要一個一個宣告嗎?還是放物件?但怎麼放 -->
         <!--  留言登入後可以編輯自己的訊息-->
+        <!--  沒留言要登入-->
 
         <div>
             <img src="../../image/article/article2.png" alt="" class="banner" style="object-fit: cover;">
-            <p class="title">參戰心得</p>
+            <p class="title">參戰心得2</p>
         </div>
 
-        <div class="box" id="main">
-            {{article}}
-            <!-- 標題/時間/PO文者 -->
-            <div class="d-flex justify-content-between">
-                <p class="sub_title">{{article.articleTitle}}</p>
+        <div id="main">
 
-                <div>
-                    <img class="head_img " :src="'../../image/upload/user/'+article.userFile" alt="">
-                    <span>{{article.lastName}}{{article.firstName}}</span>
-                </div>
-            </div>
-            <p>{{showDate}}</p>
-            <br>
-            <br>
+            <div class="box">
+                <!-- 標題/時間/PO文者 -->
+                <div class="d-flex justify-content-between">
+                    <p class="sub_title">{{article.articleTitle}}</p>
 
-            <!-- 文章內容 -->
-            <!-- 為了解決換行 用computed -->
-            <p v-html="lineBreak">{{lineBreak}}</p>
-            <!-- 文章圖片 -->
-            <img :src="'../../image/upload/article/'+article.articleFile" class="event_pic" alt="">
-            <!-- 留言區 -->
-            <br><br><br><br>
-            <p class="sub_title">留言</p>
-            <div class="ml-5">
-                <p class="msg_no">{{content[2][0].COUNT}}則留言</p>
-            </div>
-            <!-- 可以留言的區塊 -->
-            <div class="d-flex">
-                <img :src="'../../image/upload/user/'+user.userFile" alt="" class="head_img mr-3">
-                <div class="bg-light d">
-                    <textarea v-model="comment_text" name="comment_text" v-model="comment_text" class="form_input"
-                        placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
-                    <button class="btn_grey" v-on:click="submitHandler">發佈</button>
-                </div>
-            </div>
-            <!-- 別人的留言 -->
-            <div class="msg_sec">
-                <div class="d-flex align-items-center m-3" v-for="(item,index) in comment">
-                    <img :src="'../../image/upload/user/'+item.userFile" alt="" class="head_img mr-3">
                     <div>
-                        <p>
-                            <span class="text-primary">{{item.userAccount}}</span>
-                            <span>發表於</span>
-                            <span class=text-muted>{{showCommentDate[index]}}</span>
-                        </p>
-                        <p>{{item.commentContent}}</p>
+                        <img v-if="article.userFile" class="head_img " :src="'../../image/upload/user/'+article.userFile" alt="">
+                        <span>{{article.lastName}}{{article.firstName}}</span>
+                    </div>
+                </div>
+                <p>{{showDate}}</p>
+                <br>
+                <br>
+
+                <!-- 文章內容 -->
+                <!-- 為了解決換行 用computed -->
+                <p v-if="article.articleContent" v-html="lineBreak"></p>
+                <!-- 文章圖片 -->
+                <!-- 若沒加v-if 圖片正常顯示 但log會有錯誤 404 not found -->
+                <img v-if="article.articleFile" :src="'../../image/upload/article/'+article.articleFile" class="event_pic" alt="">
+                <!-- 留言區 -->
+                <br><br><br><br>
+                <p class="sub_title">留言</p>
+                <div class="ml-5">
+                    <p class="msg_no">{{commentNo}}則留言</p>
+                </div>
+                <!-- 可以留言的區塊 -->
+                <div class="d-flex">
+                    <img v-if="user.userFile" :src="'../../image/upload/user/'+user.userFile" alt="" class="head_img mr-3">
+                    <div class="bg-light d">
+                        <textarea v-model="comment_text" name="comment_text" v-model="comment_text" class="form_input"
+                            placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
+                        <button class="btn_grey" v-on:click="submitHandler">發佈</button>
+                    </div>
+                </div>
+
+                <!-- 別人的留言 -->
+                <div class="msg_sec">
+                    <div class="d-flex align-items-center m-3" v-for="(item,index) in comment">
+                        <img :src="'../../image/upload/user/'+item.userFile" alt="" class="head_img mr-3">
+                        <div>
+                            <p>
+                                <span class="text-primary">{{item.userAccount}}</span>
+                                <span>發表於</span>
+                                <span class=text-muted>{{showCommentDate[index]}}</span>
+                            </p>
+                            <p>{{item.commentContent}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <ul class="d-flex justify-content-center">
+                <li class="m-5"><a :href="'/article/item/'+index_last" id="last_arc"><i
+                            class="fas fa-angle-left"></i>上一篇</a> </li>
+                <li class="m-5"><a href="/article/1">回列表</a> </li>
+                <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
+                            class="fas fa-angle-right"></i></a> </li>
+            </ul>
         </div>
-        <ul class="d-flex justify-content-center">
-            <li class="m-5"><a :href="'/article/item/'+index_last" id="last_arc"><i
-                        class="fas fa-angle-left"></i>上一篇</a> </li>
-            <li class="m-5"><a href="/article/1">回列表</a> </li>
-            <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
-                        class="fas fa-angle-right"></i></a> </li>
-        </ul>
         </div>
-
         <%-include ("../footer.ejs")%>
 </body>
 
@@ -106,22 +108,21 @@
         }
     })
     // 重整畫面=>輸入評論後
-    function refreshPage() {
-        $.get("/article/item/data/" + index, function (e) {
-            // 這邊用this會失敗
-            vueMain.content = JSON.parse(e);
-            vueMain.index_last = vueMain.content[0][0].articleId - 1;
-            vueMain.index_next = vueMain.content[0][0].articleId + 1;
-            vueMain.comment_text = '';
-        })
-    }
+    // function refreshPage() {
+    //     $.get("/article/item/data/" + index, function (e) {
+    //         // 這邊用this會失敗
+    //         vueMain.content = JSON.parse(e);
+    //         // vueMain.index_last = vueMain.content[0][0].articleId - 1;
+    //         // vueMain.index_next = vueMain.content[0][0].articleId + 1;
+    //         vueMain.comment_text = '';
+    //     })
+    // }
     var vueMain = new Vue({
         el: "#main",
         data: {
-            content: [{
-
-            }],
-            article: [{
+            content: {
+            },
+            article: {
                 articleId: 1,
                 articleTitle: "",
                 articleContent: "",
@@ -130,34 +131,34 @@
                 firstName: "",
                 lastName: "",
                 userFile: ""
-            }],
+            },
             index_last: 0,
             index_next: 0,
             comment_text: '',
-            comment: [{
-                commentContent: "",
-                commentTime: "",
-                userAccount: "",
-                user: ""
-            }],
-
-
+            commentNo:0,
+            comment: [],
             maxArticle: 0,
-            user:''
+            user: ''
         },
-        created: function () {
+        beforeMount: function () {
             var x = $.get("/article/item/data/" + index, function (e) {
                 // 這邊用this會失敗
                 vueMain.content = JSON.parse(e);
                 vueMain.index_last = vueMain.content[0][0].articleId - 1; //上一篇
                 vueMain.index_next = vueMain.content[0][0].articleId + 1; // 下一篇
-                vueMain.article = vueMain.content[0][0];
+                vueMain.article = JSON.parse(e)[0][0];
                 vueMain.comment = vueMain.content[1];
+                vueMain.commentNo = vueMain.content[2][0].COUNT;
                 vueMain.user = vueMain.content[3][0];
                 vueMain.maxArticle = vueMain.content[4][0].COUNT //計算最大篇數 消失下一篇按鈕
             })
-
         },
+        // updated:function(){
+        //     var x = $.get("/article/item/data/" + index, function (e) {
+        //         // 這邊用this會失敗
+        //         vueMain.content = JSON.parse(e);
+        //     })
+        // },
         methods: {
             submitHandler: function () {
                 var newComment = {
@@ -168,15 +169,19 @@
                     type: "post",
                     url: "/article/comment",
                     data: newComment
-                }).then(function (e) {
-                    refreshPage();
-
+                }).then(function () {
+                    $.get("/article/item/data/" + index, function (e) {
+                        this.content = JSON.parse(e);
+                        this.comment_text = '';
+                        window.location.reload();//要重整畫面才會出現 暴力方法
+                    })
                     console.log("a")
                 })
             },
         },
         computed: {
             lineBreak: function () {
+                console.log('aaa',this.article.articleContent) //會執行兩次  一次undefined 一次正常
                 return this.article.articleContent.replace(/\n|\r\n/g, "<br />")
             },
             //修改日期格式
@@ -188,16 +193,19 @@
             },
             showCommentDate: function () {
                 // const List = this.articleList.map(item => Object.values(item)[4]); 
-                const List = vueMain.content[1].map(item => {
+                const List = vueMain.comment.map(item => {
                     var d = new Date(Object.values(item)[1])
                     var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0") + ' ' + d.getHours().toString().padStart(2, "0") + ':' + d.getMinutes().toString().padStart(2, "0") + ':' + d.getSeconds().toString().padStart(2, "0");
                     times.toString()
                     return times
                 }); // 0 表示第一個屬性值
                 return List
-
             },
+        },
+        watch:{
+         
         }
+
 
 
     })
