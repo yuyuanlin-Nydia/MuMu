@@ -230,11 +230,14 @@ a {
         height: 50%;
     }
     #main_box {
-        background-size: 110% 150%;
+        background: url(../image/login&logout/bgs.png);
+        background-size: 100% 100%;
         background-position: center;
     }
     #main_boxC {
-        background-size: 110% 150%;
+        background: url(../image/login&logout/bg2s.png);
+        background-size: 100% 100%;
+        /* background-size: 110% 150%; */
         background-position: center;
     }
     .main_content button {
@@ -252,11 +255,15 @@ a {
     }
    
     #main_box {
-        background-size: 130% 150%;
+        background: url(../image/login&logout/bgs.png);
+        background-size: 100% 100%;
+        /* background-size: 130% 150%; */
         background-position: center;
     }
     #main_boxC {
-        background-size: 130% 150%;
+        background: url(../image/login&logout/bg2s.png);
+        background-size: 100% 100%;
+        /* background-size: 130% 150%; */
         background-position: center;
     }
 }

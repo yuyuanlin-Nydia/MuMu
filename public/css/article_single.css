@@ -1,51 +1,34 @@
-.box {
+.container {
     border-top: solid 3px var(--color1);
     width: 60%;
-    margin: 30px auto ;
-    padding-top: 50px;
+    margin: 100px auto 50px auto;
+    padding: 60px;
 }
 
-.event_pic{
-    width: 300px;
-    height: auto;
-    object-fit: cover;
+.picbox {
+    width: 80%;
 }
-.banner {
+
+.picbox img {
     width: 100%;
-    height: 250px;
-    background-color: tomato;
 }
 
-.head_img {
-    vertical-align: center;
-    width: 50px !important;
-    height: 50px !important;
+.sitetitle {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: -50px;
 }
 
-.msg_no {
-    font-size: 24px;
-    padding: 10px;
-    border-bottom: 2px solid var(--color4);
-    margin-bottom: 20px;
+.btns {
+    float: right;
+    margin: 60px;
 }
 
-.msg_sec {
-    padding: 20px;
+.btn a {
+    text-decoration: none;
+    color: black;
 }
 
-.msg_sec>div>div>p {
-    line-height: 30px;
-}
-
-.btn_grey {
-    background-color: var(--color4);
-    padding: 10px;
-}
-
-textarea {
-    padding: 15px;
-    font-size: 18px;
-}
 @media screen and (max-width:750px) {
     .container {
         border: none;

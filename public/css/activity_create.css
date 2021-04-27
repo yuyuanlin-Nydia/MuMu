@@ -1,0 +1,14 @@
+@import url("mutual.css");
+
+body{
+    background-color: var(--color4);
+}
+.mynavbar{
+    background-color: var(--color5);
+}
+.container{
+    margin:  5rem 0;
+}
+textarea {
+    height: 380px;
+}

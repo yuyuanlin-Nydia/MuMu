@@ -1,163 +1,37 @@
-    .xyrotate{
-        animation-duration: 300ms;
-        animation-name: lrmove;
-        animation-iteration-count:infinite;
-    }
-    @keyframes lrmove {
-        0% {
-        transform: rotate(0deg);        
-        }
-        25% {
-            transform: rotate(1deg);
-        }
-        50% {
-            transform: rotate(0deg);
-        }
-        75% {
-            transform: rotate(-1deg);
-        }
-        100% {
-            transform: rotate(0deg);
-        }
 
-        
-    }
-    a{
-        text-decoration: none !important;
-    }
-    .card_img {
-        width: 100%;
-        object-fit: cover;
-        height:150px;
-        /* 為了抵銷bootstrap的設定 */
-        padding: 0% !important;
-    }
+.banner{
+    width: 100vw;
+    height: 200px;
+    margin: 0;
+}
 
-    .band_img {
-        width: 150px;
-        height: 150px;
-        clip-path: circle(50% at 50% 50%);
+.title{
+    color: var(--color5);
+    position: relative;
+    top: -100px;
+    left: 100px;
+   
+}
+
+#banner_box{
+    margin-bottom: -45px
+}
+
+/* 收藏tab */
+#myTab  {
+    color:black;
+}
+
+/* #home-tab::after{
+    content:"!!!!!!!!"
+} */
+
+/* RWD */
+
+@media screen and (max-width: 1300px){
+    div .profile-img{
+        margin-left: 0;
     }
 
-    .acard{
-        border: 1px solid lightgray;
-        /* 為了抵銷bootstrap的設定 */
-        padding: 0% !important;
-        box-shadow: 5px 5px 20px grey;
-        background-color: white;
-
-    }
-    .acard:hover {
-        box-shadow: 5px 5px 20px rgb(68, 68, 68);
-        
-    }
-    @media (max-width: 700px) {
-        
-    }
-    .module_all{
-        width: 100vw;
-        height: 100vh;
-        display: none;
-        align-items: center;
-        background-color: rgba(0, 0, 0,0.7);
-        position: absolute;
-    }
-    .module_box{
-        width: 40%;
-        height: 70%;
-        margin: 0 auto;
-        background-color: white;
-        border-radius: 20px;
-        position: relative;
-        
-    }
-    .module_head{
-        text-align: center;
-        background-color: wheat; 
-        padding: 10px;
-        border-radius:20px 20px 0px 0px;
-    }
-    .module_body{
-        text-align: left;
-        padding: 10px 20px;
-    }
-    .module_body div{
-        padding:10px 20px;
-        height: 50px;
-    }
-    .module_body>div:hover{
-        background-color: rgb(223, 223, 223);
-        border-radius: 10px;
-    }
-    .module_footer{
-        position: absolute;
-        bottom:10%;
-        width: 100%;
-        text-align: center;
-
-    }
-    .plus_pic{
-        width: 50px;
-
-        object-fit: cover;
-        vertical-align: middle;
-    }
-    .module_body>div:first-of-type>p{
-        margin-left: 10px;
-    }
-    .module_body>div:first-of-type{
-        cursor: pointer;
-        line-height:30px ;
-    }
-    .module_body input{
-        background-color: transparent;
-        width: 40%;
-        border-bottom: 1px solid black;
-    }
-    .module_body input:focus{
-        padding: 0px;
-    }
-
-    @media (max-width: 900px) {
-        .module_box{
-            width: 50%;
-            height: 70%;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 20px;
-            position: relative;
-            
-        }
-        .module_body>div:first-of-type>input{
-            width: 50%;
-            background-color: transparent;
-
-        }
-        .plus_pic{
-            display: none;
-        }
-    }
-    @media (max-width: 600px) {
-        .module_box{
-            width: 80%;
-            height: 70%;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 20px;
-            position: relative;
-            
-        }
-        .acard{
-            width: 40% !important;
-
-            
-        }
-        .card_img {
-            /* height:150px; */
-            object-fit: cover;
-            /* 為了抵銷bootstrap的設定 */
-            padding: 0% !important;
-        }    
-        
+}
     
-    }

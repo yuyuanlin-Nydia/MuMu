@@ -19,14 +19,23 @@ var logRouter=require("./routes/log");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 // 以 express-session 管理狀態資訊
 app.use(session({
     secret: 'secretKey',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+
+    cookie:{
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        maxAge: 10 * 60*1000
+    }
 }));
+
+
 // Web 伺服器的靜態檔案置於 public 資料夾
 app.use( express.static( "public" ) );
 app.set('view engine', 'ejs');
@@ -44,20 +53,10 @@ app.use("/company",companyRouter);
 app.use("/cart",cartRouter);
 app.use("/log",logRouter);
 
-
-app.use(session({
-	secret: "",
-    resave:true,
-    saveUninitialized: true,
-
-    cookie:{
-        path:'/',
-        httpOnly:true,
-        secure:false,
-        maxAge: 5*1000
-    }
-}))
-
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+})
 
 
 

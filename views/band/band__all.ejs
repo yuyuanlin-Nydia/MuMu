@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="description" content="">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet"> -->
+    <link href="../css/bandall.css" rel="stylesheet">
+</head>
+
+<body>
+    <%-include ("../nav.ejs")%>
+
+        <% const nameList=data.map(item => Object.values(item)[1]);  %>
+            <% const imgList=data.map(item => Object.values(item)[3]);  %>
+
+                <p id="heading">樂團介紹</p>
+                <div class="wrapper grid">
+                    <% for(item in nameList){%>
+                        <div class="item">
+                            <img src="/image/band/<%- imgList[item] %>" alt="">
+                            <p class="bandName">
+                                <%- nameList[item] %>
+                            </p>
+                        </div>
+                        <% } %>
+
+
+
+                </div>
+
+
+
+                <%-include ("../footer.ejs")%>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

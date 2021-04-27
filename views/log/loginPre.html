@@ -32,11 +32,11 @@
 
         <div class="main_content">
             <ul class="tab-group">
-                <li id="ologin"><a href="/log/login">
+                <li id="ologin" class="man1"><a href="/log/login">
                         <p><img src="../image/login&logout/man-1.png" alt="ordinary-login">
                             <img src="../image/login&logout/man-1y.png" alt="ordinary-login"></p> 一般會員
                     </a></li>
-                <li id="clogin"><a href="/log/companyLogin">
+                <li id="clogin" class="man2"><a href="/log/companyLogin">
                         <p><img src="../image/login&logout/man-3.png" alt="company-login">
                             <img src="../image/login&logout/man-3y.png" alt="company-login"></p>企業會員
                     </a></li>
@@ -48,17 +48,27 @@
         <script>
             $().ready(function () {
 
-                // console.log(123);
-                $('a p').mouseover(function () {
-                   $('a img:nth-of-type(1)').css('display', 'none')
-                   $('a img:nth-of-type(2)').css('display', 'inline')
+                // 如何更漂亮寫法?
+                $('.man1').mouseover(function () {
+                   $('.man1 > a img:nth-of-type(1)').css('display', 'none')
+                   $('.man1 > a img:nth-of-type(2)').css('display', 'inline')
                 })
                 
-                $('a p').mouseout(function () {
-                    $('a img:nth-of-type(1)').css('display','inline' )
-                   $('a img:nth-of-type(2)').css('display', 'none')
+                $('.man1').mouseout(function () {
+                    $('.man1 >a  img:nth-of-type(1)').css('display','inline' )
+                   $('.man1 >a  img:nth-of-type(2)').css('display', 'none')
                 });
 
+
+                $('.man2').mouseover(function () {
+                   $('.man2 > a img:nth-of-type(1)').css('display', 'none')
+                   $('.man2 > a img:nth-of-type(2)').css('display', 'inline')
+                })
+                
+                $('.man2').mouseout(function () {
+                    $('.man2 >a  img:nth-of-type(1)').css('display','inline' )
+                   $('.man2 >a  img:nth-of-type(2)').css('display', 'none')
+                });
             })
         </script>
 

@@ -45,10 +45,10 @@
                             <!-- 登入 -->
 
                             <li>
-                                <br><input type="text" placeholder="帳號" name="username" class="username" required>
+                                <br><input type="text" placeholder="帳號" name="userAccountL" class="username" required>
                             </li>
                             <li>
-                                <br><input type="password" placeholder="密碼" name="password" class="password" required>
+                                <br><input type="password" placeholder="密碼" name="userPasswordL" class="password" required>
                             </li>
                             <br>
                             <li class="btm_text"> <input type="checkbox"> 記住我</li>
@@ -102,6 +102,10 @@
 
         </form>
 
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
         <script>
             // 登入註冊切換
             $('.tab a').on('click', function (e) {
@@ -119,7 +123,7 @@
 
             });
 
-            // 監聽click事件
+            // 註冊
             $('#signupSub').on('click',function(){
                 // 序列化表單內容到字串
                 //console.log($('#loginForm').serializeArray());
@@ -131,16 +135,17 @@
            
 
             //ajax請求
+            // success沒反應
             $.ajax({
-                url: "/log/login",
+                url: "/log/signup",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSONData,
                 success: function(res) {
                     var res = JSON.parse(res)
                     if(res.errno === 1) {
-                        alert("註冊成功!")
-                        location.reload("/")
+                        alert("註冊成功，請登入!")
+                        location.href = '/log'
                     } else if(res.errno === 0) {
                         alert("註冊失敗!")
                     }
@@ -160,7 +165,38 @@
                 return JSON.stringify(values)
             }
 
-            
+            // 登入
+            $('#loginSub').on('click', function() {
+            var data = $('#loginForm').serializeArray()
+            JSONData = serializeToJSON(data)
+                     
+            $.ajax({
+                url: "/log/login",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSONData,
+                success: function(res) {
+                    var res = JSON.parse(res)
+                    if(res.errno === 1) {
+                        alert("登入成功!")
+                        location.href = '/'
+                    } else if(res.errno === 0) {
+                        alert("登入失敗!")
+                    }
+                },
+                error: function() {
+                    alert("系統錯誤!")
+                }
+            })
+        })
+
+        function serializeToJSON(data) {
+            var values = {};
+            for(index in data){
+                values[data[index].name] = data[index].value;
+            }
+            return JSON.stringify(values)
+        }
         </script>
 
 </body>

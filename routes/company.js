@@ -1,10 +1,11 @@
 var express = require("express");
 var router = express.Router();
 var conn = require("../db");
+const multer = require('multer');
 
 router.get("/", function (req, res) {
-	
-	conn.query('select activityFile, companyName, activityTitle, sellDate, performDate from activityinfo inner join companyinfo on activityinfo.companyid = companyinfo.companyid',
+	// select activityFile, companyName, activityTitle, sellDate, performDate from companyinfo inner join activityinfo on companyinfo.companyid = activityinfo.companyid where companyinfo.companyid = 3;
+	conn.query('select * from companyinfo inner join activityinfo on companyinfo.companyid = activityinfo.companyid where companyinfo.companyid = 3;',
 		'',
 		function (err, rows) {
 			if (err) {
@@ -12,35 +13,46 @@ router.get("/", function (req, res) {
 				return;
 			}
 			// res.send(JSON.stringify(rows));
-			res.render('./company/company_mainPage.html')
+			res.render('./company/company_mainPage.ejs', {
+				// data: JSON.stringify(rows)
+				data: rows
+			});
 		}
 	);
 
 })
-router.get("/", function(req, res) {
-    res.redirect("/1") //如果後面沒有指定數字 就到編號1的文章
-})
 
-// 企業會員-投稿
-router.get("/:id", function(req, res) {
-    conn.connect(function(err) {
-            // res.send(JSON.stringify(err));
-        })
-        //傳達指令
-    conn.query("select activityFile, companyName, activityTitle, sellDate, performDate from activityinfo inner join companyinfo on activityinfo.companyid = companyinfo.companyid WHERE activityinfo.companyid = ?", [req.params.id], function(err, result) {
-            res.send(JSON.stringify(result));
-        })
 
-})
-// 企業會員-編輯
-// router.put("/", function (req, res) {
-// 	conn.query('update companyinfo set areaId=? where companyId=?',
-// 	[],
-// 	function(err,result){
-// 		res.send('row updated')
-// 	})
+
+router.get("/edit", function (req, res) {
+	conn.query('select * from companyinfo inner join activityinfo on companyinfo.companyid = activityinfo.companyid where companyinfo.companyid = 3;',
+		'',
+		function (err, rows) {
+			if (err) {
+				console.log(JSON.stringify(err));
+				return;
+			}
+			// res.send(JSON.stringify(rows));
+			res.render('./company/company_edit.ejs', {
+				// data: JSON.stringify(rows)
+				data: rows
+			});
+		}
+	);
+	// res.render('./company/company_edit.ejs')
+
+});
+router.get("/myArticle", function (req, res) {
 	
+	res.redirect('/company')
+
+});
+// router.post("/edit", function (req, res) {
+	
+	
+
 // });
+
 
 
 module.exports = router;

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個人頁面_收藏</title>
     <link rel="stylesheet" href="../css/user_mainPage.css">
+    <link rel="stylesheet" href="../css/user_myFavorite.css">
     <link rel="stylesheet" href="../css/mutual.css">
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
     <script src="../js/jquery.js"></script>
@@ -38,8 +39,12 @@
 
 <body>
     <!-- 導覽列 開始 -->
-   <%-include("../nav.ejs")%>
+    <%-include("../nav.ejs")%>
         <!-- 導覽列 結束 -->
+        <div id="banner_box">
+            <img src="../../image/user/member.png" alt="banner" class="banner" >
+            <p class="title">會員管理</p>
+        </div>
         <!-- <div class="container "> -->
         <form method="post">
             <div class="row">
@@ -122,7 +127,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="d-flex flex-wrap">

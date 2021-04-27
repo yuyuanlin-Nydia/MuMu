@@ -5,16 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>活動資訊</title>
 
-    <link rel="stylesheet" href="../css/activity_all.css">
-    <!-- <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css"> -->
-    <!-- <script src="../js/Bootstrap/bootstrap.js"></script> -->
-    <script src="../js/jquery.js"></script>
+    <link rel="stylesheet" href="../../css/activity_all.css">
+    <!-- <link rel="stylesheet" href="../../css/Bootstrap/bootstrap.css"> -->
+    <!-- <script src="../../js/Bootstrap/bootstrap.js"></script> -->
+    <script src="../../js/jquery.js"></script>
 
 </head>
 
 <body class="campaignContent_body">
+    <!-- <%-include("../nav.ejs")%> -->
     <!-- 左側的div--start -->
     <div class="left_div">
         <h5 class="sub_title">活動資訊</h1>
@@ -29,22 +30,17 @@
                 <p>20:00</p>
 
                 <p>地點</p>
-                <p>後台BackStage Cafe'</p>
+                <p><%= data[0].activityLocation %> </p>
 
                 <p>地址</p>
-                <p>台北市大安區羅斯福路4段1號台大綜合體育館2樓206室及214室</p>
+                <p><%= data[0].city+data[0].town+data[0].activityAddress %> </p>
             </div>
             <h5 class="sub_title">活動票券</h1>
                 <div class="table_con">
-                    <p>單人票</p>
-                    <p>TWD$600</p>
-
-                    <p>雙人票</p>
-                    <p>TWD$550</p>
-
-                    <p>四人票</p>
-                    <p>TWD$500</p>
-
+                    <% data.forEach((item,idx)=>{%>
+                        <p><%=item.type %> </p>
+                        <p><%= "TWD$"+item.unitPrice %></p>
+                    <%}) %>
                 </div>
 
     </div>
@@ -52,7 +48,7 @@
 
 
     <!-- 活動圖片--start -->
-    <div class="content_img_div">
+    <div class="content_img_div" style=" background-image: url(../../image/activity/kktix_banner______1_large.png);">
         <div class="back_icon"><a href="/activity">####</a></div>
         <div class="img_icon_top">
             <div>a</div>
@@ -78,6 +74,8 @@
 
     <!-- 活動內容--start -->
     <div class="content_text_div">
+
+        <h5 class="title"><%= data[0].activityTitle %> </h1>
 
         <p><%= data[0].activityContent %> 
         </p>
@@ -119,6 +117,7 @@
         </iframe>
     </div>
     <!-- 活動內容--end -->
+    <!-- <%-include("../footer.ejs")%> -->
 
     <script>
         $(function () {
@@ -132,6 +131,7 @@
 
         
     </script>
+     
 
 </body>
 

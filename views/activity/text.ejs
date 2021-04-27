@@ -40,7 +40,7 @@
 
     <!-- 導覽列 結束 -->
     <div class="container ">
-        <form method="post">
+        <form method="">
             <div class="row justify-content-center ">
                 <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
                 <div class="d-none d-md-block col-md-3 emp-profile mr-5">
@@ -59,13 +59,10 @@
                     <div class="col-md-12">
                         <div class="profile-work ">
                             <!-- 前面放icon -->
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket"
-                                    class="user_menu">我的票券</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/myArticle"
-                                    class="user_menu">我的投稿</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/favorite"
-                                    class="user_menu">收藏&追蹤</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/profile" class="user_menu">編輯資料</a><br />
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu">我的票券</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">我的投稿</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu">收藏&追蹤</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu">編輯資料</a><br />
                             </div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登出</a></div>
                         </div>
@@ -79,12 +76,15 @@
                     <div class="d-flex pr-3">
                         <h4 class="title">我的投稿</h4>
                         <div class="ml-auto">
-                            <input type="submit" class="btn btn-outline-primary" name="btnAddArticle" value="發表文章" />
+                            <a href="/activity/create">
+                                <input type="button" class="btn btn-outline-primary" name="btnAddArticle"
+                                    value="發表文章" />
+                            </a>
                         </div>
                     </div>
 
                     <div class="col-md-12">
-                        <div class="d-flex flex-wrap mb-3 p-2 article_card">
+                        <!-- <div class="d-flex flex-wrap mb-3 p-2 article_card">
                             <div class="article_box col-md-12">
                                 <h5><b>所謂音樂祭 心得分享</b>
                                     <div class="float-right">
@@ -115,45 +115,50 @@
                             </div>
 
 
-                        </div>
-                        <div class="d-flex flex-wrap mb-3 p-2 article_card">
-                            <div class="article_box col-md-12">
-                                <h5><b>所謂音樂祭 心得分享</b>
-                                    <div class="float-right">
-                                        <span>
-                                            <button type="button" class="edit btn-sm btn-secondary"><i
-                                                    class="far fa-edit"></i></button>
-                                        </span>&nbsp;
-                                        <span>
-                                            <button type="button" class="delete btn-sm btn-secondary"><i
-                                                    class="far fa-trash-alt"></i></button>
-                                        </span>
+                        </div> -->
+                        <% data.forEach((item)=> { %>
+                            <div class="d-flex flex-wrap mb-3 p-2 article_card">
+                                <div class="article_box col-md-12">
+                                    <h5><b>
+                                            <%= item.activityTitle %>
+                                        </b>
+                                        <div class="float-right">
+                                                <span>
+                                                    <a href="/activity/edit/<%= item.activityId %>">
+                                                    <button type="button" class="edit btn-sm btn-secondary"><i
+                                                            class="far fa-edit"></i></button>
+                                                    </a>
+                                                </span>
+                                                <span>
+                                                    <button type="button" class="delete btn-sm btn-secondary"><i
+                                                            class="far fa-trash-alt"></i></button>
+                                                </span>
+                                                <input type="hidden" class="activityId" name="activityId" value=<%=item.activityId %>>
+                                                <input type="submit" class="del">
+                                        </div>
+                                </div>
+                                </h5>
+                                <div class=" d-flex col-md-12">
+                                    <div class=" col-md-4 ">
+                                        <img src="/image/user/op_01.jpg" alt="" class="article_img">
                                     </div>
-                            </div>
-                            </h5>
-                            <div class=" d-flex col-md-12">
-                                <div class=" col-md-4 ">
-                                    <img src="/image/user/op_01.jpg" alt="" class="article_img">
+                                    <div class="col-md-8 ">
+                                        <p class="article_content">
+                                            <%= item.activityContent %>
+                                        </p>
+                                        <a href="/activity/single/<%= item.activityId %>" class="float-right">看更多......</a>
+                                    </div>
                                 </div>
-                                <div class="col-md-8 ">
-                                    <p class="article_content">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Necessitatibus,
-                                        quae amet possimus earum explicabo magnam. Adipisci voluptate dicta mollitia
-                                        id, consectetur quibusdam corporis aspernatur esse ipsam, excepturi
-                                        reiciendis explicabo molestias?
-                                    </p>
-                                    <a href="" class="float-right">看更多......</a>
-                                </div>
+
+
                             </div>
+                            <% }) %>
+                                <div class="row">
 
+                                </div>
+                                <div class="row">
 
-                        </div>
-                        <div class="row">
-
-                        </div>
-                        <div class="row">
-
-                        </div>
+                                </div>
 
 
                     </div>
@@ -175,12 +180,42 @@
 
     <script>
         $(function () {
-            $('.delete').each(function (idx, elm) {
-                $(elm).on('click', function () {
-                    $('.article_card').eq(idx).remove();
-                    console.log(idx);
+            
+            // console.log($('.del').closest('form').find('.activityId')[1].value);
+            $('.del').click(function () {
+                var data = $(this).closest('.float-right').find('.activityId')[0].value;   
+                
+                var values = {};
+                values["activityId"] = data;
+                // alert(values.activityId);
+                JSONData = JSON.stringify(values);
+
+
+                $.ajax({
+                    url: "/activity/delete",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSONData,
+                    success: function (res) {
+                        var res = JSON.parse(res)
+                        if (res.errno === 1) {
+                            alert("更新成功!")
+                            // 回到會員頁
+                            location.href = `/activity/text`
+                        } else if (res.errno === 0) {
+                            alert("更新失敗!")
+                        }
+                    },
+                    error: function () {
+                        alert("系統錯誤!")
+                    }
                 })
-            })
+                
+
+            });
+
+           
+
         })
 
     </script>

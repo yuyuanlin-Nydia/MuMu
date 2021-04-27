@@ -5,23 +5,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>活動專區</title>
     <link rel="stylesheet" href="../plugin/zInput/zInput_default_stylesheet.css">
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/activity_all.css">
     <script src="../js/jquery.js"></script>
     <script src="../plugin/zInput/zInput.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
+    <style>
+        .campaign_top:nth-last-of-type(1){
+            padding: 10px 0;
+            height: 80px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .campaign_top>.btn_tea_radius{
+            padding:10px 15px;
+            border-radius:200%; 
+            border: 1px solid var(--color2);
+            background-color: var(--color5);
+            margin: 3px;
+        }
+        .campaign_top>.btn_tea_radius>a{
+            color:  var(--color2);
+        }
+    </style>
 </head>
 
 <body class="campaign_body">
+    <%-include("../nav.ejs")%>
     <!-- 左側的篩選列--start -->
     <div class="tag_div">
-        <form action="">
-
+        <form id="form" method="POST" action="">
+            <hr>
+            <div class="search_div">
+                <input type="text" name="search" class="form_input" style="background-color: var(--color4);"
+                    placeholder="Search">
+                <i class="fas fa-search btn_search"></i>
+                <!-- <input type="submit" id="submitBtn"> -->
+            </div>
+            
+            
             <label for=""></label>
             <div id="affected">
                 <input type="checkbox" name="check[]" title="全部">
@@ -39,7 +66,7 @@
     <div class="campaign_all">
         <div class="campaign_top">
             <span class="sub_title">検索結果</span>
-            <span>1〜10件(全83件)</span>
+            <span>1〜<%=nums_per_page%>件 (全 <%= total_nums  %> 件)</span>
         </div>
 
         <!-- <div class="campaign_item">
@@ -60,8 +87,8 @@
         <% data.forEach((item)=> { %>
             <div class="campaign_item">
                 <div class="campaign_img">
-                    <a href="/activity/<%= item.activityId %>">
-                        <img src="../image/campaign/_NEW_SerriniConcert_Poster_KKTIX_original.jpg" alt=""></a>
+                    <a href="/activity/single/<%= item.activityId %>">
+                        <img src="../../image/activity/kktix_banner______1_large.png" alt=""></a>
                 </div>
                 <div class="campaign_title">
                     <p>Mumu Company Niigata</p>
@@ -72,16 +99,25 @@
                         <%= item.sellDate %> ～ <%= item.performDate %>
                     </p>
                 </div>
-                <div class="campaign_btn"><a href="/activity/<%= item.activityId %>">〉</a></div>
+                <div class="campaign_btn"><a href="/activity/single/<%= item.activityId %>">〉</a></div>
 
             </div>
         <% }) %>
+        <div class="campaign_top">
+            <% for(var i = 1; i <= last_page; i++) { %>
+                <span class="btn_tea_radius"><a href="/activity/<%= i%>"><%= i%></a></span>
+            <% } %>
+
+        </div>
 
 
+
+        
 
 
     </div>
     <!-- 包所有活動的div--end -->
+    <%-include("../footer.ejs")%>
 
     <script>
         $(function () {
@@ -119,30 +155,50 @@
                     $('.tag_div_icon').removeClass('animation');
                 }
             })
+            
 
 
-            // var campaign_item = document.querySelectorAll('.campaign_item');
+            $('#submitBtn').click(function () {
+                //整理表單資料到變數
+                var data = $('#form').serializeArray()
+                JSONData = serializeToJSON(data)
+                // console.log(JSONData);
+                // alert(data[0].value)
+                // location.href = `/activity/${data[0].value}`
 
-            // $(window).on('load resize scroll', function () {
-            //     var scrollTop = document.documentElement.clientHeight;
+                $.ajax({
+                    url: "/activity/search",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSONData,
+                    success: function (res) {
+                        var res = JSON.parse(res)
+                        if (res.errno === 1) {
+                            // alert("更新成功!")
+                            // location.reload()
+                            location.href = `/activity/${data[0].value}`
+                        } else if (res.errno === 0) {
+                            alert("更新失敗!")
+                        }
+                    },
+                    error: function () {
+                        alert("系統錯誤!")
+                    }
+                })
 
-            //     campaign_item.forEach((elm, idx) => {
-            //         var itemTop = campaign_item[idx].getBoundingClientRect().top;
+            });
 
-            //         if (scrollTop + 25 > itemTop) {
-            //             $(campaign_item[idx]).css({
-            //                 'transform': 'translateY(0)',
-            //             });
-            //         } else {
-            //             $(campaign_item[idx]).css({
-            //                 'transform': '',
-            //             });
-            //         }
-            //     })
+            function serializeToJSON(data) {
+                var values = {};
+                for (index in data) {
+                    values[data[index].name] = data[index].value;
+                }
+                // console.log(values);
+                // typeof_values = object
+                return JSON.stringify(values)
+            }
+        })
 
-            // })
-
-        });
 
         $('#affected').zInput();//外掛的zInput
 
