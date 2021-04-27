@@ -1,52 +1,317 @@
 <!DOCTYPE html>
-<html class="no-js">
-
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Mu mu index</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="">
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../css/mutual.css">
-    <link rel="stylesheet" type="text/css" href="../css/assets/bootstrap.min.css">
-
-    <link rel="stylesheet" href="../css/assets/main.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/mutual.css">
+
+    <link rel="stylesheet" href="../css/index.css">
+
+    <title>首頁</title>
 </head>
 
 <body>
-    <!-- NAV -->
-    <%-include("./nav.ejs")%>
-    <button class="btn_tea2">eewew</button>
-    <div style="margin-top:100px;">
-       <%= data %> 
-    </div>
-    
-    <div id="latestNews">HIHI</div>
-
-
-    <%-include("./footer.ejs")%>
-           
-          
+    <!-- 導覽列 -->
+    <%-include ("nav.ejs")%>
 
 
 
+        <!-- 輪播 -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="../img/basic/02.jpg" alt="First slide">
+                    <div class="carousel-caption d-none d-md-block">
 
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/jquery.toast.js"></script>
-        <script>
+                        <button type="button" class="btngoshop btn btn-outline-light btn-lg ">購票去</button>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="../img/basic/03.jpg" alt="Second slide">
+                    <div class="carousel-caption d-none d-md-block">
 
-        </script>
+                        <button type="button" class="btngoshop btn btn-outline-light btn-lg ">購票去</button>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="../img/basic/04.jpg" alt="Third slide">
+                    <button type="button" class="btngoshop btn btn-outline-light btn-lg ">購票去</button>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <!-- 搜尋列 -->
+        <div class="searchbar">
+            <input type="text" class="form_input">
+            <i class="fa fa-search btn"></i>
+        </div>
+        <!-- 活動資訊 -->
+
+        <p class="title">活動資訊</p>
+        <div>
+            <table class="d-flex justify-content-center">
+                <!-- <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead> -->
+                <tbody>
+                    <% var activityT=JSON.parse(data)[0] %>
+                        <% activityT.forEach(element=> { %>
+                            <tr>
+                                <th scope="row"></th>
+                                <% let date=element.performDate %>
+                                    <td class="p-5">
+                                        <%= date.substring(0,4)+'年' + date.substring(5,7)+'月' +
+                                            date.substring(8,9)+'日'%>
+                                    </td>
+                                    <td class="p-5">
+                                        <h1 class="badge badge-secondary rounded-0">即將登場</h1>
+                                    </td>
+                                    <td class="p-5">
+                                        <%= element.activityTitle%>
+                                    </td>
+                            </tr>
+                            <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 樂團介紹 -->
 
 
+        <p class="title">樂團簡介</p>
+
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+
+                <% activityT.forEach(element=> { %>
+                    <div class="swiper-slide"><img src="../public/band1.png" alt=""></div>
+                    <% }); %>
+
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+        <!-- 活動投稿 -->
+
+        <p class="title">參戰心得</p>
+
+        <div class="live">
+            <div class="introimg">
+                <img src="./img/basic/02.jpg" alt="">
+            </div>
+            <div class="introp">
+
+                <p>
+                    千頭萬緒，
+                    我們像是剛從另一個平行時空，甦醒過來。
+                    眼睛睜開，
+                    發現我們都在這個城市中，
+                    讓孤獨能夠乘風破浪，
+                    帶迷惘四處遊玩，
+                    或許釋懷的不夠坦蕩，
+                    但還會肚子餓，
+                    就能對週遭保有期盼。
+                    於是我們發現好吃的好喝的，
+                    而最後，我們都愛上同一件事情或是同一家餐廳，
+                    站在同一處，我們都知道來時的路。
+                    下班回家，
+                    上班經過的地方，
+                    慢慢都有彼此的足跡。
+                    「在這座城市遇見了你。」
+                </p>
+
+            </div>
+
+            <div class="introsvg bordersvg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-chevron-compact-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z" />
+                </svg>
+            </div>
+            <div class="introimg">
+                <img src="./img/basic/02.jpg" alt="">
+            </div>
+            <div class="introp">
+                <p>
+                    千頭萬緒，
+                    我們像是剛從另一個平行時空，甦醒過來。
+                    眼睛睜開，
+                    發現我們都在這個城市中，
+                    讓孤獨能夠乘風破浪，
+                    帶迷惘四處遊玩，
+                    或許釋懷的不夠坦蕩，
+                    但還會肚子餓，
+                    就能對週遭保有期盼。
+                    於是我們發現好吃的好喝的，
+                    而最後，我們都愛上同一件事情或是同一家餐廳，
+                    站在同一處，我們都知道來時的路。
+                    下班回家，
+                    上班經過的地方，
+                    慢慢都有彼此的足跡。
+                    「在這座城市遇見了你。」
+                </p>
+            </div>
+            <div class="introsvg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-chevron-compact-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z" />
+                </svg>
+            </div>
+            <div class="borderB"></div>
+            <div class="introdate borderB">
+                <p>2021.04.04</p>
+            </div>
+            <div class="borderR borderB"></div>
+            <div class="borderB"></div>
+            <div class="introdate borderdate">
+                <p>2021.04.04</p>
+            </div>
+            <div class="borderB"></div>
+            <div class="introimg">
+                <img src="./img/basic/02.jpg" alt="">
+            </div>
+            <div class="introp">
+                <p>
+                    千頭萬緒，
+                    我們像是剛從另一個平行時空，甦醒過來。
+                    眼睛睜開，
+                    發現我們都在這個城市中，
+                    讓孤獨能夠乘風破浪，
+                    帶迷惘四處遊玩，
+                    或許釋懷的不夠坦蕩，
+                    但還會肚子餓，
+                    就能對週遭保有期盼。
+                    於是我們發現好吃的好喝的，
+                    而最後，我們都愛上同一件事情或是同一家餐廳，
+                    站在同一處，我們都知道來時的路。
+                    下班回家，
+                    上班經過的地方，
+                    慢慢都有彼此的足跡。
+                    「在這座城市遇見了你。」
+                </p>
+            </div>
+
+            <div class="introsvg bordersvg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-chevron-compact-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z" />
+                </svg>
+            </div>
+            <div class="introimg">
+                <img src="./img/basic/02.jpg" alt="">
+            </div>
+            <div class="introp">
+                <p>
+                    千頭萬緒，
+                    我們像是剛從另一個平行時空，甦醒過來。
+                    眼睛睜開，
+                    發現我們都在這個城市中，
+                    讓孤獨能夠乘風破浪，
+                    帶迷惘四處遊玩，
+                    或許釋懷的不夠坦蕩，
+                    但還會肚子餓，
+                    就能對週遭保有期盼。
+                    於是我們發現好吃的好喝的，
+                    而最後，我們都愛上同一件事情或是同一家餐廳，
+                    站在同一處，我們都知道來時的路。
+                    下班回家，
+                    上班經過的地方，
+                    慢慢都有彼此的足跡。
+                    「在這座城市遇見了你。」
+                </p>
+            </div>
+            <div class="introsvg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-chevron-compact-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z" />
+                </svg>
+            </div>
+            <div></div>
+            <div class="introdate">
+                <p>2021.04.04</p>
+            </div>
+            <div class="borderR"></div>
+            <div></div>
+            <div class="introdate">
+                <p>2021.04.04</p>
+            </div>
+            <div></div>
+
+
+        </div>
+
+
+
+        <!-- footer -->
+        <%-include ("footer.ejs")%>
+
+
+            <!-- Swiper JS -->
+            <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+            <!-- Initialize Swiper -->
+            <script>
+                var swiper = new Swiper('.swiper-container', {
+                    slidesPerView: 4,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+
+                    }
+
+                });
+            </script>
 
 </body>
+
+
 
 </html>

@@ -22,15 +22,17 @@ var conn = require("../db");
 //     );
 
 // })
-let sql = 'SELECT * from bandinfo'
+let sql = `SELECT * from bandinfo where bandId=1;
+SELECT * from bandAlbum where bandId=1`
 router.get("/", function(req, res) {
     conn.query(sql, function(error, rows) {
         if (error) {
             console.log(error);
         }
-
+        var data=rows;
         res.render('./band/band_single.ejs', {
-            data: JSON.stringify(rows)
+            data: JSON.stringify(data[1]),
+            data2:data[1]
         });
     })
 })

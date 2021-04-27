@@ -22,12 +22,12 @@
             float: right;
             right: -100;
         }
-        
+
         #cover {
             /* background-color: #000; */
             display: block;
         }
-        
+
         .Album {
             clear: both;
             /* text-align: center; */
@@ -58,13 +58,17 @@
         <!-- </div> -->
         <div id="shape">
             <div class="">
-                <h2>[Alexandros]
+                <%= data2 %>
                     <%= data %>
-                </h2>
-                <p>
-                    近年來以驚人速度迅速崛起的[Alexandros]，以結合英搖、龐克等曲風，打造出成熟洗鍊旋律受到矚目，除了獲邀在指標性音樂節目上演出，2014年更登上堪稱日本樂團夢想的「日本武道館」成功舉辦演唱會，並以極短時間將門票完售。也因為擁有流暢的英文能力，同時受到國際矚目，不僅是PRIMAL SCREAM、MUSE 等大團的日本巡迴指定嘉賓，也曾受邀參加歐洲 THE GREAT ESCAPE 音樂祭與美國 SXSW 音樂祭，被樂迷稱為2014必聽日本樂團之一。</p>
+                        <h2>
 
-                <span><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></span>
+                        
+
+
+                        </h2>
+                        <p>
+
+                            <span><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></span>
             </div>
         </div>
 
@@ -184,31 +188,31 @@
     <script src="js/jquery-3.2.1.slim.min.js"></script>
     <script src="slick/slick.min.js"></script>
     <script>
-        $(function() {
+        $(function () {
             $('.tm-gallery').slick({
                 dots: true,
                 infinite: true,
                 slidesToShow: 4,
                 slidesToScroll: 2,
                 responsive: [{
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 2
-                        }
-                    }, {
-                        breakpoint: 767,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    }, {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 2
                     }
+                }, {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                    }
+                }, {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
                     // You can unslick at a given breakpoint now by adding:
                     // settings: "unslick"
                     // instead of a settings object

@@ -1,0 +1,273 @@
+html, body
+{
+    margin: 0px;
+}
+:root {
+    --color1: #39455D;
+    --color2:  #AE8313;
+    --color3:  #56555B;
+    --color4: #E4E5E7;
+    --color5: white;
+    
+}
+
+.title{
+    margin-top: 100px
+}
+/* 導覽列 */
+.navbar {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 2px;
+}
+
+.navbar a {
+    /* float: right; */
+    display: block;
+    text-align: center;
+    margin: 10px 15px;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: #56555b;
+}
+
+.navbar a.right {
+    /* float: left; */
+}
+/* 如果在這一頁文字變黃 以活動為例  hover效果取消*/
+
+.navbar a:not(#activity):hover {
+    background-color: #56555b;
+    color: #E4E5E7;
+}
+
+#activity {
+    color: #ae8313;
+    border-bottom: 2px solid #ae8313;
+}
+/* .nav-item{
+    padding-left: 100px;
+}
+.navbar-nav > li > a:hover{
+    border-bottom:solid 2px #ae8313;
+    color: #ae8313 !important;
+} */
+td {
+     vertical-align: middle;
+}
+tr{
+    border-bottom: solid 1px var(--color3);
+}
+tbody{
+    margin-bottom: 50px;
+}
+/* 首頁輪播 */
+#carouselExampleIndicators{
+    margin-top: 75px;
+}
+.carousel-inner{
+    height: 500px;
+}
+.carousel-item>img{
+    height: 500px;
+    object-fit: cover
+}
+.btngoshop{
+    width: 100px;
+    height: 50px;
+    border: solid 2px;
+    border-radius: 45%;
+}
+/* 搜尋列 */
+.searchbar{
+    text-align: right; 
+    margin-top: 50px;
+}
+.fa-search{
+    background-color:var(--color1);
+    height: 40px;
+
+}
+.form_input{
+    height: 40px;
+}
+
+
+/* .nav-item{
+    margin-left: 300px;
+} */
+
+/* 搜尋列 */
+/* .searchbar{
+    margin-right: 0;
+} */
+/* .fa-search{
+    color: #fff;
+}
+.btn{
+    background-color:  #39455D;
+} */
+
+/* 活動資訊 */
+.badge{
+    background-color: var(--color2);
+    padding:10px 20px;
+
+}
+/* .form-control{
+    height: 40px;
+    width: 50%;
+} */
+
+.swiper-wrapper>div>img{
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+  }
+ 
+.swiper-container {
+    width: 80%;
+    margin-top: 100px;
+    /* height: 50px; */
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+/* .swiper-slide>img{
+    width:10px;
+    height: 10px;
+} */
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: white;
+    background-color: rgba(255, 255, 255, 0.5);
+    right:10px;
+    padding: 30px;
+    color: #000 !important;
+    fill: black !important;
+    stroke: black !important;
+}
+/* 文章字數限定 */
+/* p {
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+} */
+
+p{
+overflow: hidden;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 3;
+}
+.live{
+    width: 800px;
+    height: 300px;
+    border: solid 1px var(--color3);
+    display: grid;
+    grid-template-columns: 4fr 5fr 1fr 4fr 5fr 1fr;
+    grid-template-rows: 3fr 1/5fr 3fr 1/5fr;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
+
+}
+.live img{
+    width: 150px;
+    height: 100px;
+    /* object-fit: cover; */
+}
+.introp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.introp{
+    overflow: hidden;
+    /* display: -webkit-box; */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    
+}
+.introsvg{
+   display: flex; 
+   align-items: center;
+    /* border-right: solid 1px #56555b; */
+}
+.bordersvg{
+    border-right: solid 1px var(--color3);
+}
+.introimg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.introdate{
+   text-align: right;
+}
+.borderB{
+    border-bottom: solid 1px var(--color3);
+}
+.borderdate{
+    border-bottom: solid 1px var(--color3);
+}
+.borderR{
+    border-right: solid 1px var(--color3);
+}
+/* footer */
+
+/* * {
+    box-sizing: border-box;
+} */
+
+footer {
+    background-color: #56555b;
+    height: 100px;
+    width: 100%;
+    /* position: absolute; */
+    bottom: 0;
+}
+
+.faFamily {
+    text-align: center;
+}
+
+.faFamily>.fa {
+    padding: 18px;
+    font-size: 20px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    color: #e4e5e7;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.footerText {
+    text-align: center;
+    margin: 10px auto;
+   
+}
