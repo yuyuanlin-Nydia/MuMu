@@ -12,32 +12,49 @@
     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
     <!-- <link href="https://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet"> -->
     <link href="../css/bandall.css" rel="stylesheet">
+    <link href="../css/mutual.css" rel="stylesheet">
+    <style>
+        .banner{
+            background-image: url(../../image/banner/band1.jpg);
+        }
+    </style>
 </head>
 
 <body>
     <%-include ("../nav.ejs")%>
+    <div class="banner">
+        <p class="banner_title">樂團介紹</p>
+    </div>
+        <% const idList=data.map(item => Object.values(item)[0]);  %>
+            <% const nameList=data.map(item => Object.values(item)[1]);  %>
+                <% const introList=data.map(item => Object.values(item)[2]);  %>
+                    <% const imgList=data.map(item => Object.values(item)[3]);  %>
 
-        <% const nameList=data.map(item => Object.values(item)[1]);  %>
-            <% const imgList=data.map(item => Object.values(item)[3]);  %>
 
-                <p id="heading">樂團介紹</p>
-                <div class="wrapper grid">
-                    <% for(item in nameList){%>
-                        <div class="item">
-                            <img src="/image/band/<%- imgList[item] %>" alt="">
-                            <p class="bandName">
-                                <%- nameList[item] %>
-                            </p>
+                        <div class="wrapper grid">
+                            <% for(item in nameList){%>
+                                <a href="../band/ <%- idList[item] %>">
+                                    <div class="banditem">
+                                        <img class="bandPhoto" src="/image/band/<%- imgList[item] %>" alt="">
+                                        <p class="bandName">
+                                            <%- nameList[item] %>
+                                        </p>
+                                        <p class="bandContent">
+                                            <%- introList[item] %>
+
+                                        </p>
+                                    </div>
+                                    <% } %>
+                                </a>
                         </div>
-                        <% } %>
 
 
 
-                </div>
 
 
 
-                <%-include ("../footer.ejs")%>
+
+                        <%-include ("../footer.ejs")%>
 
 </body>
 

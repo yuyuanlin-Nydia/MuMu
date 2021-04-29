@@ -14,6 +14,11 @@
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .banner{
+            background-image: url(../../image/banner/article.jpg);
+        }
+    </style>
 </head>
 
 <body>
@@ -22,73 +27,75 @@
 
         <!--  留言登入後可以編輯自己的訊息-->
         <!--  沒留言要登入-->
-
-        <div>
-            <img src="../../image/article/article2.png" alt="" class="banner" style="object-fit: cover;">
-            <p class="title">參戰心得2</p>
+        <div class="banner">
+            <!-- <img src="../../image/banner/article.jpg" alt="" class="banner" style="object-fit: cover;"> -->
+            <p class="banner_title">參戰心得列表</p>
         </div>
+        <div class="container">
+            <div id="main">
+                <div class="box">
+                    <!-- 標題/時間/PO文者 -->
+                    <div class="d-flex justify-content-between">
+                        <p class="sub_title">{{article.articleTitle}}</p>
 
-        <div id="main">
-
-            <div class="box">
-                <!-- 標題/時間/PO文者 -->
-                <div class="d-flex justify-content-between">
-                    <p class="sub_title">{{article.articleTitle}}</p>
-
-                    <div>
-                        <img v-if="article.userFile" class="head_img " :src="'../../image/upload/user/'+article.userFile" alt="">
-                        <span>{{article.lastName}}{{article.firstName}}</span>
-                    </div>
-                </div>
-                <p>{{showDate}}</p>
-                <br>
-                <br>
-
-                <!-- 文章內容 -->
-                <!-- 為了解決換行 用computed -->
-                <p v-if="article.articleContent" v-html="lineBreak"></p>
-                <!-- 文章圖片 -->
-                <!-- 若沒加v-if 圖片正常顯示 但log會有錯誤 404 not found -->
-                <img v-if="article.articleFile" :src="'../../image/upload/article/'+article.articleFile" class="event_pic" alt="">
-                <!-- 留言區 -->
-                <br><br><br><br>
-                <p class="sub_title">留言</p>
-                <div class="ml-5">
-                    <p class="msg_no">{{commentNo}}則留言</p>
-                </div>
-                <!-- 可以留言的區塊 -->
-                <div class="d-flex">
-                    <img v-if="user.userFile" :src="'../../image/upload/user/'+user.userFile" alt="" class="head_img mr-3">
-                    <div class="bg-light d">
-                        <textarea v-model="comment_text" name="comment_text" v-model="comment_text" class="form_input"
-                            placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
-                        <button class="btn_grey" v-on:click="submitHandler">發佈</button>
-                    </div>
-                </div>
-
-                <!-- 別人的留言 -->
-                <div class="msg_sec">
-                    <div class="d-flex align-items-center m-3" v-for="(item,index) in comment">
-                        <img :src="'../../image/upload/user/'+item.userFile" alt="" class="head_img mr-3">
                         <div>
-                            <p>
-                                <span class="text-primary">{{item.userAccount}}</span>
-                                <span>發表於</span>
-                                <span class=text-muted>{{showCommentDate[index]}}</span>
-                            </p>
-                            <p>{{item.commentContent}}</p>
+                            <img v-if="article.userFile" class="head_img "
+                                :src="'../../image/upload/user/'+article.userFile" alt="">
+                            <span>{{article.lastName}}{{article.firstName}}</span>
+                        </div>
+                    </div>
+                    <p>{{showDate}}</p>
+                    <br>
+                    <br>
+
+                    <!-- 文章內容 -->
+                    <!-- 為了解決換行 用computed -->
+                    <p v-if="article.articleContent" v-html="lineBreak"></p>
+                    <!-- 文章圖片 -->
+                    <!-- 若沒加v-if 圖片正常顯示 但log會有錯誤 404 not found -->
+                    <img v-if="article.articleFile" :src="'../../image/upload/article/'+article.articleFile"
+                        class="event_pic" alt="">
+                    <!-- 留言區 -->
+                    <br><br><br><br>
+                    <p class="sub_title">留言</p>
+                    <div class="ml-5">
+                        <p class="msg_no">{{commentNo}}則留言</p>
+                    </div>
+                    <!-- 可以留言的區塊 -->
+                    <div class="d-flex">
+                        <img v-if="user.userFile" :src="'../../image/upload/user/'+user.userFile" alt=""
+                            class="head_img mr-3">
+                        <div class="bg-light d">
+                            <textarea v-model="comment_text" name="comment_text" v-model="comment_text"
+                                class="form_input" placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
+                            <button class="btn_tea2" v-on:click="submitHandler">發佈</button>
+                        </div>
+                    </div>
+
+                    <!-- 別人的留言 -->
+                    <div class="msg_sec">
+                        <div class="d-flex align-items-center m-3" v-for="(item,index) in comment">
+                            <img :src="'../../image/upload/user/'+item.userFile" alt="" class="head_img mr-3">
+                            <div>
+                                <p>
+                                    <span class="text-primary">{{item.userAccount}}</span>
+                                    <span>發表於</span>
+                                    <span class=text-muted>{{showCommentDate[index]}}</span>
+                                </p>
+                                <p>{{item.commentContent}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <ul class="d-flex justify-content-center">
+                    <li class="m-5"><a :href="'/article/item/'+index_last" id="last_arc"><i
+                                class="fas fa-angle-left"></i>上一篇</a> </li>
+                    <li class="m-5"><a href="/article/1">回列表</a> </li>
+                    <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
+                                class="fas fa-angle-right"></i></a> </li>
+                </ul>
+                {{index_last}}
             </div>
-            <ul class="d-flex justify-content-center">
-                <li class="m-5"><a :href="'/article/item/'+index_last" id="last_arc"><i
-                            class="fas fa-angle-left"></i>上一篇</a> </li>
-                <li class="m-5"><a href="/article/1">回列表</a> </li>
-                <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
-                            class="fas fa-angle-right"></i></a> </li>
-            </ul>
-        </div>
         </div>
         <%-include ("../footer.ejs")%>
 </body>
@@ -99,6 +106,8 @@
     var no = location.href.split('/');
     var index = no[no.length - 1];
     $(function () {
+        console.log(vueMain.index_last)
+        console.log(vueMain.index_next)
         // 第一頁的話  上一篇a連結消失
         if (vueMain.index_last <= 0) {
             $("#last_arc").css('display', "none");
@@ -135,7 +144,7 @@
             index_last: 0,
             index_next: 0,
             comment_text: '',
-            commentNo:0,
+            commentNo: 0,
             comment: [],
             maxArticle: 0,
             user: ''
@@ -181,7 +190,7 @@
         },
         computed: {
             lineBreak: function () {
-                console.log('aaa',this.article.articleContent) //會執行兩次  一次undefined 一次正常
+                console.log('aaa', this.article.articleContent) //會執行兩次  一次undefined 一次正常
                 return this.article.articleContent.replace(/\n|\r\n/g, "<br />")
             },
             //修改日期格式
@@ -202,8 +211,8 @@
                 return List
             },
         },
-        watch:{
-         
+        watch: {
+
         }
 
 

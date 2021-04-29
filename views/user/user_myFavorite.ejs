@@ -15,7 +15,7 @@
     <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
 
     <style>
-        .article_card {
+        /* .article_card {
             border: 2px solid lightgray;
             border-radius: 0.5rem;
         }
@@ -33,6 +33,9 @@
             display: -webkit-box;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
+        } */
+        a{
+            color: black;
         }
     </style>
 </head>
@@ -62,19 +65,19 @@
                             </label>
                             <input type="File" name="fileToUpload" id="fileToUpload">
                         </form>
-                        <h5 class="text-center text-white mt-3">林郁媛</h5>
+                        <h5 class="text-center text-white mt-3"><%= Name%> </h5>
                     </div>
 
                     <div class="  p-5 p-md-1 select_left ml-5">
                         <div class="profile-work ">
                             <!-- 前面放icon -->
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu">我的票券</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">我的投稿</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">參戰心得</a><br /></div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu"
                                     style="color: var(--color2)">收藏追蹤</a><br /></div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu">編輯資料</a><br />
                             </div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登　　出</a></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
                         </div>
                     </div>
                 </div>
@@ -85,44 +88,43 @@
                     <div class="profile-head">
                         <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                     aria-controls="home" aria-selected="true">表演收藏</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                                     aria-controls="profile" aria-selected="false">樂團追蹤</a>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-12 ">
                         <div class="tab-content profile-tab" id="myTabContent">
-                            <!-- <button type="button" class="btn btn-info " id="addBtn">新增/編輯分類</button>
-                            <button type="button" class="btn btn-info " id="orderBtn">排序</button> -->
+                            <!-- <button type="button" class="btn btn-info " id="addBtn">新增/編輯分類</button> -->
+                            <!-- <button type="button" class="btn btn-info " id="orderBtn">排序</button> -->
                             <button type="button" class="btn btn-warning d-none" id="finishBtn">完成</button>
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="d-flex flex-wrap my-3 categoryGroups">
-                                    <!-- <h5 class="col-md-12 myCategory"><b>我的最愛</b></h5><br> -->
-                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                    <div class="col-lg-3 col-sm-5 ">
                                         <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/005.png" class="card_img col-12" alt="">
+                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
                                             <p class="text-center"> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
                                         </a>
                                     </div>
-                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                    <div class="col-lg-3 col-sm-5">
                                         <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/005.png" class="card_img col-12" alt="">
+                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
                                             <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
                                         </a>
                                     </div>
-                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                    <div class="col-lg-3 col-sm-5 ">
                                         <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/002.png" class="card_img col-12" alt="">
+                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
                                             <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
                                         </a>
                                     </div>
-                                    <div class="acard col-lg-3 col-sm-5 m-3">
+                                    <div class="col-lg-3 col-sm-5 ">
                                         <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/001.png" class="card_img col-12" alt="">
+                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
                                             <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
                                         </a>
                                     </div>
@@ -130,9 +132,9 @@
 
                             </div>
                             <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="d-flex flex-wrap">
+                                <div class="d-flex flex-wrap my-3">
                                     <div class="m-2">
-                                        <img src="/image/user/樂團/滅火器.jpg" alt="" class="band_img" style="width: 300px;">
+                                        <img src="/image/user/樂團/滅火器.jpg" alt="" class="band_img" >
                                         <p class="text-center ">滅火器</p>
                                     </div>
                                     <!-- <div class="m-2">

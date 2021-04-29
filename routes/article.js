@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const multer = require('multer');
+
 var conn = require("../db");
 
 
@@ -122,46 +122,6 @@ router.get("/item/data/:no", function (req, res) {
 	});
 })
 
-// 這裡應該是放在user下 
 
-router.get("/myArticle/new", function (req, res) {
-	res.render('./article/article_create.ejs')
-})
-// 使用者代號記得改
-// 上傳文章
-router.post("/upload", function (req, res) {
-	var req = req.body
-	console.log(req.title)
-	conn.query('insert into articleInfo (userId,articleTitle,articleContent,articleTime,articleFile)values ((SELECT userId FROM userinfo WHERE userAccount="abc123"),?,?,?,?)',
-		[req.title, req.content, new Date(), req.image], function (err, rows) {
-			if (err) {
-				console.log(JSON.stringify(err));
-				return;
-			}
-
-		})
-	res.send("successfully add new article");
-})
-//上傳圖片
-var myStorage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "./public/image/upload/article"); // 保存的路徑 (需先自己創建)
-	},
-
-	filename: function (req, file, cb) {
-		// 為了預防有重複檔名
-		var Today = new Date();
-		var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
-		cb(null, date + '-' + file.originalname); // 自定義檔案名稱
-	}
-});
-
-var upload = multer({
-	storage: myStorage, // 設置 storage
-});
-
-router.post('/upload/file', upload.array('file', 3), function (req, res, next) {
-	res.send("上傳成功");
-});
 
 module.exports = router;

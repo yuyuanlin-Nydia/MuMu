@@ -1,0 +1,29 @@
+<div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+    <div class="profile-img  p-1 mt-5 ml-5">
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+            <label for="fileToUpload">
+                <div class="profile-pic">
+                    <span class="glyphicon glyphicon-camera"></span>
+                    <span>更換圖片</span>
+                </div>
+            </label>
+            <input type="File" name="fileToUpload" id="fileToUpload">
+        </form>
+
+
+        <h5 class="text-center text-white mt-3 uName"> <%= name  %>  </h5>
+    </div>
+
+    <div class="  p-5 p-md-1 select_left ml-5">
+        <div class="profile-work ">
+            <!-- 前面放icon -->
+            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu">我的票券</a><br /></div>
+            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">參戰心得</a><br /></div>
+            <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu">收藏追蹤</a><br /></div>
+            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu"
+                    style="color: var(--color2)">編輯資料</a><br />
+            </div>
+            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,23 @@ body {
     min-height: 100vh;
 }
 
+.banner{
+    width: 100vw;
+    height: 250px;
+    margin: 0;
+}
+
+.title{
+    color: var(--color5);
+    position: relative;
+    top: -100px;
+    left: 100px;
+   
+}
+
+#banner_box{
+    margin-bottom: -57px
+}
 /* left----------------------------------------------------------------------- */
 
 .emp-profile {
@@ -121,7 +138,7 @@ form input[type="file"] {
     color: black;
 }
 
-h4.title {
+h4.right_title {
     border-left: 3px solid black;
     padding-left: 20px;
     margin-bottom: 20px;

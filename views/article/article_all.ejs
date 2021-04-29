@@ -14,16 +14,20 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
+    <style>
+        .banner{
+            background-image: url(../../image/banner/article.jpg);
+        }
+    </style>
 </head>
 
 <body>
     <%-include ("../nav.ejs")%>
         <!-- 已解決:時間格式處理=>放在component裡  用computed去改  -->
         <!-- 待解決 {{showDate[0]}}  標籤   -->
-        <div>
-            <img src="../../image/banner/article.jpg" alt="" class="banner" style="object-fit: cover;">
-            <p class="title ">參戰心得列表</p>
+        <div class="banner">
+            <!-- <img src="../../image/banner/article.jpg" alt="" class="banner" style="object-fit: cover;"> -->
+            <p class="banner_title">參戰心得列表</p>
         </div>
         <div class="wrapper row3" id="main">
             <main class="hoc container clear">

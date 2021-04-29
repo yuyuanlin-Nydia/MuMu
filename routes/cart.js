@@ -2,34 +2,59 @@ var express = require("express");
 var router = express.Router()
 var conn = require('../db')
 
-// 1.建購物車資料表,暫存購物車,要有圖片
-// 2.我的優惠卷
-// 3.購票訂單邊號
+//1.購物車資料表存放session
+//2.我的優惠卷
+//3.購票訂單編號
 //4.信用卡資訊
 //5.紙本或電子票
-//6.我的票卷/我的活動,新增活動圖
+
 
 router.get('/', function (req, res) {
-    conn.query(`select * from orders ;
-           select * from orderdetails;`,
+    var sql =`select cart.userId,ai.activityTitle,ai.activityFile,ai.performDate,cart.categoryId,atc.type,cart.quantity,ap.unitPrice from cart 
+    INNER JOIN userInfo as ui on( ui.userId =cart.userId) 
+
+    INNER JOIN activityInfo as ai on( ai.activityId =cart.activityId ) 
+    INNER JOIN activityPrice ap on( ap.activityId =cart.activityId ) 
+    INNER JOIN activityTicketCategory atc on( atc.categoryId =cart.categoryId ) 
+    where(ui.userAccount="abc123")`
+    conn.query(sql,
         [],
         function (err, rows) {
             if (err) {
                 console.log(JSON.stringify(err));
                 return;
             }
-            res.send(JSON.stringify(rows));
+            res.render("./cart/cart.ejs",{
+            result:rows
+            })
+        });
+})
+router.get('/pay', function (req, res) {
+    var sql =`select cart.userId,ai.activityTitle,ai.activityFile,ai.performDate,cart.categoryId,atc.type,cart.quantity,ap.unitPrice from cart 
+    INNER JOIN userInfo as ui on( ui.userId =cart.userId) 
 
-        }
-    );
+    INNER JOIN activityInfo as ai on( ai.activityId =cart.activityId ) 
+    INNER JOIN activityPrice ap on( ap.activityId =cart.activityId ) 
+    INNER JOIN activityTicketCategory atc on( atc.categoryId =cart.categoryId ) 
+    where(ui.userAccount="abc123")`
+    conn.query(sql,
+        [],
+        function (err, rows) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+            res.render("./cart/cart_pay.ejs",{
+            result:rows
+            })
+        });
 })
 
-// car0頁取得總數以及訂購總金額()
-router.get("/cart0getmoney", function (req, res) {
-    var sql = conn.query(`select sum(categoryId*quantity),sum(categoryId*unitPrice*
-        quantity) from orderdetails INNER JOIN orders on
-        ( orderdetails.orderId =orders.orderId )where
-        (orders.userId=? AND orders.orderId=?)`,
+
+// 取得總數以及訂購總金額()
+router.get("/cart/details", function (req, res) {
+    
+    conn.query(sql,
         [1, 1],
         function (err, rows) {
             if (err) {
@@ -37,7 +62,6 @@ router.get("/cart0getmoney", function (req, res) {
                 return;
             }
             res.send(JSON.stringify(rows));
-            // res.render('./activity/cart0.html')
         }
     );
 })
@@ -55,6 +79,27 @@ router.get('/cart0orderdetail', function (req, res) {
         }
     );
 })
+
+// 這裡放到user底下
+router.get("/myTicket", function (req, res) {
+    var sql=`select * from orders join orderDetails as odd on odd.orderId=orders.orderId 
+    INNER JOIN activityInfo as ai on( ai.activityId =orders.activityId ) 
+    where userId=1
+    `
+    conn.query(sql,
+        [],
+        function (err, rows) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+            res.render("./user/user_myTicket.ejs",{
+                result:rows
+                })
+        }
+    );
+})
+
 
 
 

@@ -30,23 +30,23 @@
         <!-- <img id="logo" src="./images/fake.png" alt=""> -->
         <div class="main_content">
             <ul class="tab-group">
-                <li class="tab "><a href="#signup">Sign Up</a></li>
-                <li class="tab active"><a href="#login">Log In</a></li>
+                <li class="tab active"><a href="#login">企業登入</a></li>
+                <li class="tab "><a href="#signup">企業註冊</a></li>
             </ul>
 
             <div class="tab-content">
                 <!-- 只包含登入&註冊內容 -->
                 <div id="login">
-                    <form action="/" method="post">
-                        <h1>Welcome Back!</h1>
+                    <form id="loginForm_c">
+                        <h1>歡迎回來!</h1>
                         <ul>
                             <!-- 登入 -->
 
                             <li>
-                                <br><input type="text" placeholder="帳號" name="user">
+                                <br><input type="text" placeholder="帳號" name="companyAccountL">
                             </li>
                             <li>
-                                <br><input type="password" placeholder="密碼" name="password">
+                                <br><input type="password" placeholder="密碼" name="companyPasswordL">
                             </li>
                             <br>
                             <li class="btm_text"> <input type="checkbox"> 記住我</li>
@@ -54,7 +54,7 @@
                             
 
                         </ul><!-- 登入end -->
-                        <button type="submit" value="Login"> 登入</button>
+                        <button type="submit" value="Login" id="loginSub_c"> 登入</button>
                         <br><a class="btm_text" href="#">Forgot your password?</a>
                     </form>
                 </div>
@@ -62,25 +62,25 @@
 
                 <div id="signup">
 
-                    <form action="/" method="post">
+                    <form  id="signupForm_c">
                         <!-- <h1>Join us!</h1> -->
                         <ul>
                             <!-- 註冊 -->
                             <li>
-                                <br><input type="text" placeholder="*統一編號" name="NameNum" required>
+                                <br><input type="text" placeholder="*統一編號" name="companyTaxNo" required>
                             </li>
                             <li>
-                                <br><input type="text" placeholder="*公司名稱" name="Name" required>
+                                <br><input type="text" placeholder="*公司名稱" name="companyName" required>
                             </li>
                             <li>
-                                <br><input type="text" placeholder="*Email" name="Email" required>
+                                <br><input type="text" placeholder="*Email" name="companyEmail" required>
                             </li>
 
                             <li>
-                                <br><input type="text" placeholder="*帳號" name="user" required>
+                                <br><input type="text" placeholder="*帳號" name="companyAccount" required>
                             </li>
                             <li>
-                                <br><input type="password" placeholder="*密碼" name="password" required>
+                                <br><input type="password" placeholder="*密碼" name="companyPassword" required>
                             </li>
                             <br>
                             <li>* 為必填欄位，請填妥欄位資訊。</li>
@@ -88,7 +88,7 @@
                         </ul><!-- 註冊end -->
 
                         <!-- <input type="button" value="Get Started"> -->
-                        <button type="submit" value="signup"> 加入會員</button>
+                        <button type="submit" value="signup" id="signupSub_c"> 加入會員</button>
                     </form>
 
                 </div> <!-- signup end -->
@@ -116,6 +116,80 @@
                 $(target).fadeIn(600);
 
             });
+             // 註冊
+             $('#signupSub_c').on('click', function () {
+                // 序列化表單內容到字串
+                //console.log($('#loginForm').serializeArray());
+
+                var data = $('#signupForm_c').serializeArray()
+                // console.log(data);
+                JSONData = serializeToJSON(data)
+                console.log(JSONData);
+
+
+                //ajax請求
+                $.ajax({
+                    url: "/log/companySignup",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSONData,
+                    success: function (res) {
+                        var res = JSON.parse(res)
+                        if (res.errno === 1) {
+                            alert("註冊成功，請登入!")
+                            location.href = '/log'
+                        } else if (res.errno === 0) {
+                            alert("註冊失敗!")
+                        }
+                    },
+                    error: function () {
+                        alert("系統錯誤!")
+                    }
+                })
+            })
+
+            // 轉JSON
+            function serializeToJSON(data) {
+                var values = {};
+                for (index in data) {
+                    values[data[index].name] = data[index].value;
+                }
+                return JSON.stringify(values)
+            }
+
+            // 登入
+            $('#loginSub_c').on('click', function () {
+                var data = $('#loginForm_c').serializeArray()
+                JSONData = serializeToJSON(data)
+
+                $.ajax({
+                    url: "/log/companyLogin",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSONData,
+                    success: function (res) {
+                        var res = JSON.parse(res)
+                        if (res.errno === 1) {
+                            alert("登入成功!")
+                            location.href = '/'
+                        } else if (res.errno === 0) {
+                            alert("登入失敗!")
+                        }
+                    },
+                    error: function () {
+                        alert("系統錯誤!")
+                    }
+                })
+            })
+
+            function serializeToJSON(data) {
+                var values = {};
+                for (index in data) {
+                    values[data[index].name] = data[index].value;
+                }
+                return JSON.stringify(values)
+            }
+            
         </script>
 
 </body>

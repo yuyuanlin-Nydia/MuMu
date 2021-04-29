@@ -14,7 +14,7 @@
     <style>
         .title_div{
             width: 100vw;
-            height: 150px;
+            height: 250px;
             background-color: rgba(107, 139, 184, 0.6);
             background-blend-mode: multiply;
             background-image: url(../../image/activity/1786349.jpg);
@@ -26,7 +26,9 @@
             margin-left: 100px;
             margin-top: 80px;
         }
-
+        input .check_btn .form-check-input{
+            appearance:auto;
+        }
     </style>
 
 </head>
@@ -34,8 +36,8 @@
 <body>
     <%-include("../nav.ejs")%>
     <!-- 導覽列 開始 -->
-    <div class="title_div"><img src="" alt="">
-        <h4 class="title" style="color: #fff;">發起音樂會</h4>
+    <div class="title_div"><img>
+        <h4 class="title" style="color: #fff;">發起活動</h4>
     </div>
 
     <!-- 導覽列 結束 -->
@@ -66,17 +68,37 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="location" class="col-md-12">地點</label>
-                        <div class="col-md-12 mb-2">
+                        <label for="location" class="col-md-6">地點</label>
+                        <label for="address" class="col-md-6">地址</label>
+                        <div class="col-md-6 mb-2">
                             <input class="form-control" type="text" name="activityLocation">
                         </div>
-                        <label for="address" class="col-md-12">地址</label>
-                        <div class="col-md-12 mb-2">
+                        
+                        <div class="col-md-6 mb-2">
                             <select class="form-control" id="areaId" name="areaId">
                                 <option value="1">中正區</option>
                                 <option value="2">大同區</option>
                                 <option value="3">中山區</option>
                                 <option value="4">松山區</option>
+                                <option value="5">大安區</option>
+                                <option value="6">萬華區</option>
+                                <option value="7">信義區</option>
+                                <option value="8">士林區</option>
+                                <option value="9">北投區</option>
+                                <option value="10">內湖區</option>
+                                <option value="11">南港區</option>
+                                <option value="12">文山區</option>
+                                <option value="13">中區</option>
+                                <option value="14">東區</option>
+                                <option value="15">南區</option>
+                                <option value="16">西區</option>
+                                <option value="17">北區</option>
+                                <option value="18">北屯區</option>
+                                <option value="19">西屯區</option>
+                                <option value="20">南屯區</option>
+                                <option value="21">烏日區</option>
+                                <option value="22">豐原區</option>
+                                <option value="23">潭子區</option>
 
                             </select>
                         </div>
@@ -84,6 +106,18 @@
                             <input class="form-control" type="text" name="activityAddress">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="Price1" class="col-md-6">單人票</label>
+                        <label for="Price2" class="col-md-6">雙人票</label>
+                        <div class="col-md-6 mb-2">
+                            <input class="form-control" type="text" name="unitPrice1">
+                        </div>
+                        
+                        <div class="col-md-6 mb-2">
+                            <input class="form-control" type="text" name="unitPrice2">
+                        </div>
+                    </div>
+                    
                     <div class="form-group row">
                         <label for="maximum" class="col-md-12">人數上限</label>
                         <div class="col-md-12">
@@ -103,6 +137,24 @@
                         </div>
                         
                     </div>
+                    <div class="form-group">
+
+                        <input type="checkbox" class="bandId" name="bandId" value="1" style="appearance:auto;margin-left: 0;"/> 告五人
+                        <input type="checkbox" class="bandId" name="bandId" value="2" style="appearance:auto;margin-left: 0;"/> 美秀集團
+                        <br>
+                        <input type="checkbox" class="bandId" name="bandId" value="3" style="appearance:auto;margin-left: 0;"/> 理想混蛋
+                        <input type="checkbox" class="bandId" name="bandId" value="4" style="appearance:auto;margin-left: 0;"/> 佛跳牆
+                            <!-- <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="aaa[]" style="appearance:auto;margin-left: 0;">
+                                <label class="form-check-label" for="inlineCheckbox1">1</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" name="aaa[]" style="appearance:auto;margin-left: 0;">
+                                <label class="form-check-label" for="inlineCheckbox2">2</label>
+                            </div> -->
+
+                    </div>
+                   
 
                     <div class="form-group row">
                         <label for="activities" class="col-md-12">音樂會內容</label>
@@ -116,7 +168,7 @@
                             <br>
                         </div>
                         <div class="col-md-10  text-center">
-                            <input onclick="myFunction()" class="btn btn-primary mr-2" type="button" value="取消">
+                            <a href="/activity/text"><input class="btn btn-primary mr-2" type="button" value="取消"></a>
                             <input id="submitBtn" class="btn btn-secondary" type="button" value="上傳">
                         </div>
                     </div>
@@ -149,23 +201,25 @@
             return fmt;
         }
 
-        // function myFunction() {
-        //     var sellDate = new Date(document.getElementById("sellDate").value).Format("yyyy-MM-dd hh:mm:ss");
-        //     var performDate = new Date(document.getElementById("performDate").value).Format("yyyy-MM-dd hh:mm:ss");
-        //     console.log(sellDate);
-        //     console.log(performDate);
-        //     // typeof(sellDate) == string
-        // }
-
 
         $(function () {
-
-
+            
             $('#submitBtn').click(function () {
-                // x = $('#form').serializeArray();
-                // $.each(x, function (i, field) {
-                //     alert(field.name + ":" + field.value + " ");
-                // });
+                // 取得所有checkbox的值
+                
+
+                // alert(band);
+
+
+                var file = document.getElementById("activityFile")
+                //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
+                //建立formdata物件
+                var photoData = new FormData();
+                //給formdata物件中放入資料(鍵值對的方式)
+                photoData.append('file', file.files[0]);
+                // alert(photoData);
+
+                // =============================================
 
                 //整理表單資料到變數
                 var data = $('#form').serializeArray();                
@@ -173,13 +227,10 @@
                 data[2].value =new Date(data[2].value).Format("yyyy-MM-dd hh:mm:ss");
                 data[3].value =new Date(data[3].value).Format("yyyy-MM-dd hh:mm:ss");
 
-                
-
                 JSONData = serializeToJSON(data);
                 alert(JSONData);
                 
-                
-
+            
                 $.ajax({
                     url: "/activity/update",
                     type: "POST",
@@ -188,23 +239,44 @@
                     success: function (res) {
                         var res = JSON.parse(res)
                         if (res.errno === 1) {
-                            alert("更新成功!")
+                            // alert("更新成功!")
                             // location.reload()
-                            location.href = `/activity`
+                            // location.href = `/activity`
                         } else if (res.errno === 0) {
-                            alert("更新失敗!")
+                            // alert("更新失敗!")
                         }
                     },
                     error: function () {
                         alert("系統錯誤!")
                     }
                 })
+                $.ajax({
+                       url: '/activity/upload/file',//請求路徑
+                       type: 'POST',
+                       data: photoData,
+                       contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                       processData: false,//同上
+                       success: function (data) {
+                       },
+                       error: function (err) {
+                           console.log(err);
+                       }
+                   });
 
             });
 
             function serializeToJSON(data) {
                 var activityFileValue = document.getElementById("activityFile").value.split('\\').pop();   
-
+                var Today = new Date();
+                var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+                activityFileValue = date + '-' + activityFileValue;
+                var band=[]
+                $.each($("input[name='bandId']:checked"), function(){
+                    band.push($(this).val());
+                });
+                // alert(band.length)
+                var bandLength = band.length
+                
                 var values = {};
                 for (index in data) {
                     values[data[index].name] = data[index].value;
@@ -213,26 +285,14 @@
                 // console.log(values);
                 // typeof_values = object
                 values["activityFile"] = activityFileValue;
+                values["bandId"] = band;
+                // values["bandIdLength"] = bandLength;
+
                 // alert(values.activityFile);
 
                 return JSON.stringify(values)
             }
         })
-
-        // $('#submitBtn').on('click', function() {
-        //     //整理表單資料到變數
-        //     var data = $('#form').serializeArray()
-        //     JSONData = serializeToJSON(data)
-
-        // })
-
-        // function serializeToJSON(data) {
-        //     var values = {};
-        //     for(index in data){
-        //         values[data[index].name] = data[index].value;
-        //     }
-        //     return JSON.stringify(values)
-        // }
 
 
     </script>

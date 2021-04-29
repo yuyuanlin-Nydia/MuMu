@@ -1,0 +1,16 @@
+body{
+    background-color: var(--color4);
+}
+.box{
+    width: 70%;
+    margin: 20px auto;
+    background-color: var(--color5);
+    padding: 50px;
+}
+.box>div>p{
+    border-bottom: 2px solid var(--color2);
+    margin:20px 0 10px  0;
+}
+p{
+    margin-bottom: 0px;
+}

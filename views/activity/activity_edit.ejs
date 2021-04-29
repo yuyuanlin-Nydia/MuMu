@@ -36,8 +36,8 @@
     <!-- 導覽列 開始 -->
 
     <!-- 導覽列 結束 -->
-    <div class="title_div"><img src="" alt="">
-        <h4 class="title" style="color: #fff;">修改音樂會</h4>
+    <div class="title_div"><img>
+        <h4 class="title" style="color: #fff;">修改活動</h4>
     </div>
         
         <form id="form" method="POST" action="">
@@ -47,56 +47,59 @@
                     <div class="form-group row">
                         <label for="activityTitle" class="col-md-12">音樂會主題</label>
                         <div class="col-md-12">
+                            <input type="hidden" name="activityId" id="activityId" value=<%= activityId %>>
                             <input class="form-control" id="activityTitle" name="activityTitle" type="text" value=<%= data[0].activityTitle %>>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="sellDate" class="col-md-12">開始售票</label>
-                        <div class="col-md-12 mb-2">
-                            <input class="form-control" id="sellDate" name="sellDate" type="datetime-local" >
+                        <label for="location" class="col-md-6">地點</label>
+                        <label for="address" class="col-md-6">地址</label>
+                        <div class="col-md-6 mb-2">
+                            <input class="form-control" type="text" name="activityLocation" value=<%= data[0].activityLocation %>>
                         </div>
-                        <label for="performDate" class="col-md-12">結束售票</label>
-                        <div class="col-md-12 mb-2">
-                            <input class="form-control" id="performDate" name="performDate" type="datetime-local">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="location" class="col-md-12">地點</label>
-                        <div class="col-md-12 mb-2">
-                            <input class="form-control" type="text" name="activityLocation" value="activityLocation">
-                        </div>
-                        <label for="address" class="col-md-12">地址</label>
-                        <div class="col-md-12 mb-2">
+
+                        <div class="col-md-6 mb-2">
                             <select class="form-control" id="areaId" name="areaId" >
-                                <option value="1">中正區</option>
-                                <option value="2">大同區</option>
-                                <option value="3">中山區</option>
-                                <option value="4">松山區</option>
-                                <option value="5">大安區</option>
-                                <option value="6">萬華區</option>
-                                <option value="7">信義區</option>
-                                <option value="8">士林區</option>
-                                <option value="9">北投區</option>
-                                <option value="10">內湖區</option>
-                                <option value="11">南港區</option>
-                                <option value="12">文山區</option>
-                                <option value="13">中區</option>
-                                <option value="14">東區</option>
-                                <option value="15">南區</option>
-                                <option value="16">西區</option>
-                                <option value="17">北區</option>
-                                <option value="18">北屯區</option>
-                                <option value="19">西屯區</option>
-                                <option value="20">南屯區</option>
-                                <option value="21">烏日區</option>
-                                <option value="22">豐原區</option>
-                                <option value="23">潭子區</option>
+                                <option <%= (data[0].areaId==1)?"selected":"" %> value="1">中正區</option>
+                                <option <%= (data[0].areaId==2)?"selected":"" %> value="2">大同區</option>
+                                <option <%= (data[0].areaId==3)?"selected":"" %> value="3">中山區</option>
+                                <option <%= (data[0].areaId==4)?"selected":"" %> value="4">松山區</option>
+                                <option <%= (data[0].areaId==5)?"selected":"" %> value="5">大安區</option>
+                                <option <%= (data[0].areaId==6)?"selected":"" %> value="6">萬華區</option>
+                                <option <%= (data[0].areaId==7)?"selected":"" %> value="7">信義區</option>
+                                <option <%= (data[0].areaId==8)?"selected":"" %> value="8">士林區</option>
+                                <option <%= (data[0].areaId==9)?"selected":"" %> value="9">北投區</option>
+                                <option <%= (data[0].areaId==10)?"selected":"" %> value="10">內湖區</option>
+                                <option <%= (data[0].areaId==11)?"selected":"" %> value="11">南港區</option>
+                                <option <%= (data[0].areaId==12)?"selected":"" %> value="12">文山區</option>
+                                <option <%= (data[0].areaId==13)?"selected":"" %> value="13">中區</option>
+                                <option <%= (data[0].areaId==14)?"selected":"" %> value="14">東區</option>
+                                <option <%= (data[0].areaId==15)?"selected":"" %> value="15">南區</option>
+                                <option <%= (data[0].areaId==16)?"selected":"" %> value="16">西區</option>
+                                <option <%= (data[0].areaId==17)?"selected":"" %> value="17">北區</option>
+                                <option <%= (data[0].areaId==18)?"selected":"" %> value="18">北屯區</option>
+                                <option <%= (data[0].areaId==19)?"selected":"" %> value="19">西屯區</option>
+                                <option <%= (data[0].areaId==20)?"selected":"" %> value="20">南屯區</option>
+                                <option <%= (data[0].areaId==21)?"selected":"" %> value="21">烏日區</option>
+                                <option <%= (data[0].areaId==22)?"selected":"" %> value="22">豐原區</option>
+                                <option <%= (data[0].areaId==23)?"selected":"" %> value="23">潭子區</option>
 
 
                             </select>
                         </div>
                         <div class="col-md-12">
                             <input class="form-control" type="text" name="activityAddress" value=<%= data[0].activityAddress%>>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Price1" class="col-md-6">單人票</label>
+                        <label for="Price2" class="col-md-6">雙人票</label>
+                        <div class="col-md-6 mb-2">
+                            <input class="form-control" type="text" name="unitPrice1"value=<%=data[0].unitPrice%>>
+                        </div>
+                        
+                        <div class="col-md-6 mb-2">
+                            <input class="form-control" type="text" name="unitPrice2" value=<%=data[1].unitPrice%>>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -111,14 +114,6 @@
                 <!-- 右側 -->
                 <div class="col-md-7">
                     <div class="form-group row">
-                        <div class="col-md-10 text-center" v-if="preview">
-                            <img id="preview_img" :src="preview" alt="">
-                            <input class="form-control" type="file" id="activityFile" name="activityFile" value=""
-                                accept="image/jpeg image/jpg image/png" @change="previewImage">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
                         <label for="activities" class="col-md-12">音樂會內容</label>
                         <div class="col-md-10">
                             <textarea class="form-control" name="activityContent" id="activityContent"
@@ -130,7 +125,7 @@
                             <br>
                         </div>
                         <div class="col-md-10  text-center">
-                            <input onclick="myFunction()" class="btn btn-primary mr-2" type="button" value="取消">
+                            <a href="/activity/text"><input class="btn btn-primary mr-2" type="button" value="取消"></a>
                             <input id="submitBtn" class="btn btn-secondary" type="button" value="上傳">
                         </div>
                     </div>
@@ -163,40 +158,19 @@
             return fmt;
         }
 
-        // function myFunction() {
-        //     var sellDate = new Date(document.getElementById("sellDate").value).Format("yyyy-MM-dd hh:mm:ss");
-        //     var performDate = new Date(document.getElementById("performDate").value).Format("yyyy-MM-dd hh:mm:ss");
-        //     console.log(sellDate);
-        //     console.log(performDate);
-        //     // typeof(sellDate) == string
-        // }
 
 
         $(function () {
 
-
-
-
             $('#submitBtn').click(function () {
-                // x = $('#form').serializeArray();
-                // $.each(x, function (i, field) {
-                //     alert(field.name + ":" + field.value + " ");
-                // });
-
                 //整理表單資料到變數
                 var data = $('#form').serializeArray();                
-                data[1].value =new Date(data[2].value).Format("yyyy-MM-dd hh:mm:ss");
-                data[2].value =new Date(data[2].value).Format("yyyy-MM-dd hh:mm:ss");
-
-                
-
                 JSONData = serializeToJSON(data);
-                alert(JSONData);
+                // alert(JSONData);
                 
                 
-
                 $.ajax({
-                    url: "/activity/update",
+                    url: "/activity/edit",
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     data: JSONData,
@@ -205,7 +179,7 @@
                         if (res.errno === 1) {
                             alert("更新成功!")
                             // location.reload()
-                            location.href = `/activity`
+                            location.href = `/activity/text`
                         } else if (res.errno === 0) {
                             alert("更新失敗!")
                         }
@@ -218,36 +192,17 @@
             });
 
             function serializeToJSON(data) {
-                var activityFileValue = document.getElementById("activityFile").value.split('\\').pop();   
-
+               
                 var values = {};
                 for (index in data) {
                     values[data[index].name] = data[index].value;
                 }
-                
-                // console.log(values);
-                // typeof_values = object
-                values["activityFile"] = activityFileValue;
-                // alert(values.activityFile);
 
                 return JSON.stringify(values)
             }
         })
 
-        // $('#submitBtn').on('click', function() {
-        //     //整理表單資料到變數
-        //     var data = $('#form').serializeArray()
-        //     JSONData = serializeToJSON(data)
 
-        // })
-
-        // function serializeToJSON(data) {
-        //     var values = {};
-        //     for(index in data){
-        //         values[data[index].name] = data[index].value;
-        //     }
-        //     return JSON.stringify(values)
-        // }
 
 
     </script>

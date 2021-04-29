@@ -1,158 +1,264 @@
 var express = require("express");
 var router = express.Router();
+const multer = require('multer');
 var conn = require("../db");
-
-
+var { login_render, login_api } = require('./middleware/iflogin')
+// var {Success,Error} = require('./response')
 
 
 //會員頁-票券
+// 會有兩個sql語句 一個是未參加 一個是沒參加
 router.get("/", function (req, res) {
-	conn.query('select * from orders',
-		'',
-		function (err, rows) {
-			if (err) {
-				console.log(JSON.stringify(err));
-				return;
-			}
-    
-			res.render('./user/user_myTicket.html')
-    }
-	
-	);
+    var sql=`SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,ai.performDate,od.unitPrice,od.quantity,atc.type,orders.orderDate FROM orderdetails as od 
+    inner join orders on orders.orderId=od.orderId
+    inner join activityinfo as ai on ai.activityId=od.activityId
+    inner join area as a on ai.areaId=a.areaId
+    inner join district as d on a.districtId=d.districtId
+    inner join activityticketcategory as atc on atc.categoryId=od.categoryId
+    inner join userinfo as ui on ui.userId=orders.userId
+    where ui.userAccount="abc123" and ai.performDate> NOW();`
+    conn.query(sql,
+        '',
+        function (err, rows) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+
+            res.render('./user/user_myTicket.ejs',{
+                data:rows
+            })
+        }
+
+    );
 })
 //票券
 router.get("/ticket", function (req, res) {
-	
-			res.redirect('/user')
-    
+    res.redirect('/user')
 })
-
-// 票券data
-router.get("/ticket/data", function(req, res) {
-conn.query('select * from orders where userId = 1',
-'',
-function (err, Pdata) {
-    if (err) {
-        console.log(JSON.stringify(err));
-        return;
-    }
-
-res.send(JSON.stringify(Pdata));
-});
-})
-
 
 //我的投稿(心得)
-router.get("/myArticle", function(req, res) {
-   
-    
-        res.render('./user/user_myArticle.html')
+router.get("/myArticle", login_api, function (req, res) {
+    var session = req.session.userinfo;
+    // console.log(session);
+    conn.query( `select * from articleinfo  join userInfo on userInfo.userId=articleinfo.userId 
+    where userAccount = ? and articleDelete=0`,[session.account],
+        function (err, rows) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+            res.render('./user/user_myArticle.ejs', {
+                data: rows,
+                account: session.account,
+                Name: session.name,
+                phone: session.phone,
+                mail: session.email,
+                file: session.file,
+            })
 
+        })
 })
-//我的投稿data
-router.get("/myArticle/data", function(req, res) {
-    conn.query('select * from articleinfo where userId = 1',
-    '',
-    function (err, Pdata) {
-        if (err) {
-            console.log(JSON.stringify(err));
-            return;
-        }
+// 發表文章
+router.get("/myArticle/new", function (req, res) {
+    res.render('./article/article_create.ejs')
+   })
+   // 使用者代號記得改
+   // 上傳文章
+   router.post("/upload", function (req, res) {
+    var req = req.body
+    console.log(req.title)
+    conn.query('insert into articleInfo (userId,articleTitle,articleContent,articleTime,articleFile)values ((SELECT userId FROM userinfo WHERE userAccount="abc123"),?,?,?,?)',
+     [req.title, req.content, new Date(), req.image], function (err, rows) {
+      if (err) {
+       console.log(JSON.stringify(err));
+       return;
+      }
    
-    res.send(JSON.stringify(Pdata));
-});
-})
-
-
-
-////發表心得
+     })
+    res.send("successfully add new article");
+   })
+   //上傳圖片
+   var myStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+     cb(null, "./public/image/upload/article"); // 保存的路徑 (需先自己創建)
+    },
+   
+    filename: function (req, file, cb) {
+     // 為了預防有重複檔名
+     var Today = new Date();
+     var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+     cb(null, date + '-' + file.originalname); // 自定義檔案名稱
+    }
+   });
+   
+   var upload = multer({
+    storage: myStorage, // 設置 storage
+   });
+   
+   router.post('/upload/file', upload.array('file', 3), function (req, res, next) {
+    res.send("上傳成功");
+   });
+   // 我的心得編輯
+   router.get("/myArticle/edit/:id", function (req, res) {
+       var no=req.params.id
+       var sql = `select * from articleinfo  join userInfo on userInfo.userId=articleinfo.userId 
+       where userAccount = "abc123" and articleId=?`
+       conn.query(sql,
+           [no],
+           function (err, rows) {
+               if (err) {
+                   console.log(JSON.stringify(err));
+                   return;
+               }
+               res.render('./user/user_myArticle_edit.ejs', {
+                   data: rows
+   
+               })
+           })
+   })
+   // 編輯文章後的指令
+   router.post("/myArticle/edit/success",function(req,res){    
+       var sql=`update articleInfo SET articleTitle=?, articleContent=? where articleId=?`
+       conn.query(sql,[req.body.title,req.body.content,req.body.id],function (err,rows) {
+           if(err){
+               console.log(err)
+           };
+           res.send("Edit successed.")
+         })
+   })
+   // 刪除文章的指令
+   router.delete("/myArticle/delete",function(req,res){    
+       var sql=`update articleInfo SET articleDelete=1 where articleId=?`
+       conn.query(sql,[req.body.id],function (err,rows) {
+           if(err){
+               console.log(err)
+           };
+           res.send("Edit successed.")
+         })
+   })
 
 //收藏活動樂團
-router.get("/favorite", function(req, res) {
-
-    res.render('./user/user_myFavorite.ejs')
+router.get("/favorite", login_api, function (req, res) {
+    var session = req.session.userinfo;
+    userId = [req.params.userId];
+    conn.query('select * from userinfo ', userId,
+        function (err, Pdata) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+            res.render('./user/user_myFavorite.ejs', {
+                data: Pdata,
+                account: session.account,
+                Name: session.name,
+                phone: session.phone,
+                mail: session.email,
+                file: session.file,
+            })
+        })
 
 })
 //收藏data
-router.get("/favorite/band", function(req, res) {
+router.get("/favorite/band", login_api, function (req, res) {
     conn.query('select * from userband where userId = 1',
-    // userAccount ="abc123"
-    '',
-    function (err, Pdata) {
-        if (err) {
-            console.log(JSON.stringify(err));
-            return;
-        }
-   
-    res.send(JSON.stringify(Pdata));
-});
+        // userAccount ="abc123"
+        '',
+        function (err, Pdata) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+
+            res.send(JSON.stringify(Pdata));
+        });
 })
 
 //活動data
-router.get("/favorite/event", function(req, res) {
+router.get("/favorite/event", login_api, function (req, res) {
     conn.query('select * from userband where userId = 1',
-    // 改成join userAccount =?
-    '',
-    function (err, Pdata) {
-        if (err) {
-            console.log(JSON.stringify(err));
-            return;
-        }
-   
-    res.send(JSON.stringify(Pdata));
-});
+        // 改成join userAccount =?
+        '',
+        function (err, Pdata) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+
+            res.send(JSON.stringify(Pdata));
+        });
 })
 
 
 
 //// 移除追蹤樂團
-router.post("/favorite/band", function (request, response) {
+router.post("/favorite/band", login_api, function (request, response) {
 
-	connection.query(
-		"delete from userband where bandId = " + request.body.bandId +' and useraccount = "abc123"',
-			[]
-		);
-	response.send("row deleted.");
-    
+    connection.query(
+        "delete from userband where bandId = " + request.body.bandId + ' and useraccount = "abc123"',
+        []
+    );
+    response.send("row deleted.");
+
 })
 
 
 //移除收藏活動
-router.post("/favorite/event", function (request, response) {
+router.post("/favorite/event", login_api, function (request, response) {
 
-	connection.query(
-		"delete from useractivity where activityId = " + request.body.activityId + ' and useraccount = "abc123"',
-			[]
-		);
-	response.send("row deleted.");
-    
+    connection.query(
+        "delete from useractivity where activityId = " + request.body.activityId + ' and useraccount = "abc123"',
+        []
+    );
+    response.send("row deleted.");
+
 })
 
 
 //個人資料
-router.get("/profile", function(req, res) {
-    
-    res.render('./user/user_edit.ejs')
+router.get("/profile", login_api, function (req, res) {
+    console.log(req.session.userinfo);
+    // conn.query('select * from userinfo  WHERE firstname = $_SESSION[usreId]  ',
+    userId = [req.params.userId];
+    var session = req.session.userinfo;
+    conn.query('select * from userinfo ', userId,
+        function (err, Pdata) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+            res.render('./user/user_edit.ejs', {
+                data: Pdata,
+                account: session.account,
+                Name: session.name,
+                phone: session.phone,
+                mail: session.email,
+                file: session.file,
+            });
+
+        });
+
+
     // res.send(JSON.stringify(Pdata));
 });
 
 
 // profile資料data
-router.get("/profile/data", function(req, res) {
-    conn.query('select * from userinfo',
-    '',
-    function (err, Pdata) {
-        if (err) {
-            console.log(JSON.stringify(err));
-            return;
-        }
-   
-    res.send(JSON.stringify(Pdata));
-});
-})
+// router.get("/profile/data",login_api, function(req, res) {
+//     conn.query('select * from userinfo',
+//     '',
+//     function (err, Pdata) {
+//         if (err) {
+//             console.log(JSON.stringify(err));
+//             return;
+//         }
+
+//     res.send(JSON.stringify(Pdata));
+// });
+// })
 
 // 編輯個人資料
-// router.put("/profile/data", function (req, res) {
+// router.put("/profile/data",login_api,  function (req, res) {
 
 // 	connection.query(
 // 		"update userinfo set userEmail = ?, userPhone = ? where userId = " 
@@ -162,12 +268,31 @@ router.get("/profile/data", function(req, res) {
 // 				request.body.userPhone
 // 			]);
 // 	response.send("row updated.");
-    
+
 // })
 
 
 // 上傳大頭貼
 // "update userinfo set userFile = ? where userId = " 
 
+//left拉出去???
+// router.get("/",login_api, function(req, res) {
+//     userId = [req.params.userId] ;   
+//     var session = req.session.userinfo;
+//     conn.query('select * from userinfo ',userId,
+//     function (err, Pdata) {
+//         if (err) {
+//             console.log(JSON.stringify(err));
+//             return;
+//         }
+//     res.render('./user/user_left.ejs',{
+//         data: Pdata,
+//         Name: session.name
+//     });
 
+// });
+
+
+//     // res.send(JSON.stringify(Pdata));
+// });
 module.exports = router;

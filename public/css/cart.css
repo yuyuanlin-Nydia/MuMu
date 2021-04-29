@@ -1,0 +1,42 @@
+html{
+    background-color: var(--color4);
+}
+.box {
+    width: 80% ;
+    margin: 50px auto;
+    background-color: white;
+    padding: 50px;
+}
+table{
+    width:100% ;
+}
+thead>tr>th{
+    background-color: var(--color1);
+    color: white;
+    padding:10px ;
+}
+.act_img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+
+}
+tbody>tr>td{
+    padding: 20px;
+    border-bottom: 3px solid var(--color2);
+}
+tbody>tr>td:nth-of-type(1){
+    /* display: flex; */
+}
+.count_sec{
+    font-size: 16px;
+    margin-left: 40%;
+}
+/* .count_sec span{
+    position: relative;
+    right: 0;
+} */
+.text_tea{
+    color: var(--color2);
+
+}

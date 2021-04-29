@@ -1,0 +1,45 @@
+ <% const imageList=data3.map(item => Object.values(item)[6]);  %>
+            <% for(item in imageList){%>
+
+
+                <div class="bandAct">
+                    <img src="/image/activity/<%- imageList[item] %>" alt="">
+                </div>
+                <% } %>
+
+
+
+                 <div class="text-center">
+                            <% for (i=1;i<=9;i++){ %>
+                                <a href="/band/page<%= i %>" class="text-center">
+                                    <button class="btn_page">
+                                        <%= i %>
+                                    </button>
+                                </a>
+                                <% } %>
+                        </div>
+
+                        // 分頁
+router.get('/:page([0-9]+)', function(req, res) {
+    var page = req.params.page;
+    var count = 9;
+    var offset = (page - 1) * count;
+    // limit要放最後
+    var sql = `SELECT * FROM bandInfo LIMIT${offset},${count} ;
+            SELECT COUNT(*) AS COUNT FROM bandInfo`
+        // console.log(sql);
+    conn.query(sql, [0], function(err, result) {
+        if (err) { console.log(err); };
+        var last_page = Math.ceil((result[1][0].COUNT) / count)
+        var data = result;
+        // 	如果超過最大頁數 就到編號1的文章
+        if (page > last_page || page < 1) {
+            res.redirect("/band/1")
+        }
+        res.render('./band/band__all.ejs', {
+            data: data[0],
+            last_page: last_page,
+
+        })
+    });
+})

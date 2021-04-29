@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>樂團介紹</title>
     <link rel="stylesheet" href="">
     <link href="../css/band.css" rel="stylesheet">
+    <link href="../css/mutual.css" rel="stylesheet">
 
 
 </head>
@@ -16,7 +17,7 @@
 
     <%-include ("../nav.ejs")%>
 
-        <section class="Banner">
+        <section>
             <!-- <div class=" "> -->
 
             <div id="cover">
@@ -26,15 +27,16 @@
             <!-- </div> -->
             <div id="shape">
                 <div class="">
-                    <p class="heading">
+                    <p class="title">
                         <%= data.bandName %>
 
                     </p>
+                    <br><br><br>
 
 
                     <p class="bandIntro">
                         <%= data.bandContent %>
-                            <input type="button" value="收藏">
+
                     </p>
 
                 </div>
@@ -43,30 +45,43 @@
 
         </section>
 
-        <section class="history">
-            <h6>歷年專輯</h6>
+        <section id="history">
+            <h6 class="title bandhead">歷年專輯</h6>
             <div class="alums">
                 <% const nameList=data2.map(item => Object.values(item)[2]);  %>
                     <% const dateList=data2.map(item => Object.values(item)[3]);  %>
                         <% const imgList=data2.map(item => Object.values(item)[4]);  %>
-                            <% for(item in nameList){%>
+                            <% const introList=data2.map(item => Object.values(item)[5]);  %>
+                                <% for(item in nameList){%>
 
-                                <div class="alum">
-                                    <img src="/image/band/<%- imgList[item] %>" alt="">
-                                    <div class="text">
-                                        <p>專輯名稱:
+                                    <div class="alum">
+                                        <img src="/image/band/<%- imgList[item] %>" alt="">
+                                        <div class="bandText">
+                                            <p>
 
-                                            <!-- 出來是一個陣列 -->
-                                            <%- nameList[item] %>
-                                        </p>
-                                        <p class="date">專輯日期:
-                                            <%- dateList[item] %>
+                                                <%- nameList[item] %>
+                                            </p>
+                                            <p>
 
-                                        </p>
+
+
+                                                <%var date = dateList[item].toLocaleDateString(); %>
+                                                    <% var result = date.replace(new RegExp('/', 'g'), '-');%>
+                                                        <%- result%>
+
+
+
+                                            </p>
+                                            <p>
+                                                <%- introList[item] %>
+
+                                            </p>
+
+                                        </div>
                                     </div>
-                                </div>
+                                    <% } %>
 
-                                <% } %>
+
 
 
 
@@ -78,16 +93,20 @@
 
         </section>
         <section class="recent">
-            <h6 class="heading">近期活動</h6>
-            <hr>
-            <% const imageList=data3.map(item => Object.values(item)[6]);  %>
-                <% for(item in nameList){%>
+            <h6 class="sub_title recentact">近期活動</h6>
+            <br>
+            <hr id="bandhr">
+            <% const imageList=data3.map(item => Object.values(item)[5]);  %>
 
 
-                    <div>
-                        <img src="/image/band/<%- imageList[item] %>" alt="">
+                <% for(item in imageList){%>
+
+
+                    <div class="bandAct">
+                        <img src="/image/upload/activity/<%- imageList[item] %>" alt="">
                     </div>
                     <% } %>
+
 
 
 

@@ -44,7 +44,9 @@
             <div class="search_div">
                 <input type="text" name="search" class="form_input" style="background-color: var(--color4);"
                     placeholder="Search">
-                <i class="fas fa-search btn_search"></i>
+                <button type="submit" id="submitBtn"><i class="fas fa-search btn_search"></i></button>
+                </a>
+                
                 <!-- <input type="submit" id="submitBtn"> -->
             </div>
             
@@ -88,7 +90,7 @@
             <div class="campaign_item">
                 <div class="campaign_img">
                     <a href="/activity/single/<%= item.activityId %>">
-                        <img src="../../image/activity/kktix_banner______1_large.png" alt=""></a>
+                        <img src="../../image/upload/activity/<%= item.activityFile %>" alt=""></a>
                 </div>
                 <div class="campaign_title">
                     <p>Mumu Company Niigata</p>
@@ -107,7 +109,6 @@
             <% for(var i = 1; i <= last_page; i++) { %>
                 <span class="btn_tea_radius"><a href="/activity/<%= i%>"><%= i%></a></span>
             <% } %>
-
         </div>
 
 

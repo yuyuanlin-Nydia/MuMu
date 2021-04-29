@@ -8,18 +8,7 @@
     margin: 0 auto 80px;
     text-align: center;
 }
-.banner {
-    width: 100%;
-    height: 300px;
-    object-position: 50% 50%;;
-    object-fit: cover;
-}
-/* 調標題位置 */
-.title{
-    margin: -100px 0px 50px 50px;
-    color: var(--color5);
-    font-weight: bolder;
-}
+
 .ringcon {
     display: inline-block;
     border: 1px solid;
@@ -83,6 +72,7 @@
 .arc_pic{
     width: 100%;
     height: 200px;
+    object-fit: cover;
 }
 /* Top Bar111 */
 
@@ -96,16 +86,6 @@
     margin-top: 40px;
     
 }
-
-
-/* h6,
-.heading {
-    margin: 0 0 20px 0;
-    font-size: 22px;
-    line-height: normal;
-    font-weight: normal;
-    text-transform: capitalize;
-} */
 
 .heading.nospace {
     margin-bottom: 0;
@@ -194,8 +174,7 @@ section {
     #mainav form {
         display: block;
     }
-    #breadcrumb {}
-    .container {}
+
     #comments input[type="reset"] {
         margin-top: 10px;
     }
@@ -264,11 +243,7 @@ section {
     #latest article {
         max-width: 348px;
     }
-    /* Uses the one_third width in pixels */
-    #footer {
-        padding-bottom: 50px;
-    }
-    /* Not required, just looks a little better */
+ 
 }
 
 @media screen and (max-width:450px) {
@@ -355,9 +330,3 @@ img {
 }
 
 
-/* Fonts
---------------------------------------------------------------------------------------------------------------- */
-
-
-/* Generalise
---------------------------------------------------------------------------------------------------------------- */

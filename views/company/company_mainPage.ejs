@@ -23,6 +23,11 @@
     .profile-work div a:nth-of-type(4) {
         color: var(--color4) !important;
     }
+    .act_img{
+        width: 120px;
+        height: 90px;
+        object-fit: cover;
+    }
 </style>
 
 <body>
@@ -55,18 +60,16 @@
                             <input type="File" name="fileToUpload" id="fileToUpload">
                         </form>
 
-                        <% data.forEach((item)=> { %>
-                        <h5 class="text-center text-white mt-3"><%= item.companyName %></h5>
-                        <% }) %>
+                       
                     </div>
 
                     <div class="  p-5 p-md-1 select_left ml-5">
                         <div class="profile-work ">
                             <!-- 前面放icon -->
                             
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/" class="user_menu" style="color: var(--color2)">我的投稿</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/" class="user_menu" style="color: var(--color2)">我的活動</a><br /></div>
                            
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu" >編輯資料</a><br />
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu">編輯資料</a><br />
                             </div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登　　出</a></div>
                         </div>
@@ -77,7 +80,12 @@
 
                 <!-- 右側 開始 -->
                 <div class="col-md-8  pl-5">
-                    <div class="campaign_item d-flex"  >
+                    <div class="d-flex mb-5" style="justify-content: space-between;">
+                        <h4 class="title ml-5">活動列表</h4>
+                        <button class="btn_tea2">發起活動</button>
+                    </div>
+                    
+                    <!-- <div class="campaign_item d-flex"  >
                         <div class="campaign_img d-flex">
                             <a href="">
                                 <img width="87.3px" height="120px" src="https://dummyimage.com/275x183/000/fff" alt="">
@@ -90,27 +98,28 @@
                             </div>
                         </div>
                         
-                        <div class="campaign_btn"><a href="/activity/single">〉</a></div>
+                        <div class="campaign_btn"><a href="/activity/single" style="font-size: large;">〉</a></div>
 
-                    </div>
+                    </div> -->
+                   
+                    
                     <% data.forEach((item)=> { %>
                     
-                     <div class="campaign_item d-flex">
-                         <div class="campaign_img d-flex">
-                            <a href="/activity/<%= item.activityId %>">
-                                <img width="87.3px" height="120px"  src="https://dummyimage.com/275x183/000/fff" alt="">
-                            </a>
-                            <div class="campaign_title ml-3">
-                                <p><%= item.companyName %></p>
-                                <p class="sub_title"><%= item.activityTitle %></p>
-                                <p> <%= item.sellDate %> ～ <%= item.performDate %></p>
+                        <div class="campaign_item d-flex">
+                            <div class="campaign_img d-flex">
+                               <a href="/activity/<%= item.activityId %>">
+                                   <img class="act_img"  src="../image/activity/BANNER_large.jpg" alt="">
+                               </a>
+                               <div class="campaign_title ml-3">
+                                   <p><%= item.companyName %></p>
+                                   <p class="sub_title"><%= item.activityTitle %></p>
+                                   <p> <%= sellDate %> ～ <%= performDate %></p>
+                               </div>
                             </div>
-                         </div>
-                         <div class="campaign_btn"><a href="/activity/single">〉</a></div>
-
-                     </div>
-                     <% }) %>
-                    
+                            <div class="campaign_btn"><a class="go_activity" href="/activity/single" >〉</a></div>
+   
+                        </div>
+                        <% }) %>
                 </div>
             </div>
 

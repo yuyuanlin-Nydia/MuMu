@@ -62,9 +62,7 @@
                             <input type="File" name="fileToUpload" id="fileToUpload">
                         </form>
 
-                        <% data.forEach((item)=> { %>
-                            <h5 class="text-center text-white mt-3"><%= item.companyName %></h5>
-                        <% }) %>
+                      
                     </div>
 
                     <div class="  p-5 p-md-1 select_left ml-5">
@@ -91,26 +89,29 @@
                                 <div class="tab-pane fade show active" id="home" role="tabpanel"
                                     aria-labelledby="home-tab">
                                     <div class="form-group row">
-                                        <label for="e_mail" class="col-md-4 sub_title">統編</label>
+                                        <label for="e_mail" class="col-md-2 sub_title">統&emsp;&emsp;編:</label>
+                                        
                                         <div class="col-md-8">
-                                           15054843
+                                            <%=data[0].companyTaxNo %>
+                                            
                                         </div>
+                                        
                                     </div>
                                  
                                     <div class="form-group row">
-                                        <label for="e_mail" class="col-md-4 sub_title">電子郵件</label>
+                                        <label for="e_mail" class="col-md-2 sub_title" >電子郵件:</label>
                                         <div class="col-md-8">
-                                            <input class="form-control" type="email" name="e_mail" id="e_mail">
+                                            <input class="form-control" type="email" name="e_mail" id="e_mail"  placeholder= <%=data[0].companyEmail %>>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="phone" class="col-md-4 sub_title">連絡電話</label>
+                                        <label for="phone" class="col-md-2 sub_title" >連絡電話:</label>
                                         <div class="col-md-8">
-                                            <input class="form-control" type="tel" name="phone" id="phone">
+                                            <input class="form-control" type="tel" name="phone" id="phone" placeholder= <%=data[0].companyPhone %>>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="city" class="col-md-4 sub_title">地址</label>
+                                        <label for="city" class="col-md-2 sub_title">地&emsp;&emsp;址:</label>
 
                                         <div class="col-md-4">
                                             <select class=" form-control" name="city" id="city">
@@ -124,19 +125,39 @@
                                                 <option value="潭子區">潭子區</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4"></div>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-2" ></div>
                                         <div class="col-md-8 mt-2">
-                                            <input class="form-control" type="text" name="address">
+                                            <input class="form-control" type="text" name="address" placeholder= <%=data[0].companyAddress %>>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4">
+                                        <label for="e_mail" class="col-md-2 sub_title">原始密碼:</label>
+                                        <div class="col-md-8">
+                                            <input class="form_input" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 sub_title">修改密碼:</label>
+                                        <div class="col-md-8">
+                                            <input class="form_input" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 sub_title">確認密碼:</label>
+                                        <div class="col-md-8">
+                                            <input class="form_input" type="text" name="password" id="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mt-4">
+                                        <div class="col-md-2">
                                             <br>
                                         </div>
                                          <div class="col-md-8  d-flex" style="justify-content:flex-end;">
                                             
                                             <div>
-                                                <input class="btn_blue2" type="submit" value="確認修改">
+                                                <button class="btn_blue2">確認修改</button>
+                                                <!-- <input class="btn_blue2" type="submit" value="確認修改"> -->
                                             </div>
                                             
                                             
@@ -165,6 +186,31 @@
         <%-include("../footer.ejs")%>
         <!-- 頁尾  結束-->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+                  //需要知道更改哪個東西所以要使用id單純顯示更改資訊還沒有更改
+        function Edit(id) {
+            $.ajax({
+                url: "/company/edit/detail/",
+                type: "GET",
+                success: function(res) {
+                    // JSON.parse() 方法把會把一個JSON字串轉換成 JavaScript的數值或是物件。另外也可選擇使用reviver函數讓這些數值或是物件在被回傳之前做轉換
+                    // 因為這個JSON.stringify(new Success('update success')),所以回傳到前端的是json格式
+                    var res = JSON.parse(res)
+                    //將數據庫res的回傳的data裡的值傳遞進input標籤裡
+                    $("input[name='e_mail']").val(res.data.companyEmail)
+                    $("input[name='phone']").val(res.data.companyPhone)
+                    // $("input[name='city']").val(res.data.city)
+                    // $("input[name='town']").val(res.data.town)
+                    $("input[name='address']").val(res.data.companyAddress)
+                    
+                },
+                error: function() {
+                    alert("系統錯誤!")
+                },
+            })
+        }
+
+        </script>
     </body>
 
 </html>

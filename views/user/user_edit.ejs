@@ -36,6 +36,10 @@
     <%-include("../nav.ejs")%>
 
         <!-- 導覽列 結束 -->
+        <div id="banner_box">
+            <img src="../../image/user/member.png" alt="banner" class="banner">
+            <p class="title">會員管理</p>
+        </div>
         <!-- <div class="container "> -->
         <img src="../../public/image/user/member.png" alt="">
         <form method="post">
@@ -43,15 +47,6 @@
                 <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
                 <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
                     <div class="profile-img  p-1 mt-5 ml-5">
-                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                            alt="" />
-                        <br>
-                        <br> -->
-                        <!-- <div class="file btn btn-sm btn-primary ">
-                            更改大頭貼
-                            <input type="file" name="file" />
-                        </div> -->
-
                         <form action="upload.php" method="post" enctype="multipart/form-data">
                             <label for="fileToUpload">
                                 <div class="profile-pic">
@@ -63,18 +58,19 @@
                         </form>
 
 
-                        <h5 class="text-center text-white mt-3">林郁媛</h5>
+                        <h5 class="text-center text-white mt-3 uName"> <%= Name%>  </h5>
                     </div>
 
                     <div class="  p-5 p-md-1 select_left ml-5">
                         <div class="profile-work ">
                             <!-- 前面放icon -->
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu">我的票券</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">我的投稿</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">參戰心得</a><br /></div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu">收藏追蹤</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu" style="color: var(--color2)">編輯資料</a><br />
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu"
+                                    style="color: var(--color2)">編輯資料</a><br />
                             </div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登　　出</a></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
                         </div>
                     </div>
                 </div>
@@ -83,10 +79,10 @@
 
                 <!-- 右側 開始 -->
                 <div class="col-md-8  pl-5 right_box">
-                    <h4 class="title ml-5">編輯個人資料</h4>
+                    <h4 class="right_title ml-5">編輯個人資料</h4>
                     <div class="col-md-12 pl-md-5 ">
                         <div class="tab-content profile-tab" id="myTabContent">
-                            <div class=""  >
+                            <form id="">
 
                                 <div class="form-group row text-md-center">
 
@@ -100,7 +96,7 @@
 
                                     <label for="e_mail" class="col-md-2 col-sm-12 userinfo">電子郵件</label>
                                     <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="email" name="e_mail" id="e_mail">
+                                        <input class="form-control" type="email" name="e_mail" id="e_mail" placeholder=" <%= mail  %>">
                                     </div>
 
                                 </div>
@@ -108,7 +104,7 @@
 
                                     <label for="phone" class="col-md-2 col-sm-12 userinfo">連絡電話</label>
                                     <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="tel" name="phone" id="phone">
+                                        <input class="form-control" type="tel" name="phone" id="phone" placeholder=" <%= phone  %>">
                                     </div>
 
                                 </div>
@@ -118,19 +114,19 @@
 
                                     <div class="col-md-2 col-sm-6 mb-sm-1">
                                         <select class=" form-control" name="city" id="city">
-                                            <option value="台北市">台北市</option>
-                                            <option value="台中市">台中市</option>
+                                            <option value=""></option>
+                                          
                                         </select>
                                     </div>
                                     <div class="col-md-2 col-sm-6">
                                         <select class="form-control " name="town">
-                                            <option value="南屯區">南屯區</option>
-                                            <option value="潭子區">潭子區</option>
+                                            <option value=""></option>
+                                            
                                         </select>
                                     </div>
 
                                     <!-- 換行用 -->
-                                    <div class="col-md-12"></div> 
+                                    <div class="col-md-12"></div>
                                     <!-- 地址輸入欄 -->
 
                                     <div class="col-md-6 mt-2">
@@ -138,19 +134,47 @@
                                     </div>
                                     <!-- 換行用 -->
                                     <div class="col-md-12"></div>
-                                    <div class="col-md-6 mt-2 text-right">
-                                        <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" type="submit" value="確定">
+                                </div>
+                                <h4 class="right_title ml-5">更改密碼</h4>
+                                <div class="form-group row text-md-center">
+
+                                    <label for="phone" class="col-md-2 col-sm-12 userinfo">舊密碼</label>
+                                    <div class="col-md-4 col-sm-12">
+                                        <input class="form-control" type="tel" name="phone" id="phone">
                                     </div>
+
+                                </div>
+                                <div class="form-group row text-md-center">
+
+                                    <label for="phone" class="col-md-2 col-sm-12 userinfo">新密碼</label>
+                                    <div class="col-md-4 col-sm-12">
+                                        <input class="form-control" type="tel" name="phone" id="phone">
+                                    </div>
+
+                                </div>
+                                <div class="form-group row text-md-center">
+
+                                    <label for="phone" class="col-md-2 col-sm-12 userinfo">新密碼確認</label>
+                                    <div class="col-md-4 col-sm-12">
+                                        <input class="form-control" type="tel" name="phone" id="phone">
+                                    </div>
+
                                 </div>
 
+                                <div class="col-md-6 mt-2 text-right">
+                                    <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" type="submit"
+                                        value="確定">
+                                </div>
+                            </form>
 
-                                <!-- <div class="form-group row cfmBtn"> -->
 
-                                <!-- </div> -->
-                            </div>
+                            <!-- <div class="form-group row cfmBtn"> -->
+
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
 

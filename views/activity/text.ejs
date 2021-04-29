@@ -74,48 +74,17 @@
                 <!-- 右側 開始 -->
                 <div class="col-md-8 emp-profile pl-5">
                     <div class="d-flex pr-3">
-                        <h4 class="title">我的投稿</h4>
+                        <h4 class="title">我的活動</h4>
                         <div class="ml-auto">
                             <a href="/activity/create">
                                 <input type="button" class="btn btn-outline-primary" name="btnAddArticle"
-                                    value="發表文章" />
+                                    value="發起活動" />
                             </a>
                         </div>
                     </div>
 
                     <div class="col-md-12">
-                        <!-- <div class="d-flex flex-wrap mb-3 p-2 article_card">
-                            <div class="article_box col-md-12">
-                                <h5><b>所謂音樂祭 心得分享</b>
-                                    <div class="float-right">
-                                        <span>
-                                            <button type="button" class="edit btn-sm btn-secondary"><i
-                                                    class="far fa-edit"></i></button>
-                                        </span>&nbsp;
-                                        <span>
-                                            <button type="button" class="delete btn-sm btn-secondary"><i
-                                                    class="far fa-trash-alt"></i></button>
-                                        </span>
-                                    </div>
-                            </div>
-                            </h5>
-                            <div class=" d-flex col-md-12">
-                                <div class=" col-md-4 ">
-                                    <img src="/image/user/背景.jpg" alt="" class="article_img">
-                                </div>
-                                <div class="col-md-8 ">
-                                    <p class="article_content">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Necessitatibus,
-                                        quae amet possimus earum explicabo magnam. Adipisci voluptate dicta mollitia
-                                        id, consectetur quibusdam corporis aspernatur esse ipsam, excepturi
-                                        reiciendis explicabo molestias?
-                                    </p>
-                                    <a href="" class="float-right">看更多......</a>
-                                </div>
-                            </div>
 
-
-                        </div> -->
                         <% data.forEach((item)=> { %>
                             <div class="d-flex flex-wrap mb-3 p-2 article_card">
                                 <div class="article_box col-md-12">
@@ -130,11 +99,11 @@
                                                     </a>
                                                 </span>
                                                 <span>
-                                                    <button type="button" class="delete btn-sm btn-secondary"><i
+                                                    <button type="submit" class="del delete btn-sm btn-secondary"><i
                                                             class="far fa-trash-alt"></i></button>
                                                 </span>
                                                 <input type="hidden" class="activityId" name="activityId" value=<%=item.activityId %>>
-                                                <input type="submit" class="del">
+                                                <!-- <input type="submit" class="del"> -->
                                         </div>
                                 </div>
                                 </h5>
