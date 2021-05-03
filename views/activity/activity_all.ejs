@@ -59,6 +59,10 @@
             color: var(--color3);
             /* background-color: brown; */
         }
+        .campaign_top>a>button {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
     </style>
 </head>
 
@@ -131,7 +135,7 @@
             <% }) %>
             <div class="campaign_top">
                 <% for(var i = 1; i <= last_page; i++) { %>
-                    <a href="/activity/<%= i%>"><span class="btn_tea_radius"><%= i%></span></a>
+                    <a href="/activity/<%= i%>"><button class="btn_page" style="line-height: 1;"><%= i%></button></a>
                 <% } %>
             </div>
     

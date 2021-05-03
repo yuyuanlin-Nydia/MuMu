@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var conn = require("../db");
 const multer = require('multer');
+var { Success, Error } = require('./response')
 
 router.get("/", function (req, res) {
 	function dateString(e) {
@@ -9,12 +10,13 @@ router.get("/", function (req, res) {
 		var date = mmddyy.getFullYear().toString() + "年" + (mmddyy.getMonth() + 1).toString() + "月" + mmddyy.getDate().toString() + "日";
 		return date;
 		}
-	var sql = 'select * from companyinfo inner join activityinfo on companyinfo.companyid = activityinfo.companyid where companyAccount = ?;';
+	var sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) WHERE c.companyId=? ORDER BY activityId DESC`;
 	
 	var session = req.session.companyinfo;
-	var data = [session.cAccount];
-	console.log(req.session.companyinfo);
-	conn.query(sql,data,
+	// var data = [session.cid];
+	var data = [session.cid];
+	// console.log(session.cid);
+	conn.query(sql,[5],
 		function (err, rows) {
 			if (err) {
 				console.log(JSON.stringify(err));
@@ -25,8 +27,6 @@ router.get("/", function (req, res) {
 				// data: JSON.stringify(rows)
 
 				data: rows,
-				performDate:dateString(rows[0].performDate),
-				sellDate:dateString(rows[0].sellDate),
 				Caccount: session.cAccount,
 				Cname: session.cName,
 				Cphone: session.cPhone,
@@ -39,9 +39,9 @@ router.get("/", function (req, res) {
 
 })
 
-router.get("/", function (req, res) {
+// router.get("/", function (req, res) {
 
-})
+// })
 
 
 
@@ -120,6 +120,30 @@ router.get("/myArticle", function (req, res) {
 //         }
 //     })
 // })
+
+
+// 刪除活動POST
+router.post('/delete', function (req, res) {
+    var body = req.body;
+    var data = parseInt(body.activityId);
+
+    var sql = `Delete from activityband where activityId = ${data};
+    Delete from activitydetails where activityId = ${data};
+    Delete from activityinfo where activityId = ${data};
+    Delete from activityprice where activityId = ${data};`
+	// console.log(sql);
+    conn.query(sql, function (error, results, fields) {
+        if (results) {
+            res.end(
+                JSON.stringify(new Success('insert success'))
+            )
+        } else {
+            res.end(
+                JSON.stringify(new Error('insert failed'))
+            )
+        }
+    })
+})
 
 
 module.exports = router;

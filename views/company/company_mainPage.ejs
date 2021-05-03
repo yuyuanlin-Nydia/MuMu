@@ -87,7 +87,7 @@
                 <div class="col-md-8  pl-5">
                     <div class="d-flex mb-5" style="justify-content: space-between;">
                         <h4 class="title ml-5">活動列表</h4>
-                        <a href="/activity/create"><button class="btn_tea2">發起活動</button></a>
+                        <a href="/activity/create"><button type="button" class="btn_tea2">發起活動</button></a>
                     </div>
                     
                     <!-- <div class="campaign_item d-flex"  >
@@ -155,6 +155,7 @@
         
         <script>
             $(function () {
+
                 
                 // console.log($('.del').closest('form').find('.activityId')[1].value);
                 $('.del').click(function () {
@@ -167,7 +168,7 @@
     
                     //第一次會跳轉到company POST錯誤的地方 
                     $.ajax({
-                        url: "/activity/delete",
+                        url: "/company/delete",
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
                         data: JSONData,

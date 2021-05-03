@@ -42,17 +42,33 @@
 
 <body class="campaignContent_body">
     <%-include("../nav.ejs")%>
+    <% Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份 
+            "d+": this.getDate(), //日 
+            "h+": this.getHours(), //小时 
+            "m+": this.getMinutes(), //分 
+            "s+": this.getSeconds(), //秒 
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+            "S": this.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }%>
+    <% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %> 
     <!-- 左側的div--start -->
     <div class="left_div">
-        <h5 class="sub_title">活動資訊</h1><% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %> 
+        <h5 class="sub_title">活動資訊</h1>
             <div class="table_con"> <% var activity_day=JSON.parse(JSON.stringify(activity_day)) %> <% activity_day.forEach((a)=>{ %>
                
                 <p class="little_date">日期</p>
-                <p><%=a.activityDate.substring(0,4)+"/"+a.activityDate.substring(5,7)+"/"+a.activityDate.substring(8,10)+"("+monthDay[a.acd]+")"%></p>
+                <p><%= (new Date(a.activityDate)).Format("yyyy/MM/dd (")+monthDay[a.acd]+")" %></p>
                 <%})%>
-                <p>預售</p>
-                <p><%=sell_date%>(<%= sell_week %>)</p>
-
+                <p>預售</p><% var s=JSON.parse(JSON.stringify(data[0])) %>
+                <p> <%= (new Date(s.sellDate)).Format("yyyy/MM/dd (")+monthDay[s.sell]+")" %></p>
+                
                 <p>地點</p>
                 <p><%= data[0].activityLocation %> </p>
 
@@ -111,7 +127,8 @@
                 <tr>
                     <td class="big_title">活動日期：</td>
                     <td class="little_title">活動日期：</td>
-                    <td><%= a.activityDate.substring(0,4)+"/"+a.activityDate.substring(5,7)+"/"+a.activityDate.substring(8,10)+"  ("+monthDay[a.acd]+") "+a.activityDate.substring(11,13)+":"+a.activityDate.substring(14,16) %></td>
+                    
+                    <td><%= (new Date(a.activityDate)).Format("yyyy/MM/dd (")+monthDay[a.acd]+(new Date(a.activityDate)).Format(") hh:mm") %></td>
                 </tr>
                 <% }) %> 
             </table>
@@ -121,9 +138,9 @@
             活動地址： <%= data[0].city + data[0].town + data[0].activityAddress %> 
             
             演出樂團： <% band.forEach((b)=>{ %> <%= b.bandName %> <% }) %>
-            
-            啟售時間： <%= sell_date+"("+sell_week+")" %> 
-            
+            <% var s=JSON.parse(JSON.stringify(data[0])) %>
+            啟售時間： <%= (new Date(s.sellDate)).Format("yyyy/MM/dd (")+monthDay[s.sell]+(new Date(s.sellDate)).Format(") hh:mm") %>
+
             購票方式： MUMU及全台全家便利商店
 
             票　　數： <%= data[0].ticketAmount %> （剩餘  張）

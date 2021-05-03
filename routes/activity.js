@@ -8,8 +8,7 @@ const url = require('url');
 const querystring = require('querystring');
 var connection = require("../db");
 
-var sql = `
-SELECT * FROM activityInfo;`
+var sql = `SELECT * FROM activityInfo;`
 
 // //跳轉到有頁數的路由
 router.get('/', function (req, res) {
@@ -73,38 +72,51 @@ router.get("/single/:id([0-9]+)", function (req, res) {
     SELECT activityDetailId, activityDate, WEEKDAY(activityDate)as acd,activityDetailId FROM activitydetails WHERE activityId =?;
     SELECT bandName FROM activityband a INNER JOIN bandinfo b ON(a.bandId=b.bandId) WHERE activityId = ?`
 
-    var monthDay = ["一", "二", "三", "四", "五", "六", "日"]
-    function dateString(e) {
-        var mmddyy = new Date(e);
-        var date = mmddyy.getFullYear().toString() + "/" + (mmddyy.getMonth() + 1).toString() + "/" + mmddyy.getDate().toString();
-        return date;
-    }
 
-    
-    connection.query(sql, [req.params.id,req.params.id,req.params.id], function (error, rows) {
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+    // Date.prototype.Format = function (fmt) {
+    //     var o = {
+    //         "M+": this.getMonth() + 1, //月份 
+    //         "d+": this.getDate(), //日 
+    //         "h+": this.getHours(), //小时 
+    //         "m+": this.getMinutes(), //分 
+    //         "s+": this.getSeconds(), //秒 
+    //         "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+    //         "S": this.getMilliseconds() //毫秒 
+    //     };
+    //     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    //     for (var k in o)
+    //         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    //     return fmt;
+    // }
+
+
+    connection.query(sql, [req.params.id, req.params.id, req.params.id], function (error, rows) {
         if (error) {
             console.log(error);
         }
         // console.log(rows[0]);
         connection.query(`SELECT activityId FROM useractivity WHERE userId =?`, [3], function (error, favorates) {
-        if (error) {
-            console.log(error);
-        }
-        res.render('./activity/activity_single.ejs', {
-            data: rows[0],
-            activity_day:rows[1],
-            band: rows[2],
-            // activity_date_one:dateString(rows[1][0].activityDate)+"("+monthDay[rows[1][0].acd]+")",
-            // activity_date_two:dateString(rows[1][1].activityDate)+"("+monthDay[rows[1][1].acd]+")",
-            id: req.params.id,
-            sell_week: monthDay[rows[0][0].sell],
-            sell_date: dateString(rows[0][0].sellDate),
-            // 收藏的活動
-            favorates:favorates,
-            activityId:req.params.id
-        });
+            if (error) {
+                console.log(error);
+            }
+            // var y = JSON.parse(JSON.stringify(rows[0]))
+            // y.forEach((x) => {
+            //     console.log((new Date(x.sellDate)).Format("yyyy/MM/dd (")+monthDay[x.sell]+(new Date(x.sellDate)).Format(") hh:mm"));
+            // })
+            res.render('./activity/activity_single.ejs', {
+                data: rows[0],
+                activity_day: rows[1],
+                band: rows[2],
+                id: req.params.id,
+                // 收藏的活動
+                favorates: favorates,
+                activityId: req.params.id
+            });
+            //console.log(typeof(rows));
         })
-        
+
 
     })
 })
@@ -125,7 +137,7 @@ router.get("/create", function (req, res) {
 // 編輯活動畫面get
 router.get('/edit/:aid([0-9]+)', function (req, res) {
 
-    sql =`SELECT activityTitle,activityContent,activityLocation,areaId,activityAddress,categoryId,unitPrice,ticketAmount FROM activityinfo i INNER JOIN activityprice p ON (i.activityId=p.activityId)WHERE i.activityId =?`
+    sql = `SELECT activityTitle,activityContent,activityLocation,areaId,activityAddress,categoryId,unitPrice,ticketAmount FROM activityinfo i INNER JOIN activityprice p ON (i.activityId=p.activityId)WHERE i.activityId =?`
     activityId = req.params.aid
     connection.query(sql, [activityId], function (error, rows) {
 
@@ -134,7 +146,7 @@ router.get('/edit/:aid([0-9]+)', function (req, res) {
         }
         res.render('./activity/activity_edit.ejs', {
             data: rows,
-            activityId:req.params.aid
+            activityId: req.params.aid
         });
     })
 })
@@ -142,30 +154,30 @@ router.get('/edit/:aid([0-9]+)', function (req, res) {
 // 搜尋get
 router.get('/search', function (req, res) {
 
-    search = JSON.stringify("%"+req.query.text+"%");
+    search = JSON.stringify("%" + req.query.text + "%");
 
     var all = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE activityTitle LIKE ${search};`
     var north = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 1 AND 6) AND activityTitle LIKE ${search};`
     var middle = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 7 AND 11) AND activityTitle LIKE ${search};`
     var south = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 12 AND 15) AND activityTitle LIKE ${search};`
-    
-    districtId =parseInt(req.query.districtId) ;
+
+    districtId = parseInt(req.query.districtId);
 
     switch (districtId) {
         case 1:
-            sql=all;
+            sql = all;
             break;
         case 2:
-            sql=north;
+            sql = north;
             break;
         case 3:
-            sql=middle;
-            break;     
+            sql = middle;
+            break;
         default:
-            sql=south;
+            sql = south;
             break;
     }
-    
+
     // console.log(sql);
 
     connection.query(sql, function (error, rows) {
@@ -177,8 +189,8 @@ router.get('/search', function (req, res) {
             nums_per_page: 1,
             total_nums: 1,
             last_page: 2,
-            search:search,
-            districtId:districtId
+            search: search,
+            districtId: districtId
         });
     })
 
@@ -217,7 +229,7 @@ router.post('/update', function (req, res) {
 (?, ?, ?, ?, ?, ?,?,?,?,?);`
     var data = [5, body.activityTitle, body.activityFile, body.activityContent, body.activityLocation, body.areaId, body.activityAddress, body.sellDate, body.performDate, parseInt(body.ticketAmount)];
 
-    connection.query(sql,data, function (error, results, fields) {
+    connection.query(sql, data, function (error, results, fields) {
         if (results) {
             res.end(
                 JSON.stringify(new Success('insert success'))
@@ -229,26 +241,26 @@ router.post('/update', function (req, res) {
         }
         connection.query(`SELECT activityId FROM activityinfo ORDER BY activityId DESC LIMIT 1`, function (error, aid, fields) {
 
-                        var aid = aid[0].activityId;
-            
-                        // 轉換bandId的url指令數量
-                        var sql2 = unHappy(body.bandId);
-            
-                        function unHappy(data) {
-                            var result = ``;
-                            for (index in data) {
-                                result += `INSERT INTO activityband(activityId, bandId)VALUES (${aid},${data[index]});`
-                            }
-                            result += `INSERT INTO activitydetails(activityId, activityDate)VALUES (${aid},?);INSERT INTO activitydetails(activityId, activityDate)VALUES (${aid},?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},1,?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},2,?);`
-                            return(result)
-                        }
-            
-                        var data2 =[ body.activityDate1,body.activityDate2, parseInt(body.unitPrice1), parseInt(body.unitPrice2)]
-                        connection.query(sql2, data2, function (error, results2, fields) {
-                            
-                        })
-            
-                    })
+            var aid = aid[0].activityId;
+
+            // 轉換bandId的url指令數量
+            var sql2 = unHappy(body.bandId);
+
+            function unHappy(data) {
+                var result = ``;
+                for (index in data) {
+                    result += `INSERT INTO activityband(activityId, bandId)VALUES (${aid},${data[index]});`
+                }
+                result += `INSERT INTO activitydetails(activityId, activityDate)VALUES (${aid},?);INSERT INTO activitydetails(activityId, activityDate)VALUES (${aid},?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},1,?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},2,?);`
+                return (result)
+            }
+
+            var data2 = [body.activityDate1, body.activityDate2, parseInt(body.unitPrice1), parseInt(body.unitPrice2)]
+            connection.query(sql2, data2, function (error, results2, fields) {
+
+            })
+
+        })
 
     })
 })
@@ -285,14 +297,14 @@ router.post('/edit', function (req, res) {
     var sql = `UPDATE activityinfo SET  activityTitle=?,activityContent=?,activityLocation=?, areaId=?,activityAddress=?,ticketAmount=? WHERE activityId= ?;
     UPDATE activityprice SET unitPrice =? WHERE categoryId= 1 AND activityId =?;
     UPDATE activityprice SET unitPrice =? WHERE categoryId= 2 AND activityId =?;`
-    
-    
-    var data = [body.activityTitle, body.activityContent, body.activityLocation, parseInt(body.areaId), body.activityAddress,parseInt(body.ticketAmount),parseInt(body.activityId),parseInt(body.unitPrice1),parseInt(body.activityId),parseInt(body.unitPrice2),parseInt(body.activityId)];
+
+
+    var data = [body.activityTitle, body.activityContent, body.activityLocation, parseInt(body.areaId), body.activityAddress, parseInt(body.ticketAmount), parseInt(body.activityId), parseInt(body.unitPrice1), parseInt(body.activityId), parseInt(body.unitPrice2), parseInt(body.activityId)];
     // console.log(data);
 
 
-    connection.query(sql,data,function (error,results,fields) {
-        if(results){
+    connection.query(sql, data, function (error, results, fields) {
+        if (results) {
             res.end(
                 JSON.stringify(new Success('insert success'))
             )
@@ -304,14 +316,14 @@ router.post('/edit', function (req, res) {
     })
 })
 // 移除收藏POST
-router.post('/movelove', function (req, res){
+router.post('/movelove', function (req, res) {
     var body = req.body;
-    var sql =`Delete from useractivity where activityId = ? and userId=3;`
+    var sql = `Delete from useractivity where activityId = ? and userId=3;`
     var data = [parseInt(body.activityId)];
     // console.log("move");
     // console.log(data);
-    connection.query(sql,data,function (error,results,fields) {
-        if(results){
+    connection.query(sql, data, function (error, results, fields) {
+        if (results) {
             res.end(
                 JSON.stringify(new Success('insert success'))
             )
@@ -324,14 +336,14 @@ router.post('/movelove', function (req, res){
 
 })
 // 加入收藏POST
-router.post('/addlove', function (req, res){
+router.post('/addlove', function (req, res) {
     var body = req.body;
-    var sql =`INSERT INTO useractivity(activityId,userId)VALUES (?, ?);`
-    var data = [parseInt(body.activityId),3];
+    var sql = `INSERT INTO useractivity(activityId,userId)VALUES (?, ?);`
+    var data = [parseInt(body.activityId), 3];
     // console.log("add");
     // console.log(data);
-    connection.query(sql,data,function (error,results,fields) {
-        if(results){
+    connection.query(sql, data, function (error, results, fields) {
+        if (results) {
             res.end(
                 JSON.stringify(new Success('insert success'))
             )

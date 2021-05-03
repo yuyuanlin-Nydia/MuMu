@@ -298,6 +298,7 @@ input.form_input {
     .tag_div.animation {
         max-width: 20vw;
         box-sizing: border-box;
+        padding-top:50px;
     }
 
     .tag_div.animation {
@@ -375,6 +376,7 @@ input.form_input {
         max-width: 26vw;
         /* padding: 0px 10px; */
         box-sizing: border-box;
+        padding-top:50px;
     }
     .tag_div select,
     .tag_div.animation select {
