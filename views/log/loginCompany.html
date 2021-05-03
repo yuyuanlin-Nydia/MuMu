@@ -6,191 +6,236 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>企業會員登入</title>
-    <link rel="icon" href="../image/logoImgS-bg.svg" type="image/x-icon"></head>
-    <script src="../js/jquery.js"></script>
-    <link rel="stylesheet" href="../css/mutual.css">
-    <link rel="stylesheet" href="../css/login.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
-        /* @import url(./css/login.css); */
-        /* @import url('./reset.css'); */
+    <link rel="icon" href="../../public/image/logoImg-icon.svg" type="image/x-icon">
+</head>
+<script src="../js/jquery.js"></script>
+<link rel="stylesheet" href="../css/mutual.css">
+<link rel="stylesheet" href="../css/login.css">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
+    /* @import url(./css/login.css); */
+    /* @import url('./reset.css'); */
 
-
-        li:nth-of-type(5),li:nth-of-type(6) {
-            font-size: 10px;
-        }
-    </style>
+    .mynavbar {
+        background-color: #FFF;
+    }
+</style>
 
 </head>
 
 <body>
 
+    <%-include ('../nav.ejs') %>
+        <div id="main_box">
+            <!-- <img id="logo" src="./images/fake.png" alt=""> -->
+            <div class="main_content">
+                <ul class="tab-group">
+                    <li class="tab active"><a href="#login">企業登入</a></li>
+                    <li class="tab "><a href="#signup">企業註冊</a></li>
+                </ul>
 
-    <div id="main_boxC">
-        <!-- <img id="logo" src="./images/fake.png" alt=""> -->
-        <div class="main_content">
-            <ul class="tab-group">
-                <li class="tab active"><a href="#login">企業登入</a></li>
-                <li class="tab "><a href="#signup">企業註冊</a></li>
-            </ul>
+                <div class="tab-content">
+                    <!-- 只包含登入&註冊內容 -->
+                    <div id="login">
+                        <form id="loginForm">
 
-            <div class="tab-content">
-                <!-- 只包含登入&註冊內容 -->
-                <div id="login">
-                    <form id="loginForm_c">
-                        <h1>歡迎回來!</h1>
-                        <ul>
-                            <!-- 登入 -->
+                            <ul>
+                                <!-- 登入 -->
 
-                            <li>
-                                <br><input type="text" placeholder="帳號" name="companyAccountL">
-                            </li>
-                            <li>
-                                <br><input type="password" placeholder="密碼" name="companyPasswordL">
-                            </li>
-                            <br>
-                            <li class="btm_text"> <input type="checkbox"> 記住我</li>
-                          
-                            
-
-                        </ul><!-- 登入end -->
-                        <button type="submit" value="Login" id="loginSub_c"> 登入</button>
-                        <br><a class="btm_text" href="#">Forgot your password?</a>
-                    </form>
-                </div>
+                                <li>
+                                    <br><input type="text" placeholder="帳號" name="companyAccountL">
+                                </li>
+                                <li>
+                                    <br><input type="password" placeholder="密碼" name="companyPasswordL">
+                                </li>
+                                <br>
+                                <li class="btm_text"> <input type="checkbox"> 記住我</li>
 
 
-                <div id="signup">
 
-                    <form  id="signupForm_c">
-                        <!-- <h1>Join us!</h1> -->
-                        <ul>
-                            <!-- 註冊 -->
-                            <li>
-                                <br><input type="text" placeholder="*統一編號" name="companyTaxNo" required>
-                            </li>
-                            <li>
-                                <br><input type="text" placeholder="*公司名稱" name="companyName" required>
-                            </li>
-                            <li>
-                                <br><input type="text" placeholder="*Email" name="companyEmail" required>
-                            </li>
-
-                            <li>
-                                <br><input type="text" placeholder="*帳號" name="companyAccount" required>
-                            </li>
-                            <li>
-                                <br><input type="password" placeholder="*密碼" name="companyPassword" required>
-                            </li>
-                            <br>
-                            <li>* 為必填欄位，請填妥欄位資訊。</li>
-                            <li class="btm_text"><input type="checkbox" required>我同意<a href="#">會員使用條款</a> </li>
-                        </ul><!-- 註冊end -->
-
-                        <!-- <input type="button" value="Get Started"> -->
-                        <button type="submit" value="signup" id="signupSub_c"> 加入會員</button>
-                    </form>
-
-                </div> <!-- signup end -->
-
-            </div><!-- tab-content end -->
+                            </ul><!-- 登入end -->
+                            <div class="btndiv"> <button type="submit" value="Login" id="loginSub_c"> 登入</button></div>
+                            <br><a class="btm_text" href="#">忘記密碼?</a>
+                        </form>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
 
 
+                    <div id="signup">
+
+                        <form id="signupForm">
+                            <!-- <h1>Join us!</h1> -->
+                            <ul>
+                                <!-- 註冊 -->
+                                <li>
+                                    <br><input type="text" placeholder="*統一編號" name="companyTaxNo" required>
+                                </li>
+                                <li>
+                                    <br><input type="text" placeholder="*公司名稱" name="companyName" required>
+                                </li>
+                                <li>
+                                    <br><input type="text" placeholder="*Email" name="companyEmail" required>
+                                </li>
+
+                                <li>
+                                    <br><input type="text" placeholder="*帳號&nbsp(至少8位,包含英文+數字)" name="companyAccount" required id="accountC">
+                                </li>
+                                <li>
+                                    <br><input type="password" placeholder="*密碼&nbsp(至少8位,包含英文+數字)" name="companyPassword" required id="newpw">
+                                </li>
+                                <li>
+                                    <br><input type="password" placeholder="*確認密碼" name="userPassword"
+                                        pattern="[a-zA-Z0-9]{8,}" maxlength="15" id="newpwCfm">
+                                </li>
+                                <br>
+                                
+                                <li>* 為必填欄位，請填妥欄位資訊。</li>
+                                <li class="btm_text"><input type="checkbox" required>我同意<a href="#">會員使用條款</a> </li>
+                            </ul><!-- 註冊end -->
+
+                            <!-- <input type="button" value="Get Started"> -->
+                            <div class="btndiv"> <button type="submit" value="signup" id="signupSub_c"> 加入會員</button>
+                            </div>
+                        </form>
+
+                    </div> <!-- signup end -->
+
+                </div><!-- tab-content end -->
+
+
+            </div>
         </div>
-
         </form>
-        
-        <script>
+        <%-include ('../footer.ejs') %>
+            <script>
 
-            $('.tab a').on('click', function (e) {
+                $('.tab a').on('click', function (e) {
 
-                e.preventDefault();
+                    e.preventDefault();
 
-                $(this).parent().addClass('active');
-                $(this).parent().siblings().removeClass('active');
+                    $(this).parent().addClass('active');
+                    $(this).parent().siblings().removeClass('active');
 
-                target = $(this).attr('href');
+                    target = $(this).attr('href');
 
-                $('.tab-content > div').not(target).hide();
+                    $('.tab-content > div').not(target).hide();
 
-                $(target).fadeIn(600);
+                    $(target).fadeIn(600);
 
-            });
-             // 註冊
-             $('#signupSub_c').on('click', function () {
-                // 序列化表單內容到字串
-                //console.log($('#loginForm').serializeArray());
+                });
+                // 註冊
+                $('#signupSub_c').on('click', function () {
+                    // 序列化表單內容到字串
+                    //console.log($('#loginForm').serializeArray());
 
-                var data = $('#signupForm_c').serializeArray()
+                    var data = $('#signupForm').serializeArray()
+                    // console.log(data);
+                    JSONData = serializeToJSON(data)
+                    console.log(JSONData);
+
+
+                    //ajax請求
+                    $.ajax({
+                        url: "/log/companySignup",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                alert("註冊成功，請登入!")
+                                location.href = '/log'
+                            } else if (res.errno === 0) {
+                                alert("註冊失敗!")
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
+                        }
+                    })
+                })
+
+                // 轉JSON
+                function serializeToJSON(data) {
+                    var values = {};
+                    for (index in data) {
+                        values[data[index].name] = data[index].value;
+                    }
+                    return JSON.stringify(values)
+                }
+
+                // 登入
+                $('#loginSub_c').on('click', function () {
+                    var data = $('#loginForm').serializeArray()
+                    JSONData = serializeToJSON(data)
+
+                    $.ajax({
+                        url: "/log/companyLogin",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                alert("登入成功!")
+                                location.href = '/'
+                            } else if (res.errno === 0) {
+                                alert("帳號或密碼錯誤，請重新登入!")
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
+                        }
+                    })
+                })
+                // 帳號檢查是否重複
+                $('#accountC').blur(function(){
+                // $('#accountC').css("background-color","#D6D6FF")
+                var dataA = $('#accountC').serializeArray()
                 // console.log(data);
-                JSONData = serializeToJSON(data)
-                console.log(JSONData);
-
-
-                //ajax請求
+                JSONData = serializeToJSON(dataA)
+                // console.log(JSONData);
                 $.ajax({
-                    url: "/log/companySignup",
-                    type: "POST",
+	                url: '/log/checkC',
+		            type: 'POST',
                     contentType: "application/json; charset=utf-8",
                     data: JSONData,
                     success: function (res) {
                         var res = JSON.parse(res)
-                        if (res.errno === 1) {
-                            alert("註冊成功，請登入!")
-                            location.href = '/log'
-                        } else if (res.errno === 0) {
-                            alert("註冊失敗!")
+                      
+                        if (res.errno === undefined) {
+                            alert("帳號重複")
                         }
                     },
                     error: function () {
                         alert("系統錯誤!")
                     }
-                })
+                    });
             })
-
+                $('#newpwCfm').blur(function () {
+                    // $('#newpwCfm').css("background-color","#D6D6FF")
+                    var newps = $('#newpw').val();
+                    var newpsCfm = $('#newpwCfm').val();
+                    // console.log(newps,newpsCfm);
+                    if(newps != newpsCfm){
+                        alert("兩次輸入密碼不一致,請重新輸入！")
+                    // $("#msg").html("兩次輸入密碼不一致,請重新輸入！").css("display","block");
+                    }
+                })
             // 轉JSON
-            function serializeToJSON(data) {
-                var values = {};
-                for (index in data) {
-                    values[data[index].name] = data[index].value;
-                }
-                return JSON.stringify(values)
-            }
-
-            // 登入
-            $('#loginSub_c').on('click', function () {
-                var data = $('#loginForm_c').serializeArray()
-                JSONData = serializeToJSON(data)
-
-                $.ajax({
-                    url: "/log/companyLogin",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSONData,
-                    success: function (res) {
-                        var res = JSON.parse(res)
-                        if (res.errno === 1) {
-                            alert("登入成功!")
-                            location.href = '/'
-                        } else if (res.errno === 0) {
-                            alert("登入失敗!")
-                        }
-                    },
-                    error: function () {
-                        alert("系統錯誤!")
+                function serializeToJSON(data) {
+                    var values = {};
+                    for (index in data) {
+                        values[data[index].name] = data[index].value;
                     }
-                })
-            })
-
-            function serializeToJSON(data) {
-                var values = {};
-                for (index in data) {
-                    values[data[index].name] = data[index].value;
+                    return JSON.stringify(values)
                 }
-                return JSON.stringify(values)
-            }
-            
-        </script>
+
+            </script>
 
 </body>
 

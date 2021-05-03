@@ -2,123 +2,242 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>樂團介紹</title>
-    <link rel="stylesheet" href="">
+
+
+    <!-- load CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="../css/band.css" rel="stylesheet">
     <link href="../css/mutual.css" rel="stylesheet">
+    <!-- https://getbootstrap.com/ -->
 
+    <script src="https://use.fontawesome.com/b4547aa58e.js"></script>
+    <script src="../public/js/jquery.js"></script>
 
 </head>
 
 <body>
-
     <%-include ("../nav.ejs")%>
+        <input type="hidden" name="favorates" value=<% favorates.forEach((fav,idx)=>{%>
+        <%=(fav.bandId==bandId)? bandId :"" %>
+            <% }) %>>
+                <input type="hidden" name="bandId" value=<%=bandId %>>
+                <section class="Banner">
+                    <!-- <div class=" "> -->
 
-        <section>
-            <!-- <div class=" "> -->
+                    <div id="cover">
+                        <img  src="/image/band/<%= data.bandFile %>" alt="">
 
-            <div id="cover">
-                <img src="/image/band/<%= data.bandFile %>" alt="">
-
-            </div>
-            <!-- </div> -->
-            <div id="shape">
-                <div class="">
-                    <p class="title">
-                        <%= data.bandName %>
-
-                    </p>
-                    <br><br><br>
+                    </div>
+                    <!-- </div> -->
+                    <div id="shape">
+                        <div class="">
+                            <h2 class="title">
+                                <%= data.bandName %>
+                                    <!-- 收藏 -->
+                                    <button name="unlove" class="btn_tea1" style="padding: 5px 10px; margin-left: 10px;">
+                                收藏
+                            </button>
 
 
-                    <p class="bandIntro">
-                        <%= data.bandContent %>
+                            </h2>
+                            <br>
+                            <b class="bandContent">
+                    <%= data.bandContent %>
+                </b>
 
-                    </p>
+
+                        </div>
+                    </div>
+
+
+                </section>
+
+
+
+
+                <div class="Album">
+                    <p class="title bandheading">歷年專輯</p>
+                    <% const nameList=data2.map(item => Object.values(item)[2]);  %>
+                        <% const dateList=data2.map(item => Object.values(item)[3]);  %>
+                            <% const imgList=data2.map(item => Object.values(item)[4]);  %>
+                                <% const introList=data2.map(item => Object.values(item)[5]);  %>
+                                    <% for(item in nameList){%>
+
+                                        <div class="albums">
+
+                                            <img class="album_img" src="/image/band/<%- imgList[item] %>" alt="">
+
+                                            <div class="alumbText ">
+                                                <b class="nameList sub_title">
+                                        <%- nameList[item] %>
+                                    </b>
+                                                <br><br>
+                                                <p>
+
+                                                    <% var yyyy = dateList[item].toLocaleDateString().slice(0,4);%>
+                                                        <% var mm = ('0'+ dateList[item].getMonth()).substr(-2); %>
+                                                            <% var dd = ('0'+ dateList[item].getDate()).substr(-2); %>
+
+                                                                <%- yyyy+'-'+ mm+'-'+dd %>
+
+
+                                                </p>
+                                                <br>
+                                                <p>
+                                                    <%- introList[item] %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <% } %>
+
 
                 </div>
-            </div>
 
+                <br>
+                <br>
+                <!-- 近期活動 -->
+                <section class="row activityBg">
+                    <div class="activity ">
+                        <p class="actTitle title">近期活動</p>
+                        <div class="actbox">
+                            <% const imageList=data3.map(item => Object.values(item)[5]);  %>
+                                <% const actList=data3.map(item => Object.values(item)[4]);  %>
+                                    <% const actLinkList=data3.map(item => Object.values(item)[2]);  %>
+                                        <% const pDateLinkList=data3.map(item => Object.values(item)[11]);  %>
+                                            <% for(item in imageList){%>
+                                                <a href="../activity/single/<%- actLinkList %>">
+                                                    <div class="bandAct">
+                                                        <div class="grid">
+                                                            <figure class="effect-lexi ">
+                                                                <img  src="/image/activity/<%- imageList[item] %>" alt="">
 
-        </section>
-
-        <section id="history">
-            <h6 class="title bandhead">歷年專輯</h6>
-            <div class="alums">
-                <% const nameList=data2.map(item => Object.values(item)[2]);  %>
-                    <% const dateList=data2.map(item => Object.values(item)[3]);  %>
-                        <% const imgList=data2.map(item => Object.values(item)[4]);  %>
-                            <% const introList=data2.map(item => Object.values(item)[5]);  %>
-                                <% for(item in nameList){%>
-
-                                    <div class="alum">
-                                        <img src="/image/band/<%- imgList[item] %>" alt="">
-                                        <div class="bandText">
-                                            <p>
-
-                                                <%- nameList[item] %>
-                                            </p>
-                                            <p>
-
-
-
-                                                <%var date = dateList[item].toLocaleDateString(); %>
-                                                    <% var result = date.replace(new RegExp('/', 'g'), '-');%>
-                                                        <%- result%>
-
-
-
-                                            </p>
-                                            <p>
-                                                <%- introList[item] %>
-
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                    <% } %>
+                                                                <figcaption>
+                                                                    <p>
+                                                                        <% var y = pDateLinkList[item].toLocaleDateString().slice(0,4);%>
+                                                                            <% var m = ('0'+ pDateLinkList[item].getMonth()).substr(-2); %>
+                                                                                <% var d = ('0'+ pDateLinkList[item].getDate()).substr(-2); %>
 
 
 
 
+                                                                                    <%- y+'-'+m+'-'+d %>
+                                                                                        <%- actList[item] %>
+                                                                    </p>
+                                                                </figcaption>
+                                                                <% } %>
+                                                            </figure>
+                                                        </div>
+                                                    </div>
+                                                </a>
 
-
-            </div>
-
-
-
-
-        </section>
-        <section class="recent">
-            <h6 class="sub_title recentact">近期活動</h6>
-            <br>
-            <hr id="bandhr">
-            <% const imageList=data3.map(item => Object.values(item)[5]);  %>
-
-
-                <% for(item in imageList){%>
-
-
-                    <div class="bandAct">
-                        <img src="/image/upload/activity/<%- imageList[item] %>" alt="">
+                        </div>
                     </div>
-                    <% } %>
+
+                </section>
+
+
+                <%-include ("../footer.ejs")%>
+                    <script>
+                        $(function() {
+                            // alert("OK!");
+
+                            // 設置收藏按鈕的html樣式
+                            var favorates = $('input[name="favorates"]').val();
+                            var bandId = $('input[name="bandId"]').val();
+
+                            if (favorates !== '') {
+                                // console.log("ok");
+                                $('button[name="unlove"]').text('已收藏');
+                                $('button[name="unlove"]').addClass('btn_tea2').removeClass('btn_tea1');
+                                $('button[name="unlove"]').attr('name', 'love');
+                            } else {
+                                // console.log("no");
+                                $('button[name="love"]').text('收藏');
+                                $('button[name="love"]').addClass('btn_tea1').removeClass('btn_tea2');
+                                $('button[name="love"]').attr('name', 'unlove');
+                            }
+                            $('button[name="love"]').on('click', () => {
+                                // alert("已取消收藏!")
+                                var movelove = {};
+                                movelove["bandId"] = favorates;
+                                movelove = JSON.stringify(movelove);
+                                // alert(movelove);
+
+                                $.ajax({
+                                    url: "/band/movelove",
+                                    type: "POST",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: movelove,
+                                    success: function(res) {
+                                        var res = JSON.parse(res)
+                                        if (res.errno === 1) {
+                                            alert("已取消收藏!")
+                                                // 刷新本頁
+                                            location.reload()
+                                        } else if (res.errno === 0) {
+                                            alert("更新失敗!")
+                                        }
+                                    },
+                                    error: function() {
+                                        alert("系統錯誤!")
+                                    }
+                                })
+                            })
+                            $('button[name="unlove"]').on('click', () => {
+                                // alert("已加入收藏!")
+                                var addlove = {};
+                                addlove["bandId"] = bandId;
+                                addlove = JSON.stringify(addlove);
+                                // alert(addlove);
+
+                                $.ajax({
+                                    url: "/band/addlove",
+                                    type: "POST",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: addlove,
+                                    success: function(res) {
+                                        var res = JSON.parse(res)
+                                        if (res.errno === 1) {
+                                            alert("已加入收藏!")
+                                                // 刷新本頁
+                                            location.reload()
+                                        } else if (res.errno === 0) {
+                                            alert("更新失敗!")
+                                        }
+                                    },
+                                    error: function() {
+                                        alert("系統錯誤!")
+                                    }
+                                })
+                            })
+
+                        });
+                    </script>
 
 
 
 
 
-        </section>
-
-        <%-include ("../footer.ejs")%>
 
 
 
+                    <!-- </div>  -->
+                    <!-- container -->
 
-
+                    < src="js/jquery-3.2.1.slim.min.js">
+                        </>
+                        < src="slick/slick.min.js">
+                            </>
+                            <>
+                                $(function() { $('.tm-gallery').slick({ dots: true, infinite: true, slidesToShow: 4, slidesToScroll: 2, responsive: [{ breakpoint: 991, settings: { slidesToShow: 3, slidesToScroll: 2 } }, { breakpoint: 767, settings: { slidesToShow: 2, slidesToScroll:
+                                1 } }, { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } } // You can unslick at a given breakpoint now by adding: // settings: "unslick" // instead of a settings object ] }); });
+                                </>
 </body>
 
 </html>

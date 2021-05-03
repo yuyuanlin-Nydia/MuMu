@@ -8,169 +8,250 @@
     <title>個人頁面_我的票券</title>
     <link rel="stylesheet" href="../css/user_mainPage.css">
     <link rel="stylesheet" href="../css/mutual.css">
+    <link rel="stylesheet" href="../css/user_myTicket.css">
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
-    <!-- 不連線測試用 -->
-    <script src="../../public/js/jquery.js"></script>
-    <script src="../../public/js/Bootstrap/bootstrap.js"></script>
-    <link rel="stylesheet" href="../../public/css/mutual.css">
-    <link rel="stylesheet" href="../../public/css/user_mainPage.css">
-    <link rel="stylesheet" href="../../public/css/Bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+
 </head>
-<style>
-    .profile-work div a:nth-of-type(4) {
-        color: var(--color4) !important;
-    }
-</style>
 
 <body>
     <!-- 導覽列 開始 -->
-    <%-include("../nav.ejs")%>
-
-        <!-- 導覽列 結束 -->
-        <div id="banner_box">
-            <img src="../../image/user/member.png" alt="banner" class="banner">
-            <p class="title">會員管理</p>
+    <main>
+        <%-include("../nav.ejs")%>
+        <div class="banner">
+            <p class="banner_title">會員管理</p>
         </div>
-        <!-- <div class="container "> -->
-        <img src="../../public/image/user/member.png" alt="">
-        <form method="post">
-            <div class="row ">
-                <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
-                <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
-                    <div class="profile-img   p-1 mt-5 ml-5">
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
-                            <label for="fileToUpload">
-                                <div class="profile-pic">
-                                    <span class="glyphicon glyphicon-camera"></span>
-                                    <span>更換圖片</span>
-                                </div>
-                            </label>
-                            <input type="File" name="fileToUpload" id="fileToUpload">
-                        </form>
-                        <h5 class="text-center text-white mt-3">林郁媛</h5>
-                    </div>
+            <!-- <div class="container "> -->
+            <!-- <img src="../../public/image/user/member.png" alt=""> -->
 
-                    <div class="  p-5 p-md-1 select_left ml-5">
-                        <div class="profile-work ">
-                            <!-- 前面放icon -->
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu"  style="color: var(--color2)">我的票券</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/myArticle" class="user_menu">參戰心得</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/favorite" class="user_menu"
-                                   >收藏追蹤</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/profile" class="user_menu">編輯資料</a><br />
+        <div class="row ">
+            <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
+            <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+                <div class="profile-img   p-1 mt-5 ml-5">
+                    <form action="upload.php" method="post" enctype="multipart/form-data">
+                        <label for="fileToUpload">
+                            <div class="profile-pic">
+                                <span class="glyphicon glyphicon-camera"></span>
+                                <span>更換圖片</span>
                             </div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
+                        </label>
+                        <input type="File" name="fileToUpload" id="fileToUpload">
+                    </form>
+                    <h5 class="text-center text-white mt-3">林郁媛</h5>
+                </div>
+                <div class="  p-5 p-md-1 select_left ml-5">
+                    <div class="profile-work ">
+                        <!-- 前面放icon -->
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu"
+                                style="color: var(--color2)">我的票券</a><br /></div>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/myArticle" class="user_menu">參戰心得</a><br />
                         </div>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/favorite" class="user_menu">收藏追蹤</a><br />
+                        </div>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/profile" class="user_menu">編輯資料</a><br />
+                        </div>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
                     </div>
                 </div>
-                <!-- 左側 結束-->
-
-                <!-- 右側 開始 -->
-                <div class="col-md-8 col-sm-12  pl-lg-4 right_box">
-                    <div class="profile-head">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                    aria-controls="home" aria-selected="true">即將參加</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                    aria-controls="profile" aria-selected="false">已結束</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-12 ">
-                        <div class="tab-content profile-tab" id="myTabContent">
-
-                            <button type="button" class="btn btn-warning d-none" id="finishBtn">完成</button>
-                            <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                aria-labelledby="home-tab">
-                                <%data.forEach(function(item,idx){ %>
-
-                               <div>
-                                    <p class="m-3">訂單編號:<span class="text-danger"><%=item.orderId %></span></p>
+            </div>
+            <!-- 左側 結束-->
+            <!-- 右側 開始 -->
+            <div class="col-md-8 col-sm-12  pl-lg-4 right_box">
+                <div class="profile-head">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">即將參加</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">已結束</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <button type="button" class="btn btn-warning d-none" id="finishBtn">完成</button>
+                        <% if(data[0]){ %>
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <% data.forEach(function(item,idx){ %>
+                                <div>
+                                    <p class="m-3">訂單編號:<span class="text-danger">
+                                            <%=item.orderId %>
+                                        </span></p>
                                     <div class="ticket_div">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <p><%=item.performDate %><%=item.type %></p>
-                                                <p><span>活動:</span><%=item.activityLocation %></p>
-                                                <p><span>地點:</span>市民廣場</p>
-                                                <p> <span>地址:</span><%=item.city %><%=item.town %><%=item.activityAddress %></p>
+                                                <%var d=item.activityDate %>
+                                                    <p>
+                                                        <%=item.activityDate.toLocaleDateString()%>
+                                                            <%=d.getHours()%>:
+                                                                <%=d.getMinutes().toString().padStart(2,"0")%>
+                                                                    <%=item.type %>*<%=item.quantity %><%= item.type=="單人票"? "張":"組" %>
+                                                    </p>
+                                                    <p><span>活動:</span>
+                                                        <%=item.activityTitle %>
+                                                    </p>
+                                                    <p><span>地點:</span>
+                                                        <%=item.activityLocation %>
+                                                    </p>
+                                                    <p> <span>地址:</span>
+                                                        <%=item.city %>
+                                                            <%=item.town %>
+                                                                <%=item.activityAddress %>
+                                                    </p>
                                             </div>
                                             <img src="../../image/ticket/QRCODE.png" alt="">
                                         </div>
-                                        <p class="text-right my-3">
-                                            <b>訂單明細</b>
+                                        <p class="text-right my-1 ">
                                             <i class="fas fa-angle-down" style="color: var(--color2);"></i>
+                                            <b class="od_text">訂單明細</b>
                                         </p>
                                         <div class="order_details">
                                             <ul>
-                                                <li>訂購時間:<%=item.orderDate.toLocaleDateString() %></li>
-                                                <li>信用卡號:</li>
-                                                <li>取票方式:</li>
-                                                <li>取票編號:</li>
-                                                <li>總金額:<span class="text-danger">NT$<%=item.unitPrice %><%=item.quanity %></span></li>
+                                                <% var d=item.orderDate; var weekDay=["日", "一" , "二" , "三" , "四"
+                                                    , "五" , "六" ]; %>
+                                                    <li>訂購時間:<%=item.orderDate.toLocaleDateString() %> (<%=
+                                                                weekDay[d.getDay()] %>)
+                                                                <%=d.getHours().toString().padStart(2,"0") %>:
+                                                                    <%=d.getMinutes().toString().padStart(2,"0") %>
+                                                    </li>
+                                                    <li>信用卡號:<%=item.card1 %> - <%=item.card2.replace( /\d{4}/
+                                                                ,"****") %> - <%=item.card3.replace( /\d{4}/
+                                                                    ,"****") %> -
+                                                                    <%=item.card4 %>
+                                                    </li>
+                                                    <li>取票方式:<%=item.method %>
+                                                    </li>
+
+                                                    <li>票價金額:
+                                                        <span class="text-danger">
+                                                            NT$<%=item.unitPrice%>x<%=item.quantity%>=NT$<%=item.tot%>
+                                                        </span>
+                                                    </li>
                                             </ul>
                                         </div>
                                     </div>
-                               </div>
-                               <%}) %>
-                            </div>
-                            <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="ticket_div ticket_div_end">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <p>2020/10/18 10:00單人票</p>
-                                            <p><span>活動2:</span>台中爵士音樂節2</p>
-                                            <p><span>地點:</span>市民廣場</p>
-                                            <p> <span>地址:</span>台中市南屯區公益路155號</p>
-                                        </div>
-                                        <div>
-                                            <p class="end_tag">活動結束</p>
-                                            <img src="../../image/ticket/QRCODE.png" alt=""></div>
-
-                                    </div>
-                                    <p class="text-right my-3">
-                                        <b>訂單明細</b>
-                                        <i class="fas fa-angle-down" style="color: var(--color2);"></i>
+                                </div>
+                                <%}) %>
+                        </div>
+                        <% }else{ %>
+                            <main>
+                                <div class="box">
+                                    <p class="text-center">
+                                        您目前沒有即將參加的活動唷! <br>
+                                        回到活動列表去看看<br><br><br>
                                     </p>
-                                    <div class="order_details">
-                                        <ul>
-                                            <li>訂購時間:</li>
-                                            <li>信用卡號:</li>
-                                            <li>取票方式:</li>
-                                            <li>取票編號:</li>
-                                            <li>總金額:</li>
-                                        </ul>
+                                    <a href="/activity">
+                                        <div class="text-center">
+                                            <button class="btn_tea1 ">活動列表</button>
+                                        </div>
+                                    </a>
+                                </div>
+                            </main>
+                        <% } %>
+                        <!-- 已結束的活動 -->
+                        <% if(data2[0]){ %>
+                        <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            
+                            <% data2.forEach(function(item,idx){ %>
+                            <div class="ticket_div ticket_div_end">
+                                <div class="end_div">
+                                    <div>
+                                        <%var d=item.activityDate %>
+                                            <p>
+                                                <%=item.activityDate.toLocaleDateString()%>
+                                                    <%=d.getHours()%>:
+                                                        <%=d.getMinutes().toString().padStart(2,"0")%>
+                                                            <%=item.type %>*<%=item.quantity %><%= item.type=="單人票"? "張":"組" %>
+                                            </p>
+                                            <p><span>活動:</span>
+                                                <%=item.activityTitle %>
+                                            </p>
+                                            <p><span>地點:</span>
+                                                <%=item.activityLocation %>
+                                            </p>
+                                            <p> <span>地址:</span>
+                                                <%=item.city %>
+                                                    <%=item.town %>
+                                                        <%=item.activityAddress %>
+                                            </p>
+                                    </div>
+                                    <div>
+                                        <p class="end_tag">活動結束</p>
+                                        <img src="../../image/ticket/QRCODE.png" alt="">
                                     </div>
                                 </div>
+                                <p class="text-right my-1 ">
+                                    <i class="fas fa-angle-down" style="color: var(--color2);"></i><b class="od_text">訂單明細</b>
+                                </p>
+                                <div class="order_details">
+                                    <ul>
+                                        <% var d=item.orderDate; var weekDay=["日", "一" , "二" , "三" , "四"
+                                            , "五" , "六" ]; %>
+                                            <li>訂購時間:<%=item.orderDate.toLocaleDateString() %> (<%=
+                                                        weekDay[d.getDay()] %>)
+                                                        <%=d.getHours().toString().padStart(2,"0") %>:
+                                                            <%=d.getMinutes().toString().padStart(2,"0") %>
+                                            </li>
+                                            <li>信用卡號:<%=item.card1 %> - <%=item.card2.replace( /\d{4}/
+                                                        ,"****") %> - <%=item.card3.replace( /\d{4}/
+                                                            ,"****") %> -
+                                                            <%=item.card4 %>
+                                            </li>
+                                            <li>取票方式:<%=item.method %>
+                                            </li>
+
+                                            <li>票價金額:
+                                                <span class="text-danger">
+                                                    NT$<%=item.unitPrice%>x<%=item.quantity%>=NT$<%=item.tot%>
+                                                </span>
+                                            </li>
+                                    </ul>
+                                </div>
                             </div>
+                            <% }) %>
+
+                            <% }else{ %>
+                                <!-- 如果沒有已結束的活動 -->
+                                <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="box">
+                                        <p class="text-center">
+                                            您目前沒有已結束的活動! <br>
+                                            回到活動列表去看看<br><br><br>
+                                        </p>
+                                        <a href="/activity">
+                                            <div class="text-center">
+                                                <button class="btn_tea1">活動列表</button>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            <% } %>    
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
-    </div>
+        </div>
+    </main>
 
-    <!-- 頁尾-->
+<!-- 頁尾-->
+    <%-include("../footer.ejs")%>
 
-
-
-        <script>
-            $(function () {
-                $('.delete').each(function (idx, elm) {
-                    $(elm).on('click', function () {
-                        $('.article_card').eq(idx).remove();
-                        console.log(idx);
-                    })
-                })
+    <script>
+        $(function () {
+            //點擊訂單明細
+            $(".od_text").each(function(idx,elm){
+                $(elm).click(function () {
+                    $(".order_details").eq(idx).toggle("slow", "swing");
+                    $(".fa-angle-down").eq(idx).toggleClass("rotate");
+                });
             })
-
-        </script>
+        })
+    </script>
 
 
 </body>

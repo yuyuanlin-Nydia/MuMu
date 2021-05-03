@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>樂團介紹</title>
+    <link rel="stylesheet" href="../../css/bandall.css">
+    <link rel="stylesheet" href="../../css/mutual.css">
+    <link rel="stylesheet" href="../../css/Bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
-    <meta name="description" content="">
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-    <!-- <link href="https://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet"> -->
-    <link href="../css/bandall.css" rel="stylesheet">
-    <link href="../css/mutual.css" rel="stylesheet">
     <style>
-        .banner{
+        .banner {
             background-image: url(../../image/banner/band1.jpg);
         }
     </style>
@@ -22,53 +20,82 @@
 
 <body>
     <%-include ("../nav.ejs")%>
-    <div class="banner">
-        <p class="banner_title">樂團介紹</p>
-    </div>
-        <% const idList=data.map(item => Object.values(item)[0]);  %>
-            <% const nameList=data.map(item => Object.values(item)[1]);  %>
-                <% const introList=data.map(item => Object.values(item)[2]);  %>
-                    <% const imgList=data.map(item => Object.values(item)[3]);  %>
+        <div class="banner">
+            <!-- <img src="../../image/banner/article.jpg" alt="" class="banner" style="object-fit: cover;"> -->
+            <p class="banner_title">樂團介紹</p>
+        </div>
+        <div class="wrapper row3 " id="main">
+            <main class="hoc container clear ">
+
+                <!-- 搜尋欄 -->
+                <div class="float-right mb-3 mr-4">
+                    <!-- <input type="text" id="search" class="form_input" style="background-color: var(--color4);" placeholder="搜尋相關文章" name="search_text">
+                    <button id="sub"><i class="fas fa-search btn_search"></i></button> -->
+                    <input type="text" placeholder="search" id="search">
+                    <button id="sub" onclick="mysearch()"><i class="fas fa-search btn_search"></i></button>
+                    <style id="search_style"></style>
 
 
-                        <div class="wrapper grid">
-                            <% for(item in nameList){%>
-                                <a href="../band/ <%- idList[item] %>">
-                                    <div class="banditem">
-                                        <img class="bandPhoto" src="/image/band/<%- imgList[item] %>" alt="">
-                                        <p class="bandName">
-                                            <%- nameList[item] %>
-                                        </p>
-                                        <p class="bandContent">
-                                            <%- introList[item] %>
+                    <!-- <style id="search_style"></style> -->
+                </div>
 
-                                        </p>
-                                    </div>
-                                    <% } %>
-                                </a>
-                        </div>
+                <% const idList=data.map(item => Object.values(item)[0]);  %>
+                    <% const nameList=data.map(item => Object.values(item)[1]);  %>
+                        <% const introList=data.map(item => Object.values(item)[2]);  %>
+                            <% const imgList=data.map(item => Object.values(item)[3]);  %>
+
+                                <ul class="nospace group overview" id="itemContainer">
+                                    <% for(item in nameList){%>
 
 
+                                        <li class="one_third searchable" data-index="<%- nameList[item] %>">
+
+                                            <figure>
+                                                <a href="../band/ <%- idList[item] %>"></a> <img class="bandPhoto" src="/image/band/<%- imgList[item] %>" alt=""></a>
+                                                <figcaption>
+                                                    <b>
+                                                        <p class="heading subtitle ">
+                                                            <%- nameList[item] %>
+                                                        </p>
+                                                    </b>
+                                                    <p class="bandIntro">
+                                                        <%- introList[item] %>
+                                                    </p>
+
+                                                </figcaption>
+                                            </figure>
+                                        </li>
+
+                                        <% } %>
 
 
 
+            </main>
+        </div>
+        <script>
+            window.onload = search;
+
+            function search() {
+                var searchStyle = document.getElementById('search_style');
+                document.getElementById('sub').addEventListener('click', function() {
+                    var text = document.getElementById('search')
+                    if (!text.value) {
+                        searchStyle.innerHTML = "";
+                        return;
+                    }
+                    // look ma, no indexOf!
+                    searchStyle.innerHTML = ".searchable:not([data-index*=\"" + text.value.toLowerCase() + "\"]) { display: none; }";
+                    // beware of css injections!
+                });
+            }
+        </script>
 
 
-                        <%-include ("../footer.ejs")%>
+
+        <%-include ("../footer.ejs")%>
+
+
 
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </html>

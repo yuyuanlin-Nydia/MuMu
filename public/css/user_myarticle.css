@@ -1,14 +1,8 @@
-
 img{
     width: 150px;
     height: 150px;
 }
-/* RWD */
-
-/* @media screen and (max-width: 1300px){
-    div .profile-img{
-        margin-left: 0;
-    }
-
+.banner{
+    background-image: url(../../image/banner/member.png);
+    
 }
-     */

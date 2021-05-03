@@ -1,9 +1,32 @@
+<!-- 企業登入後 -->
+<% if(session.companyinfo){ %>
+    <nav class="mynavbar">
+        <a href="/cart">購票車</a>
+        <a href="/log">company嗨嗨</a>
+        <a href="/article">參戰心得</a>
+        <a href="/band">樂團簡介</a>
+        <a href="/activity">活動專區</a>
+        <a href="/" class="right"><img src="/../image/logoImg.svg" style="width:150px;height: auto; "></a>
+    </nav>
+<!-- 使用者登入後 -->
+<% }else if(session.userinfo){ %>
 <nav class="mynavbar">
+    <a href="/cart">購票車</a>
+    <a href="/log">user哈囉</a>
+    <a href="/article">參戰心得</a>
+    <a href="/band">樂團簡介</a>
+    <a href="/activity">活動專區</a>
+    <a href="/" class="right"><img src="/../image/logoImg.svg" style="width:150px;height: auto; "></a>
+</nav>
+<!-- 未登入 -->
+<% }else { %>
+    <nav class="mynavbar">
     <a href="/cart">購票車</a>
     <a href="/log">會員專區</a>
     <a href="/article">參戰心得</a>
     <a href="/band">樂團簡介</a>
     <a href="/activity">活動專區</a>
-    <a href="/" class="right"><img src="../image/logoImg.svg" style="width:150px;height: auto; "></a>
+    <a href="/" class="right"><img src="/../image/logoImg.svg" style="width:150px;height: auto; "></a>
 </nav>
-   
+
+<% }%>

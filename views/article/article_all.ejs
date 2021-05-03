@@ -25,41 +25,44 @@
     <%-include ("../nav.ejs")%>
         <!-- 已解決:時間格式處理=>放在component裡  用computed去改  -->
         <!-- 待解決 {{showDate[0]}}  標籤   -->
-        <div class="banner">
-            <!-- <img src="../../image/banner/article.jpg" alt="" class="banner" style="object-fit: cover;"> -->
-            <p class="banner_title">參戰心得列表</p>
-        </div>
-        <div class="wrapper row3" id="main">
-            <main class="hoc container clear">
-                <div style="padding-left:10px;">
-                    <a href="" class="tags" v-on:click="portHandler">大港開唱</a>
-                    <a href="" class="tags">覺醒音樂祭</a>
+        <main>
+            <div class="banner">
+                <!-- <img src="../../image/banner/article.jpg" alt="" class="banner" style="object-fit: cover;"> -->
+                <p class="banner_title">參戰心得列表</p>
+            </div>
+            <div class="wrapper row3" id="main">
+                <div class="hoc container clear">
+                    <div style="padding-left:10px;">
+                        <a href="" class="tags" v-on:click="portHandler">大港開唱</a>
+                        <a href="" class="tags">覺醒音樂祭</a>
+                    </div>
+                    <!-- 搜尋欄 -->
+                    <div class="float-right mb-3 mr-4">
+                        <input type="text" id="search_input" class="form_input" style="background-color: var(--color4);"
+                            placeholder="搜尋相關文章" name="search_text" v-model="search_text">
+                        <i class="fas fa-search btn_search" v-on:click="searchHandler"></i>
+                    </div>
+    
+    
+                    <ul class="nospace group overview" id="itemContainer">
+                        <!-- <articleitem v-bind:item="article" v-for="(article,idx) in articleList"></articleitem> -->
+                        <articleitem id="allArticle"v-bind:item="article" v-for="(article,index) in filteredArticles"></articleitem>
+    
+                    </ul>
+    
+                    <div class="text-center">
+                        <% for (i=1;i<=last_page;i++){ %>
+                            <a href="/article/<%= i %>" class="text-center">
+                                <button class="btn_page">
+                                    <%= i %>
+                                </button>
+                            </a>
+                            <% } %>
+                    </div>
                 </div>
-                <!-- 搜尋欄 -->
-                <div class="float-right mb-3 mr-4">
-                    <input type="text" id="search_input" class="form_input" style="background-color: var(--color4);"
-                        placeholder="搜尋相關文章" name="search_text" v-model="search_text">
-                    <i class="fas fa-search btn_search" v-on:click="searchHandler"></i>
-                </div>
+            </div>
+        </main>
 
-
-                <ul class="nospace group overview" id="itemContainer">
-                    <!-- <articleitem v-bind:item="article" v-for="(article,idx) in articleList"></articleitem> -->
-                    <articleitem id="allArticle"v-bind:item="article" v-for="(article,index) in filteredArticles"></articleitem>
-
-                </ul>
-
-                <div class="text-center">
-                    <% for (i=1;i<=last_page;i++){ %>
-                        <a href="/article/<%= i %>" class="text-center">
-                            <button class="btn_page">
-                                <%= i %>
-                            </button>
-                        </a>
-                        <% } %>
-                </div>
-            </main>
-        </div>
 
 
 
@@ -75,7 +78,8 @@
                                 class="arc_pic"></a>
                         <figcaption>
                             <h6 class="heading"><b>{{item.articleTitle}}</b></h6>
-                            <p>{{showDate[0]}}</p>
+                            <p>{{item.articleTime.substring(0,10)}}</p>
+
                         </figcaption>
                     </figure>
                 </li>
@@ -86,18 +90,18 @@
                 Vue.component('articleitem', { //自訂元素的名稱
                     props: ['item'], //填上上面取名的接口名稱
                     template: '#article',
-
-                    computed: {
-                        showDate: function () {
-                            const List = vueMain.articleList.map(item => {
-                                var d = new Date(Object.values(item)[4])
-                                var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0");
-                                times.toString()
-                                return times
-                            }); // 0 表示第一個屬性值
-                            return List
-                        },
-                    }
+                    // 後來用substring完美解決
+                    // computed: {
+                    //     showDate: function () {
+                    //         const List = vueMain.articleList.map(item => {
+                    //             var d = new Date(Object.values(item)[4])
+                    //             var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0");
+                    //             times.toString()
+                    //             return times
+                    //         }); // 0 表示第一個屬性值
+                    //         return List
+                    //     },
+                    // }
 
                 })
 

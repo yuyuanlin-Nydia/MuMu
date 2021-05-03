@@ -6,28 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>個人頁面_編輯個人資料</title>
+    <link rel="icon" href="../../public/image/logoImg-icon.svg" type="image/x-icon">
     <link rel="stylesheet" href="../css/user_mainPage.css">
     <link rel="stylesheet" href="../css/mutual.css">
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <!-- 不連線測試用 -->
-    <script src="../../public/js/jquery.js"></script>
+    <!-- <script src="../../public/js/jquery.js"></script>
     <script src="../../public/js/Bootstrap/bootstrap.js"></script>
     <link rel="stylesheet" href="../../public/css/mutual.css">
     <link rel="stylesheet" href="../../public/css/user_mainPage.css">
-    <link rel="stylesheet" href="../../public/css/Bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="../../public/css/Bootstrap/bootstrap.css"> -->
 </head>
 <style>
-    @media (max-width:768px) {
+    /* @media (max-width:768px) {
         .cfmBtn {
             display: flex;
             justify-content: center;
         }
-    }
+    } */
 
-    .profile-work div a:nth-of-type(4) {
+    /* .profile-work div a:nth-of-type(4) {
         color: var(--color4) !important;
+    } */
+    
+    body {
+        line-height: 1.2rem;
+    }
+    input[type=text]{
+        border: 1px solid #E3E8E4;
+        /* rgb(133, 133, 133) */
+    }
+    #userProfile input:focus,#changePwForm input:focus{
+        outline:none;
+        border: 1px solid var(--color2);
+    }
+    a{
+        color: black;
     }
 </style>
 
@@ -47,18 +63,20 @@
                 <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
                 <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
                     <div class="profile-img  p-1 mt-5 ml-5">
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
+                        <form action="upload_avatar" method="post" enctype="multipart/form-data">
                             <label for="fileToUpload">
                                 <div class="profile-pic">
                                     <span class="glyphicon glyphicon-camera"></span>
                                     <span>更換圖片</span>
                                 </div>
                             </label>
-                            <input type="File" name="fileToUpload" id="fileToUpload">
+                            <input type="File" name="fileToUpload" id="avatar" accept="image/png, image/jpeg">
                         </form>
 
 
-                        <h5 class="text-center text-white mt-3 uName"> <%= Name%>  </h5>
+                        <h5 class="text-center text-white mt-3 uName">
+                            <%= Name%>
+                        </h5>
                     </div>
 
                     <div class="  p-5 p-md-1 select_left ml-5">
@@ -68,7 +86,7 @@
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">參戰心得</a><br /></div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu">收藏追蹤</a><br /></div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu"
-                                    style="color: var(--color2)">編輯資料</a><br />
+                                    style="color: var(--color2)" >編輯資料</a><br />
                             </div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
                         </div>
@@ -79,24 +97,39 @@
 
                 <!-- 右側 開始 -->
                 <div class="col-md-8  pl-5 right_box">
-                    <h4 class="right_title ml-5">編輯個人資料</h4>
+                    <!-- <h4 class="right_title ml-5">編輯個人資料</h4> -->
+                    <div class="profile-head">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
+                            <li class="nav-item">
+                                <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                    aria-controls="home" aria-selected="true">個人資料</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                    aria-controls="profile" aria-selected="false">修改密碼</a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="col-md-12 pl-md-5 ">
                         <div class="tab-content profile-tab" id="myTabContent">
-                            <form id="">
+                            <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab" >
+                            <form id="userProfile" method="POST" >
 
                                 <div class="form-group row text-md-center">
 
                                     <label for="birth" class="col-md-2  col-sm-12 userinfo">生　　日</label>
                                     <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="date" name="birth" id="birth">
+                                        <!-- <input class="form-control" type="date" name="birth" id="birth"  placeholder="2021/01/01">  -->
+                                        <!-- 日期抓到了但要讓他可以修改&只能改一次 birth.substring(0,10)-->
+                                        <input class="form-control"type="text" name="birth"  onfocus="(this.type='date')" value="<%=birth.substring(0,10)%>" > 
                                     </div>
-
                                 </div>
                                 <div class="form-group row text-md-center">
 
                                     <label for="e_mail" class="col-md-2 col-sm-12 userinfo">電子郵件</label>
                                     <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="email" name="e_mail" id="e_mail" placeholder=" <%= mail  %>">
+                                        <input class="form-control" type="email" name="e_mail" id="e_mail"
+                                           value=" <%= mail  %>">
                                     </div>
 
                                 </div>
@@ -104,7 +137,8 @@
 
                                     <label for="phone" class="col-md-2 col-sm-12 userinfo">連絡電話</label>
                                     <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="tel" name="phone" id="phone" placeholder=" <%= phone  %>">
+                                        <input class="form-control" type="tel" name="phone" id="phone"
+                                        value=" <%= phone  %>">
                                     </div>
 
                                 </div>
@@ -113,15 +147,22 @@
                                     <label for="city" class="col-md-2 userinfo ">地　　址</label>
 
                                     <div class="col-md-2 col-sm-6 mb-sm-1">
-                                        <select class=" form-control" name="city" id="city">
-                                            <option value=""></option>
-                                          
+                                        <select class=" form-control" name="district" id="district">
+
+                                            <% var options = ["基隆市","台北市","新北市","桃園縣","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣","雲林縣","嘉義市","嘉義縣","台南市","高雄市"];%>
+                                            <% for ( var i = 0; i < options.length; i++ ){%>
+                                            <option value="<%=i+1%>" <%= (district ==(i+1) ) ? "selected" : "" %>> <%=options[i] %></option>
+                                            <%} %>
                                         </select>
                                     </div>
                                     <div class="col-md-2 col-sm-6">
-                                        <select class="form-control " name="town">
-                                            <option value=""></option>
-                                            
+                                     
+                                        <select class="form-control " name="area">
+                                            <% var options = ["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區","中區","東區","南區","西區","北區","北屯區","西屯區","南屯區","烏日區","豐原區","潭子區"];%>
+                                            <% for ( var i = 0; i < options.length; i++ ){%>
+                                            <option value="<%=i+1%>" <%= (area ==(i+1) ) ? "selected" : "" %>> <%=options[i] %></option>
+                                            <%} %>
+                                           
                                         </select>
                                     </div>
 
@@ -130,44 +171,57 @@
                                     <!-- 地址輸入欄 -->
 
                                     <div class="col-md-6 mt-2">
-                                        <input class="form-control" type="text" name="address">
+                                        <input class="form-control" type="text" name="address" value="<%= address %>">
                                     </div>
                                     <!-- 換行用 -->
                                     <div class="col-md-12"></div>
                                 </div>
-                                <h4 class="right_title ml-5">更改密碼</h4>
-                                <div class="form-group row text-md-center">
 
-                                    <label for="phone" class="col-md-2 col-sm-12 userinfo">舊密碼</label>
-                                    <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="tel" name="phone" id="phone">
-                                    </div>
 
-                                </div>
-                                <div class="form-group row text-md-center">
-
-                                    <label for="phone" class="col-md-2 col-sm-12 userinfo">新密碼</label>
-                                    <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="tel" name="phone" id="phone">
-                                    </div>
-
-                                </div>
-                                <div class="form-group row text-md-center">
-
-                                    <label for="phone" class="col-md-2 col-sm-12 userinfo">新密碼確認</label>
-                                    <div class="col-md-4 col-sm-12">
-                                        <input class="form-control" type="tel" name="phone" id="phone">
-                                    </div>
-
-                                </div>
+                                
+                                <!-- <h4 class="right_title ml-5">更改密碼</h4>
+                         -->
 
                                 <div class="col-md-6 mt-2 text-right">
-                                    <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" type="submit"
+                                    <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" id="userUpdate" type="submit"
                                         value="確定">
                                 </div>
                             </form>
+                        </div>
+                            <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab" >
 
+                                <form id="changePwForm">
+                                    <div class="form-group row text-md-center">
+    
+                                        <label for="phone" class="col-md-2 col-sm-12 userinfo">舊密碼</label>
+                                        <div class="col-md-4 col-sm-12">
+                                            <input class="form-control" type="password" name="oldpw" id="oldpw">
+                                        </div>
+    
+                                    </div>
+                                    <div class="form-group row text-md-center">
+    
+                                        <label for="phone" class="col-md-2 col-sm-12 userinfo">新密碼</label>
+                                        <div class="col-md-4 col-sm-12">
+                                            <input class="form-control" type="password" name="newpw" id="newpw">
+                                        </div>
+    
+                                    </div>
+                                    <div class="form-group row text-md-center">
+    
+                                        <label for="phone" class="col-md-2 col-sm-12 userinfo">新密碼確認</label>
+                                        <div class="col-md-4 col-sm-12">
+                                            <input class="form-control" type="password" name="cfmpw" id="newpwcfm">
+                                        </div>
+    
+                                    </div>
 
+                                    <div class="col-md-6 mt-2 text-right">
+                                        <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" id="pwupdate" type="submit"
+                                            value="確定">
+                                    </div>
+                                </form>
+                            </div>
                             <!-- <div class="form-group row cfmBtn"> -->
 
                             <!-- </div> -->
@@ -191,9 +245,112 @@
         <!-- 頁尾  開始-->
         <%-include("../footer.ejs")%>
             <!-- 頁尾  結束-->
-            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
             <script>
+                $('#userUpdate').on('click', function () {
+                    // alert('有')
+                var data = $('#userProfile').serializeArray()
+                JSONData = serializeToJSON(data)
 
+                $.ajax({
+                    url: "/user/profile",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSONData,
+                    success: function (res) {
+                        var res = JSON.parse(res)
+                        if (res.errno === 1) {
+                            alert("更新成功!")
+                            location.href = '/user/profile'
+                            
+                        } else if (res.errno === 0) {
+                            alert("更新失敗，請重新再試一次!")
+                           
+                        }
+                    },
+                    error: function () {
+                        alert("系統錯誤!")
+                      
+                        // alert(serializeToJSON(data))
+                    }
+                })
+
+            })
+            $('#oldpw').blur(function(){
+                // alert('hey')
+                var dataA = $('#oldpw').serializeArray()
+                // console.log(data);
+                JSONData = serializeToJSON(dataA)
+                // console.log(JSONData);
+                
+                $.ajax({
+	                url: '/user/checkpw',
+		            type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSONData,
+                    success: function (res) {
+                        var res = JSON.parse(res)
+                        // console.log(res);
+                        if (res.errno === 1) {
+                            alert("舊密碼錯誤")
+                        }
+                    },
+                    error: function () {
+                        alert("系統錯誤!")
+                    }
+                    });
+            })
+            $('#newpw').blur(function(){
+                    var newpw = $('#newpw').val();
+                    var newpwcfm = $('#newpwcfm').val();
+                    if(newpw != newpwcfm || newpw ==""||newpwcfm== ""){
+                            alert("密碼不一致或為空")
+                        }
+                    })
+            $('#pwupdate').on('click', function () {
+                    // alert('有')
+                var data = $('#changePwForm').serializeArray()
+                JSONData = serializeToJSON(data)
+            
+                $.ajax({
+                    url: "/user/profile/pw",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSONData,
+                    success: function (res) {
+                        var res = JSON.parse(res)
+                        
+                        if (res.errno === 1) {
+                            alert("更新成功!")
+                            location.href = '/user/profile'
+                            
+                        } else if (res.errno === 0) {
+                            alert("更新失敗，請重新再試一次!")
+                           
+                        }
+                    },
+                    error: function () {
+                        alert("系統錯誤!")
+                      
+                        // alert(serializeToJSON(data))
+                    }
+                })
+
+            })
+            function serializeToJSON(data) {
+                var values = {};
+                for (index in data) {
+                    values[data[index].name] = data[index].value;
+                }
+                return JSON.stringify(values)
+            }
+        
+
+            
+           
+            
+        //     $('#avaBtn').click(function () {
+                   
+        // })
             </script>
 
 

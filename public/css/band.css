@@ -1,24 +1,8 @@
 body {
-    margin: 0;
-    padding: 0;
-}
-
-#shape {
-    height: 530px!important;
-    position: relative;
-    background-color: #39455d;
-    padding: 70px 120px 40px;
-    width: 56%;
-    /* margin-left: -40px; */
-    -webkit-clip-path: polygon(14% 0%, 100% 0%, 86% 100%, 0% 100%);
-    clip-path: polygon(0 1%, 100% 0%, 75% 100%, 0% 100%);
-    color: seashell;
-}
-
-.bandIntro {
-    color: seashell !important;
-    font-size: 17.5px;
-    line-height: 40px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 300;
+    color: #ffffff;
 }
 
 #cover img {
@@ -26,120 +10,436 @@ body {
     opacity: .8;
     float: right;
     right: -100;
-    height: 530px;
-    object-fit: cover;
+    height: 520px;
 }
 
-
-/* #cover {
-   
+#cover {
+    /* background-color: #000; */
     display: block;
+}
+
+
+/* #cover image {
+    height: 320px;
 } */
 
-
-/* 歷年專輯 */
-
-#history {
+.Album {
+    clear: both;
     background-color: #e4e5e7;
-    padding: 20px 120px 20px;
+    /* text-align: center; */
+    color: #384F5C;
     width: 100%;
+    height: 700px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.bandContent {
+    line-height: 46px;
 }
 
 
-/* .alum {
-    padding: 0px 120px 0px;
-    display: inline-block!important;
-    margin-top: 0px;
-    width: 20%;
-    word-wrap: break-word;
-    padding-bottom: -20px;
-} */
+/* 假導覽列1&2 */
 
-
-/* .alum {
-    border: blue 1px solid;
-} */
-
-
-/* /* .alums {
-    padding: 30px;
-    border: azure solid 1px;
-} */
-
-.bandhead {
-    margin-top: 40px;
-}
-
-.alum img {
-    width: 300px;
-    height: 270px;
-}
-
-.alum {
-    /* border: red solid 1px; */
-    width: 80%;
-    /* position: relative;
-    left: 3%; */
-    margin-bottom: -360px;
-    margin-top: 20px;
-}
-
-.alum {
-    display: inline-block;
-}
-
-.alums {
+.tm-top-bar {
+    /* background-color: #384F5C; */
     width: 100%;
-    margin-top: 60px;
+    height: 30px;
+    margin-bottom: 10px;
 }
 
-.bandText p {
-    word-break: break-all;
+.tm-bar-2 {
+    /* background-color: #384F5C; */
+    width: 100%;
+    height: 15px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+
+/* 與上一個元素距離 */
+
+.tm-section-mb {
+    margin-bottom: 40px;
+}
+
+
+/* .tm-section-pt { padding-top: 135px; } */
+
+#shape {
+    height: 520px;
     position: relative;
-    word-wrap: break-word;
-    top: -240px;
-    left: 320px;
-    line-height: 30px;
-    width: 60%;
-    /* height: 80px; */
+    background-color: #39455d;
+    padding: 70px 120px 40px;
+    width: 50%;
+    /* margin-left: -40px; */
+    -webkit-clip-path: polygon(14% 0%, 100% 0%, 86% 100%, 0% 100%);
+    clip-path: polygon(0 0%, 100% 0%, 86% 100%, 0% 100%);
 }
 
 
-/* 近期活動 */
+/* .activity {
+    background-color: #8B979E;
+     margin: 10px auto;
+    
+} */
 
-.recentact {
-    color: #56555b;
-    position: relative !important;
-    left: 8% !important;
+.bandheading {
     margin-top: 40px;
+    margin-left: 11%;
 }
 
-hr {
+
+/* 專輯介紹 */
+
+
+/* .Album .alums {
+    margin: 0 auto;
+} */
+
+.nameList {
+    color: #39455d;
+}
+
+.albums {
+    /* border: darkcyan 1px solid; */
+    margin: 40px;
+    display: flex;
     width: 80%;
-    color: #ae8313!important;
+    position: relative;
+    left: 8%;
+    /* margin: 0 auto; */
 }
 
-#bandhr {
-    position: relative !important;
-    left: 7% !important;
-    color: #ae8313!important;
+.albums img {
+    width: 200px;
+    height: 200px;
+}
+
+.alumbText {
+    /* border: red solid 1px; */
+    text-align: left;
+    margin-left: 20px;
+}
+
+
+/* Image hover effect-------------------------------------------------------- */
+
+.grid figure {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    height: auto;
+    /* background: #3085a3; */
+    text-align: center;
+    cursor: pointer;
+}
+
+.grid figure img {
+    position: relative;
+    display: block;
+    min-height: 100%;
+    max-width: 100%;
+    opacity: 0.8;
+}
+
+.grid figure figcaption {
+    padding: 2em;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.25em;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+
+/* 圓圈位置 */
+
+.grid figure figcaption,
+.grid figure figcaption>a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 10px;
+}
+
+.grid figure figcaption::before,
+.grid figure figcaption::after {
+    pointer-events: none;
+}
+
+figure.effect-lexi:hover {
+    background: #0a0a0a;
+}
+
+figure.effect-lexi:hover figcaption::before {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+
+/* 字 */
+
+figure.effect-lexi p {
+    position: absolute;
+    right: 20px;
+    bottom: 40px;
+    /* padding: 0 1.5em .3em 0; */
+    width: 180px;
+    text-align: right;
+    opacity: 0;
+    -webkit-transform: translate3d(10px, 10px, 0);
+    transform: translate3d(10px, 10px, 0);
+}
+
+figure.effect-lexi img {
+    margin: -10px 0 0 -10px;
+    max-width: 300px;
+    max-height: 270px;
+    width: -webkit-calc(100% + 10px);
+    width: calc(100% + 10px);
+    opacity: 0.9;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: translate3d(10px, 10px, 0);
+    transform: translate3d(10px, 10px, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+figure.effect-lexi:hover h2,
+figure.effect-lexi:hover p {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+figure.effect-lexi:hover img {
+    opacity: 0.6;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+figure.effect-lexi:hover figcaption::before {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+}
+
+
+/* 圓圈框 */
+
+figure.effect-lexi figcaption::before {
+    position: absolute;
+    right: -100px;
+    bottom: -100px;
+    width: 300px;
+    height: 300px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    /* box-shadow: 0 0 0 900px rgba(255, 255, 255, 0.2); */
+    content: '';
+    opacity: 0;
+    -webkit-transform: scale3d(0.5, 0.5, 1);
+    transform: scale3d(0.5, 0.5, 1);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+figure.effect-lexi figcaption::before,
+figure.effect-lexi p {
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+}
+
+.actTitle {
+    background-color: white !important;
+    color: #56555b;
+}
+
+.actTitle {
+    /* margin-top: 40px; */
+    margin-left: 11%;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+
+/* .bandAct {
+    display: flex;
+} */
+
+.activity .actbox {
+    /* border: greenyellow solid 1px; */
+    height: 300px;
+    overflow: hidden;
 }
 
 .bandAct {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    width: 33%;
     display: inline-block;
-    text-align: center;
+    position: relative;
+    left: 11%;
+    margin-right: 40px;
 }
 
-.bandAct img {
-    width: 250px;
-    height: 220px;
-    object-fit: cover;
+
+/* RWD------------------------------------------------------------------ */
+
+
+/* @media (min-width: 1430px) {
+    .tm-contact-left { width: 80%; }
+  
+    .container {
+      max-width: 1430px;
+      padding-left: 120px;
+      padding-right: 120px;
+    }
+  }
+  
+  @media (max-width: 1310px) {
+    .tm-bar-2 { max-width: 100%; }
+  }
+  
+  @media (max-width: 1199px) {
+    .tm-logo {
+      width: 300px;
+      height: 300px;
+      top: 25%;
+    }
+  
+    .tm-welcome-content { max-width: 450px; }
+  
+    .tm-top-bar,
+    .tm-welcome-left {
+      max-width: 782px;
+    }
+  
+    .tm-welcome-right { margin-left: -55px; }
+    .tm-section-3-left { padding-bottom: 63px; }
+  
+    .tm-section-3-right {
+      -webkit-clip-path: polygon(0 0, 82% 0, 100% 100%, 15% 100%);
+      clip-path: polygon(0 0, 82% 0, 100% 100%, 15% 100%);
+    }
+  } */
+
+
+/* @media (max-width: 991px) {
+    .tm-welcome { flex-direction: column-reverse; }
+    .tm-logo {
+      top: -250px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tm-welcome-left {
+      max-width: 100%;
+      width: 100%;
+      padding-top: 100px;
+    }
+    .tm-welcome-content {
+      max-width: 100%;
+    }
+    .tm-welcome-icons-container {
+      display: flex;
+      justify-content: center;
+    }
+    .tm-welcome-right {
+      max-width: 100%;
+      width: 100%;
+      height: 250px;
+      transform: skewY(-5deg);
+      margin-bottom: -30px;
+      margin-top: 80px;
+      margin-left: 0;
+    }
+  
+    .tm-section-2-inner {
+      flex-direction: column;
+      margin-left: 0;
+    } */
+
+
+/* 
+    .tm-section-2-right {
+      width: 100%;
+      margin-top: 40px;
+      margin-left: 0;
+    } */
+
+
+/* .tm-section-2-left {
+      width: 100%;
+      height: 560px;
+    }
+  
+    .tm-section-3-inner { flex-direction: column-reverse; }
+  
+    .tm-section-3-left {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    .tm-section-3-right {
+      width: 100%;
+      height: 560px;
+      margin-bottom: 40px;
+      margin-left: 0;
+    }
+  
+    .tm-welcome-icon { padding: 0 30px 60px 0; }
+  
+    .tm-contact-left {
+      clip-path: none;
+      border-radius: 200px;
+      width: 100%;
+      height: 90%;
+    }
+  
+    figure.effect-lexi figcaption::before {
+      right: -110px;
+      bottom: -80px;
+    }
+  } */
+
+@media (max-width: 960px) {
+    img {
+        width: 100%;
+        float: none;
+    }
+    #shape {
+        width: 100%;
+    }
 }
 
-.recent {
-    width: 100%;
-    overflow: hidden;
+@media (max-width: 800px) {
+    img {
+        width: 100%;
+        float: none;
+    }
+    #shape {
+        width: 100%;
+    }
 }
+
+@media (max-width: 480px) {
+    img {
+        width: 100%;
+        float: none;
+    }
+    #shape {
+        top: 10px;
+        width: 100%;
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        padding: 10px;
+    }
+}
+
+@media (max-width: 420px) {
+    /* .tm-section-3-left { padding: 70px 50px 80px 50px; } */
+}
+

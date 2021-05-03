@@ -9,16 +9,32 @@ var { login_render, login_api } = require('./middleware/iflogin')
 //會員頁-票券
 // 會有兩個sql語句 一個是未參加 一個是沒參加
 router.get("/", function (req, res) {
-    var sql=`SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,ai.performDate,od.unitPrice,od.quantity,atc.type,orders.orderDate FROM orderdetails as od 
+    var account=req.session.userinfo.account;
+    var sql=`SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,ad.activityDate,ap.unitPrice,od.quantity,od.quantity*ap.unitPrice as tot,atc.type,orders.orderDate,orders.card1,orders.card2,orders.card3,orders.card4,tp.method FROM orderdetails as od 
     inner join orders on orders.orderId=od.orderId
-    inner join activityinfo as ai on ai.activityId=od.activityId
+    inner join activityinfo as ai on ai.activityId=od.activityId 
     inner join area as a on ai.areaId=a.areaId
     inner join district as d on a.districtId=d.districtId
-    inner join activityticketcategory as atc on atc.categoryId=od.categoryId
+    inner join activityticketcategory as atc on atc.categoryId=od.categoryId 
     inner join userinfo as ui on ui.userId=orders.userId
-    where ui.userAccount="abc123" and ai.performDate> NOW();`
+    inner join ticketpickup as tp on tp.ticketpickupId=orders.ticketpickupId
+    inner join activitydetails as ad on ad.activityDetailId=od.activityDetailId
+    inner join activityPrice as ap on ap.activityId=od.activityId and ap.categoryId=atc.categoryId
+    where ui.userAccount=? and ad.activityDate> NOW() order by orders.orderDate DESC;
+    
+    SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,ad.activityDate,ap.unitPrice,od.quantity,od.quantity*ap.unitPrice as tot,atc.type,orders.orderDate,orders.card1,orders.card2,orders.card3,orders.card4,tp.method FROM orderdetails as od 
+    inner join orders on orders.orderId=od.orderId
+    inner join activityinfo as ai on ai.activityId=od.activityId 
+    inner join area as a on ai.areaId=a.areaId
+    inner join district as d on a.districtId=d.districtId
+    inner join activityticketcategory as atc on atc.categoryId=od.categoryId 
+    inner join userinfo as ui on ui.userId=orders.userId
+    inner join ticketpickup as tp on tp.ticketpickupId=orders.ticketpickupId
+    inner join activitydetails as ad on ad.activityDetailId=od.activityDetailId
+    inner join activityPrice as ap on ap.activityId=od.activityId and ap.categoryId=atc.categoryId
+    where ui.userAccount=? and ad.activityDate< NOW() order by orders.orderDate DESC`
     conn.query(sql,
-        '',
+        [account,account],
         function (err, rows) {
             if (err) {
                 console.log(JSON.stringify(err));
@@ -26,7 +42,9 @@ router.get("/", function (req, res) {
             }
 
             res.render('./user/user_myTicket.ejs',{
-                data:rows
+                data:rows[0],
+                data2:rows[1]
+
             })
         }
 

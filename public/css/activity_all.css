@@ -11,6 +11,9 @@ body {
 .campaignContent_body{
     background-color:  var(--color1);
 }
+a:hover {
+    text-decoration: none;
+}
 
 /* --------------------------第一頁------------------------------- */
 /* --------------------------第一頁------------------------------- */
@@ -36,7 +39,7 @@ input.form_input {
     /* display: flex; */
     /* flex-wrap: nowrap; */
     text-align: center;
-    width: 80%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -51,7 +54,7 @@ input.form_input {
 }
 
 /* 按鈕預設樣式 */
-.zCheckbox {
+.zInputWrapper>.zInput{
     color: var(--color2);
     border: var(--color2) 1px solid;
     border-radius: 0%;
@@ -65,15 +68,14 @@ input.form_input {
     margin: 4px 3px;
     white-space: nowrap;
     overflow: hidden;
-
 }
 
 /* 按鈕被選取樣式 */
-.zSelected.zCheckbox {
+.zSelected {
     background-color: var(--color2);
 }
 
-.zSelected {
+.zInput.zSelected {
     color: white;
 }
 
@@ -155,7 +157,7 @@ input.form_input {
     padding: 5px;
     /* padding-top: 8rem; */
     box-sizing: border-box;
-    background-color: var(--color4);
+    background-color: var(--color5);
 
 }
 
@@ -170,8 +172,8 @@ input.form_input {
     /*  flex-grow | flex-shrink | flex-basis */
     height: 180px;
     margin:2px;
-    border-top: 1px solid var(--color2);
-    border-bottom: 1px solid var(--color2);
+    border-top: 1px solid var(--color4);
+    border-bottom: 1px solid var(--color4);
     /* transform: translateY(70px); */
     /* transition: .8s ease-in-out; */
     /* overflow:hidden */
@@ -217,7 +219,7 @@ input.form_input {
     margin-left: 15px;
     /* background-color: #acacac; */
 }
-.campaign_img>a>img{
+.campaign_img>img{
     height: 100%;
     width: 100%;
     /* background-color: #ff9900; */
@@ -227,6 +229,7 @@ input.form_input {
 .campaign_title {
     flex: 1 0 60%;
     padding: 0 15px;
+    margin-top: 30px;
     
 }
 .campaign_btn{
@@ -334,7 +337,7 @@ input.form_input {
         flex: 0 0 17%;
         /* margin-left: 50px; */
     }
-    .campaign_img>a>img{
+    .campaign_img>img{
         width: 90px;
     }
     
@@ -595,7 +598,8 @@ input.form_input {
 }
 
 .content_text_div {
-    position: absolute;
+    /* position: absolute; */
+   
     width: 100%;
     top: 60vh;
     background-color: #fff;
@@ -603,6 +607,7 @@ input.form_input {
     /* border-top-left-radius: 2rem; */
     z-index: 1;
     padding: 0 1.3rem;
+    padding-top: 22rem;
     box-sizing: border-box;
     white-space: pre-line;
 
@@ -661,8 +666,11 @@ input.form_input {
     }
 
     .content_text_div {
-        top: 40vh;
+        
+        top: 50vh;
         padding: 0 3rem;
+        padding-top: 45vh;
+        padding-bottom:  7vh;
         /* background-color: lightcoral; */
     }
 
@@ -754,9 +762,10 @@ input.form_input {
     }
 
     .content_text_div {
-        top: 40vh;
+        top: 55vh;
         padding: 0 3rem;
-        
+        padding-top: 45vh;
+        padding-bottom:  7vh;
     }
 
     .img_icon_top>div {
@@ -816,4 +825,3 @@ input.form_input {
     
 
 }
-

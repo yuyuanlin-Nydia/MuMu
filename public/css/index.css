@@ -218,3 +218,20 @@ svg{
 .borderR{
     border-right: solid 1px var(--color3);
 }
+.collect{
+    cursor: pointer;
+    color:white
+}
+.introimg>img{
+    margin-right: 10px;
+
+    transition: transform .5s; 
+ }
+ .introimg>img:hover {
+     transform: scale(1.2);
+ }
+     
+ .introimg{
+     overflow: hidden;
+     /* margin-right: 10px; */
+ }

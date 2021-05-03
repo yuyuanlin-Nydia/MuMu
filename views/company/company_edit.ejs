@@ -73,7 +73,7 @@
                            
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu" style="color: var(--color2)">編輯資料</a><br />
                             </div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登　　出</a></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
                         </div>
                     </div>
                 </div>
@@ -83,15 +83,22 @@
 
                     <!-- 右側 開始 -->
                     <div class="col-md-8 pl-5">
-                        <h4 class="title">編輯公司資料</h4>
+                        <ul class="nav nav-tabs mb-5">
+                            <li class="nav-item">
+                               <a class="nav-link active" data-toggle="tab" href="#menu1">編輯資料</a>
+                            </li>
+                            <li class="nav-item">
+                               <a class="nav-link" data-toggle="tab" href="#menu2">修改密碼</a>
+                            </li>
+                         </ul>
                         <div class="col-md-10 pl-5 ">
                             <div class="tab-content profile-tab" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                <div class="container tab-pane fade show active" id="menu1" role="tabpanel"
                                     aria-labelledby="home-tab">
                                     <div class="form-group row">
                                         <label for="e_mail" class="col-md-2 sub_title">統&emsp;&emsp;編:</label>
                                         
-                                        <div class="col-md-8">
+                                        <div class="col-md-6">
                                             <%=data[0].companyTaxNo %>
                                             
                                         </div>
@@ -100,60 +107,45 @@
                                  
                                     <div class="form-group row">
                                         <label for="e_mail" class="col-md-2 sub_title" >電子郵件:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-6">
                                             <input class="form-control" type="email" name="e_mail" id="e_mail"  placeholder= <%=data[0].companyEmail %>>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="phone" class="col-md-2 sub_title" >連絡電話:</label>
-                                        <div class="col-md-8">
+                                        <div class="col-md-6">
                                             <input class="form-control" type="tel" name="phone" id="phone" placeholder= <%=data[0].companyPhone %>>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="city" class="col-md-2 sub_title">地&emsp;&emsp;址:</label>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <select class=" form-control" name="city" id="city">
                                                 <option value="台北市">台北市</option>
                                                 <option value="台中市">台中市</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <select class="form-control" name="town" id="town">
                                                 <option value="南屯區">南屯區</option>
                                                 <option value="潭子區">潭子區</option>
                                             </select>
                                         </div>
+                                        <div class="col-md-4" ></div>
                                         <div class="col-md-2"></div>
-                                        <div class="col-md-2" ></div>
-                                        <div class="col-md-8 mt-2">
+                                        
+                                        <div class="col-md-6 mt-2">
                                             <input class="form-control" type="text" name="address" placeholder= <%=data[0].companyAddress %>>
                                         </div>
+                                        
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title">原始密碼:</label>
-                                        <div class="col-md-8">
-                                            <input class="form_input" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title">修改密碼:</label>
-                                        <div class="col-md-8">
-                                            <input class="form_input" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title">確認密碼:</label>
-                                        <div class="col-md-8">
-                                            <input class="form_input" type="text" name="password" id="password">
-                                        </div>
-                                    </div>
+
                                     <div class="form-group row mt-4">
                                         <div class="col-md-2">
                                             <br>
                                         </div>
-                                         <div class="col-md-8  d-flex" style="justify-content:flex-end;">
+                                         <div class="col-md-6  d-flex" style="justify-content:flex-end;">
                                             
                                             <div>
                                                 <button class="btn_blue2">確認修改</button>
@@ -164,9 +156,45 @@
                                         </div>
                                     </div>
                                        
-                                    </div>
                                 </div>
-                            </div>
+                                <div class="container tab-pane fade show " id="menu2" role="tabpanel"
+                                    aria-labelledby="home-tab">
+
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 sub_title">原始密碼:</label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 sub_title">修改密碼:</label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 sub_title">確認密碼:</label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" name="password" id="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mt-4">
+                                        <div class="col-md-2">
+                                            <br>
+                                        </div>
+                                         <div class="col-md-6  d-flex" style="justify-content:flex-end;">
+                                            
+                                            <div>
+                                                <button class="btn_blue2">確認修改</button>
+                                                <!-- <input class="btn_blue2" type="submit" value="確認修改"> -->
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                       
+                                </div>     
+                            </div>    
                         </div>
                     </div>
                 </div>

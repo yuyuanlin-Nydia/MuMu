@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
-    <link rel="icon" href="../image/logoImgS-bg.svg" type="image/x-icon">
+    <title>登入</title>
+    <link rel="icon" href="../../public/image/logoImg-icon.svg" type="image/x-icon">
 </head>
 <script src="./js/jquery.js"></script>
 <link rel="stylesheet" href="../css/mutual.css">
@@ -16,34 +16,39 @@
     /* @import url(./css/login.css); */
     /* @import url('./reset.css'); */
 
-
-    li:nth-of-type(5),
-    li:nth-of-type(6) {
-        font-size: 10px;
-    }
+    .mynavbar{
+   background-color: #FFF;
+}
+img{
+    text-align: center;
+}
 </style>
 
 </head>
 
 <body>
 
-
-    <div id="main_box">
-
-        <div class="main_content">
-            <ul class="tab-group">
-                <li id="ologin" class="man1"><a href="/log/login">
-                        <p><img src="../image/login_logout/man-1.png" alt="ordinary-login">
-                            <img src="../image/login_logout/man-1y.png" alt="ordinary-login"></p> 一般會員
-                    </a></li>
-                <li id="clogin" class="man2"><a href="/log/companyLogin">
-                        <p><img src="../image/login_logout/man-3.png" alt="company-login">
-                            <img src="../image/login_logout/man-3y.png" alt="company-login"></p>企業會員
-                    </a></li>
-            </ul>
+    <%-include ('../nav.ejs')  %> 
+    <main>
+        <div id="main_box">
+    
+            <div class="main_content">
+                <ul class="tab-group">
+                    <li id="ologin" class="man1"><a href="/log/login">
+                            <p><img src="../image/login_logout/man-1.png" alt="ordinary-login">
+                                <img src="../image/login_logout/man-1y.png" alt="ordinary-login"></p> <h4>一般會員</h4>
+                                <p> 一般使用者購票入口</p>
+                        </a></li>
+                    <li id="clogin" class="man2"><a href="/log/companyLogin">
+                            <p><img src="../image/login_logout/man-3.png" alt="company-login">
+                                <img src="../image/login_logout/man-3y.png" alt="company-login"></p><h4>企業會員</h4>
+                                <p> 企業及樂團舉辦音樂季入口</p>
+                        </a></li>
+                </ul>
+            </div>
         </div>
-
-
+    </main>
+        <%-include ('../footer.ejs')  %> 
 
         <script>
             $().ready(function () {
@@ -51,22 +56,22 @@
                 // 如何更漂亮寫法?
                 $('.man1').mouseover(function () {
                    $('.man1 > a img:nth-of-type(1)').css('display', 'none')
-                   $('.man1 > a img:nth-of-type(2)').css('display', 'inline')
+                   $('.man1 > a img:nth-of-type(2)').css('display', 'inline-block')
                 })
                 
                 $('.man1').mouseout(function () {
-                    $('.man1 >a  img:nth-of-type(1)').css('display','inline' )
+                    $('.man1 >a  img:nth-of-type(1)').css('display','inline-block' )
                    $('.man1 >a  img:nth-of-type(2)').css('display', 'none')
                 });
 
 
                 $('.man2').mouseover(function () {
                    $('.man2 > a img:nth-of-type(1)').css('display', 'none')
-                   $('.man2 > a img:nth-of-type(2)').css('display', 'inline')
+                   $('.man2 > a img:nth-of-type(2)').css('display', 'inline-block')
                 })
                 
                 $('.man2').mouseout(function () {
-                    $('.man2 >a  img:nth-of-type(1)').css('display','inline' )
+                    $('.man2 >a  img:nth-of-type(1)').css('display','inline-block' )
                    $('.man2 >a  img:nth-of-type(2)').css('display', 'none')
                 });
             })

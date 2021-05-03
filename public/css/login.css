@@ -1,32 +1,43 @@
 * {
-    font-size: 20px;
+    font-size: 14px;
 }
+
 
 /* 最外層大div */
-
+body{
+    background: url(../image/login_logout/bg.png) no-repeat;
+    background-size: 70% 100%;
+    background-position: center;
+    background-color: var(--color1);
+}
 #main_box {
-    width: 70vw;
-    height: 680px;
-    border: 1px solid var(--color1);
+    /* width: 70vw; */
+    /* height: 680px; */
+    margin: 10px auto;
+    /* background-color:burlywood; */
+    padding: 10px;
+    max-height: 530px;
+
+    /* border: 1px solid var(--color1);
     margin: 2% auto;
     border-radius: 10px;
-    /* background: url(./images/loginBackground.jpg) no-repeat; */
-    background: url(../image/login_logout/bg1.png) no-repeat;
+    background: url(./images/loginBackground.jpg) no-repeat;
+    background: url(../image/login&logout/bg1.png) no-repeat;
     background-size: cover;
-    /* opacity: .8; */
-    background-position: center;
+    opacity: .8;
+    background-position: center; */
 }
 /* 企業 */
-#main_boxC {
+/* #main_boxC {
     width: 70vw;
     height: 680px;
     border: 1px solid var(--color1);
     margin: 2% auto;
     border-radius: 10px;
-    background: url(../image/login_logout/bg2.png) no-repeat;
+    background: url(../image/login&logout/bg2.png) no-repeat;
     background-size: cover;
     background-position: center;
-}
+} */
 
 /* tab-group 登入註冊標籤----------------------------------------------------- */
 
@@ -34,6 +45,8 @@
     list-style: none;
     /* padding: 0; */
     float: left;
+    margin-left: 20px;
+    margin-top: 10px;
 }
 
 /* .tab-group:after {
@@ -41,14 +54,16 @@
     display: table;
     clear: both;
 } */
-
+input[type=text], input[type=password],input[type=email]{
+    border-bottom: #FFF 1px solid;
+    width: 20vw;
+}
 .tab-group li a {
     display: block;
     text-decoration: none;
-    padding: 15px;
+    padding: 25px 20px;
     background: rgba(255, 255, 255, .4);
     color: rgba(57, 69, 93, .5);
-    font-size: 20px;
     height: 80px;
     width: 80px;
     text-align: center;
@@ -67,17 +82,17 @@
 }
 
 /* 登入註冊內容大div(含標籤)--------------------------------------------------------------------------- */
-
+form{
+    margin-left: 40px;
+}
 .main_content {
-    /* font-size: 1.2rem; */
-    font-family: 'Fraunces', serif;
-    /* background: rgba(59, 13, 75, 0.9); */
-    padding: 50px;
+    /* padding: 50px; */
     max-width: 600px;
-    margin: 10% auto;
+    margin: 7% auto 9%;
     /* border-radius: 4px; */
     /* box-shadow: 0 4px 10px 4px rgba(59, 13, 75, 0.3); */
     text-align: left;
+    /* background-color: cornflowerblue */
 }
 
 .main_content input[type=button]:focus {
@@ -87,7 +102,9 @@
 /* .main_content button:focus {
     outline: none;
 } */
-
+.btndiv{
+    padding: 0px 20px  0 20px;
+}
 .main_content button {
 /* .main_content input[type=button] { */
     width: 20vw;
@@ -98,7 +115,6 @@
     cursor: pointer;
     border-radius: 2px;
     font-family: 'Fraunces', serif;
-    font-size: 16px;
     margin-top: 10px;
 }
 
@@ -111,14 +127,14 @@
 #login, #signup {
     /* text-align: center; */
     margin-left: 50px;
-    font-size: 60px;
+    /* font-size: 60px; */
 }
 
-h1 {
+/* h1 {
     margin-left: 30px;
     color: var(--color4);
     font-size: 32px;
-}
+} */
 
 /* 登入註冊內容大div(不含標籤)--------------------------------------------------------------------------- */
 
@@ -165,10 +181,10 @@ input {
 ::-moz-input-placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
-
+/* 
 .btm_text {
     font-size: 0.5rem;
-}
+} */
 
 .btm_text input {
     appearance:auto ;
@@ -189,21 +205,21 @@ a {
     position: relative;
     margin-bottom: 40px;
 }
-.btm_text a {
+/* .btm_text a {
     font-size: 12px;
    
-}
+} */
 /* RWD */
 
 @media screen and (max-width: 1280px) {
-    #main_box {
+    /* #main_box {
         background-size: 120% 150%;
         background-position: center;
     }
     #main_boxC {
         background-size: 120% 150%;
         background-position: center;
-    }
+    } */
 }
 
 @media screen and (max-width: 960px) {
@@ -229,17 +245,16 @@ a {
         float: left;
         height: 50%;
     }
-    #main_box {
-        background: url(../image/login_logout/bgs.png);
+    /* #main_box {
+        background: url(../image/login&logout/bgs.png);
         background-size: 100% 100%;
         background-position: center;
     }
     #main_boxC {
-        background: url(../image/login_logout/bg2s.png);
+        background: url(../image/login&logout/bg2s.png);
         background-size: 100% 100%;
-        /* background-size: 110% 150%; */
         background-position: center;
-    }
+    } */
     .main_content button {
         width: 70%;
     }
@@ -254,16 +269,14 @@ a {
        
     }
    
-    #main_box {
-        background: url(../image/login_logout/bgs.png);
+    /* #main_box {
+        background: url(../image/login&logout/bgs.png);
         background-size: 100% 100%;
-        /* background-size: 130% 150%; */
         background-position: center;
     }
     #main_boxC {
-        background: url(../image/login_logout/bg2s.png);
+        background: url(../image/login&logout/bg2s.png);
         background-size: 100% 100%;
-        /* background-size: 130% 150%; */
         background-position: center;
-    }
+    } */
 }

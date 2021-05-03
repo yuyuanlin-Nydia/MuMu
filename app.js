@@ -34,7 +34,10 @@ app.use(session({
         maxAge: 10 * 60*1000
     }
 }));
-
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next();
+})
 
 // Web 伺服器的靜態檔案置於 public 資料夾
 app.use( express.static( "public" ) );
@@ -53,16 +56,14 @@ app.use("/company",companyRouter);
 app.use("/cart",cartRouter);
 app.use("/log",logRouter);
 
-app.use(function(req,res,next){
-    res.locals.session = req.session;
-    next();
-})
+
 
 
 
 
 app.listen(3000);
 console.log("Web伺服器就緒，開始接受用戶端連線.「Ctrl + C」可結束伺服器程式.");
+
 
 
 

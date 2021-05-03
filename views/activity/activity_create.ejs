@@ -29,6 +29,9 @@
         input .check_btn .form-check-input{
             appearance:auto;
         }
+        .justify-content-center{
+            padding: 30px 0;
+        }
     </style>
 
 </head>
@@ -56,15 +59,16 @@
                     <div class="form-group row">
                         <label for="sellDate" class="col-md-12">活動時間</label>
                         <div class="col-md-12 mb-2">
-                            <input class="form-control" id="activityDate" name="activityDate" type="datetime-local">
+                            <input class="form-control" id="activityDate1" name="activityDate1" type="datetime-local">
+                            <input class="form-control" id="activityDate2" name="activityDate2" type="datetime-local">
                         </div>
                         <label for="sellDate" class="col-md-12">開始售票</label>
                         <div class="col-md-12 mb-2">
                             <input class="form-control" id="sellDate" name="sellDate" type="datetime-local">
                         </div>
-                        <label for="performDate" class="col-md-12">結束售票</label>
+                        <!-- <label for="performDate" class="col-md-12">結束售票</label> -->
                         <div class="col-md-12 mb-2">
-                            <input class="form-control" id="performDate" name="performDate" type="datetime-local">
+                            <input class="form-control" id="performDate" name="performDate" type="hidden">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -144,14 +148,6 @@
                         <br>
                         <input type="checkbox" class="bandId" name="bandId" value="3" style="appearance:auto;margin-left: 0;"/> 理想混蛋
                         <input type="checkbox" class="bandId" name="bandId" value="4" style="appearance:auto;margin-left: 0;"/> 佛跳牆
-                            <!-- <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="aaa[]" style="appearance:auto;margin-left: 0;">
-                                <label class="form-check-label" for="inlineCheckbox1">1</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" name="aaa[]" style="appearance:auto;margin-left: 0;">
-                                <label class="form-check-label" for="inlineCheckbox2">2</label>
-                            </div> -->
 
                     </div>
                    
@@ -168,8 +164,8 @@
                             <br>
                         </div>
                         <div class="col-md-10  text-center">
-                            <a href="/activity/text"><input class="btn btn-primary mr-2" type="button" value="取消"></a>
-                            <input id="submitBtn" class="btn btn-secondary" type="button" value="上傳">
+                            <a href="/company"><input class="btn_tea1" type="button" value="取消"></a>
+                            <input id="submitBtn" class="btn_tea2" type="button" value="發表">
                         </div>
                     </div>
                 </div>
@@ -205,11 +201,6 @@
         $(function () {
             
             $('#submitBtn').click(function () {
-                // 取得所有checkbox的值
-                
-
-                // alert(band);
-
 
                 var file = document.getElementById("activityFile")
                 //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
@@ -221,11 +212,15 @@
 
                 // =============================================
 
+                var today = new Date();
+                // console.log(today);
+
                 //整理表單資料到變數
                 var data = $('#form').serializeArray();                
                 data[1].value =new Date(data[1].value).Format("yyyy-MM-dd hh:mm:ss");
                 data[2].value =new Date(data[2].value).Format("yyyy-MM-dd hh:mm:ss");
                 data[3].value =new Date(data[3].value).Format("yyyy-MM-dd hh:mm:ss");
+                data[4].value =new Date(today).Format("yyyy-MM-dd hh:mm:ss");
 
                 JSONData = serializeToJSON(data);
                 alert(JSONData);
@@ -239,11 +234,11 @@
                     success: function (res) {
                         var res = JSON.parse(res)
                         if (res.errno === 1) {
-                            // alert("更新成功!")
+                            alert("更新成功!")
                             // location.reload()
-                            // location.href = `/activity`
+                            location.href = `/activity`
                         } else if (res.errno === 0) {
-                            // alert("更新失敗!")
+                            alert("更新失敗!")
                         }
                     },
                     error: function () {

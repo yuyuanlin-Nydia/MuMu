@@ -1,16 +1,54 @@
 body{
     background-color: var(--color4);
 }
-.box{
-    width: 70%;
-    margin: 20px auto;
-    background-color: var(--color5);
-    padding: 50px;
-}
-.box>div>p{
+
+.box>form>div>.sub_title{
     border-bottom: 2px solid var(--color2);
     margin:20px 0 10px  0;
 }
 p{
     margin-bottom: 0px;
+}
+.form_input{
+    width:150px;
+    margin-left: 0px !important;
+
+}
+.cc_section{
+    position: relative;
+
+    
+}
+.card_img{
+    width: 400px;
+}
+.cc_number{
+    position: absolute;
+    top:200px;
+    left: 30px;
+    color:white;
+    font-weight: 800;
+}
+.cc_expire{
+    position: absolute;
+    top:240px;
+    left: 230px;
+    color:white;
+    font-weight: 800;
+}
+.warning{
+    color: red;
+    font-size:12px ;
+}
+.input_error{
+    border:2px solid red !important;
+    background-color: white;
+}
+.input_success{
+    border:2px solid rgb(3, 143, 3) !important;
+    background-color: white !important;
+}
+.box>div>.sub_title  {
+    border-bottom: 2px solid var(--color2);
+    margin: 20px 0 10px 0;
 }

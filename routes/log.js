@@ -87,12 +87,16 @@ router.post('/login', function (req, res) {
 		console.log(results);
 		if(results[0]) {
             req.session.userinfo = {
-                id: results[0].id,
+                id: results[0].userId,
                 account: results[0].userAccount,
                 name: results[0].firstName,
                 phone: results[0].userPhone,
                 email: results[0].userEmail,
                 file: results[0].userFile,
+                area: results[0].userArea,
+                birth: results[0].userBirth,
+                add: results[0].userAdd,
+                dis: results[0].userDis,
                 area: results[0].userArea,
             }
             res.end(
@@ -113,10 +117,9 @@ router.post('/companyLogin', function (req, res) {
 	var sql = `SELECT * FROM companyinfo WHERE companyAccount=? and companyPassword=?;`
 	var data = [body.companyAccountL, body.companyPasswordL]
 	conn.query(sql, data, function (error,results, fields) {
-		console.log(results);
 		if(results[0]) {
             req.session.companyinfo = {
-                cid: results[0].id,
+                cid: results[0].companyId,
                 cAccount: results[0].companyAccount,
                 cName: results[0].companyName,
 				cPhone: results[0].companyPhone,
@@ -146,4 +149,41 @@ router.get('/logout', function (req, res) {
 	res.redirect('/');  //重新導向首頁
 });
 
+// 檢查帳號(一般會員)
+router.post('/check',function(req, res){
+	var body = req.body;
+	var sql = `select userId from userinfo where userAccount=?`
+	var data = [body.userAccount]
+	conn.query(sql, data, function (error,results, fields) {
+		// console.log(results[0]);
+		if(results[0]) {
+            res.end(
+				JSON.stringify('Account being used'),
+            )
+        } else {
+            res.end(
+                JSON.stringify(new Success('checked ok')),
+            )
+        }
+    })
+})
+
+// 檢查帳號(企業會員)
+router.post('/checkC',function(req, res){
+	var body = req.body;
+	var sql = `select companyId from companyinfo where companyAccount=?`
+	var data = [body.companyAccount]
+	conn.query(sql, data, function (error,results, fields) {
+		// console.log(results[0]);
+		if(results[0]) {
+            res.end(
+				JSON.stringify('Account being used'),
+            )
+        } else {
+            res.end(
+                JSON.stringify(new Success('checked ok')),
+            )
+        }
+    })
+})
 module.exports = router;

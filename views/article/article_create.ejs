@@ -13,48 +13,54 @@
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="../../js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
+    <style>
+        .banner{
+            background-image: url(../../image/banner/article.jpg);
+        }
+    </style>
 </head>
 
 <body>
-    <%-include ("../nav.ejs")%>
+    <%-include("../nav.ejs")%>
         <!-- 已解決:上傳單張圖片功能 -->
         <!-- 選擇照片那要有刪除功能 -->
         <!-- 照片資料庫設定    -->
         <!-- 前端要判斷欄位值不能為空 -->
 
-        <div class="whole" id="main">
-            <div>
-                <img src="../../image/article/article2.png" alt="" class="banner" style="object-fit: cover;">
-                <p class="banner_title ">發表參戰心得</p>
-            </div>
-            <div class="all">
-
-                <!-- <form action="/article/upload" method="post" enctype="multipart/form-data" class="posting"> -->
-                <input v-model="title" class="form_input" type="text" placeholder="請輸入文章標題">
-                <br><br>
-
-                <label for=""><b>心得內容:</b></label>
-                <textarea v-model="content" name="" id="" placeholder="分享你的音樂祭心得" class="article form_input"></textarea>
-
-                <label class="btn_blue1">
-                    <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="articleFile"
-                        style="display:none;" multiple>
-                    <i class="fas fa-camera"></i>新增圖片
-                </label><br><br>
-                <div id="img_sec" class="d-flex flex-wrap">
-                    <p></p>
+       <main>
+            <div class="whole" id="main">
+                <div class="banner">
+                    <!-- <img src="../../image/article/article2.png" alt="" class="banner" style="object-fit: cover;"> -->
+                    <p class="banner_title ">發表參戰心得</p>
                 </div>
-                <div style="text-align:right;">
-                    <button class="btn_tea1" v-on:click="cxlHandler">取消</button>
-                    <button class="btn_tea2" v-on:click="submitHandler">發表</button>
+                <div class="all">
+    
+                    <!-- <form action="/article/upload" method="post" enctype="multipart/form-data" class="posting"> -->
+                    <input v-model="title" class="form_input" type="text" placeholder="請輸入文章標題">
+                    <br><br>
+    
+                    <label for=""><b>心得內容:</b></label>
+                    <textarea v-model="content" name="" id="" placeholder="分享你的音樂祭心得" class="article form_input"></textarea>
+    
+                    <label class="btn_blue1">
+                        <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="articleFile"
+                            style="display:none;" multiple>
+                        <i class="fas fa-camera"></i>新增圖片
+                    </label><br><br>
+                    <div id="img_sec" class="d-flex flex-wrap">
+                        <p></p>
+                    </div>
+                    <div style="text-align:right;">
+                        <button class="btn_tea1" v-on:click="cxlHandler">取消</button>
+                        <button class="btn_tea2" v-on:click="submitHandler">發表</button>
+                    </div>
+                    {{image}}
+                    {{title}}
+                    {{content}}
+                    <!-- </form> -->
                 </div>
-                {{image}}
-                {{title}}
-                {{content}}
-                <!-- </form> -->
             </div>
-        </div>
+       </main>
         <%-include ("../footer.ejs")%>
 
 
@@ -99,10 +105,9 @@
                                     console.log(err);
                                 }
                             });
-                            // 這邊之後要改正   url 到user
                             $.ajax({
                                 type: "post",
-                                url: "/article/upload",
+                                url: "/user/upload",
                                 data: newActivity
                             }).then(function () {
                                 alert("已成功上傳文章 回到我的文章去看看吧")
@@ -123,12 +128,13 @@
                             };
                             reader.readAsDataURL(file);
                         },
-                        // deleteImgHandler: function () {
-                        //     $("body").on("click",".del_img_icon", function () {
-                        //         console.log("aaa")
+                        // 動態生成的怎麼去再綁定事件
+                        deleteImgHandler: function () {
+                            console.log("aaa")
+                            $("body").on("click",".del_img_icon", function () {
                                 
-                        //     })
-                        // }
+                            })
+                        }
                     }
                 })
 

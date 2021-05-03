@@ -27,6 +27,9 @@
             margin-left: 100px;
             margin-top: 80px;
         }
+        .justify-content-center{
+            padding: 30px 0;
+        }
     </style>
 
 </head>
@@ -36,104 +39,106 @@
     <!-- 導覽列 開始 -->
 
     <!-- 導覽列 結束 -->
-    <div class="title_div"><img>
-        <h4 class="title" style="color: #fff;">修改活動</h4>
-    </div>
-        
-        <form id="form" method="POST" action="">
-            <div class="row justify-content-center">
-                <!-- 左側 -->
-                <div class="col-md-3 ml-5 mr-5">
-                    <div class="form-group row">
-                        <label for="activityTitle" class="col-md-12">音樂會主題</label>
-                        <div class="col-md-12">
-                            <input type="hidden" name="activityId" id="activityId" value=<%= activityId %>>
-                            <input class="form-control" id="activityTitle" name="activityTitle" type="text" value=<%= data[0].activityTitle %>>
+    <main>
+        <div class="title_div"><img>
+            <h4 class="title" style="color: #fff;">編輯活動</h4>
+        </div>
+            
+            <form id="form" method="POST" action="">
+                <div class="row justify-content-center">
+                    <!-- 左側 -->
+                    <div class="col-md-3 ml-5 mr-5">
+                        <div class="form-group row">
+                            <label for="activityTitle" class="col-md-12">音樂會主題</label>
+                            <div class="col-md-12">
+                                <input type="hidden" name="activityId" id="activityId" value=<%= activityId %>>
+                                <input class="form-control" id="activityTitle" name="activityTitle" type="text" value=<%= data[0].activityTitle %>>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="location" class="col-md-6">地點</label>
-                        <label for="address" class="col-md-6">地址</label>
-                        <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="activityLocation" value=<%= data[0].activityLocation %>>
+                        <div class="form-group row">
+                            <label for="location" class="col-md-6">地點</label>
+                            <label for="address" class="col-md-6">地址</label>
+                            <div class="col-md-6 mb-2">
+                                <input class="form-control" type="text" name="activityLocation" value=<%= data[0].activityLocation %>>
+                            </div>
+    
+                            <div class="col-md-6 mb-2">
+                                <select class="form-control" id="areaId" name="areaId" >
+                                    <option <%= (data[0].areaId==1)?"selected":"" %> value="1">中正區</option>
+                                    <option <%= (data[0].areaId==2)?"selected":"" %> value="2">大同區</option>
+                                    <option <%= (data[0].areaId==3)?"selected":"" %> value="3">中山區</option>
+                                    <option <%= (data[0].areaId==4)?"selected":"" %> value="4">松山區</option>
+                                    <option <%= (data[0].areaId==5)?"selected":"" %> value="5">大安區</option>
+                                    <option <%= (data[0].areaId==6)?"selected":"" %> value="6">萬華區</option>
+                                    <option <%= (data[0].areaId==7)?"selected":"" %> value="7">信義區</option>
+                                    <option <%= (data[0].areaId==8)?"selected":"" %> value="8">士林區</option>
+                                    <option <%= (data[0].areaId==9)?"selected":"" %> value="9">北投區</option>
+                                    <option <%= (data[0].areaId==10)?"selected":"" %> value="10">內湖區</option>
+                                    <option <%= (data[0].areaId==11)?"selected":"" %> value="11">南港區</option>
+                                    <option <%= (data[0].areaId==12)?"selected":"" %> value="12">文山區</option>
+                                    <option <%= (data[0].areaId==13)?"selected":"" %> value="13">中區</option>
+                                    <option <%= (data[0].areaId==14)?"selected":"" %> value="14">東區</option>
+                                    <option <%= (data[0].areaId==15)?"selected":"" %> value="15">南區</option>
+                                    <option <%= (data[0].areaId==16)?"selected":"" %> value="16">西區</option>
+                                    <option <%= (data[0].areaId==17)?"selected":"" %> value="17">北區</option>
+                                    <option <%= (data[0].areaId==18)?"selected":"" %> value="18">北屯區</option>
+                                    <option <%= (data[0].areaId==19)?"selected":"" %> value="19">西屯區</option>
+                                    <option <%= (data[0].areaId==20)?"selected":"" %> value="20">南屯區</option>
+                                    <option <%= (data[0].areaId==21)?"selected":"" %> value="21">烏日區</option>
+                                    <option <%= (data[0].areaId==22)?"selected":"" %> value="22">豐原區</option>
+                                    <option <%= (data[0].areaId==23)?"selected":"" %> value="23">潭子區</option>
+    
+    
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" type="text" name="activityAddress" value=<%= data[0].activityAddress%>>
+                            </div>
                         </div>
-
-                        <div class="col-md-6 mb-2">
-                            <select class="form-control" id="areaId" name="areaId" >
-                                <option <%= (data[0].areaId==1)?"selected":"" %> value="1">中正區</option>
-                                <option <%= (data[0].areaId==2)?"selected":"" %> value="2">大同區</option>
-                                <option <%= (data[0].areaId==3)?"selected":"" %> value="3">中山區</option>
-                                <option <%= (data[0].areaId==4)?"selected":"" %> value="4">松山區</option>
-                                <option <%= (data[0].areaId==5)?"selected":"" %> value="5">大安區</option>
-                                <option <%= (data[0].areaId==6)?"selected":"" %> value="6">萬華區</option>
-                                <option <%= (data[0].areaId==7)?"selected":"" %> value="7">信義區</option>
-                                <option <%= (data[0].areaId==8)?"selected":"" %> value="8">士林區</option>
-                                <option <%= (data[0].areaId==9)?"selected":"" %> value="9">北投區</option>
-                                <option <%= (data[0].areaId==10)?"selected":"" %> value="10">內湖區</option>
-                                <option <%= (data[0].areaId==11)?"selected":"" %> value="11">南港區</option>
-                                <option <%= (data[0].areaId==12)?"selected":"" %> value="12">文山區</option>
-                                <option <%= (data[0].areaId==13)?"selected":"" %> value="13">中區</option>
-                                <option <%= (data[0].areaId==14)?"selected":"" %> value="14">東區</option>
-                                <option <%= (data[0].areaId==15)?"selected":"" %> value="15">南區</option>
-                                <option <%= (data[0].areaId==16)?"selected":"" %> value="16">西區</option>
-                                <option <%= (data[0].areaId==17)?"selected":"" %> value="17">北區</option>
-                                <option <%= (data[0].areaId==18)?"selected":"" %> value="18">北屯區</option>
-                                <option <%= (data[0].areaId==19)?"selected":"" %> value="19">西屯區</option>
-                                <option <%= (data[0].areaId==20)?"selected":"" %> value="20">南屯區</option>
-                                <option <%= (data[0].areaId==21)?"selected":"" %> value="21">烏日區</option>
-                                <option <%= (data[0].areaId==22)?"selected":"" %> value="22">豐原區</option>
-                                <option <%= (data[0].areaId==23)?"selected":"" %> value="23">潭子區</option>
-
-
-                            </select>
+                        <div class="form-group row">
+                            <label for="Price1" class="col-md-6">單人票</label>
+                            <label for="Price2" class="col-md-6">雙人票</label>
+                            <div class="col-md-6 mb-2">
+                                <input class="form-control" type="text" name="unitPrice1"value=<%=data[0].unitPrice%>>
+                            </div>
+                            
+                            <div class="col-md-6 mb-2">
+                                <input class="form-control" type="text" name="unitPrice2" value=<%=data[1].unitPrice%>>
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <input class="form-control" type="text" name="activityAddress" value=<%= data[0].activityAddress%>>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Price1" class="col-md-6">單人票</label>
-                        <label for="Price2" class="col-md-6">雙人票</label>
-                        <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="unitPrice1"value=<%=data[0].unitPrice%>>
+                        <div class="form-group row">
+                            <label for="maximum" class="col-md-12">人數上限</label>
+                            <div class="col-md-12">
+                                <input class="form-control" type="number" value=<%=data[0].ticketAmount %> id="ticketAmount" name="ticketAmount">
+                            </div>
                         </div>
                         
-                        <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="unitPrice2" value=<%=data[1].unitPrice%>>
-                        </div>
+    
                     </div>
-                    <div class="form-group row">
-                        <label for="maximum" class="col-md-12">人數上限</label>
-                        <div class="col-md-12">
-                            <input class="form-control" type="number" value=<%=data[0].ticketAmount %> id="ticketAmount" name="ticketAmount">
+                    <!-- 右側 -->
+                    <div class="col-md-7">
+                        <div class="form-group row">
+                            <label for="activities" class="col-md-12">音樂會內容</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" name="activityContent" id="activityContent"
+                                    rows="8"><%= data[0].activityContent%></textarea>
+                            </div>
                         </div>
-                    </div>
-                    
-
-                </div>
-                <!-- 右側 -->
-                <div class="col-md-7">
-                    <div class="form-group row">
-                        <label for="activities" class="col-md-12">音樂會內容</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="activityContent" id="activityContent"
-                                rows="8"><%= data[0].activityContent%></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row ">
-                        <div class="col-md-12">
-                            <br>
-                        </div>
-                        <div class="col-md-10  text-center">
-                            <a href="/activity/text"><input class="btn btn-primary mr-2" type="button" value="取消"></a>
-                            <input id="submitBtn" class="btn btn-secondary" type="button" value="上傳">
+                        <div class="form-group row ">
+                            <div class="col-md-12">
+                                <br>
+                            </div>
+                            <div class="col-md-10  text-center">
+                                <a href="/company#<%-activityId%>"><input class="btn_tea1" type="button" value="取消"></a>
+                                <input id="submitBtn" class="btn_tea2" type="button" value="發表">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+    
 
-
+    </p>   
     <!-- 頁尾  開始-->
 
     <!-- 頁尾  結束-->
@@ -179,7 +184,7 @@
                         if (res.errno === 1) {
                             alert("更新成功!")
                             // location.reload()
-                            location.href = `/activity/text`
+                            location.href = `/company#<%-activityId%>`
                         } else if (res.errno === 0) {
                             alert("更新失敗!")
                         }

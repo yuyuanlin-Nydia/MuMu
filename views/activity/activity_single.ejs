@@ -11,23 +11,47 @@
     <!-- <link rel="stylesheet" href="../../css/Bootstrap/bootstrap.css"> -->
     <!-- <script src="../../js/Bootstrap/bootstrap.js"></script> -->
     <script src="../../js/jquery.js"></script>
+    <style>
+        input[type=number]{
+            border:2px solid var(--color4);
+            border-radius: 0.3rem;
+            padding: 6px;
+            appearance:none;
+            -moz-appearance:none;
+            margin:3px;
+            width: 180px;
+        }
+        select.form_input{
+            width:180px ;
+            margin: 0px;
+        }
+     
+        .form_input{
+            margin: 0;
+            padding: 0;
+        }
+        .mynavbar{
+            background:var(--color5);
+        }
+        .mynavbar>.right{
+            border: 0;
+        }
+    </style>
 
 </head>
 
 <body class="campaignContent_body">
-    <!-- <%-include("../nav.ejs")%> -->
+    <%-include("../nav.ejs")%>
     <!-- 左側的div--start -->
     <div class="left_div">
-        <h5 class="sub_title">活動資訊</h1>
-            <div class="table_con">
-                <p>日期</p>
+        <h5 class="sub_title">活動資訊</h1><% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %> 
+            <div class="table_con"> <% var activity_day=JSON.parse(JSON.stringify(activity_day)) %> <% activity_day.forEach((a)=>{ %>
+               
+                <p class="little_date">日期</p>
+                <p><%=a.activityDate.substring(0,4)+"/"+a.activityDate.substring(5,7)+"/"+a.activityDate.substring(8,10)+"("+monthDay[a.acd]+")"%></p>
+                <%})%>
+                <p>預售</p>
                 <p><%=sell_date%>(<%= sell_week %>)</p>
-
-                <p>時間</p>
-                <p>19:30</p>
-
-                <p>開場</p>
-                <p>20:00</p>
 
                 <p>地點</p>
                 <p><%= data[0].activityLocation %> </p>
@@ -39,7 +63,7 @@
                 <div class="table_con">
                     <% data.forEach((item,idx)=>{%>
                         <p><%=item.type %> </p>
-                        <p><%= "TWD$"+item.unitPrice %></p>
+                        <p><%= "NT$"+item.unitPrice %></p>
                     <%}) %>
                 </div>
 
@@ -48,7 +72,7 @@
 
 
     <!-- 活動圖片--start -->
-    <div class="content_img_div" style= "background-image: url(../../image/upload/activity/<%= data[0].activityFile %>);">
+    <div class="content_img_div" style= "background-image: url(../../image/upload/activity/<%-data[0].activityFile%>)">
         <div class="back_icon"><a href="/activity">####</a></div>
         <!-- <div class="img_icon_top">
             <div>a</div>
@@ -75,50 +99,81 @@
         
         <h5 class="title" style="display: inline-block;"><%= data[0].activityTitle %> </h1><button name="unlove" class="btn_tea1" style="padding: 5px 10px; margin-left: 10px;">收藏</button>
 
+
         <p><%= data[0].activityContent %> 
         </p>
         
         <hr>
         
         <h5 class="sub_title">節 目 資 訊</h5>
-        <p>
-            活動日期： 2021/5/1 (六)
-
-            入場時間： 19:30
-
-            開始時間： 20:00
+        <p><% var activity_day=JSON.parse(JSON.stringify(activity_day)) %>
+            <table style=" display: inline-block;"><% activity_day.forEach((a)=>{ %>
+                <tr>
+                    <td class="big_title">活動日期：</td>
+                    <td class="little_title">活動日期：</td>
+                    <td><%= a.activityDate.substring(0,4)+"/"+a.activityDate.substring(5,7)+"/"+a.activityDate.substring(8,10)+"  ("+monthDay[a.acd]+") "+a.activityDate.substring(11,13)+":"+a.activityDate.substring(14,16) %></td>
+                </tr>
+                <% }) %> 
+            </table>
 
             活動地點： <%= data[0].activityLocation %> 
 
             活動地址： <%= data[0].city + data[0].town + data[0].activityAddress %> 
             
-            啟售時間： <%= data[0].sellDate %> （限量 <%= data[0].ticketAmount %>  張）
+            演出樂團： <% band.forEach((b)=>{ %> <%= b.bandName %> <% }) %>
+            
+            啟售時間： <%= sell_date+"("+sell_week+")" %> 
             
             購票方式： MUMU及全台全家便利商店
+
+            票　　數： <%= data[0].ticketAmount %> （剩餘  張）
             
             票　　價： <% data.forEach((item,idx)=>{%><%=item.type + " "+ item.unitPrice +" |" %> <%}) %>
             
             主辦單位： MUMU、 <%= data[0].companyName %> 
         </p>
-        <form method="POST" action="">
-            <select name="activityPriceId" id="activityPriceId">
-                <% data.forEach((item,index)=>{  %>
-                <option value=<%= item.categoryId %>><%= item.type %></option>
-                <% })  %>
-            </select>
+        <!-- 更改區域 -->
+        <form method="POST" action="/cart">
+            <p>選擇場次:</p>
+                <select name="activityDetailId" id="activityDetailId" class="form_input"><% var activity_day=JSON.parse(JSON.stringify(activity_day)) %>
+                    <% activity_day.forEach((a)=>{  %>
+                    <option value=<%-a.activityDetailId%>> <%= a.activityDate.substring(0,4)+"/"+a.activityDate.substring(5,7)+"/"+a.activityDate.substring(8,10)%></option>
+                    <% })  %>
+                </select>
+          
+            <% data.forEach((item,index)=>{  %>
+            <p><%= item.type %>:</p><input name="quantity<%=item.categoryId%>"value="0" type="number" class=""min="0">
+            <input type="hidden" name="categoryId<%=item.categoryId%>" value="<%=item.categoryId%>" >
+            <% })  %>
             <input type="hidden"name="activityId" value=<%= id %>>
-            <input type="submit" class="btn_tea2" width="100%" value="我要購票">
+            <a href="/cart">
+                <input type="submit" class="btn_tea1 ticket_btn" width="100%" value="確定購票">
+            </a>
+
+            <input type="hidden" value="<%= data[0].activityId %>" >
         </form>
-        <hr><iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14457.850254165025!2d121.5986163!3d25.0523066!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7df0dd098383b7f0!2z6Ie65YyX5rWB6KGM6Z-z5qiC5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1616845743833!5m2!1szh-TW!2stw"
-            width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy">
-        </iframe>
-    </div>
+        <hr>
+        <!-- <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14457.850254165025!2d121.5986163!3d25.0523066!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7df0dd098383b7f0!2z6Ie65YyX5rWB6KGM6Z-z5qiC5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1616845743833!5m2!1szh-TW!2stw"
+        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe> -->
+</div>
+
     <!-- 活動內容--end -->
-    <!-- <%-include("../footer.ejs")%> -->
+    <%-include("../footer.ejs")%>
 
     <script>
         $(function () {
+            $('.big_title').eq(1).text("");
+
+            $('.little_title').each(function(idx,item){
+                    $(item).text(`第${idx+1}日－`);    
+            });
+            $('.little_date').each(function(idx,item){
+                    $(item).text(`Day${idx+1}`);    
+            });
+
+        
             $('.img_icon_top>div:nth-of-type(1)').click(function () {
                 $('.img_icon_top').toggleClass('btn_show');
             })
@@ -202,6 +257,8 @@
         
     </script>
      
+
+
 
 </body>
 
