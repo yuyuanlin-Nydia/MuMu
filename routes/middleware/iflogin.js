@@ -1,7 +1,6 @@
 var { Error } = require('../response')
 var login_render = function (req, res, next) {
     if(req.session.userinfo) {
-
         next();
 
     } else {
@@ -12,10 +11,9 @@ var login_api = function (req, res, next) {
     if(req.session.userinfo) {
         next();
     } else {
-        res.end(
-            JSON.stringify(new Error('permission deined'))
-            
-        )
+        res.write("<script> alert('Please login!'); location.href = '/'</script>"
+            )
+   
     }
 }
 

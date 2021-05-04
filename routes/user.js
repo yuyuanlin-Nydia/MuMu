@@ -8,7 +8,7 @@ var { login_render, login_api } = require('./middleware/iflogin')
 
 //會員頁-票券
 // 會有兩個sql語句 一個是未參加 一個是沒參加
-router.get("/", function (req, res) {
+router.get("/", login_render,function (req, res) {
     var account=req.session.userinfo.account;
     var sql=`SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,ad.activityDate,ap.unitPrice,od.quantity,od.quantity*ap.unitPrice as tot,atc.type,orders.orderDate,orders.card1,orders.card2,orders.card3,orders.card4,tp.method FROM orderdetails as od 
     inner join orders on orders.orderId=od.orderId
@@ -237,9 +237,15 @@ router.post("/favorite/event", login_api, function (request, response) {
 router.get("/profile", login_api, function (req, res) {
     console.log(req.session.userinfo);
     // conn.query('select * from userinfo  WHERE firstname = $_SESSION[usreId]  ',
-    userId = [req.params.userId];
     var session = req.session.userinfo;
-    conn.query('select * from userinfo ', userId,
+    // console.log(session.id);
+    conn.query(`SELECT ui.userId,ui.firstName,ui.lastName,ui.userAccount,ui.userPassword,ui.userPhone,ui.userEmail,ui.userFile,ui.userArea,ui.userBirth,ui.userAdd, district.city, area.town
+        FROM userinfo ui
+        INNER JOIN area 
+        ON ui.userArea = area.areaId
+        INNER JOIN district
+        ON ui .userDis = district.districtID
+        WHERE userId=?;`,[session.id],
         function (err, Pdata) {
             if (err) {
                 console.log(JSON.stringify(err));
@@ -247,11 +253,16 @@ router.get("/profile", login_api, function (req, res) {
             }
             res.render('./user/user_edit.ejs', {
                 data: Pdata,
+                userId: session.id,
                 account: session.account,
                 Name: session.name,
                 phone: session.phone,
                 mail: session.email,
                 file: session.file,
+                birth: session.birth,
+                address: session.add,
+                district:session.dis,
+                area:session.area
             });
 
         });
@@ -260,11 +271,17 @@ router.get("/profile", login_api, function (req, res) {
     // res.send(JSON.stringify(Pdata));
 });
 
-
 // profile資料data
 // router.get("/profile/data",login_api, function(req, res) {
-//     conn.query('select * from userinfo',
-//     '',
+//     var session = req.session.userinfo;
+//     conn.query(`SELECT ui.userId,ui.firstName,ui.lastName,ui.userAccount,ui.userPassword,ui.userPhone,ui.userEmail,ui.userFile,ui.userArea,ui.userBirth,ui.userAdd, district.city, area.town
+//     FROM userinfo ui
+//     INNER JOIN area 
+//     ON ui.userArea = area.areaId
+//     INNER JOIN district
+//     ON ui .userDis = district.districtID
+//     WHERE userId=?;`,
+//     [session.id],
 //     function (err, Pdata) {
 //         if (err) {
 //             console.log(JSON.stringify(err));
@@ -275,42 +292,73 @@ router.get("/profile", login_api, function (req, res) {
 // });
 // })
 
-// 編輯個人資料
-// router.put("/profile/data",login_api,  function (req, res) {
+//編輯個人資料
+router.post("/profile", function (req, res) {
+    var session = req.session.userinfo;
+    var body = req.body
+    var sql = `UPDATE userinfo SET userBirth = ?, userPhone = ?, userEmail = ?, userArea = ?, userDis = ?,userAdd = ? WHERE userId = ?`;
+    var data = [body.birth,body.phone, body.e_mail,body.area,body.district,body.address,parseInt(session.id)]
+    conn.query(sql, data, function (error,results,fields) {
+        console.log(error);
+        console.log(55555);
+        if(results){
+            res.end(
+                JSON.stringify(new Success('UPDATE success'))
+            )
+        } else {
+            res.end(
+                JSON.stringify(new Error('UPDATE failed'))
+            )
+        }
+        // req.session.user=user
+        req.session.save();
+    })
 
-// 	connection.query(
-// 		"update userinfo set userEmail = ?, userPhone = ? where userId = " 
-// 		    + request.body.userId, 
-// 			[
-// 				request.body.userEmail, 
-// 				request.body.userPhone
-// 			]);
-// 	response.send("row updated.");
+})
+//更改密碼
+router.post("/profile/pw", function (req, res) {
+    var session = req.session.userinfo;
+    var body = req.body
+    var sql = `UPDATE userinfo SET userPassword = ? WHERE userId = ?`;
+    var data = [body.newpw,parseInt(session.id)]
+    conn.query(sql, data, function (error,results,fields) {
+        // console.log(error);
+        // console.log(55555);
+        if(results){
+            res.end(
+                JSON.stringify(new Success('UPDATE success'))
+            )
+        } else {
+            res.end(
+                JSON.stringify(new Error('UPDATE failed'))
+            )
+        }
+    })
 
-// })
+})
+//舊密碼確認
+router.post('/checkpw',function(req, res){
+    var session = req.session.userinfo;
+	var body = req.body;
+	var sql = `select userId from userinfo where userPassword=? AND userId=?`
+	var data = [body.oldpw,session.id]
+	conn.query(sql, data, function (error,results, fields) {
+		// console.log(results[0]);
+		if(results[0]) {
+            res.end(
+				JSON.stringify('old password is correct'),
+            )
+        } else {
+            res.end(
+                JSON.stringify(new Success('old password is false')),
+            )
+        }
+    })
+})
 
 
-// 上傳大頭貼
-// "update userinfo set userFile = ? where userId = " 
-
-//left拉出去???
-// router.get("/",login_api, function(req, res) {
-//     userId = [req.params.userId] ;   
-//     var session = req.session.userinfo;
-//     conn.query('select * from userinfo ',userId,
-//     function (err, Pdata) {
-//         if (err) {
-//             console.log(JSON.stringify(err));
-//             return;
-//         }
-//     res.render('./user/user_left.ejs',{
-//         data: Pdata,
-//         Name: session.name
-//     });
-
-// });
 
 
-//     // res.send(JSON.stringify(Pdata));
-// });
+
+
 module.exports = router;
