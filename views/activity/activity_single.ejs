@@ -79,7 +79,7 @@
                 <div class="table_con">
                     <% data.forEach((item,idx)=>{%>
                         <p><%=item.type %> </p>
-                        <p><%= "NT$"+item.unitPrice %></p>
+                        <p><%= "NT $"+item.unitPrice %></p>
                     <%}) %>
                 </div>
 
@@ -110,10 +110,12 @@
     <!-- 活動圖片--end -->
     <input type="hidden" name="favorates" value=<% favorates.forEach((fav,idx)=>{%><%= (fav.activityId==activityId)?activityId :"" %><% }) %>>
     <input type="hidden" name="activityId" value=<%= activityId %>>
+  
     <!-- 活動內容--start -->
     <div class="content_text_div">
         
-        <h5 class="title" style="display: inline-block;"><%= data[0].activityTitle %> </h1><button name="unlove" class="btn_tea1" style="padding: 5px 10px; margin-left: 10px;">收藏</button>
+        <h5 class="title" style="display: inline-block;"><%= data[0].activityTitle %> </h1><!-- 登入 --><%if(session.userinfo){ %><button name="unlove" class="btn_tea1" style="padding: 5px 10px; margin-left: 10px;">收藏</button>
+        <!-- 未登入 --><% }else { %><% } %>
 
 
         <p><%= data[0].activityContent %> 
@@ -166,6 +168,7 @@
             <a href="/cart">
                 <input type="submit" class="btn_tea1 ticket_btn" width="100%" value="確定購票">
             </a>
+           
 
             <input type="hidden" value="<%= data[0].activityId %>" >
         </form>

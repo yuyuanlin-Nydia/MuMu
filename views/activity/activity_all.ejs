@@ -68,15 +68,29 @@
 
 <body class="campaign_body">
     <%-include("../nav.ejs")%>
+    <% Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份 
+            "d+": this.getDate(), //日 
+            "h+": this.getHours(), //小时 
+            "m+": this.getMinutes(), //分 
+            "s+": this.getSeconds(), //秒 
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+            "S": this.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }%>
+    <% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %> 
     <!-- 左側的篩選列--start -->
    <main>
         <div class="tag_div">
             <form id="form" method="POST" action="">
                 <div class="search_div">
                     <input type="text" name="search" class="form_input" style="background-color: var(--color4);" placeholder="Search">
-                    <button type="submit" id="submitBtn"><i class="fas fa-search btn_search"></i></button>
-    
-                    
+                    <button type="submit" id="submitBtn"><i class="fas fa-search btn_search"></i></button>                   
                     <!-- <input type="submit" id="submitBtn"> -->
                 </div>
                 
@@ -114,10 +128,10 @@
                                 <%= item.activityTitle %>
                             </p>
                             <p>
-                                活動時間：　<%= item.sellDate.substring(0,4)+'年'+item.sellDate.substring(5,7)+'月'+item.sellDate.substring(8,10)+'日' %>
+                                活動時間：　<%= (new Date(item.minDate)).Format("yyyy年MM月dd日 (")+monthDay[item.min]+")~"+(new Date(item.maxDate)).Format("yyyy/MM/dd (")+monthDay[item.max]+")" %>
                             </p>
                             <p>
-                                售票時間：　<%= item.sellDate.substring(0,4)+'年'+item.sellDate.substring(5,7)+'月'+item.sellDate.substring(8,10)+'日' %>
+                                售票時間：　<%= (new Date(item.sellDate)).Format("yyyy/MM/dd (")+monthDay[item.sell]+")" %>
                             </p>
                             <p>
                                 地　　點：　<%= item.activityLocation %>
@@ -135,7 +149,7 @@
             <% }) %>
             <div class="campaign_top">
                 <% for(var i = 1; i <= last_page; i++) { %>
-                    <a href="/activity/<%= i%>"><button class="btn_page" style="line-height: 1;"><%= i%></button></a>
+                    <a href="/activity/<%= i%>"><button class="btn_page" style="line-height: 1;<%-(i==curr_page)?"background-color:var(--color2);color:var(--color5)":""%>"><%= i%></button></a>
                 <% } %>
             </div>
     

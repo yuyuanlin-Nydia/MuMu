@@ -15,7 +15,7 @@
     <style>
         .title_div{
             width: 100vw;
-            height: 150px;
+            height: 250px;
             background-color: rgba(107, 139, 184, 0.6);
             background-blend-mode: multiply;
             background-image: url(../../image/upload/activity/1786349.jpg);
@@ -58,7 +58,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="location" class="col-md-6">地點</label>
-                            <label for="address" class="col-md-6">地址</label>
+                            <label for="address" class="col-md-6">地區</label>
                             <div class="col-md-6 mb-2">
                                 <input class="form-control" type="text" name="activityLocation" value=<%= data[0].activityLocation %>>
                             </div>
@@ -92,13 +92,14 @@
     
                                 </select>
                             </div>
+                            <label for="activityAddress" class="col-md-6">地址</label>
                             <div class="col-md-12">
                                 <input class="form-control" type="text" name="activityAddress" value=<%= data[0].activityAddress%>>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="Price1" class="col-md-6">單人票</label>
-                            <label for="Price2" class="col-md-6">雙人票</label>
+                            <label for="Price1" class="col-md-6">單人票價</label>
+                            <label for="Price2" class="col-md-6">雙人票價</label>
                             <div class="col-md-6 mb-2">
                                 <input class="form-control" type="text" name="unitPrice1"value=<%=data[0].unitPrice%>>
                             </div>

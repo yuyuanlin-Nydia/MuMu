@@ -62,6 +62,8 @@
                         <label for="sellDate" class="col-md-12">活動時間</label>
                         <div class="col-md-12 mb-2">
                             <input class="form-control" id="activityDate1" name="activityDate1" type="datetime-local">
+                        </div>
+                        <div class="col-md-12 mb-2"> 
                             <input class="form-control" id="activityDate2" name="activityDate2" type="datetime-local">
                         </div>
                         <label for="sellDate" class="col-md-12">開始售票</label>
@@ -75,7 +77,7 @@
                     </div>
                     <div class="form-group row">
                         <label for="location" class="col-md-6">地點</label>
-                        <label for="address" class="col-md-6">地址</label>
+                        <label for="address" class="col-md-6">地區</label>
                         <div class="col-md-6 mb-2">
                             <input class="form-control" type="text" name="activityLocation">
                         </div>
@@ -108,19 +110,20 @@
 
                             </select>
                         </div>
+                        <label for="activityAddress" class="col-md-12">地址</label>
                         <div class="col-md-12">
                             <input class="form-control" type="text" name="activityAddress">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Price1" class="col-md-6">單人票</label>
-                        <label for="Price2" class="col-md-6">雙人票</label>
+                        <label for="Price1" class="col-md-6">單人票價</label>
+                        <label for="Price2" class="col-md-6">雙人票價</label>
                         <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="unitPrice1">
+                            <input class="form-control" type="text" name="unitPrice1"  pattern="[0-9]+">
                         </div>
                         
                         <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="unitPrice2">
+                            <input class="form-control" type="text" name="unitPrice2" pattern="[0-9]+">
                         </div>
                     </div>
                     
@@ -136,21 +139,25 @@
                 <div class="col-md-5 ml-5 mr-5">
 
                     <div class="form-group row">
-                        <div class="col-md-10 text-center" v-if="preview">
+                        <div class="col-md-10 text-center mb-2" v-if="preview">
                             <img id="preview_img" :src="preview" alt="">
                             <input class="form-control" type="file" id="activityFile" name="activityFile" value=""
                                 accept="image/jpeg image/jpg image/png" @change="previewImage">
                         </div>
                         
                     </div>
-                    <div class="form-group">
-
-                        <input type="checkbox" class="bandId" name="bandId" value="1" style="appearance:auto;margin-left: 0;"/> 告五人
-                        <input type="checkbox" class="bandId" name="bandId" value="2" style="appearance:auto;margin-left: 0;"/> 美秀集團
-                        <br>
-                        <input type="checkbox" class="bandId" name="bandId" value="3" style="appearance:auto;margin-left: 0;"/> 理想混蛋
-                        <input type="checkbox" class="bandId" name="bandId" value="4" style="appearance:auto;margin-left: 0;"/> 佛跳牆
-
+                    <div class="form-group  row">
+                        <label for="bandId" class="col-md-12">演出樂團</label>
+                        <div class="col-md-10 mb-2">
+                            &ensp;
+                            <% data.forEach((e)=>{%>
+                            <input type="checkbox" class="bandId" name="bandId" value=<%-e.bandId%> style="appearance:auto;margin-left: 0;"/> <%=e.bandName%>
+                            <%}) %> 
+                            <!-- <input type="checkbox" class="bandId" name="bandId" value="2" style="appearance:auto;margin-left: 0;"/> 美秀集團 -->
+                            <!-- <input type="checkbox" class="bandId" name="bandId" value="3" style="appearance:auto;margin-left: 0;"/> 理想混蛋 -->
+                            <!-- <input type="checkbox" class="bandId" name="bandId" value="4" style="appearance:auto;margin-left: 0;"/> 佛跳牆   -->
+                              
+                        </div>
                     </div>
                    
 
@@ -225,7 +232,7 @@
                 data[4].value =new Date(today).Format("yyyy-MM-dd hh:mm:ss");
 
                 JSONData = serializeToJSON(data);
-                alert(JSONData);
+                // alert(JSONData);
                 
             
                 $.ajax({

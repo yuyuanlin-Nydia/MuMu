@@ -28,7 +28,10 @@ router.get("/:page([0-9]+)", function (req, res) {
     //定義資料偏移量
     var offset = (page - 1) * nums_per_page
 
-    sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) ORDER BY activityId DESC LIMIT ${offset}, ${nums_per_page};`
+    // sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) ORDER BY activityId DESC LIMIT ${offset}, ${nums_per_page};`
+    sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
+    from activitydetails
+    group by activityId)as d ON(a.activityId=d.activityId) ORDER BY activityId DESC LIMIT ${offset}, ${nums_per_page}`
     connection.query(sql, [], function (error, rows) {
         connection.query(`SELECT COUNT(*) AS COUNT FROM activityInfo;`, [], function (error, nums) {
 
@@ -123,7 +126,7 @@ router.get("/single/:id([0-9]+)", function (req, res) {
 
 // 創建新活動畫面get
 router.get("/create", function (req, res) {
-    sql = `SELECT * FROM activityInfo;`
+    sql = `SELECT bandId,bandName FROM bandinfo;`
     connection.query(sql, function (error, rows) {
         if (error) {
             console.log(error);
@@ -150,16 +153,31 @@ router.get('/edit/:aid([0-9]+)', function (req, res) {
         });
     })
 })
-// router.get('/:search', function (req, res)
+// router.get('/search', function (req, res) {
+//     var text = req.query.text
+//     var districtId = req.query.districtId
+//     res.redirect(`/search/1?text=${text}&districtId=${districtId}`)
+// })
+
+
 // 搜尋get
+// router.get("/search/:page([0-9]+)", function (req, res) {
 router.get('/search', function (req, res) {
 
     search = JSON.stringify("%" + req.query.text + "%");
 
-    var all = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE activityTitle LIKE ${search};`
-    var north = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 1 AND 6) AND activityTitle LIKE ${search};`
-    var middle = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 7 AND 11) AND activityTitle LIKE ${search};`
-    var south = `SELECT activityId,companyName,activityTitle,activityFile,districtId,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on (a.companyId=c.companyId) INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 12 AND 15) AND activityTitle LIKE ${search};`
+    var all = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
+    from activitydetails
+    group by activityId)as d ON(a.activityId=d.activityId)WHERE activityTitle LIKE ${search} ORDER BY activityId DESC;`
+    var north = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
+    from activitydetails
+    group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 1 AND 6) AND activityTitle LIKE ${search} ORDER BY activityId DESC;`
+    var middle = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
+    from activitydetails
+    group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 7 AND 11) AND activityTitle LIKE ${search} ORDER BY activityId DESC;`
+    var south = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
+    from activitydetails
+    group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 12 AND 15) AND activityTitle LIKE ${search} ORDER BY activityId DESC;`
 
     districtId = parseInt(req.query.districtId);
 
@@ -200,7 +218,7 @@ router.post('/search', function (req, res) {
     var body = req.body
     var sql = `SELECT * FROM activityinfo WHERE activityTitle LIKE "%?%"`
     var data = [body.search]
-    // console.log(req.body)
+
     connection.query(sql, [data], function (error, results, fields) {
         if (results) {
             res.end(
