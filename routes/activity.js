@@ -204,6 +204,7 @@ router.get('/search', function (req, res) {
         }
         res.render('./activity/activity_all.ejs', {
             data: rows,
+            curr_page: 1,
             nums_per_page: 1,
             total_nums: 1,
             last_page: 2,
