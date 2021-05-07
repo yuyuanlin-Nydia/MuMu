@@ -24,16 +24,16 @@ router.get("/:page([0-9]+)", function (req, res) {
         return
     }
     //每頁資料數
-    var nums_per_page = 3
+    var nums_per_page = 5
     //定義資料偏移量
     var offset = (page - 1) * nums_per_page
 
     // sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) ORDER BY activityId DESC LIMIT ${offset}, ${nums_per_page};`
     sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
     from activitydetails
-    group by activityId)as d ON(a.activityId=d.activityId) ORDER BY activityId DESC LIMIT ${offset}, ${nums_per_page}`
+    group by activityId)as d ON(a.activityId=d.activityId)WHERE del =0 ORDER BY sellDate DESC LIMIT ${offset}, ${nums_per_page}`
     connection.query(sql, [], function (error, rows) {
-        connection.query(`SELECT COUNT(*) AS COUNT FROM activityInfo;`, [], function (error, nums) {
+        connection.query(`SELECT COUNT(*) AS COUNT FROM activityInfo WHERE del =0;`, [], function (error, nums) {
 
             var last_page = Math.ceil(nums[0].COUNT / nums_per_page)
             // console.log(typeof(rows));
@@ -53,10 +53,12 @@ router.get("/:page([0-9]+)", function (req, res) {
                 //本頁資料數量
                 total_nums: nums[0].COUNT,
                 //總數除以每頁筆數，再無條件取整數
-                last_page: last_page
-
+                last_page: last_page,
+                search:"undefind",
+                districtId:"undefind"
 
             })
+            
 
         })
 
@@ -65,7 +67,10 @@ router.get("/:page([0-9]+)", function (req, res) {
 })
 // 活動詳細頁get
 router.get("/single/:id([0-9]+)", function (req, res) {
-    var sql = `select activityTitle,activityFile,activityContent,activityLocation,city,town,activityAddress,ticketAmount,p.categoryId,type,unitPrice,sellDate,WEEKDAY(performDate) as perform,WEEKDAY(sellDate)as sell,companyName 
+    if (req.session.userinfo) {
+        var userId = req.session.userinfo.id;
+    }
+    var sql = `select activityTitle,activityFile,activityContent,activityLocation,city,town,activityAddress,ticketAmount,p.categoryId,type,unitPrice,sellDate,WEEKDAY(upDated) as perform,WEEKDAY(sellDate)as sell,companyName 
     from  (activityinfo i INNER JOIN  activityprice p ON (i.activityId = p.activityId)) 
     INNER JOIN companyinfo c ON(i.companyId = c.companyId)
     INNER JOIN area a ON(i.areaId =a.areaId)
@@ -75,32 +80,12 @@ router.get("/single/:id([0-9]+)", function (req, res) {
     SELECT activityDetailId, activityDate, WEEKDAY(activityDate)as acd,activityDetailId FROM activitydetails WHERE activityId =?;
     SELECT bandName FROM activityband a INNER JOIN bandinfo b ON(a.bandId=b.bandId) WHERE activityId = ?`
 
-
-    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
-    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
-    // Date.prototype.Format = function (fmt) {
-    //     var o = {
-    //         "M+": this.getMonth() + 1, //月份 
-    //         "d+": this.getDate(), //日 
-    //         "h+": this.getHours(), //小时 
-    //         "m+": this.getMinutes(), //分 
-    //         "s+": this.getSeconds(), //秒 
-    //         "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-    //         "S": this.getMilliseconds() //毫秒 
-    //     };
-    //     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    //     for (var k in o)
-    //         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    //     return fmt;
-    // }
-
-
     connection.query(sql, [req.params.id, req.params.id, req.params.id], function (error, rows) {
         if (error) {
             console.log(error);
         }
         // console.log(rows[0]);
-        connection.query(`SELECT activityId FROM useractivity WHERE userId =?`, [3], function (error, favorates) {
+        connection.query(`SELECT activityId FROM useractivity WHERE userId =?`, [userId], function (error, favorates) {
             if (error) {
                 console.log(error);
             }
@@ -153,31 +138,46 @@ router.get('/edit/:aid([0-9]+)', function (req, res) {
         });
     })
 })
-// router.get('/search', function (req, res) {
-//     var text = req.query.text
-//     var districtId = req.query.districtId
-//     res.redirect(`/search/1?text=${text}&districtId=${districtId}`)
-// })
-
 
 // 搜尋get
-// router.get("/search/:page([0-9]+)", function (req, res) {
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+// 沒有辦法保留搜尋關鍵字改動地區
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 router.get('/search', function (req, res) {
+    var page = parseInt(req.query.page)
+    
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+    // 沒有搜尋結果時無法跳轉回第一頁
+    // -----------已解決-----------
+    // last_page 要大於 0
+    if (page <= 0) {
+        res.redirect(`/activity/search?text=${req.query.text}&districtId=${req.query.districtId}&page=1`)
+        return
+    }
+    
+    //每頁資料數
+    var nums_per_page = 5
+    //定義資料偏移量
+    var offset = (page - 1) * nums_per_page
 
+    
     search = JSON.stringify("%" + req.query.text + "%");
+   
+    var all = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) 
+    INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate from activitydetails group by activityId)as d ON(a.activityId=d.activityId)WHERE activityTitle LIKE ${search}AND del =0 ORDER BY sellDate DESC LIMIT ${offset}, ${nums_per_page} ;
+    SELECT COUNT(*)as COUNT FROM activityinfo  WHERE activityTitle LIKE ${search} AND del =0;;`
 
-    var all = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
-    from activitydetails
-    group by activityId)as d ON(a.activityId=d.activityId)WHERE activityTitle LIKE ${search} ORDER BY activityId DESC;`
     var north = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
-    from activitydetails
-    group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 1 AND 6) AND activityTitle LIKE ${search} ORDER BY activityId DESC;`
+    from activitydetails group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 1 AND 6) AND activityTitle LIKE ${search}AND del =0 ORDER BY sellDate DESC LIMIT ${offset}, ${nums_per_page};
+    SELECT COUNT(*)as COUNT FROM activityinfo a INNER JOIN area b ON(a.areaId = b.areaId) WHERE (districtId BETWEEN 1 AND 6) AND activityTitle LIKE ${search} AND del =0`
+    
     var middle = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
-    from activitydetails
-    group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 7 AND 11) AND activityTitle LIKE ${search} ORDER BY activityId DESC;`
+    from activitydetails group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 7 AND 11) AND activityTitle LIKE ${search}AND del =0 ORDER BY sellDate DESC LIMIT ${offset}, ${nums_per_page};
+    SELECT COUNT(*)as COUNT FROM activityinfo a INNER JOIN area b ON(a.areaId = b.areaId) WHERE (districtId BETWEEN 7 AND 11) AND activityTitle LIKE ${search} AND del =0;`
+    
     var south = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
-    from activitydetails
-    group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 12 AND 15) AND activityTitle LIKE ${search} ORDER BY activityId DESC;`
+    from activitydetails group by activityId)as d ON(a.activityId=d.activityId)INNER JOIN area r on (a.areaId=r.areaId) WHERE (districtId BETWEEN 12 AND 15) AND activityTitle LIKE ${search}AND del =0 ORDER BY sellDate DESC LIMIT ${offset}, ${nums_per_page};
+    SELECT COUNT(*)as COUNT FROM activityinfo a INNER JOIN area b ON(a.areaId = b.areaId) WHERE (districtId BETWEEN 12 AND 15) AND activityTitle LIKE ${search} AND del =0;`
 
     districtId = parseInt(req.query.districtId);
 
@@ -199,43 +199,33 @@ router.get('/search', function (req, res) {
     // console.log(sql);
 
     connection.query(sql, function (error, rows) {
-        if (error) {
-            console.log(error);
+        // if (error) {
+        //     console.log(error);
+        // }
+        var last_page = Math.ceil(rows[1][0].COUNT / nums_per_page)
+        // console.log(last_page);
+
+        // 避免請求超過最大頁數
+        if (page > last_page &&  last_page > 0) {
+            res.redirect(`/activity/search?text=${req.query.text}&districtId=${req.query.districtId}&page=${last_page}`)
+            return
         }
+
         res.render('./activity/activity_all.ejs', {
-            data: rows,
-            curr_page: 1,
-            nums_per_page: 1,
-            total_nums: 1,
-            last_page: 2,
-            search: search,
-            districtId: districtId
+            data: rows[0],
+            curr_page: page,
+            //每頁資料數
+            nums_per_page: nums_per_page,
+            //本頁資料數量
+            total_nums: rows[1][0].COUNT,
+             //總數除以每頁筆數，再無條件取整數
+            last_page: last_page,
+            search: req.query.text,
+            districtId: req.query.districtId
         });
     })
 
 })
-// 搜尋POST
-router.post('/search', function (req, res) {
-    var body = req.body
-    var sql = `SELECT * FROM activityinfo WHERE activityTitle LIKE "%?%"`
-    var data = [body.search]
-
-    connection.query(sql, [data], function (error, results, fields) {
-        if (results) {
-            res.end(
-                JSON.stringify(new Success('insert success'))
-            )
-        } else {
-            res.end(
-                JSON.stringify(new Error('insert failed'))
-            )
-        }
-
-
-    })
-
-})
-
 
 // 新增活動/刪除POST
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -243,10 +233,11 @@ router.post('/search', function (req, res) {
 // ----------已解決-----------
 router.post('/update', function (req, res) {
     var body = req.body;
+    var cid = req.session.companyinfo.cid;
 
-    var sql = `INSERT INTO activityinfo(companyId, activityTitle, activityFile,activityContent,activityLocation, areaId,activityAddress,sellDate,performDate,ticketAmount)VALUES 
-(?, ?, ?, ?, ?, ?,?,?,?,?);`
-    var data = [5, body.activityTitle, body.activityFile, body.activityContent, body.activityLocation, body.areaId, body.activityAddress, body.sellDate, body.performDate, parseInt(body.ticketAmount)];
+    var sql = `INSERT INTO activityinfo(companyId, activityTitle, activityFile,activityContent,activityLocation, areaId,activityAddress,sellDate,upDated,ticketAmount)
+    VALUES (?, ?, ?, ?, ?, ?,?,?,?,?);`
+    var data = [cid, body.activityTitle, body.activityFile, body.activityContent, body.activityLocation, body.areaId, body.activityAddress, body.sellDate, body.upDated, parseInt(body.ticketAmount)];
 
     connection.query(sql, data, function (error, results, fields) {
         if (results) {
@@ -289,11 +280,15 @@ router.post('/update', function (req, res) {
 router.post('/delete', function (req, res) {
     var body = req.body;
     var data = parseInt(body.activityId);
-
-    var sql = `Delete from activityband where activityId = ${data};
-    Delete from activitydetails where activityId = ${data};
-    Delete from activityinfo where activityId = ${data};
-    Delete from activityprice where activityId = ${data};`
+    // AND del =0
+    // var sql = `Delete from activityband where activityId = ${data};
+    // Delete from activitydetails where activityId = ${data};
+    // Delete from activityinfo where activityId = ${data};
+    // Delete from activityprice where activityId = ${data};`
+    sql=`UPDATE activityband SET del =1 WHERE activityId = ${data};
+    UPDATE activitydetails SET del =1 WHERE activityId = ${data};
+    UPDATE activityinfo SET del =1 WHERE activityId = ${data};
+    UPDATE activityprice SET del =1 WHERE activityId = ${data};`
 
     connection.query(sql, function (error, results, fields) {
         if (results) {
@@ -313,7 +308,7 @@ router.post('/delete', function (req, res) {
 router.post('/edit', function (req, res) {
     var body = req.body;
 
-    var sql = `UPDATE activityinfo SET  activityTitle=?,activityContent=?,activityLocation=?, areaId=?,activityAddress=?,ticketAmount=? WHERE activityId= ?;
+    var sql = `UPDATE activityinfo SET activityTitle=?,activityContent=?,activityLocation=?, areaId=?,activityAddress=?,ticketAmount=? WHERE activityId= ?;
     UPDATE activityprice SET unitPrice =? WHERE categoryId= 1 AND activityId =?;
     UPDATE activityprice SET unitPrice =? WHERE categoryId= 2 AND activityId =?;`
 
@@ -336,8 +331,11 @@ router.post('/edit', function (req, res) {
 })
 // 移除收藏POST
 router.post('/movelove', function (req, res) {
+    if (req.session.userinfo) {
+        var userId = req.session.userinfo.id;
+    }
     var body = req.body;
-    var sql = `Delete from useractivity where activityId = ? and userId=3;`
+    var sql = `Delete from useractivity where activityId = ? and userId=${userId};`
     var data = [parseInt(body.activityId)];
     // console.log("move");
     // console.log(data);
@@ -356,8 +354,11 @@ router.post('/movelove', function (req, res) {
 })
 // 加入收藏POST
 router.post('/addlove', function (req, res) {
+    if (req.session.userinfo) {
+        var userId = req.session.userinfo.id;
+    }
     var body = req.body;
-    var sql = `INSERT INTO useractivity(activityId,userId)VALUES (?, ?);`
+    var sql = `INSERT INTO useractivity(activityId,userId)VALUES (?, ${userId});`
     var data = [parseInt(body.activityId), 3];
     // console.log("add");
     // console.log(data);

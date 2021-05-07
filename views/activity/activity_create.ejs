@@ -11,38 +11,15 @@
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <style>
-        .title_div{
-            width: 100vw;
-            height: 250px;
-            background-color: rgba(107, 139, 184, 0.6);
-            background-blend-mode: multiply;
-            background-image: url(../../image/upload/activity/1786349.jpg);
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        .title_div>.title{
-            margin-left: 100px;
-            margin-top: 80px;
-        }
-        input .check_btn .form-check-input{
-            appearance:auto;
-        }
-        .justify-content-center{
-            padding: 30px 0;
-            padding-bottom: 130px;
-        }
-        
-    </style>
 
 </head>
 
 <body>
     <%-include("../nav.ejs")%>
     <!-- 導覽列 開始 -->
-    <div class="title_div"><img>
-        <h4 class="title" style="color: #fff;">發起活動</h4>
+    <div class="title_div banner"><img>
+            <p class="banner_title">發起活動</p>
+        <!-- <h4 class="title" style="color: #fff;">發起活動</h4> -->
     </div>
 
     <!-- 導覽列 結束 -->
@@ -70,9 +47,9 @@
                         <div class="col-md-12 mb-2">
                             <input class="form-control" id="sellDate" name="sellDate" type="datetime-local">
                         </div>
-                        <!-- <label for="performDate" class="col-md-12">結束售票</label> -->
+                        <!-- <label for="update" class="col-md-12">結束售票</label> -->
                         <div class="col-md-12 mb-2">
-                            <input class="form-control" id="performDate" name="performDate" type="hidden">
+                            <input class="form-control" id="upDated" name="upDated" type="hidden">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -245,7 +222,7 @@
                         if (res.errno === 1) {
                             alert("更新成功!")
                             // location.reload()
-                            location.href = `/activity`
+                            location.href = `/company`
                         } else if (res.errno === 0) {
                             alert("更新失敗!")
                         }

@@ -39,7 +39,7 @@ input.form_input {
     /* display: flex; */
     /* flex-wrap: nowrap; */
     text-align: center;
-    width: 90%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -165,19 +165,16 @@ input.form_input {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
     position: relative;
     background-color:var(--color5);
     flex: 1 0 50%;
-    /*  flex-grow | flex-shrink | flex-basis */
     height: 180px;
     margin:2px;
     border-top: 1px solid var(--color4);
     border-bottom: 1px solid var(--color4);
-    /* transform: translateY(70px); */
-    /* transition: .8s ease-in-out; */
-    /* overflow:hidden */
-
+}
+.campaign_item:hover{
+    background-color: #f8f3ec;
 }
 
 
@@ -235,7 +232,41 @@ input.form_input {
 .campaign_btn{
     flex: 1 0 8%;
 }
+.campaign_top:nth-last-of-type(1){
+    padding: 10px 0;
+    height: 80px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.campaign_top>.btn_tea_radius{
+    padding:10px 15px;
+    border-radius:200%; 
+    border: 1px solid var(--color2);
+    background-color: var(--color5);
+    margin: 3px;
+}
+.campaign_top>.btn_tea_radius:hover{
+    background-color: var(--color2);
+}
+.campaign_top>.btn_tea_radius:hover a{
+    color:  var(--color5);
+}
+.campaign_top>.btn_tea_radius>a{
+    color:  var(--color2);
+}
+.campaign_title>p:nth-of-type(2),
+.campaign_title>p:nth-of-type(3),
+.campaign_title>p:nth-of-type(4){
+    line-height: 1.2;
+    letter-spacing:1px;
+    color: var(--color3);
+    /* background-color: brown; */
+}
 
+.campaign_top>a>button {
+    margin-top: auto;
+    margin-bottom: auto;
+}
 @media (min-width:500px) and (max-width:797px) {
 
     /* .tag_div .zInput:nth-of-type(even) {
@@ -296,7 +327,7 @@ input.form_input {
 
     .tag_div,
     .tag_div.animation {
-        max-width: 20vw;
+        max-width: 19vw;
         box-sizing: border-box;
         padding-top:50px;
     }
@@ -373,7 +404,7 @@ input.form_input {
 
     .tag_div,
     .tag_div.animation {
-        max-width: 26vw;
+        max-width: 24vw;
         /* padding: 0px 10px; */
         box-sizing: border-box;
         padding-top:50px;
@@ -426,11 +457,13 @@ input.form_input {
 /* --------------------------第二頁------------------------------- */
 
 .left_div {
+    padding-top: 20px;
     position: fixed;
     color: #fff;
 }
 
-.left_div>h5 {
+.left_div>b {
+    display: inline-block;
     width: 85%;
     margin-left: auto;
     margin-right: auto;
@@ -626,7 +659,7 @@ input.form_input {
         height: 100vh;
         background-color: var(--color1);
     }
-    .left_div>h5{
+    .left_div>b{
         display: none;
     }
 
@@ -730,6 +763,9 @@ input.form_input {
     .content_text_div>p:nth-of-type(2){
         line-height: 1.15;
     }
+    .back_icon{
+        display: none;
+    }
 
 }
 
@@ -823,6 +859,9 @@ input.form_input {
     }
     .content_text_div>p:nth-of-type(2){
         line-height: 1.15;
+    }
+    .back_icon{
+        display: none;
     }
     
 

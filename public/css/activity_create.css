@@ -10,5 +10,12 @@ body{
     margin:  5rem 0;
 }
 textarea {
-    height: 380px;
+    height: 385px;
+}
+.title_div{
+    background-image: url(../../image/upload/activity/1786349.jpg);
+}
+.justify-content-center{
+    padding: 30px 0;
+    padding-bottom: 130px;
 }

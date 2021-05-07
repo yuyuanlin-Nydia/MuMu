@@ -36,6 +36,9 @@
         .mynavbar>.right{
             border: 0;
         }
+        #getback{
+            cursor:context-menu;
+        }
     </style>
 
 </head>
@@ -60,9 +63,10 @@
     <% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %> 
     <!-- 左側的div--start -->
     <div class="left_div">
-        <h5 class="sub_title">活動資訊</h1>
-            <div class="table_con"> <% var activity_day=JSON.parse(JSON.stringify(activity_day)) %> <% activity_day.forEach((a)=>{ %>
-               
+        <p id="getback">&ensp; &lt;&lt;</p>
+        <b>活動資訊</b>
+            <div class="table_con"> <% var activity_day=JSON.parse(JSON.stringify(activity_day)) %> 
+                <% activity_day.forEach((a)=>{ %>                
                 <p class="little_date">日期</p>
                 <p><%= (new Date(a.activityDate)).Format("yyyy/MM/dd (")+monthDay[a.acd]+")" %></p>
                 <%})%>
@@ -75,7 +79,7 @@
                 <p>地址</p>
                 <p><%= data[0].city+data[0].town+data[0].activityAddress %> </p>
             </div>
-            <h5 class="sub_title">活動票券</h1>
+            <b>活動票券</b>
                 <div class="table_con">
                     <% data.forEach((item,idx)=>{%>
                         <p><%=item.type %> </p>
@@ -184,6 +188,16 @@
 
     <script>
         $(function () {
+            $('#getback').on('click',function(){
+                // 回到上一頁的方法，有下面兩種：
+                // 1.  history.go 方法
+
+                window.history.go(-1); 
+                // 2. history.back 方法
+
+                // window.history.back();
+            })
+
             $('.big_title').eq(1).text("");
 
             $('.little_title').each(function(idx,item){
@@ -231,7 +245,6 @@
                             alert("已取消收藏!")
                             // 刷新本頁
                             location.reload()
-                            // location.href = `/activity`
                         } else if (res.errno === 0) {
                             alert("更新失敗!")
                         }
@@ -283,4 +296,3 @@
 </body>
 
 </html>
-

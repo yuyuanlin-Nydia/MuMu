@@ -15,33 +15,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
     <style>
-        .campaign_item:hover{
-            background-color: #f8f3ec;
-            /* background-color: blue; */
-        }
-        .campaign_top:nth-last-of-type(1){
-            padding: 10px 0;
-            height: 80px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        .campaign_top>.btn_tea_radius{
-            padding:10px 15px;
-            border-radius:200%; 
-            border: 1px solid var(--color2);
-            background-color: var(--color5);
-            margin: 3px;
-        }
-        .campaign_top>.btn_tea_radius:hover{
-            background-color: var(--color2);
-        }
-        .campaign_top>.btn_tea_radius:hover a{
-            color:  var(--color5);
-        }
-        .campaign_top>.btn_tea_radius>a{
-            color:  var(--color2);
-        }
         .mynavbar{
             background:var(--color5);
         }
@@ -50,18 +26,6 @@
         }
         p{
             margin-bottom: 0;
-        }
-        .campaign_title>p:nth-of-type(2),
-        .campaign_title>p:nth-of-type(3),
-        .campaign_title>p:nth-of-type(4){
-            line-height: 1.2;
-            letter-spacing:1px;
-            color: var(--color3);
-            /* background-color: brown; */
-        }
-        .campaign_top>a>button {
-            margin-top: auto;
-            margin-bottom: auto;
         }
     </style>
 </head>
@@ -83,14 +47,17 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }%>
-    <% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %> 
+    <% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %>
+    <input type="hidden" name="checkId" value=<%=districtId%> > 
+    <input type="hidden" name="name" id="name" value=<%= search %>>
     <!-- 左側的篩選列--start -->
    <main>
         <div class="tag_div">
-            <form id="form" method="POST" action="">
-                <div class="search_div">
-                    <input type="text" name="search" class="form_input" style="background-color: var(--color4);" placeholder="Search">
-                    <button type="submit" id="submitBtn"><i class="fas fa-search btn_search"></i></button>                   
+            
+            <form id="form" method="POST" action="" >
+                <div class="search_div" id="app">
+                    <input v-model="search" type="text" name="search" class="form_input" style="background-color: var(--color4);" placeholder="Search">
+                    <button type="submit" id="submitBtn" style="display: none;"><i class="fas fa-search btn_search"></i></button>                   
                     <!-- <input type="submit" id="submitBtn"> -->
                 </div>
                 
@@ -101,6 +68,7 @@
                     <input type="radio" name="set 2" title="北部" value="2">
                     <input type="radio" name="set 2" title="中部" value="3">
                     <input type="radio" name="set 2" title="南部" value="4">
+                    <!-- <input type="radio" name="set 2" title="all" value="1"> -->
                 </div>
     
             </form>
@@ -128,7 +96,7 @@
                                 <%= item.activityTitle %>
                             </p>
                             <p>
-                                活動時間：　<%= (new Date(item.minDate)).Format("yyyy年MM月dd日 (")+monthDay[item.min]+")~"+(new Date(item.maxDate)).Format("yyyy/MM/dd (")+monthDay[item.max]+")" %>
+                                活動時間：　<%= (new Date(item.minDate)).Format("yyyy/MM/dd (")+monthDay[item.min]+")~"+(new Date(item.maxDate)).Format("yyyy/MM/dd (")+monthDay[item.max]+")" %>
                             </p>
                             <p>
                                 售票時間：　<%= (new Date(item.sellDate)).Format("yyyy/MM/dd (")+monthDay[item.sell]+")" %>
@@ -147,30 +115,75 @@
                     </div>
                 </a>
             <% }) %>
+            
             <div class="campaign_top">
                 <% for(var i = 1; i <= last_page; i++) { %>
-                    <a href="/activity/<%= i%>"><button class="btn_page" style="line-height: 1;<%-(i==curr_page)?"background-color:var(--color2);color:var(--color5)":""%>"><%= i%></button></a>
+                    <a href="/activity/<%=(search!=="undefind"&&districtId!=="undefind")?`search?text=${search}&districtId=${districtId}&page=${i}`:`${i}`%>"><button class="btn_page" style="line-height: 1;<%-(i==curr_page)?"background-color:var(--color2);color:var(--color5)":""%>"><%= i%></button></a>
                 <% } %>
             </div>
-    
-    
-    
-            
-    
-    
+   
         </div>
    </main>
     <!-- 包所有活動的div--end -->
     <%-include("../footer.ejs")%>
 
     <script>
+       
+        var searchName= document.getElementById('name').value;
+        searchName=(searchName!=="undefind") ?searchName :"";
+        // console.log(searchName);
+        
+
+        var app = new Vue({
+        el: '#app',
+        data: {
+            search: searchName,
+            value: '',
+            oldValue: ''
+            // description: "line1\nline2"
+        },
+        watch: {
+            search: function(val, oldVal) {
+            this.value = val;
+            }
+        }
+        
+        // computed: {
+        //   htmlLineBreak() {
+        //     return this.description.replace(/\r\n|\r|\n/g,"<br />");
+        //   }
+        // }
+        });
+
+
+        
         $(function () {
-            // var x = $('input[value="1"]').closest('.zInput')[0];
-            // console.log(x);
-            $('input[value="1"]').closest('.zInput').addClass('zSelected');
+            var checkId =$('input[name="checkId"]').val();
+
+            if(checkId!=="undefind"){
+                $(`input[value=${checkId}]`).closest('.zInput').addClass('zSelected');              
+            }else{
+                $('input[value="1"]').closest('.zInput').addClass('zSelected');
+            }
+
+            $('input[name="search"]').on('change',function(){
+                var s =( $('input[name="search"]').val());
+
+                $('input[name="set 2"]').each(( index,e )=> {
+                    var v= $(e).prop("value");
+                    $('input[name="search"]').val();
+
+                    var ahref ="window.location='"
+                    ahref +=`/activity/search?text=${s}&districtId=${v}&page=1'`
+                    // console.log(ahref);
+                    $(e).closest('.zInput').attr("onclick", ahref)
+                });
+            }).change();
+
+                      
             
-            
-            
+
+
             //左側導覽列動畫
             $('.tag_div_icon').click(function () {
                 // console.log("aaaa");
@@ -186,35 +199,21 @@
                 }
             })
             
+            $("#id_of_textbox").keyup(function(event) {
+                if (event.keyCode === 13) {
+                    $("#submitBtn").click;
+                }
+            });
 
-
-            $('#submitBtn').click(function () {
+            $('#submitBtn').on('click',function () {
                 //整理表單資料到變數
                 var data = $('#form').serializeArray()
                 JSONData = serializeToJSON(data)
                 // alert(JSONData);
                 var districtId = $('.zSelected').find('input[name="set 2"]').prop('value');
                 // alert(districtId);
-
-                $.ajax({
-                    url: "/activity/search",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSONData,
-                    success: function (res) {
-                        var res = JSON.parse(res)
-                        if (res.errno === 1) {
-                            // alert("更新成功!")
-                            // location.reload()
-                            location.href = `/activity/search?text=${data[0].value}&districtId=${districtId}`
-                        } else if (res.errno === 0) {
-                            alert("更新失敗!")
-                        }
-                    },
-                    error: function () {
-                        alert("系統錯誤!")
-                    }
-                })
+                location.href=`/activity/search?text=${data[0].value}&districtId=${districtId}&page=1`;
+                return false;
 
             });
 

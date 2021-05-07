@@ -10,13 +10,13 @@ router.get("/", function (req, res) {
 		var date = mmddyy.getFullYear().toString() + "年" + (mmddyy.getMonth() + 1).toString() + "月" + mmddyy.getDate().toString() + "日";
 		return date;
 		}
-	var sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) WHERE c.companyId=? ORDER BY activityId DESC`;
+	var sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) WHERE c.companyId=? AND del=0 ORDER BY sellDate DESC`;
 	
 	var session = req.session.companyinfo;
 	// var data = [session.cid];
 	var data = [session.cid];
 	// console.log(session.cid);
-	conn.query(sql,[5],
+	conn.query(sql,data,
 		function (err, rows) {
 			if (err) {
 				console.log(JSON.stringify(err));
@@ -127,10 +127,12 @@ router.post('/delete', function (req, res) {
     var body = req.body;
     var data = parseInt(body.activityId);
 
-    var sql = `Delete from activityband where activityId = ${data};
-    Delete from activitydetails where activityId = ${data};
-    Delete from activityinfo where activityId = ${data};
-    Delete from activityprice where activityId = ${data};`
+	// sql=`UPDATE activityband SET del =1 WHERE activityId = ${data};
+    // UPDATE activitydetails SET del =1 WHERE activityId = ${data};
+    // UPDATE activityinfo SET del =1 WHERE activityId = ${data};
+    // UPDATE activityprice SET del =1 WHERE activityId = ${data};`
+	sql=`UPDATE activityinfo SET del =1 WHERE activityId = ${data};`
+
 	// console.log(sql);
     conn.query(sql, function (error, results, fields) {
         if (results) {

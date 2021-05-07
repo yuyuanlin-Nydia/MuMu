@@ -13,23 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
-        .title_div{
-            width: 100vw;
-            height: 250px;
-            background-color: rgba(107, 139, 184, 0.6);
-            background-blend-mode: multiply;
-            background-image: url(../../image/upload/activity/1786349.jpg);
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        .title_div>.title{
-            margin-left: 100px;
-            margin-top: 80px;
-        }
-        .justify-content-center{
-            padding: 30px 0;
-            padding-bottom: 130px;
+        textarea {
+            height: 345px;
         }
     </style>
 
@@ -41,8 +26,8 @@
 
     <!-- 導覽列 結束 -->
     <main>
-        <div class="title_div"><img>
-            <h4 class="title" style="color: #fff;">編輯活動</h4>
+        <div class="title_div banner"><img>
+            <h4 class="banner_title">編輯活動</h4>
         </div>
             
             <form id="form" method="POST" action="">
@@ -53,7 +38,7 @@
                             <label for="activityTitle" class="col-md-12">音樂會主題</label>
                             <div class="col-md-12">
                                 <input type="hidden" name="activityId" id="activityId" value=<%= activityId %>>
-                                <input class="form-control" id="activityTitle" name="activityTitle" type="text" value=<%= data[0].activityTitle %>>
+                                <input class="form-control" id="activityTitle" name="activityTitle" type="text" value="<%= data[0].activityTitle %>">
                             </div>
                         </div>
                         <div class="form-group row">
