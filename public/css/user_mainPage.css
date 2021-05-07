@@ -3,12 +3,9 @@ body {
     min-height: 100vh;
 }
 
-.banner{
-    width: 100vw;
-    height: 250px;
-    margin: 0;
+.banner {
+    background-image: url(../../image/banner/member.png);
 }
-
 .title{
     color: var(--color5);
     position: relative;
@@ -23,8 +20,8 @@ body {
 /* left----------------------------------------------------------------------- */
 
 .emp-profile {
-    padding: 3% 0%;
-    height: 100vh;
+   
+    height: 800px;
     background: var(--color1);
     margin-left: -60px;
 }
@@ -34,8 +31,8 @@ body {
 }
 
 .profile-img img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -45,8 +42,7 @@ body {
 /* 換頭貼 */
 
 .profile-pic {
-
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog');
+    
     background-size: cover;
     background-position: center;
     /* 圓 */
@@ -65,19 +61,20 @@ body {
 }
 
 .profile-pic:hover {
+    position: relative;
     background-color: rgba(0,0,0,.5);
     z-index: 10000;
     color: #fff;
     transition: all .3s ease;
     text-decoration: none;
+    
 }
+#avaimg{
+    position: relative;
 
-/* 更換圖片文字 */
-.profile-pic span {
-    display: inline-block;
-    padding-top: 4.5em;
-    padding-bottom: 4.5em;
 }
+/* 更換圖片文字 */
+
 
 /* 隱藏 */
 form input[type="file"] {
@@ -86,24 +83,7 @@ form input[type="file"] {
  }
 
 
-/* btn */
 
-.profile-img .file {
-    position: relative;
-    overflow: hidden;
-    width: 65%;
-    border: none;
-    border-radius: 0;
-    font-size: 15px;
-    background: #212529b8;
-}
-
-.profile-img .file input {
-    position: absolute;
-    opacity: 0;
-    right: 0;
-    top: 0;
-}
 .select_left{
     margin: 0 20px;
     
@@ -125,10 +105,6 @@ form input[type="file"] {
     font-weight: 600;
     font-size: 16px;
 }
-
-/* .profile-work div:hover {
-   border-left: 3px solid var(--color2);
-} */
 
 .profile-work a:hover {
     color: var(--color2);

@@ -6,3 +6,7 @@ img{
     background-image: url(../../image/banner/member.png);
     
 }
+.article_box{
+   margin: -5px;
+   margin-left: 10px;
+}

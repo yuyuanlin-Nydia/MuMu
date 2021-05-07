@@ -14,12 +14,13 @@
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
     <style>
-        a:hover{
+        a:hover {
             text-decoration: none;
         }
+
         .article_card {
             border: 2px solid lightgray;
-            border-radius: 0.5rem;
+            /* border-radius: 0.5rem; */
         }
 
         .article_img {
@@ -42,133 +43,138 @@
 <body>
     <!-- 導覽列 開始 -->
     <%-include("../nav.ejs")%>
-    <!-- 導覽列 結束 -->
-    <main>
-        <div class="banner">
-            <p class="banner_title">會員管理</p>
-        </div>
-        <div class="row">
-            <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
-            <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
-                <div class="profile-img  p-1 mt-5 ml-5">
-                    <form action="upload.php" method="post" enctype="multipart/form-data">
-                        <label for="fileToUpload">
-                            <div class="profile-pic">
-                                <span class="glyphicon glyphicon-camera"></span>
-                                <span>更換圖片</span>
-                            </div>
-                        </label>
-                        <input type="File" name="fileToUpload" id="fileToUpload">
-                    </form>
-                    <h5 class="text-center text-white mt-3 uName"> <%= Name%>  </h5>
-                </div>
-                <div class="  p-5 p-md-1 select_left ml-5">
-                    <div class="profile-work ">
-                        <!-- 前面放icon -->
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu">我的票券</a><br /></div>
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu"  style="color: var(--color2)">參戰心得</a><br /></div>
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu"
-                               >收藏追蹤</a><br /></div>
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu">編輯資料</a><br />
-                        </div>
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
-                    </div>
-                </div>
+        <!-- 導覽列 結束 -->
+        <main>
+            <div class="banner">
+                <p class="banner_title">會員管理</p>
             </div>
-            <!-- 左側 結束-->
-            <!-- 右側 開始 -->
-            <div class="col-md-8  pl-5">
-                <div class="d-flex">
-                    <h4 class="title">我的投稿</h4>
-                    <div class="ml-auto">
-                        <a href="/user/myArticle/new">
-                            <button class="btn_tea2">發表參戰心得</button>
-                        </a>
+            <div class="row">
+                <!-- 左側 開始 -->
+                <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+                    <div class="profile-img  p-1 mt-5 ml-5">
+                        <form action="upload.php" method="post" enctype="multipart/form-data">
+                            <label for="fileToUpload">
+                                <div class="profile-pic">
+                                    <span class="glyphicon glyphicon-camera"></span>
+                                    <span>更換圖片</span>
+                                </div>
+                            </label>
+                            <input type="File" name="fileToUpload" id="fileToUpload">
+                        </form>
+                        <h5 class="text-center text-white mt-3 uName">
+                            <%= Name%>
+                        </h5>
+                    </div>
+                    <div class="  p-5 p-md-1 select_left ml-5">
+                        <div class="profile-work ">
+                            <!-- 前面放icon -->
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket#myTab" class="user_menu">我的票券</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle#myTab" class="user_menu"
+                                    style="color: var(--color2)">參戰心得</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite#myTab" class="user_menu">收藏追蹤</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile#profile-tab" class="user_menu">編輯資料</a><br />
+                            </div>
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
+                        </div>
                     </div>
                 </div>
-                <% if(data[0]){ %>
-                <div class="col-md-12">
-                    <% data.forEach(function(item,idx){%>
-                        <div class="d-flex flex-wrap mb-3 p-2 article_card" >
-                            <div class="article_box col-md-12">
-                                <h5><b>
-                                        <%= item.articleTitle %>
-                                    </b>
-                                    <div class="float-right">
-                                        <a href="/user/myArticle/edit/<%= item.articleId %>">
+                <!-- 左側 結束-->
+                <!-- 右側 開始 -->
+                <div class="col-md-8  pl-5">
+                    <div class="d-flex">
+                    
+                        <div class="ml-auto">
+                            <a href="/user/myArticle/new">
+                                <button class="btn_tea2 mt-5 ">發表參戰心得</button>
+                            </a>
+                        </div>
+                    </div>
+                    <% if(data[0]){ %>
+                        <div class="col-md-12 mt-2" id="home">
+                            <% data.forEach(function(item,idx){%>
+                                <div class="d-flex flex-wrap p-1 article_card">
+                                    <div class="article_box col-md-12">
+                                        <div class="float-right m-3">
+                                            <a href="/user/myArticle/edit/<%= item.articleId %>">
+                                                <span>
+                                                    <button type="button" class="edit btn_sm_blue2">
+                                                        <i class="far fa-edit">編輯</i>
+                                                    </button>
+                                                </span>
+                                            </a>&nbsp;
                                             <span>
-                                                <button type="button" class="edit btn_sm_blue2">
-                                                    <i class="far fa-edit">編輯</i>
+                                                <button type="button" class="delete btn_sm_blue2"
+                                                    data-id="<%= item.articleId %>">
+                                                    <i class="far fa-trash-alt">刪除</i>
                                                 </button>
                                             </span>
-                                        </a>&nbsp;
-                                        <span>
-                                            <button type="button" class="delete btn_sm_blue2" data-id="<%= item.articleId %>">
-                                                <i class="far fa-trash-alt">刪除</i>
-                                            </button>
-                                        </span>
+                                        </div>
+                                       
                                     </div>
-                                </h5>
-                            </div>
-                            <div class=" d-flex col-md-12">
-                                <div class=" col-md-4 ">
-                                    <img src="../image/upload/article/<%= item.articleFile %>" alt=""
-                                        class="article_img">
+                                    <div class=" d-flex col-md-12">
+                                        <div class=" col-md-4 ">
+                                            <img src="../image/upload/article/<%= item.articleFile %>" alt=""
+                                                class="article_img">
+                                        </div>
+                                        <div class="col-md-8 ">
+                                            <h5><b class="aTitle">
+                                                <%= item.articleTitle %>
+                                            </b>
+                                            
+                                        </h5>
+                                            <p class="article_content">
+                                                <%= item.articleContent %>
+                                            </p>
+                                            <a href="/article/item/<%= item.articleId %>"
+                                                class="float-right">檢視全文</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-8 ">
-                                    <p class="article_content">
-                                        <%= item.articleContent %>
+                                <% }) %>
+                        </div>
+                        <% }else{ %>
+                         
+                                <div class="box">
+                                    <p class="text-center">
+                                        您目前沒有發表過文章喔! <br>
+                                        快點選右上角的<b>發表文章</b> 增加新文章吧!<br><br><br>
                                     </p>
-                                    <a href="/article/item/<%= item.articleId %>" class="float-right">閱讀全文......</a>
                                 </div>
-                            </div>
-                        </div>
-                        <% }) %>
-                </div>
-                <% }else{ %>
-                    <main>
-                        <div class="box">
-                            <p class="text-center">
-                                您目前沒有發表過文章喔! <br>
-                                快點選右上角的<b>發表文章</b> 增加新文章吧!<br><br><br>
-                            </p>
-                        </div>
-                    </main>
-                <% } %>
-            </div
-        </div>
+                         
+                            <% } %>
+                </div> 
 
-        </div>
-        <!-- 右側 結束 -->
+            </div>
+            <!-- 右側 結束 -->
 
-    </main>    
+        </main>
 
 
-    <!-- 頁尾  開始-->
-    <%-include("../footer.ejs")%>
-    <!-- 頁尾  結束-->
+        <!-- 頁尾  開始-->
+        <%-include("../footer.ejs")%>
+            <!-- 頁尾  結束-->
 
-    <script>
-        $(function () {
-            $('.delete').each(function (idx, elm) {
-                $(elm).on('click', function () {
-                    // 跳出詢問確認移除
-                    confirm("確定要刪除此文章嗎?")
-                    var id=$(elm).attr("data-id");
-                    var data = {
-                        id: id
-                    }
-                    $.ajax({
-                        type: "delete",
-                        url: "/user/myArticle/delete",
-                        data: data
-                    }).then(function () {
-                        location.reload()
+            <script>
+                $(function () {
+                    $('.delete').each(function (idx, elm) {
+                        $(elm).on('click', function () {
+                            // 跳出詢問確認移除
+                            confirm("確定要刪除此文章嗎?")
+                            var id = $(elm).attr("data-id");
+                            var data = {
+                                id: id
+                            }
+                            $.ajax({
+                                type: "delete",
+                                url: "/user/myArticle/delete",
+                                data: data
+                            }).then(function () {
+                                location.reload()
+                            })
+                        })
                     })
                 })
-            })
-        })
-    </script>
+            </script>
 
 
 </body>

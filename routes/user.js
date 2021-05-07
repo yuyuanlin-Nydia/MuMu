@@ -3,12 +3,13 @@ var router = express.Router();
 const multer = require('multer');
 var conn = require("../db");
 var { login_render, login_api } = require('./middleware/iflogin')
-// var {Success,Error} = require('./response')
+var {Success,Error} = require('./response')
 
 
 //會員頁-票券
 // 會有兩個sql語句 一個是未參加 一個是沒參加
 router.get("/", login_render,function (req, res) {
+
     var account=req.session.userinfo.account;
     var sql=`SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,ad.activityDate,ap.unitPrice,od.quantity,od.quantity*ap.unitPrice as tot,atc.type,orders.orderDate,orders.card1,orders.card2,orders.card3,orders.card4,tp.method FROM orderdetails as od 
     inner join orders on orders.orderId=od.orderId
@@ -43,7 +44,9 @@ router.get("/", login_render,function (req, res) {
 
             res.render('./user/user_myTicket.ejs',{
                 data:rows[0],
-                data2:rows[1]
+                data2:rows[1],
+                Name: req.session.userinfo.name,
+                avatar:req.session.avatar
 
             })
         }
@@ -73,6 +76,7 @@ router.get("/myArticle", login_api, function (req, res) {
                 phone: session.phone,
                 mail: session.email,
                 file: session.file,
+                avatar:session.avatar
             })
 
         })
@@ -156,89 +160,71 @@ router.get("/myArticle/new", function (req, res) {
          })
    })
 
-//收藏活動樂團
+//收藏活動+樂團
 router.get("/favorite", login_api, function (req, res) {
     var session = req.session.userinfo;
-    userId = [req.params.userId];
-    conn.query('select * from userinfo ', userId,
-        function (err, Pdata) {
+    conn.query(`SELECT userband.bandId,userband.userId,bandinfo.bandName,userinfo.firstName,bandinfo.bandFile FROM userband 
+    INNER JOIN  bandinfo ON userband.bandId = bandinfo.bandId
+    INNER JOIN  userinfo ON userinfo.userId = userband.userId
+    WHERE userinfo.userId=? ;
+    SELECT c.userId,d.firstName,a.activityId,activityTitle,activityLocation,activityFile,b.minDate,b.maxDate 
+    FROM activityinfo as a 
+    INNER JOIN (SELECT activityId,MIN(activityDate)as minDate,MAX(activityDate) as maxDate   
+    FROM activitydetails GROUP BY activityId) as b ON(a.activityId=b.activityId)
+    INNER JOIN useractivity c on(a.activityId=c.activityId)
+    INNER JOIN userinfo as d ON (c.userId=d.userId) WHERE c.userId=?`, [session.id,session.id],
+        function (err, data) {
+          
             if (err) {
                 console.log(JSON.stringify(err));
                 return;
             }
             res.render('./user/user_myFavorite.ejs', {
-                data: Pdata,
+                data:data[0], //band
+                data2:data[1],//event
                 account: session.account,
                 Name: session.name,
                 phone: session.phone,
                 mail: session.email,
                 file: session.file,
+                avatar:session.avatar
             })
         })
 
 })
-//收藏data
-router.get("/favorite/band", login_api, function (req, res) {
-    conn.query('select * from userband where userId = 1',
-        // userAccount ="abc123"
-        '',
-        function (err, Pdata) {
-            if (err) {
-                console.log(JSON.stringify(err));
-                return;
-            }
 
-            res.send(JSON.stringify(Pdata));
-        });
+//// 移除追蹤活動
+router.delete("/event/delete",function(req,res){    
+    var session = req.session.userinfo;
+    var aId = req.body.id;
+    console.log(aId);
+    var sql=`DELETE FROM useractivity WHERE userId=? && activityId=?`
+    conn.query(sql,[session.id,aId],function (err,rows) {
+        if(err){
+            console.log(err)
+        };
+        res.send("Edit successed.")
+      })
 })
-
-//活動data
-router.get("/favorite/event", login_api, function (req, res) {
-    conn.query('select * from userband where userId = 1',
-        // 改成join userAccount =?
-        '',
-        function (err, Pdata) {
-            if (err) {
-                console.log(JSON.stringify(err));
-                return;
-            }
-
-            res.send(JSON.stringify(Pdata));
-        });
-})
-
 
 
 //// 移除追蹤樂團
-router.post("/favorite/band", login_api, function (request, response) {
-
-    connection.query(
-        "delete from userband where bandId = " + request.body.bandId + ' and useraccount = "abc123"',
-        []
-    );
-    response.send("row deleted.");
-
+router.delete("/band/delete",function(req,res){    
+    var session = req.session.userinfo;
+    var aId = req.body.id;
+    var sql=`DELETE FROM userband WHERE userId=? && bandId=?`
+    conn.query(sql,[session.id,aId],function (err,rows) {
+        if(err){
+            console.log(err)
+        };
+        res.send("Edit successed.")
+      })
 })
-
-
-//移除收藏活動
-router.post("/favorite/event", login_api, function (request, response) {
-
-    connection.query(
-        "delete from useractivity where activityId = " + request.body.activityId + ' and useraccount = "abc123"',
-        []
-    );
-    response.send("row deleted.");
-
-})
-
 
 //個人資料
 router.get("/profile", login_api, function (req, res) {
     console.log(req.session.userinfo);
-    // conn.query('select * from userinfo  WHERE firstname = $_SESSION[usreId]  ',
     var session = req.session.userinfo;
-    // console.log(session.id);
     conn.query(`SELECT ui.userId,ui.firstName,ui.lastName,ui.userAccount,ui.userPassword,ui.userPhone,ui.userEmail,ui.userFile,ui.userArea,ui.userBirth,ui.userAdd, district.city, area.town
         FROM userinfo ui
         INNER JOIN area 
@@ -252,55 +238,24 @@ router.get("/profile", login_api, function (req, res) {
                 return;
             }
             res.render('./user/user_edit.ejs', {
-                data: Pdata,
+                data: Pdata[0],
                 userId: session.id,
-                account: session.account,
-                Name: session.name,
-                phone: session.phone,
-                mail: session.email,
-                file: session.file,
-                birth: session.birth,
-                address: session.add,
-                district:session.dis,
-                area:session.area
+              
             });
 
         });
 
 
-    // res.send(JSON.stringify(Pdata));
+
 });
-
-// profile資料data
-// router.get("/profile/data",login_api, function(req, res) {
-//     var session = req.session.userinfo;
-//     conn.query(`SELECT ui.userId,ui.firstName,ui.lastName,ui.userAccount,ui.userPassword,ui.userPhone,ui.userEmail,ui.userFile,ui.userArea,ui.userBirth,ui.userAdd, district.city, area.town
-//     FROM userinfo ui
-//     INNER JOIN area 
-//     ON ui.userArea = area.areaId
-//     INNER JOIN district
-//     ON ui .userDis = district.districtID
-//     WHERE userId=?;`,
-//     [session.id],
-//     function (err, Pdata) {
-//         if (err) {
-//             console.log(JSON.stringify(err));
-//             return;
-//         }
-
-//     res.send(JSON.stringify(Pdata));
-// });
-// })
 
 //編輯個人資料
 router.post("/profile", function (req, res) {
     var session = req.session.userinfo;
     var body = req.body
     var sql = `UPDATE userinfo SET userBirth = ?, userPhone = ?, userEmail = ?, userArea = ?, userDis = ?,userAdd = ? WHERE userId = ?`;
-    var data = [body.birth,body.phone, body.e_mail,body.area,body.district,body.address,parseInt(session.id)]
+    var data = [body.birth,body.phone, body.e_mail,body.area,body.district,body.address,session.id]
     conn.query(sql, data, function (error,results,fields) {
-        console.log(error);
-        console.log(55555);
         if(results){
             res.end(
                 JSON.stringify(new Success('UPDATE success'))
@@ -310,8 +265,7 @@ router.post("/profile", function (req, res) {
                 JSON.stringify(new Error('UPDATE failed'))
             )
         }
-        // req.session.user=user
-        req.session.save();
+       
     })
 
 })
@@ -322,8 +276,6 @@ router.post("/profile/pw", function (req, res) {
     var sql = `UPDATE userinfo SET userPassword = ? WHERE userId = ?`;
     var data = [body.newpw,parseInt(session.id)]
     conn.query(sql, data, function (error,results,fields) {
-        // console.log(error);
-        // console.log(55555);
         if(results){
             res.end(
                 JSON.stringify(new Success('UPDATE success'))
@@ -357,6 +309,46 @@ router.post('/checkpw',function(req, res){
 })
 
 
+// 上傳大頭貼
+    // var sql = `UPDATE userinfo SET userFile = ? WHERE userinfo.userId = ?`
+    router.post("/avatarUpload", function (req, res) {
+        var session = req.session.userinfo
+        var body = req.body
+        conn.query('UPDATE userinfo SET userFile = ? WHERE userinfo.userId = ?',
+         [body.image,session.id], function (err, rows) {
+          if (err) {
+           console.log(JSON.stringify(err));
+           return;
+          }
+       
+         })
+        res.send("successfully update avatar");
+       })
+
+       var myStorage2 = multer.diskStorage({
+        destination: function (req, file, cb) {
+         cb(null, "./public/image/upload/user"); // 保存的路徑
+        },
+       
+        filename: function (req, file, cb) {
+         // 檔名日期+原檔名
+         var Today = new Date();
+         var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+         cb(null, date + '-' + file.originalname); // 自定義檔案名稱
+        }
+       });
+       
+       var upload2 = multer({
+        storage: myStorage2, // 設置 storage
+       });
+
+
+       router.post('/upload/avatarfile', upload2.single('file'), function (req, res) {
+        res.send("上傳成功");
+       });
+
+
+//left拉出去???
 
 
 

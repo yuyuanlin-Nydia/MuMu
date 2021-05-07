@@ -45,7 +45,7 @@ router.post('/signup', function (req, res) {
 	var sql = `INSERT INTO userinfo (firstName, userEmail,userAccount ,userPassword) VALUES ( ?, ?, ?, ?);`
 	var data = [body.firstName, body.userEmail, body.userAccount, body.userPassword]
 	conn.query(sql, data, function (error,results, fields) {
-		if(results.insertId){
+		if(results){
 		    res.end(
 		        JSON.stringify(new Success('insert success'))
 		    )
@@ -54,7 +54,7 @@ router.post('/signup', function (req, res) {
 		        JSON.stringify(new Error('insert failed'))
 		    )
 		}
-		console.log(results);
+		
 	})
 
 })
@@ -64,7 +64,7 @@ router.post('/companySignup', function (req, res) {
 	var sql = `INSERT INTO companyinfo (companyTaxNo,companyName,companyAccount ,companyPassword,companyEmail) VALUES ( ?, ?, ?, ?,?);`
 	var data = [body.companyTaxNo, body.companyName, body.companyAccount, body.companyPassword, body.companyEmail]
 	conn.query(sql, data, function (error,results, fields) {
-		if(results.insertId){
+		if(results){
 		    res.end(
 		        JSON.stringify(new Success('insert success'))
 		    )
@@ -98,6 +98,7 @@ router.post('/login', function (req, res) {
                 add: results[0].userAdd,
                 dis: results[0].userDis,
                 area: results[0].userArea,
+                avatar: results[0].userFile,
             }
             res.end(
                 JSON.stringify(new Success('login success')),
@@ -155,7 +156,7 @@ router.post('/check',function(req, res){
 	var sql = `select userId from userinfo where userAccount=?`
 	var data = [body.userAccount]
 	conn.query(sql, data, function (error,results, fields) {
-		// console.log(results[0]);
+
 		if(results[0]) {
             res.end(
 				JSON.stringify('Account being used'),

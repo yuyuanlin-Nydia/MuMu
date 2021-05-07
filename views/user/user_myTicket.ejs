@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 
+        <style>
+             a{
+                color: black;
+             }
+        </style>
 </head>
 
 <body>
@@ -24,11 +29,10 @@
         <div class="banner">
             <p class="banner_title">會員管理</p>
         </div>
-            <!-- <div class="container "> -->
-            <!-- <img src="../../public/image/user/member.png" alt=""> -->
+      
 
         <div class="row ">
-            <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
+            <!-- 左側 開始 -->
             <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
                 <div class="profile-img   p-1 mt-5 ml-5">
                     <form action="upload.php" method="post" enctype="multipart/form-data">
@@ -45,14 +49,17 @@
                 <div class="  p-5 p-md-1 select_left ml-5">
                     <div class="profile-work ">
                         <!-- 前面放icon -->
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu"
-                                style="color: var(--color2)">我的票券</a><br /></div>
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/myArticle" class="user_menu">參戰心得</a><br />
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket#myTab" class="user_menu"
+                            style="color: var(--color2)">我的票券</a><br /></div>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/myArticle#myTab"
+                            class="user_menu">參戰心得</a><br />
                         </div>
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/favorite" class="user_menu">收藏追蹤</a><br />
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/favorite#myTab"
+                            class="user_menu">收藏追蹤</a><br />
                         </div>
-                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/profile" class="user_menu">編輯資料</a><br />
-                        </div>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="user/profile#profile-tab"
+                            class="user_menu">編輯資料</a><br />
+                         </div>
                         <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
                     </div>
                 </div>
@@ -73,10 +80,10 @@
                     </ul>
                 </div>
                 <div class="col-md-12 ">
-                    <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-content home-tab" id="myTabContent">
                         <button type="button" class="btn btn-warning d-none" id="finishBtn">完成</button>
-                        <% if(data[0]){ %>
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <% if(data[0]){ %>
                             <% data.forEach(function(item,idx){ %>
                                 <div>
                                     <p class="m-3">訂單編號:<span class="text-danger">
@@ -126,7 +133,6 @@
                                                     </li>
                                                     <li>取票方式:<%=item.method %>
                                                     </li>
-
                                                     <li>票價金額:
                                                         <span class="text-danger">
                                                             NT$<%=item.unitPrice%>x<%=item.quantity%>=NT$<%=item.tot%>
@@ -136,10 +142,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <%}) %>
+                            <%}) %>
                         </div>
                         <% }else{ %>
-                            <main>
+                            
                                 <div class="box">
                                     <p class="text-center">
                                         您目前沒有即將參加的活動唷! <br>
@@ -151,11 +157,11 @@
                                         </div>
                                     </a>
                                 </div>
-                            </main>
+                            
                         <% } %>
                         <!-- 已結束的活動 -->
-                        <% if(data2[0]){ %>
                         <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <% if(data2[0]){ %>
                             
                             <% data2.forEach(function(item,idx){ %>
                             <div class="ticket_div ticket_div_end">
@@ -204,7 +210,6 @@
                                             </li>
                                             <li>取票方式:<%=item.method %>
                                             </li>
-
                                             <li>票價金額:
                                                 <span class="text-danger">
                                                     NT$<%=item.unitPrice%>x<%=item.quantity%>=NT$<%=item.tot%>
@@ -214,7 +219,6 @@
                                 </div>
                             </div>
                             <% }) %>
-
                             <% }else{ %>
                                 <!-- 如果沒有已結束的活動 -->
                                 <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
