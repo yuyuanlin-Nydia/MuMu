@@ -14,17 +14,15 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
 
-    /* @import url(./css/login.css); */
-    /* @import url('./reset.css'); */
-    /* 
-
-    li:nth-of-type(5),
-    li:nth-of-type(6) {
-        font-size: 10px;
-    } */
     .mynavbar {
         background-color: #FFF;
     }
+    span{
+        visibility: hidden;
+    }
+   /* li>b{
+        display: none;
+    } */
 </style>
 
 </head>
@@ -32,97 +30,106 @@
 <body>
 
     <%-include ('../nav.ejs') %>
-        <div id="main_box">
-            <!-- <img id="logo" src="./images/fake.png" alt=""> -->
-            <div class="main_content">
-                <ul class="tab-group">
-                    <li class="tab active"><a href="#login">會員登入</a></li>
-                    <li class="tab "><a href="#signup">會員註冊</a></li>
-                </ul>
-
-                <div class="tab-content">
-                    <!-- 只包含登入&註冊內容 -->
-                    <div id="login">
-                        <form id="loginForm">
-                            <!-- action="/" method="post"-->
-                            <!-- <h1>歡迎回來!</h1> -->
-                            <ul>
-                                <!-- 登入 -->
-
-                                <li>
-                                    <br><input type="text" placeholder="帳號" name="userAccountL" class="username"
-                                        required>
-                                </li>
-                                <li>
-                                    <br><input type="password" placeholder="密碼" name="userPasswordL" class="password"
-                                        required>
-                                </li>
-                                <br>
-                                <li class="btm_text"> <input type="checkbox"> 記住我</li>
-
-
-
-                            </ul><!-- 登入end -->
-                            <!-- <input type="button" value="登入" class="logIn"> -->
-                            <div class="btndiv"><button type="button" value="Login" id="loginSub"> 登入</button></div>
-                            <br><a class="btm_text" href="#">忘記密碼?</a>
-                        </form>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-
-
-                    <div id="signup">
-
-                        <form id="signupForm">
-                            <!--action="/" method="post"-->
-                            <!-- <h1>Join us!</h1> -->
-                            <ul>
-                                <!-- 註冊 -->
-                                <li>
-                                    <br><input type="text" placeholder="*姓名" name="firstName" required>
-                                </li>
-                                <li>
-                                    <br><input type="email" placeholder="*Email" name="userEmail" required>
-                                </li>
-
-                                <li>
-                                    <!-- 至少8位英數 -->
-                                    <br><input type="text" placeholder="*帳號&nbsp(至少8位,包含英文+數字)" name="userAccount"
-                                        pattern="[a-zA-Z0-9]{8,} " maxlength="15" id="account">
-                                </li>
-                                <li>
-                                    <!-- 至少8位英數 -->
-                                    <br><input type="password" placeholder="*密碼&nbsp(至少8位,包含英文+數字)" name="userPassword"
-                                        pattern="[a-zA-Z0-9]{8,}" maxlength="15" id="newpw">
-                                </li>
-                                <!-- 要加入確認密碼 -->
-                                <li>
-                                    <br><input type="password" placeholder="*確認密碼" name="userPassword"
-                                        pattern="[a-zA-Z0-9]{8,}" maxlength="15" id="newpwCfm">
-                                </li>
-                                <br>
-                                <li>* 為必填欄位，請填妥欄位資訊。</li>
-                                <li class="btm_text"><input type="checkbox" required>我同意<a href="#">會員使用條款</a> </li>
-                            </ul><!-- 註冊end -->
-
-                            <!-- <input type="button" value="加入會員" class="signUp"> -->
-                            <div class="btndiv"> <button type="submit" value="signup" id="signupSub"> 加入會員</button>
-                            </div>
-                        </form>
-
-                    </div> <!-- signup end -->
-
-                </div><!-- tab-content end -->
-
-
+        <main>
+            <div id="main_box">
+                <!-- <img id="logo" src="./images/fake.png" alt=""> -->
+                <div class="main_content">
+                    <ul class="tab-group">
+                        <li class="tab active"><a href="#login">會員登入</a></li>
+                        <li class="tab "><a href="#signup">會員註冊</a></li>
+                    </ul>
+    
+                    <div class="tab-content">
+                        <!-- 只包含登入&註冊內容 -->
+                        <div id="login">
+                            <form id="loginForm">
+                                <ul>
+                                    <!-- 登入 -->
+    
+                                    <li>
+                                        <br><input type="text" placeholder="帳號" name="userAccountL" class="username"
+                                            required>
+                                    </li>
+                                    <li>
+                                        <br><input type="password" placeholder="密碼" name="userPasswordL" class="password"
+                                            required>
+                                    </li>
+                                    <br>
+                                    <li class="btm_text"> <input type="checkbox"> 記住我</li>
+    
+    
+    
+                                </ul><!-- 登入end -->
+                                <!-- <input type="button" value="登入" class="logIn"> -->
+                                <div class="btndiv"><button type="button" value="Login" id="loginSub"> 登入</button></div>
+                                <br><a class="btm_text" href="#">忘記密碼?</a>
+                            </form>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+    
+    
+                        <div id="signup">
+    
+                            <form id="signupForm">
+                                <!--action="/" method="post"-->
+                                <!-- <h1>Join us!</h1> -->
+                                <ul>
+                                    <!-- 註冊 -->
+                                    <li>
+                                        <br><input type="text" placeholder="*姓名" name="firstName" required>
+                                    </li>
+                                    <li>
+                                        <br><input type="email" id="email" placeholder="*Email" name="userEmail" required >
+                                       <span id="if1"><i class='fa fa-exclamation-circle' aria-hidden='true'style="margin: -10px;color:var(--color2)"></i>
+                                        <b >格式有誤</b></span>
+                                    </li>
+    
+                                    <li>
+                                        <!-- 至少8位英數 -->
+                                        <br><input type="text" placeholder="*帳號" name="userAccount"
+                                           maxlength="15" id="account">
+                                           <span id="if2"> <i class='fa fa-exclamation-circle' aria-hidden='true' style="margin: -10px;color:var(--color2)"></i>
+                                            <b >帳號重複</b></span>
+                                            <!-- <b>至少8位,包含英數</b> -->
+                                    </li>
+                                    <li>
+                                        <!-- 至少8位英數 -->
+                                        <br><input type="password" placeholder="*密碼&nbsp(至少8位,包含英文+數字)" name="userPassword"
+                                             maxlength="15" id="newpw">
+                                           <span id="if3"> <i class='fa fa-exclamation-circle' aria-hidden='true'style="margin: -10px;color:var(--color2)"></i>
+                                            <b>至少8位,包含英數</b></span>
+                                    </li>
+                                    <!-- 要加入確認密碼 -->
+                                    <li>
+                                        <br><input type="password" placeholder="*確認密碼" name="userPassword"
+                                            pattern="[a-zA-Z0-9]{8,}" maxlength="15" id="newpwCfm">
+                                        <span id="if4"><i class='fa fa-exclamation-circle' aria-hidden='true'style="margin: -10px;color:var(--color2)"></i>
+                                            <b >密碼不一致</b></span>
+                                    </li>
+                                    <br>
+                                    <li>* 為必填欄位，請填妥欄位資訊。</li>
+                                    <li class="btm_text"><input type="checkbox" required>我同意<a href="#">會員使用條款</a> </li>
+                                </ul><!-- 註冊end -->
+    
+                                <!-- <input type="button" value="加入會員" class="signUp"> -->
+                                <div class="btndiv"> <button type="submit" value="signup" id="signupSub"> 加入會員</button>
+                                </div>
+                            </form>
+    
+                        </div> <!-- signup end -->
+    
+                    </div><!-- tab-content end -->
+    
+    
+                </div>
+    
+               
             </div>
-
-            </form>
-        </div>
+        </main>
         <%-include ('../footer.ejs') %>
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"
                 integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -173,16 +180,8 @@
                         }
                     })
                 })
-                $('#newpwCfm').blur(function () {
-                    // $('#newpwCfm').css("background-color","#D6D6FF")
-                    var newps = $('#newpw').val();
-                    var newpsCfm = $('#newpwCfm').val();
-                    // console.log(newps,newpsCfm);
-                    if(newps != newpsCfm){
-                        alert("兩次輸入密碼不一致,請重新輸入！")
-                    // $("#msg").html("兩次輸入密碼不一致,請重新輸入！").css("display","block");
-                    }
-                })
+
+
                 // 登入
                 $('#loginSub').on('click', function () {
                     var data = $('#loginForm').serializeArray()
@@ -209,34 +208,39 @@
                     })
                 })
 
-                // function serializeToJSON(data) {
-                //     var values = {};
-                //     for (index in data) {
-                //         values[data[index].name] = data[index].value;
-                //     }
-                //     return JSON.stringify(values)
-                // }
+                                // 轉JSON
+                                function serializeToJSON(data) {
+                    var values = {};
+                    for (index in data) {
+                        values[data[index].name] = data[index].value;
+                    }
+                    return JSON.stringify(values)
+                }
 
-                // 按enter可以登入
-                // $("#loginSub").keypress(function (e) {
+                // mail格式確認
+                $("#email").blur(function(){
+                    var mail =$("#email").val();
+                    var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                  if(!regex.test(mail)) {
+                    $("#if1").css('visibility','visible');
+                        } else{ 
+                    $("#if1").css('visibility','hidden')
+                  }
+                })
 
-                //     code = (e.keyCode?e.keyCode:e.which);
 
-                //     if (code == 13) {
-
-
-                //         $("#loginForm").submit();
-
-                //     }
-
-                // });
                 // 帳號檢查是否重複
                 $('#account').blur(function () {
-                    // $('#account').css("background-color","#D6D6FF")
+                    // var regex = /[a-zA-Z0-9]{8,}/;
+                    // var acc =$("#account").val();
+                    // if(acc!=regex){
+
+                    //         $("li>b").css('display','inline-block');
+                    //         $("#if2 i").css('visibility','visible');
+                    // }else{
                     var dataA = $('#account').serializeArray()
-                    // console.log(data);
                     JSONData = serializeToJSON(dataA)
-                    // console.log(JSONData);
+                  
                     $.ajax({
                         url: '/log/check',
                         type: 'POST',
@@ -244,24 +248,54 @@
                         data: JSONData,
                         success: function (res) {
                             var res = JSON.parse(res)
-
                             if (res.errno === undefined) {
-                                alert("帳號重複")
+                                $("#if2 b:first-of-type").css('visibility','visible');
+                                $("#if2 i").css('visibility','visible');
+                                } else{ 
+                                 $("#if2 b:first-of-type").css('visibility','hidden')
+                                 $("#if2 i").css('visibility','hidden');
+                                //  $("li>b").css('display','none')
+                                //  $("#if2 i").css('visibility','hidden');
                             }
                         },
                         error: function () {
                             alert("系統錯誤!")
                         }
                     });
+                    //  }
+                    
                 })
-                // 轉JSON
-                function serializeToJSON(data) {
-                    var values = {};
-                    for (index in data) {
-                        values[data[index].name] = data[index].value;
+
+                //密碼格式確認
+                $("#newpw").blur(function(){
+                   
+                    var pw =$("#newpw").val();
+                    var regex = /[a-zA-Z0-9]{8,}/;
+                  
+                  if(!regex.test(pw)) {
+                    $("#if3").css('visibility','visible');
+                        } else{ 
+                    $("#if3").css('visibility','hidden')
+                  };
+                  
+                })
+
+
+                // 檢查兩次密碼是否一致
+                $('#newpwCfm').blur(function () {
+                    
+                    var newps = $('#newpw').val();
+                    var newpsCfm = $('#newpwCfm').val();
+                    if(newps != newpsCfm){
+                        $("#if4").css('visibility','visible');
+                                } else{ 
+                        $("#if4").css('visibility','hidden')
                     }
-                    return JSON.stringify(values)
-                }
+                })
+
+
+              
+
             </script>
 
 </body>

@@ -13,11 +13,22 @@
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
        
         a{
             color: black;
+        }
+
+        .delBtn{
+            position: relative;
+            top:-235px ;
+            left: 170px;
+        }
+        .delBtnb{
+            position: relative;
+            top:-190px ;
+            left: 125px;
         }
     </style>
 </head>
@@ -25,159 +36,129 @@
 <body>
     <!-- 導覽列 開始 -->
     <%-include("../nav.ejs")%>
+    
         <!-- 導覽列 結束 -->
-        <div id="banner_box">
-            <img src="../../image/user/member.png" alt="banner" class="banner" >
-            <p class="title">會員管理</p>
-        </div>
-        <!-- <div class="container "> -->
-        <form method="post">
-            <div class="row">
-
-                <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
-
-                <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
-                    <div class="profile-img   p-1 mt-5 ml-5">
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
-                            <label for="fileToUpload">
-                                <div class="profile-pic">
-                                    <span class="glyphicon glyphicon-camera"></span>
-                                    <span>更換圖片</span>
-                                </div>
-                            </label>
-                            <input type="File" name="fileToUpload" id="fileToUpload">
-                        </form>
-                        <h5 class="text-center text-white mt-3"><%= Name%> </h5>
-                    </div>
-
-                    <div class="  p-5 p-md-1 select_left ml-5">
-                        <div class="profile-work ">
-                            <!-- 前面放icon -->
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu">我的票券</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">參戰心得</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu"
-                                    style="color: var(--color2)">收藏追蹤</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu">編輯資料</a><br />
-                            </div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 左側 結束-->
-
-                <!-- 右側 開始 -->
-                <div class="col-md-8 col-sm-12  pl-lg-4 right_box">
-                    <div class="profile-head">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
-                            <li class="nav-item">
-                                <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                    aria-controls="home" aria-selected="true">表演收藏</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                    aria-controls="profile" aria-selected="false">樂團追蹤</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-12 ">
-                        <div class="tab-content profile-tab" id="myTabContent">
-                            <!-- <button type="button" class="btn btn-info " id="addBtn">新增/編輯分類</button> -->
-                            <!-- <button type="button" class="btn btn-info " id="orderBtn">排序</button> -->
-                            <button type="button" class="btn btn-warning d-none" id="finishBtn">完成</button>
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="d-flex flex-wrap my-3 categoryGroups">
-                                    <div class="col-lg-3 col-sm-5 ">
-                                        <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
-                                            <p class="text-center"> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-5">
-                                        <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
-                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-5 ">
-                                        <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
-                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-5 ">
-                                        <a href="" class=" d-flex justify-content-center flex-wrap">
-                                            <img src="/image/user/樂團/滅火器.jpg" class="card_img col-12" alt="">
-                                            <p class=text-center> 覺醒音樂祭<br> 2021/05/28-30 <br> 大安森林公園</p>
-                                        </a>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="d-flex flex-wrap my-3">
-                                    <div class="m-2">
-                                        <img src="/image/user/樂團/滅火器.jpg" alt="" class="band_img" >
-                                        <p class="text-center ">滅火器</p>
-                                    </div>
-                                    <!-- <div class="m-2">
-                                        <img src="/image/user/樂團/美秀集團.jpg" alt="" class="band_img">
-                                        <p class="text-center ">美秀集團</p>
-                                    </div>
-                                    <div class="m-2">
-                                        <img src="/image/user/樂團/茄子蛋.jpg" alt="" class="band_img">
-                                        <p class="text-center  ">茄子蛋</p>
-                                    </div>
-                                    <div class="m-2 ">
-                                        <img src="/image/user/樂團/告五人.jpeg" alt="" class="band_img">
-                                        <p class="text-center  ">告五人</p>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 右側 結束 -->
-                <!-- 對話框 開始 -->
-                <!-- <div class="module_all">
-                    <div class="module_box ">
-                        <div class="module_head">
-                            <h2>我的分類</h2>
-                        </div>
-                        <div class="module_body">
-                            <p id='remind'></p>
-                            <div>
-                                <img src="../image/user/plus.jpg" class="plus_pic float-left" alt="">
-                                <p class="float-left" id="addNew">點擊建立分類</p>
-                            </div>
-                            <div>
-                                <span class="float-left categoryItem">我的最愛</span>
-                                <span class="float-right edit"><button type="button"
-                                        class=" btn btn-sm btn-outline-info">編輯</button></span>
-                            </div>
-                            <div style="clear:both">
-                                <span class="float-left categoryItem">台中</span>
-                                <span class="float-right  edit"><button type="button"
-                                        class=" btn btn-sm btn-outline-info">編輯</button></span>
-                            </div>
-                        </div>
-                        <div class="module_footer">
-                            <button type="button" class="module_cfm btn btn-dark">確認</button>
-                            <button type="button" class="module_cxl btn btn-dark">取消</button>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- 對話框 結束 -->
+        <% Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "h+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }%>
+        <main>
+            <div class="banner">
+                <p class="banner_title">會員管理</p>
             </div>
+            <!-- <div class="container "> -->
+            <form method="post">
+                <div class="row">
+    
+                    <!-- 左側 開始 -->
 
-        </form>
-
-        <!-- </div> -->
-        <!-- 右側 結束 -->
-
-
-
-        </form>
-        </div>
+                    <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+                        <div class="profile-img   p-1 mt-5 ml-5">
+                            <form action="upload.php" method="post" enctype="multipart/form-data">
+                                <label for="fileToUpload">
+                                    <div class="profile-pic">
+                                        <span class="glyphicon glyphicon-camera"></span>
+                                        <span>更換圖片</span>
+                                    </div>
+                                </label>
+                                <input type="File" name="fileToUpload" id="fileToUpload">
+                            </form>
+                            <h5 class="text-center text-white mt-3"><%= Name%> </h5>
+                        </div>
+    
+                        <div class="  p-5 p-md-1 select_left ml-5">
+                            <div class="profile-work ">
+                               
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket#myTab" class="user_menu">我的票券</a><br /></div>
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle#myTab" class="user_menu">參戰心得</a><br /></div>
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite#myTab" class="user_menu"
+                                        style="color: var(--color2)">收藏追蹤</a><br /></div>
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile#profile-tab" class="user_menu">編輯資料</a><br />
+                                </div>
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 左側 結束-->
+    
+                    <!-- 右側 開始 -->
+                    <div class="col-md-8 col-sm-12  pl-lg-4 right_box">
+                        <div class="profile-head">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
+                                <li class="nav-item">
+                                    <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                        aria-controls="home" aria-selected="true">表演收藏</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                        aria-controls="profile" aria-selected="false">樂團追蹤</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <button type="button" class="btn btn-warning d-none" id="finishBtn">完成</button>
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="d-flex flex-wrap my-3 categoryGroups">
+                                        <% var data2 = JSON.parse(JSON.stringify(data2)) %>
+                                        <% data2.forEach((item)=> { %>
+                                        <div class="col-lg-3 col-sm-5 ">
+                                            <a href="/activity/single/<%= item.activityId %>" class=" d-flex justify-content-center flex-wrap" onmouseover="this.style.textDecoration='none';">
+                                                <img src="/image/upload/activity/<%= item.activityFile %>" class="card_img col-12" alt="">
+                                                <p class="text-center"> <%= item.activityTitle %><br> <%= (new Date(item.minDate)).Format("yyyy/MM/dd ~ ")+(new Date(item.maxDate)).Format("yyyy/MM/dd")%> <br> <%= item.activityLocation%></p>
+                                            </a>
+                                            <span  class="delBtn " data-id="<%= item.activityId %>">
+                                                <i class="far fa-trash-alt"></i>
+                                            </span>
+                                            
+                                        </div>
+                                        <% }) %>
+                                       
+                                    </div>
+    
+                                </div>
+                                <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="d-flex flex-wrap my-3">
+                                        <% data.forEach((item)=> { %>
+                                        <div class="m-2">
+                                           <a  href="../band/ <%= item.bandId %>" onmouseover="this.style.textDecoration='none'">
+                                                <img src="/image/band/<%= item.bandFile %>" alt="" class="band_img" >
+                                                <p class="text-center "><%= item.bandName %></p>
+                                            </a>
+                                            <span  class="delBtnb " data-id="<%= item.bandId %>">
+                                                <i class="far fa-trash-alt"></i>
+                                            </span>
+                                        </div>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 右側 結束 -->
+                </div>
+    
+            </form>
+    
+            <!-- </div> -->
+            <!-- 右側 結束 -->
+    
+    
+    
+            </form>
+            </div>
+        </main>
 
 
         <!-- 頁尾  開始-->
@@ -186,7 +167,53 @@
             <!-- 一定得放這邊 不能放上面 -->
             <script src="../plugin/vanilla-toast.js"></script>
             <script src="../js/user_myFavorite.js"></script>
+        <script>
 
+            $(function () {
+            $('.delBtn').each(function (idx, elm) {
+                $(elm).on('click', function () {
+                    // 跳出詢問確認移除
+                    var yes =confirm("確定要刪除此收藏嗎?")
+                   
+                    var id=$(elm).attr("data-id");
+                    var data = {
+                        id: id
+                    }
+                    if(yes){
+                    $.ajax({
+                        type: "delete",
+                        url: "/user/event/delete",
+                        data: data
+                    }).then(function () {
+                        location.reload('#home')
+                    })}else{
+
+                    }
+                })
+            })
+
+            $('.delBtnb').each(function (idx, elm) {
+                $(elm).on('click', function () {
+                    // 跳出詢問確認移除
+                    var yes = confirm("確定要刪除此追蹤嗎?")
+                    var id=$(elm).attr("data-id");
+                    var data = {
+                        id: id
+                    }
+                    if(yes){
+                    $.ajax({
+                        type: "delete",
+                        url: "/user/band/delete",
+                        data: data
+                    }).then(function () {
+                        location.reload('#home')
+                    })}else{
+
+}
+                })
+            })
+        })
+        </script>
 
 
 </body>
