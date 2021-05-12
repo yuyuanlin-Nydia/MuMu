@@ -13,31 +13,39 @@
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 <style>
-    input[type=text]{
+    input[type=text] {
         border: 1px solid #E3E8E4;
     }
-    #userProfile input:focus,#changePwForm input:focus{
-        outline:none;
+
+    #userProfile input:focus,
+    #changePwForm input:focus,
+    #userProfile select:focus {
+        outline: none;
         border: 1px solid var(--color2);
     }
-    a{
+
+    a {
         color: black;
     }
-    .avaImg{
+
+    .avaImg {
         position: relative;
         top: -150px;
     }
 
-    .pwif{
+    .pwif {
         margin-left: -40px !important;
     }
 
-    .topfix{
+    .topfix {
         margin-top: -24px;
     }
-    #profile-tab:focus{
+
+    #profile-tab:focus {
         outline: none;
     }
 </style>
@@ -47,389 +55,422 @@
     <%-include("../nav.ejs")%>
 
         <!-- 導覽列 結束 -->
-    
-      <main>
-        <div class="banner">
-            <p class="banner_title">會員管理</p>
-        </div>
+
+        <main>
+            <div class="banner">
+                <p class="banner_title">會員管理</p>
+            </div>
             <!-- <div class="container "> -->
             <img src="../../public/image/user/member.png" alt="">
-     
-            
-                <div class="row topfix">
-                    <!-- 左側 開始 -->
-                    <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
-                        <div class="profile-img  p-1 mt-5 ml-5">
-                            <form id="avatar" action="/upload/avatarfile">
-                                <label class="aa">
-                                    <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="avatarFile"
-                                        style="display:none;">
-                    
-                                    <div class="profile-pic">
-                                        <div id="avaimg"><img id="testImg" src="../../image/upload/user/<%= data.userFile%>" alt=""></div>
-                                        <span>更換圖片</span>
-                                    </div>
-                                </label>
-                                <div id="img_sec" class="d-flex flex-wrap">
-                                    <p></p>
+
+
+            <div class="row topfix">
+                <!-- 左側 開始 -->
+                <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+                    <div class="profile-img  p-1 mt-5 ml-5">
+                        <form id="avatar" action="/upload/avatarfile">
+                            <label class="aa">
+                                <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*"
+                                    id="avatarFile" style="display:none;">
+
+                                <div class="profile-pic">
+                                    <div id="avaimg"><img id="testImg" src="../../image/upload/user/<%= data.userFile%>"
+                                            alt=""></div>
+                                    <span>更換圖片</span>
                                 </div>
-                                {{image}}
-                    
-                            </form>
-                    
-                    
-                            <h5 class="text-center text-white mt-3 uName">
-                                <%= data.firstName%>
-                            </h5>
-                        </div>
-                    
-                        <div class="  p-5 p-md-1 select_left ml-5">
-                            <div class="profile-work ">
-                                <!-- 前面放icon -->
-                                <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="ticket#myTab" class="user_menu">我的票券</a><br /></div>
-                                <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="myArticle#myTab" class="user_menu">參戰心得</a><br /></div>
-                                <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="favorite#myTab" class="user_menu">收藏追蹤</a><br /></div>
-                                <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="profile#profile-tab" class="user_menu"  style="color: var(--color2)">編輯資料</a><br /></div>
-                                <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="/log/logout" class="user_menu">登　　出</a></div>
+                            </label>
+                            <div id="img_sec" class="d-flex flex-wrap">
+                                <p></p>
+                            </div>
+                            <!-- {{image}} -->
+
+                        </form>
+
+
+                        <h5 class="text-center text-white mt-3 uName">
+                            <%= data.firstName%>
+                        </h5>
+                    </div>
+
+                    <div class="  p-5 p-md-1 select_left ml-5">
+                        <div class="profile-work ">
+                            <!-- 前面放icon -->
+                            <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="ticket#myTab"
+                                    class="user_menu">我的票券</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="myArticle#myTab"
+                                    class="user_menu">參戰心得</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="favorite#myTab"
+                                    class="user_menu">收藏追蹤</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="profile#profile-tab" class="user_menu"
+                                    style="color: var(--color2)">編輯資料</a><br /></div>
+                            <div class="mb-2 pl-2 pb-1 pt-1 thepage"><a href="/log/logout" class="user_menu">登　　出</a>
                             </div>
                         </div>
                     </div>
-    
-                    <!-- 左側 結束-->
-    
-                    <!-- 右側 開始 -->
-                    <div class="col-md-8  pl-5 right_box">
-                        <!-- <h4 class="right_title ml-5">編輯個人資料</h4> -->
-                        <div class="profile-head">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
-                                <li class="nav-item">
-                                    <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                        aria-controls="home" aria-selected="true">個人資料</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                        aria-controls="profile" aria-selected="false">修改密碼</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-12 pl-md-5 ">
-                            <div class="tab-content profile-tab" id="myTabContent">
-                                <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab" >
-                                <form id="userProfile" method="POST" >
-    
+                </div>
+
+                <!-- 左側 結束-->
+
+                <!-- 右側 開始 -->
+                <div class="col-md-8  pl-5 right_box">
+                    <!-- <h4 class="right_title ml-5">編輯個人資料</h4> -->
+                    <div class="profile-head">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
+                            <li class="nav-item">
+                                <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                    aria-controls="home" aria-selected="true">個人資料</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                    aria-controls="profile" aria-selected="false">修改密碼</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12 ">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
+                                <form id="userProfile" method="POST">
+
                                     <div class="form-group row text-md-center">
-    
+
                                         <label for="birth" class="col-md-2  col-sm-12 userinfo">生　　日</label>
-                                        <div class="col-md-4 col-sm-12">                                          
-                                            <input class="form-control"type="text" name="birth"  onfocus="(this.type='date')" value="<%=(data.userBirth).toLocaleDateString()%>" id="datechange"> 
+                                        <div class="col-md-4 col-sm-12">
+                                            <% if(data.userBirth){ %>
+                                            <input class="form-control" type="text" name="birth"
+                                                onfocus="(this.type='date')" min="1940-01-01" max="2014-12-30"
+                                                value="<%=(data.userBirth).toLocaleDateString()%>" id="datechange">
+                                            <%}else{%>
+                                                <input class="form-control" type="text" name="birth"
+                                                onfocus="(this.type='date')" min="1940-01-01" max="2014-12-30"
+                                                id="datechange">
+                                            <%}%>
                                         </div>
                                     </div>
                                     <div class="form-group row text-md-center">
-    
                                         <label for="e_mail" class="col-md-2 col-sm-12 userinfo">電子郵件</label>
                                         <div class="col-md-4 col-sm-12">
                                             <input class="form-control" type="email" name="e_mail" id="e_mail"
-                                               value=" <%= data.userEmail  %>">
+                                                value=" <%= data.userEmail  %>">
                                         </div>
-    
                                     </div>
                                     <div class="form-group row text-md-center">
-    
+
                                         <label for="phone" class="col-md-2 col-sm-12 userinfo">連絡電話</label>
                                         <div class="col-md-4 col-sm-12">
                                             <input class="form-control" type="tel" name="phone" id="phone"
-                                            value=" <%= data.userPhone  %>">
+                                                value="<%= data.userPhone  %>">
                                         </div>
-    
+
                                     </div>
                                     <div class="form-group row text-md-center">
-    
                                         <label for="city" class="col-md-2 userinfo ">地　　址</label>
-    
                                         <div class="col-md-2 col-sm-6 mb-sm-1">
-                                            <select class=" form-control" name="district" id="district">
-    
-                                                <% var options = ["基隆市","台北市","新北市","桃園縣","新竹市","新竹縣","苗栗縣","台中市","彰化縣","南投縣","雲林縣","嘉義市","嘉義縣","台南市","高雄市"];%>
-                                                <% for ( var i = 0; i < options.length; i++ ){%>
-                                                <option value="<%=i+1%>" <%= (data.district ==(i+1) ) ? "selected" : "" %>> <%=options[i] %></option>
-                                                <%} %>
+                                            <select class="form-control" name="city" id="selected_city">
+                                                <option value="<%=data.userDis %>" selected>
+                                                    <%=data.city %>
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-md-2 col-sm-6">
-                                         
-                                            <select class="form-control " name="area">
-                                                <% var options = ["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區","中區","東區","南區","西區","北區","北屯區","西屯區","南屯區","烏日區","豐原區","潭子區"];%>
-                                                <% for ( var i = 0; i < options.length; i++ ){%>
-                                                <option value="<%=i+1%>" <%= (data.userArea ==(i+1) ) ? "selected" : "" %>> <%=options[i] %></option>
-                                                <%} %>
-                                               
+                                            <select class="form-control" name="town" id="town">
+                                                <option value="<%=data.userArea %>">
+                                                    <%=data.town %>
+                                                </option>
                                             </select>
+                                            
                                         </div>
-    
+
                                         <!-- 換行用 -->
                                         <div class="col-md-12"></div>
                                         <!-- 地址輸入欄 -->
-    
-                                        <div class="col-md-6 mt-2">
-                                            <input class="form-control" type="text" name="address" value="<%= data.userAdd %>">
+
+                                        <div class="col-md-4 col-sm-12" style="margin-left: 17%;">
+                                            <input class="form-control" type="text" name="address"
+                                                value="<%= data.userAdd %>">
                                         </div>
-                                        <!-- 換行用 -->
-                                        <div class="col-md-12"></div>
+
                                     </div>
-    
-    
-    
+
+
+
                                     <div class="col-md-6 mt-2 text-right">
-                                        <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" id="userUpdate" type="submit"
-                                            value="確定">
+                                        <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" id="userUpdate"
+                                            type="button" value="確定">
                                     </div>
                                 </form>
                             </div>
-                                <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab" >
-    
-                                    <form id="changePwForm">
-                                        <div class="form-group row text-md-center">
-        
-                                            <label for="phone" class="col-md-2 col-sm-12 userinfo">原始密碼</label>
-                                            <div class="col-md-4 col-sm-12">
-                                                <input class="form-control" type="password" name="oldpw" id="oldpw">
-                                            </div>
-                                            <span id="cfmLabel_or" class="col-md-3 pwif text-justify" style="visibility: hidden;">
-                                                <i class='fa fa-exclamation-circle' aria-hidden='true' style="margin:-10px -20px 0px -5px;color:var(--color2)"></i>
-                                                密碼錯誤</span>
+                            <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                <form id="changePwForm">
+                                    <div class="form-group row text-md-center">
+
+                                        <label for="phone" class="col-md-2 col-sm-12 userinfo">原始密碼</label>
+                                        <div class="col-md-4 col-sm-12">
+                                            <input class="form-control" type="password" name="oldpw" id="oldpw">
                                         </div>
-                                        <div class="form-group row text-md-center">
-        
-                                            <label for="phone" class="col-md-2 col-sm-12 userinfo">修改密碼</label>
-                                            <div class="col-md-4 col-sm-12">
-                                                <input class="form-control" type="password" name="newpw" id="newpw">
-                                            </div>
-        
+                                        <span id="cfmLabel_or" class="col-md-3 pwif text-justify"
+                                            style="visibility: hidden;">
+                                            <i class='fa fa-exclamation-circle' aria-hidden='true'
+                                                style="margin:-10px -20px 0px -5px;color:var(--color2)"></i>
+                                            密碼錯誤</span>
+                                    </div>
+                                    <div class="form-group row text-md-center">
+
+                                        <label for="phone" class="col-md-2 col-sm-12 userinfo">修改密碼</label>
+                                        <div class="col-md-4 col-sm-12">
+                                            <input class="form-control" type="password" name="newpw" id="newpw">
                                         </div>
-                                        <div class="form-group row text-md-center">
-        
-                                            <label for="phone" class="col-md-2 col-sm-12 userinfo" >確認密碼</label>
-                                            <div class="col-md-4 col-sm-12">
-                                                <input class="form-control" type="password" name="cfmpw" id="newpwcfm">
-                                            </div>
-                                            <span id="cfmLabel" class="col-md-3 pwif text-justify mb-1" style="visibility: hidden;">
-                                                <i class='fa fa-exclamation-circle' aria-hidden='true' style="margin:-10px -20px 0px -5px;color:var(--color2)"></i>
-                                                密碼不一致</span>
+
+                                    </div>
+                                    <div class="form-group row text-md-center">
+
+                                        <label for="phone" class="col-md-2 col-sm-12 userinfo">確認密碼</label>
+                                        <div class="col-md-4 col-sm-12">
+                                            <input class="form-control" type="password" name="cfmpw" id="newpwcfm">
                                         </div>
-    
-                                        <div class="col-md-6 mt-2 text-right">
-                                            <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" id="pwupdate" type="submit"
-                                                value="確定">
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- <div class="form-group row cfmBtn"> -->
-    
-                                <!-- </div> -->
+                                        <span id="cfmLabel" class="col-md-3 pwif text-justify mb-1"
+                                            style="visibility: hidden;">
+                                            <i class='fa fa-exclamation-circle' aria-hidden='true'
+                                                style="margin:-10px -20px 0px -5px;color:var(--color2)"></i>
+                                            密碼不一致</span>
+                                    </div>
+
+                                    <div class="col-md-6 mt-2 text-right">
+                                        <input class="btn_blue2 col-md-3 col-sm-12 mt-2  text-center" id="pwupdate"
+                                            type="button" value="確定">
+                                    </div>
+                                </form>
                             </div>
+                            <!-- <div class="form-group row cfmBtn"> -->
+
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
-                </div>
-    
-    
-                <!-- </div> -->
-    
-                <!-- 右側 結束 -->
-    
-    
-    
-            
+            </div>
+            </div>
+            <!-- 右側 結束 -->
             </div>
 
-        </main>    
+        </main>
 
         <!-- 頁尾  開始-->
         <%-include("../footer.ejs")%>
-            <!-- 頁尾  結束-->
             <script>
                 $('#userUpdate').on('click', function () {
-                    // alert('有')
-                var data = $('#userProfile').serializeArray()
-                JSONData = serializeToJSON(data)
-
-                $.ajax({
-                    url: "/user/profile",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSONData,
-                    success: function (res) {
-                        var res = JSON.parse(res)
-                        if (res.errno === 1) {
-                            alert("更新成功!")
-                            location.href = '/user/profile'
-                            
-                        } else if (res.errno === 0) {
-                            alert("更新失敗，請重新再試一次!")
-                           
+                    var data = $('#userProfile').serializeArray()
+                    JSONData = serializeToJSON(data)
+                    console.log(JSONData)
+                    $.ajax({
+                        url: "/user/profile",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                swal("更新成功!", "", "success")
+                                .then((value) => {location.href = '/user/profile'})
+                                
+                            } else if (res.errno === 0) {
+                                swal("更新失敗!", "請重新試一次", "error");
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
                         }
-                    },
-                    error: function () {
-                        alert("系統錯誤!")
-                      
-                        // alert(serializeToJSON(data))
-                    }
+                    })
                 })
+                // 舊密碼CFM
+                $('#oldpw').blur(function () {
+                    var dataA = $('#oldpw').serializeArray()
+                    JSONData = serializeToJSON(dataA)
 
-            })
-            // 舊密碼CFM
-            $('#oldpw').blur(function(){
-                // alert('hey')
-                var dataA = $('#oldpw').serializeArray()
-                // console.log(data);
-                JSONData = serializeToJSON(dataA)
-                // console.log(JSONData);
-                
-                $.ajax({
-	                url: '/user/checkpw',
-		            type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    data: JSONData,
-                    success: function (res) {
-                        var res = JSON.parse(res)
-                        // console.log(res);
-                        if (res.errno === 1) {
-                            $("#cfmLabel_or").css('visibility','visible');
-                        }else{
-                            $("#cfmLabel_or").css('visibility','hidden');
+                    $.ajax({
+                        url: '/user/checkpw',
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                $("#cfmLabel_or").css('visibility', 'visible');
+                            } else {
+                                $("#cfmLabel_or").css('visibility', 'hidden');
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
                         }
-                    },
-                    error: function () {
-                        alert("系統錯誤!")
-                    }
                     });
-            })
-            // 密碼一致cfm
-            $('#newpwcfm').blur(function(){
+                })
+                // 密碼一致cfm
+                $('#newpwcfm').blur(function () {
                     var newpw = $('#newpw').val();
                     var newpwcfm = $('#newpwcfm').val();
-                    if(newpw != newpwcfm || newpw ==""||newpwcfm== ""){
-                         $("#cfmLabel").css('visibility','visible');
-                        } else{ 
-                        $("#cfmLabel").css('visibility','hidden')
+                    if (newpw != newpwcfm || newpw == "" || newpwcfm == "") {
+                        $("#cfmLabel").css('visibility', 'visible');
+                    } else {
+                        $("#cfmLabel").css('visibility', 'hidden')
                     }
-                    })
-            
-            
-            $('#pwupdate').on('click', function () {
-                    // alert('有')
-                var data = $('#changePwForm').serializeArray()
-                JSONData = serializeToJSON(data)
-            
-                $.ajax({
-                    url: "/user/profile/pw",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSONData,
-                    success: function (res) {
-                        var res = JSON.parse(res)
-                        
-                        if (res.errno === 1) {
-                            alert("更新成功!")
-                            location.href = '/user/profile'
-                            
-                        } else if (res.errno === 0) {
-                            alert("更新失敗，請重新再試一次!")
-                           
+                })
+
+
+                $('#pwupdate').on('click', function () {
+                    var newpw = $('#newpw').val();
+                    var newpwcfm = $('#newpwcfm').val();
+                    if (newpw != newpwcfm || newpw == "" || newpwcfm == "") {
+                        $("#cfmLabel").css('visibility', 'visible');
+                    }
+                    else{
+                        var data = $('#changePwForm').serializeArray()
+                        JSONData = serializeToJSON(data)
+
+                    $.ajax({
+                        url: "/user/profile/pw",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                swal("密碼更新成功!", "", "success")
+                                .then((value) => {location.href = '/user/profile'})
+
+                            } else if (res.errno === 0) {
+                                swal("密碼更新失敗!", "請重新試一次", "error");
+
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
                         }
+                    })
+                    }
+                    
+
+                })
+                function serializeToJSON(data) {
+                    var values = {};
+                    for (index in data) {
+                        values[data[index].name] = data[index].value;
+                    }
+                    return JSON.stringify(values)
+                }
+                function getDistrict() {
+                    $.ajax({
+                        type: "post",
+                        url: "/user/district",
+                    }).then(function (item) {
+                        item.forEach(item => {
+                            $("#selected_city").append(`<option value="${item.districtId}">${item.city}</option>`)
+                        });
+
+                    })
+                    $.ajax({
+                        type: "post",
+                        url: "/user/town/user",
+                    }).then(function (item) {
+                        item.forEach(item => {
+                            $("#town").append(`<option value="${item.areaId}">${item.town}</option>`)
+                        });
+
+                    })
+
+                }
+                getDistrict();
+
+                $("#selected_city").change(function () {
+                    $.ajax({
+                        type: "post",
+                        url: "/user/town",
+                        data: { districtId: $("#selected_city").val() }
+                    }).then(function (item) {
+                        $("#town").empty();
+                        item.forEach(value => {
+                            $("#town").append(`<option value="${value.areaId}">${value.town}</option>`)
+                        });
+                    })
+
+                });
+
+
+                //大頭貼上傳 
+                var vueMain = new Vue({
+                    el: "#avatar",
+                    data: {
+                        image: ""
                     },
-                    error: function () {
-                        alert("系統錯誤!")
-                      
-                        // alert(serializeToJSON(data))
+                    methods: {
+
+                        imageHandler: function () {
+                            var file = $('#avatarFile')[0].files[0];
+                            var reader = new FileReader;
+                            reader.onload = function (e) {
+                                $("#testImg").removeAttr('src', "");
+                                $("#testImg").attr('src', e.target.result);
+                            };
+                            reader.readAsDataURL(file);
+
+
+                            //上傳圖片的input
+                            var file = document.getElementById("avatarFile")
+                            //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
+                            //建立formdata物件
+                            var formData = new FormData();
+                            //給formdata物件中放入資料(鍵值對的方式)
+                            formData.append('file', file.files[0]);
+
+                            var Today = new Date();
+                            var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+                            this.image = date + '-' + formData.get('file').name
+
+                            var newAvatar = {
+                                image: this.image
+                            }
+
+                            // 因為圖片文字格式不同  所以使用兩次ajax
+                            // 副檔名
+                            $.ajax({
+                                url: '/uploadafile',//請求路徑
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                                processData: false,//同上
+                                success: function (data) {
+
+                                },
+                                error: function (err) {
+                                    console.log(err);
+                                }
+                            });
+                            // 日期+原檔名
+                            $.ajax({
+                                type: "post",
+                                url: "/user/avatarUpload",
+                                data: newAvatar
+                            }).then(function () {
+                                swal("圖片更新成功!", "", "success")
+                                .then((value) => {location.href = '/user/profile'})
+                            })
+                            // 圖片
+                            $.ajax({
+                                url: '/user/upload/avatarfile',//請求路徑
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                                processData: false,//同上
+                                success: function (data) {
+
+                                },
+                                error: function (err) {
+                                    console.log(err);
+                                }
+                            });
+                        },
+
                     }
                 })
-
-            })
-            function serializeToJSON(data) {
-                var values = {};
-                for (index in data) {
-                    values[data[index].name] = data[index].value;
-                }
-                return JSON.stringify(values)
-            }
-        
-       //大頭貼上傳 
-    var vueMain = new Vue({
-        el: "#avatar",
-        data: {
-            image: ""
-        },
-        methods: {
-
-            imageHandler: function () {
-                var file = $('#avatarFile')[0].files[0];
-                var reader = new FileReader;
-                reader.onload = function (e) {
-                    $("#testImg").removeAttr('src', "");
-                    $("#testImg").attr('src', e.target.result);
-                };
-                reader.readAsDataURL(file);
-                // alert(file)
-
-                 //上傳圖片的input
-                 var file = document.getElementById("avatarFile")
-                //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
-                //建立formdata物件
-                var formData = new FormData();
-                //給formdata物件中放入資料(鍵值對的方式)
-                formData.append('file', file.files[0]);
-
-                var Today = new Date();
-                var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
-                this.image = date + '-' + formData.get('file').name
-
-                var newAvatar = {
-                    image: this.image
-                }
-
-                // 因為圖片文字格式不同  所以使用兩次ajax
-                // 副檔名
-                $.ajax({
-                    url: '/uploadafile',//請求路徑
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
-                    processData: false,//同上
-                    success: function (data) {
-                        // alert(data)
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-                // 日期+原檔名
-                $.ajax({
-                    type: "post",
-                    url: "/user/avatarUpload",
-                    data: newAvatar
-                }).then(function () {
-                    alert("上傳成功")
-                    location.href = "/user";
-                })
-                // 圖片
-                $.ajax({
-                    url: '/user/upload/avatarfile',//請求路徑
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
-                    processData: false,//同上
-                    success: function (data) {
-                        alert(data)
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            },
-
-        }
-    })
 
             </script>
 

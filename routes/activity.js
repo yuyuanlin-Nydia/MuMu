@@ -8,6 +8,7 @@ const url = require('url');
 const querystring = require('querystring');
 var connection = require("../db");
 
+
 var sql = `SELECT * FROM activityInfo;`
 
 // //跳轉到有頁數的路由
@@ -29,15 +30,13 @@ router.get("/:page([0-9]+)", function (req, res) {
     var offset = (page - 1) * nums_per_page
 
     // sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,sellDate FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) ORDER BY activityId DESC LIMIT ${offset}, ${nums_per_page};`
-    sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
-    from activitydetails
-    group by activityId)as d ON(a.activityId=d.activityId)WHERE del =0 ORDER BY sellDate DESC LIMIT ${offset}, ${nums_per_page}`
+        sql = `SELECT a.activityId,companyName,activityTitle,activityFile,activityLocation,minDate,maxDate,sellDate,WEEKDAY(minDate)as min,WEEKDAY(maxDate)as max,WEEKDAY(sellDate)as sell FROM activityinfo a INNER JOIN companyinfo c on(a.companyId=c.companyId) INNER JOIN (select activityId ,MIN(activityDate) as minDate,MAX(activityDate)as maxDate
+        from activitydetails
+        group by activityId)as d ON(a.activityId=d.activityId)WHERE del =0  and minDate>now() ORDER BY upDated DESC LIMIT ${offset}, ${nums_per_page}`
     connection.query(sql, [], function (error, rows) {
         connection.query(`SELECT COUNT(*) AS COUNT FROM activityInfo WHERE del =0;`, [], function (error, nums) {
 
             var last_page = Math.ceil(nums[0].COUNT / nums_per_page)
-            // console.log(typeof(rows));
-
 
             //避免請求超過最大頁數
             if (page > last_page) {
@@ -77,14 +76,24 @@ router.get("/single/:id([0-9]+)", function (req, res) {
     INNER JOIN district d ON(a.districtId=d.districtId)
     INNER JOIN activityticketcategory pc ON(p.categoryId=pc.categoryId) 
     where (i.activityId=?);
-    SELECT activityDetailId, activityDate, WEEKDAY(activityDate)as acd,activityDetailId FROM activitydetails WHERE activityId =?;
+    SELECT  ad.activityDetailId,activityDate, WEEKDAY(activityDate)as acd,(amount-sum(od.quantity*od.categoryId)) as rest,amount FROM activitydetails ad
+    left join orderdetails od on od.activityDetailId=ad.activityDetailId
+    left join activityinfo ai on ai.activityId=ad.activityId 
+    where ad.activityId=?
+    GROUP by ad.activityDetailId;
     SELECT bandName FROM activityband a INNER JOIN bandinfo b ON(a.bandId=b.bandId) WHERE activityId = ?`
 
     connection.query(sql, [req.params.id, req.params.id, req.params.id], function (error, rows) {
         if (error) {
             console.log(error);
         }
-        // console.log(rows[0]);
+
+        var rest =JSON.stringify(rows[1][0].rest);
+        if(rest!=="null"){
+            rest=rest;
+        }else{
+            rest=rows[1][0].amount;
+        }
         connection.query(`SELECT activityId FROM useractivity WHERE userId =?`, [userId], function (error, favorates) {
             if (error) {
                 console.log(error);
@@ -100,7 +109,8 @@ router.get("/single/:id([0-9]+)", function (req, res) {
                 id: req.params.id,
                 // 收藏的活動
                 favorates: favorates,
-                activityId: req.params.id
+                activityId: req.params.id,
+                rest:rest
             });
             //console.log(typeof(rows));
         })
@@ -111,13 +121,21 @@ router.get("/single/:id([0-9]+)", function (req, res) {
 
 // 創建新活動畫面get
 router.get("/create", function (req, res) {
-    sql = `SELECT bandId,bandName FROM bandinfo;`
-    connection.query(sql, function (error, rows) {
+    sql = `SELECT bandId,bandName FROM bandinfo;SELECT companyName FROM companyinfo WHERE companyId =?;`
+    var cid= 5;
+    //先預設值為1方便測試
+    if(req.session.companyinfo){
+        cid=req.session.companyinfo.cid;
+    };
+    // console.log(cid);   
+    
+    connection.query(sql,[cid], function (error, rows) {
         if (error) {
             console.log(error);
         }
         res.render('./activity/activity_create.ejs', {
-            data: rows
+            data: rows[0],
+            cName: rows[1][0].companyName
         });
     })
 
@@ -125,10 +143,10 @@ router.get("/create", function (req, res) {
 // 編輯活動畫面get
 router.get('/edit/:aid([0-9]+)', function (req, res) {
 
-    sql = `SELECT activityTitle,activityContent,activityLocation,areaId,activityAddress,categoryId,unitPrice,ticketAmount FROM activityinfo i INNER JOIN activityprice p ON (i.activityId=p.activityId)WHERE i.activityId =?`
+    sql = `SELECT activityTitle,activityContent,activityLocation,area.areaId,d.city,activityAddress,categoryId,unitPrice,ticketAmount,area.districtId FROM activityinfo i INNER JOIN activityprice p ON (i.activityId=p.activityId) inner join area on area.areaId=i.areaId inner join district d on d.districtId=area.districtId WHERE i.activityId =?`
     activityId = req.params.aid
     connection.query(sql, [activityId], function (error, rows) {
-
+        // console.log( rows[0].ticketAmount);
         if (error) {
             console.log(error);
         }
@@ -140,15 +158,8 @@ router.get('/edit/:aid([0-9]+)', function (req, res) {
 })
 
 // 搜尋get
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-// 沒有辦法保留搜尋關鍵字改動地區
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 router.get('/search', function (req, res) {
     var page = parseInt(req.query.page)
-    
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-    // 沒有搜尋結果時無法跳轉回第一頁
-    // -----------已解決-----------
     // last_page 要大於 0
     if (page <= 0) {
         res.redirect(`/activity/search?text=${req.query.text}&districtId=${req.query.districtId}&page=1`)
@@ -196,15 +207,12 @@ router.get('/search', function (req, res) {
             break;
     }
 
-    // console.log(sql);
 
     connection.query(sql, function (error, rows) {
         // if (error) {
         //     console.log(error);
         // }
         var last_page = Math.ceil(rows[1][0].COUNT / nums_per_page)
-        // console.log(last_page);
-
         // 避免請求超過最大頁數
         if (page > last_page &&  last_page > 0) {
             res.redirect(`/activity/search?text=${req.query.text}&districtId=${req.query.districtId}&page=${last_page}`)
@@ -229,15 +237,13 @@ router.get('/search', function (req, res) {
 
 // 新增活動/刪除POST
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// 新增活動後不會發生跳轉的BUG!!
-// ----------已解決-----------
 router.post('/update', function (req, res) {
     var body = req.body;
     var cid = req.session.companyinfo.cid;
 
     var sql = `INSERT INTO activityinfo(companyId, activityTitle, activityFile,activityContent,activityLocation, areaId,activityAddress,sellDate,upDated,ticketAmount)
     VALUES (?, ?, ?, ?, ?, ?,?,?,?,?);`
-    var data = [cid, body.activityTitle, body.activityFile, body.activityContent, body.activityLocation, body.areaId, body.activityAddress, body.sellDate, body.upDated, parseInt(body.ticketAmount)];
+    var data = [cid, body.activityTitle, body.activityFile, body.activityContent, body.activityLocation, body.areaId, body.activityAddress, body.sellDate, body.upDated,parseInt(body.ticketAmount) ];
 
     connection.query(sql, data, function (error, results, fields) {
         if (results) {
@@ -261,13 +267,15 @@ router.post('/update', function (req, res) {
                 for (index in data) {
                     result += `INSERT INTO activityband(activityId, bandId)VALUES (${aid},${data[index]});`
                 }
-                result += `INSERT INTO activitydetails(activityId, activityDate)VALUES (${aid},?);INSERT INTO activitydetails(activityId, activityDate)VALUES (${aid},?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},1,?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},2,?);`
+                result += `INSERT INTO activitydetails(activityId, activityDate,amount)VALUES (${aid},?,?);INSERT INTO activitydetails(activityId, activityDate,amount)VALUES (${aid},?,?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},1,?);INSERT INTO activityprice(activityId, categoryId,unitPrice)VALUES (${aid},2,?);`
                 return (result)
             }
 
-            var data2 = [body.activityDate1, body.activityDate2, parseInt(body.unitPrice1), parseInt(body.unitPrice2)]
+            var data2 = [body.activityDate1,parseInt(body.ticketAmount), body.activityDate2,parseInt(body.ticketAmount), parseInt(body.unitPrice1), parseInt(body.unitPrice2)]
             connection.query(sql2, data2, function (error, results2, fields) {
-
+                if (error) {
+                    console.log(error);
+                }
             })
 
         })

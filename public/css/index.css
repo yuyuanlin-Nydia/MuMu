@@ -24,8 +24,11 @@
     text-align: center;
 }
 .td_title{
-    width: 30%;
-    text-align: center;
+    width: 20%;
+    text-align: start;
+}
+.td_title>b{
+    margin-left: 40px;
 }
 thead>tr>th{
     padding: 5px 0px;
@@ -42,6 +45,7 @@ tr>td{
     padding: 200px;
   
 }
+
 /* 首頁輪播 */
 #carouselExampleIndicators{
     margin-bottom: 30px;
@@ -87,9 +91,7 @@ tr>td{
     margin-top: -50px;
     z-index: 100;
 }
-/* .follow_sec{
-    visibility: hidden;
-} */
+
 
 /* 樂團介紹 */
 
@@ -100,41 +102,18 @@ tr>td{
       object-fit: cover;
       margin-bottom: 10px;
   }
-  /* .swiper-wrapper{
-      position: relative;
-  } */
-.swiper-wrapper>div>img:hover{
-    /* background-color: var(--color1) */
+ 
 
-}
 .imagetext{
-    margin-top: -50px;
+    margin-top: -40px;
 }
-
-.imagetext>svg{
-   opacity: 0;
+.band_text{
+    background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+    padding: 4px;
+    width: 80;
 }
-.imagetext>svg:hover{
-
-        fill:var(--color1);
-        opacity: 100;
-        z-index: 100;
-    
-}
-
-
-    /* .imagetext:hover{
-        color: white;
-        font-size: 20px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        text-align: center;
-        
-      } */
       
 .swiper-slide {
     text-align: center;
@@ -150,18 +129,7 @@ tr>td{
     color:var(--color2) ;
 
 }
-/* .follow_sec{
-    background-color: rgba(0, 0, 0, 0.5);
-    color:var(--color5);
-    height: 15px;
-    padding: 20px 0px;
-    margin-top: -35px;
-    margin-bottom: 30px;
-    z-index: 50;
-    position: absolute;
 
-    width: 90%;
-} */
 
 .live{
     border: solid 1px var(--color4);
@@ -233,5 +201,12 @@ svg{
      
  .introimg{
      overflow: hidden;
-     /* margin-right: 10px; */
+     
+ }
+ .art_cont_sec{
+    color: black !important;
+ }
+ .art_cont_sec:hover{
+     text-decoration: underline !important;
+     
  }

@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var conn = require("../db");
 var {Success,Error} = require('./response')
+var nodemailer = require('nodemailer');
 
 // 如果已登入導向會員頁
 router.get("/", function (req, res) {
@@ -33,11 +34,7 @@ router.get("/companySignup", function (req, res) {
 
 	res.render('./log/loginCompany.html')
 })
-// 抓資料/寫入沒問題
-// router.post('/login', function (req, res) {
-// 	var body = req.body;
-// 	console.log(body);
-// })
+
 
 // 一般註冊
 router.post('/signup', function (req, res) {
@@ -73,7 +70,7 @@ router.post('/companySignup', function (req, res) {
 		        JSON.stringify(new Error('insert failed'))
 		    )
 		}
-		console.log(results);
+
 	})
 
 })
@@ -84,7 +81,6 @@ router.post('/login', function (req, res) {
 	var sql = `SELECT * FROM userinfo WHERE userAccount=? and userPassword=?;`
 	var data = [body.userAccountL, body.userPasswordL]
 	conn.query(sql, data, function (error,results, fields) {
-		console.log(results);
 		if(results[0]) {
             req.session.userinfo = {
                 id: results[0].userId,
@@ -127,6 +123,8 @@ router.post('/companyLogin', function (req, res) {
                 cEmail: results[0].companyEmail,
                 cFile: results[0].companyFile,
                 cArea: results[0].companyArea,
+                cPassword: results[0].companyPassword,
+				
             }
             res.end(
                 JSON.stringify(new Success('login success')),
@@ -186,5 +184,27 @@ router.post('/checkC',function(req, res){
             )
         }
     })
+})
+// 註冊寄信
+var send = require('./email.js');
+router.post('/email',function(req,res){
+	var r = req.body;
+	conn.query(`select userEmail from userinfo where userId=1`, [], function (err,rows) {
+		if (err){
+			console.log(err)
+		}
+	});
+	var mail = {
+		from: "yuyuanlin613@gmail.com",  
+		to: r.email, 
+		subject: "mumu音樂祭平台 [啟用信箱賬號]",  
+		html: `<p>${r.userName}  您好: <br>
+		<br>
+		點選連結即可啟用您的Mumu帳號，<a href="http://localhost:3000/"style="color:blue;cursor:pointer">http://localhost:3000/checkCode?name=${r.userName}&code=${r.code}</a>，謝謝您成為Mumu的一員。<br>本郵件由系統自動發出，請勿直接回復！
+		<br><br><br><br>
+		Mumu敬啟</p>
+		`
+	};
+	send(mail);
 })
 module.exports = router;

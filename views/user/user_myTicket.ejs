@@ -14,6 +14,8 @@
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
         <style>
              a{
@@ -29,22 +31,25 @@
         <div class="banner">
             <p class="banner_title">會員管理</p>
         </div>
-      
-
         <div class="row ">
             <!-- 左側 開始 -->
             <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
                 <div class="profile-img   p-1 mt-5 ml-5">
-                    <form action="upload.php" method="post" enctype="multipart/form-data">
-                        <label for="fileToUpload">
+                    <form id="avatar" action="/upload/avatarfile">
+                        <label class="aa">
+                            <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="avatarFile"
+                                style="display:none;">
+            
                             <div class="profile-pic">
-                                <span class="glyphicon glyphicon-camera"></span>
+                                <div id="avaimg"><img id="testImg" src="../../image/upload/user/<%=data3[0].userFile%>" alt=""></div>
                                 <span>更換圖片</span>
                             </div>
                         </label>
-                        <input type="File" name="fileToUpload" id="fileToUpload">
+                        <div id="img_sec" class="d-flex flex-wrap">
+                            <p></p>
+                        </div>
                     </form>
-                    <h5 class="text-center text-white mt-3">林郁媛</h5>
+                    <h5 class="text-center text-white mt-3"><%= session.userinfo.name %></h5>
                 </div>
                 <div class="  p-5 p-md-1 select_left ml-5">
                     <div class="profile-work ">
@@ -88,7 +93,8 @@
                                 <div>
                                     <p class="m-3">訂單編號:<span class="text-danger">
                                             <%=item.orderId %>
-                                        </span></p>
+                                        </span>
+                                    </p>
                                     <div class="ticket_div">
                                         <div class="d-flex justify-content-between">
                                             <div>
@@ -153,7 +159,7 @@
                                     </p>
                                     <a href="/activity">
                                         <div class="text-center">
-                                            <button class="btn_tea1 ">活動列表</button>
+                                            <button class="btn_tea1 ml-4">活動列表</button>
                                         </div>
                                     </a>
                                 </div>
@@ -164,6 +170,10 @@
                             <% if(data2[0]){ %>
                             
                             <% data2.forEach(function(item,idx){ %>
+                            <p class="m-3">訂單編號:<span class="text-danger">
+                                    <%=item.orderId %>
+                                </span>
+                            </p>
                             <div class="ticket_div ticket_div_end">
                                 <div class="end_div">
                                     <div>
@@ -255,6 +265,82 @@
                 });
             })
         })
+               //大頭貼上傳 
+    var vueMain = new Vue({
+        el: "#avatar",
+        data: {
+            image: ""
+        },
+        methods: {
+
+            imageHandler: function () {
+                var file = $('#avatarFile')[0].files[0];
+                var reader = new FileReader;
+                reader.onload = function (e) {
+                    $("#testImg").removeAttr('src', "");
+                    $("#testImg").attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+                // alert(file)
+
+                 //上傳圖片的input
+                 var file = document.getElementById("avatarFile")
+                //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
+                //建立formdata物件
+                var formData = new FormData();
+                //給formdata物件中放入資料(鍵值對的方式)
+                formData.append('file', file.files[0]);
+
+                var Today = new Date();
+                var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+                this.image = date + '-' + formData.get('file').name
+
+                var newAvatar = {
+                    image: this.image
+                }
+
+                // 因為圖片文字格式不同  所以使用兩次ajax
+                // 副檔名
+                $.ajax({
+                    url: '/uploadafile',//請求路徑
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                    processData: false,//同上
+                    success: function (data) {
+                        // alert(data)
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+                // 日期+原檔名
+                $.ajax({
+                    type: "post",
+                    url: "/user/avatarUpload",
+                    data: newAvatar
+                }).then(function () {
+                    swal("上傳成功", "", "success");
+                    location.href = "/user";
+                })
+                // 圖片
+                $.ajax({
+                    url: '/user/upload/avatarfile',//請求路徑
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                    processData: false,//同上
+                    success: function (data) {
+                        alert(data)
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            },
+
+        }
+    })
     </script>
 
 

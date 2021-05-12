@@ -1,6 +1,4 @@
 body {
-    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-    font-size: 19px;
     font-weight: 300;
     color: #ffffff;
 }
@@ -27,15 +25,17 @@ body {
     clear: both;
     background-color: #e4e5e7;
     /* text-align: center; */
+    padding: 50px 200px;
     color: #384F5C;
     width: 100%;
     height: 700px;
-    overflow-x:hidden;
-    overflow-y:auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .bandContent {
-    line-height: 46px;
+    line-height: 40px;
+    font-size: 18px;
 }
 
 
@@ -85,10 +85,9 @@ body {
 } */
 
 .bandheading {
-    margin-top: 40px;
-    margin-left: 11%;
+    /* margin-top: 40px;
+    margin-left: 11%; */
 }
-
 
 /* 專輯介紹 */
 
@@ -103,12 +102,8 @@ body {
 
 .albums {
     /* border: darkcyan 1px solid; */
-    margin: 40px;
-    display: flex;
-    width: 80%;
-    position: relative;
-    left: 8%;
-    /* margin: 0 auto; */
+    margin: 40px 40px 40px 0;
+    display: flex;  
 }
 
 .albums img {
@@ -133,72 +128,68 @@ body {
     /* background: #3085a3; */
     text-align: center;
     cursor: pointer;
-}
-
-.grid figure img {
+  }
+  
+  .grid figure img {
     position: relative;
     display: block;
     min-height: 100%;
     max-width: 100%;
     opacity: 0.8;
-}
-
-.grid figure figcaption {
+  }
+  
+  .grid figure figcaption {
     padding: 2em;
     color: #fff;
     text-transform: uppercase;
     font-size: 1.25em;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-}
-
-
-/* 圓圈位置 */
-
-.grid figure figcaption,
-.grid figure figcaption>a {
+  }
+  
+  /* 圓圈位置 */
+  
+  .grid figure figcaption, .grid figure figcaption>a {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     margin: 10px;
-}
-
-.grid figure figcaption::before,
-.grid figure figcaption::after {
+  }
+  
+  .grid figure figcaption::before, .grid figure figcaption::after {
     pointer-events: none;
-}
-
-figure.effect-lexi:hover {
+  }
+  
+  figure.effect-lexi:hover {
     background: #0a0a0a;
-}
-
-figure.effect-lexi:hover figcaption::before {
+  }
+  
+  figure.effect-lexi:hover figcaption::before {
     background: rgba(0, 0, 0, 0.25);
-}
-
-
-/* 字 */
-
-figure.effect-lexi p {
+  }
+  
+  /* 字 */
+  
+  figure.effect-lexi p {
     position: absolute;
     right: 20px;
-    bottom: 40px;
-    /* padding: 0 1.5em .3em 0; */
-    width: 180px;
+    bottom: 30px;
+    padding: 0 0.5em .3em 0;
+    width: 160px;
     text-align: right;
     opacity: 0;
-    -webkit-transform: translate3d(10px, 10px, 0);
-    transform: translate3d(10px, 10px, 0);
-}
-
-figure.effect-lexi img {
+    -webkit-transform: translate3d(20px, 20px, 0);
+    transform: translate3d(20px, 20px, 0);
+  }
+  
+  figure.effect-lexi img {
     margin: -10px 0 0 -10px;
-    max-width: 300px;
-    max-height: 270px;
-    width: -webkit-calc(100% + 10px);
-    width: calc(100% + 10px);
+    width: 350px;
+    height: 250px;
+    /* width: -webkit-calc(100% + 10px); */
+    /* width: calc(100% + 10px); */
     opacity: 0.9;
     -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
     transition: opacity 0.35s, transform 0.35s;
@@ -206,31 +197,29 @@ figure.effect-lexi img {
     transform: translate3d(10px, 10px, 0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-}
-
-figure.effect-lexi:hover h2,
-figure.effect-lexi:hover p {
+  }
+  
+  figure.effect-lexi:hover h2, figure.effect-lexi:hover p {
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-}
-
-figure.effect-lexi:hover img {
+  }
+  
+  figure.effect-lexi:hover img {
     opacity: 0.6;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-}
-
-figure.effect-lexi:hover figcaption::before {
+  }
+  
+  figure.effect-lexi:hover figcaption::before {
     opacity: 1;
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
-}
-
-
-/* 圓圈框 */
-
-figure.effect-lexi figcaption::before {
+  }
+  
+  /* 圓圈框 */
+  
+  figure.effect-lexi figcaption::before {
     position: absolute;
     right: -100px;
     bottom: -100px;
@@ -238,31 +227,29 @@ figure.effect-lexi figcaption::before {
     height: 300px;
     border: 2px solid #fff;
     border-radius: 50%;
-    /* box-shadow: 0 0 0 900px rgba(255, 255, 255, 0.2); */
+    box-shadow: 0 0 0 900px rgba(255, 255, 255, 0.2);
     content: '';
     opacity: 0;
     -webkit-transform: scale3d(0.5, 0.5, 1);
     transform: scale3d(0.5, 0.5, 1);
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
-}
-
-figure.effect-lexi figcaption::before,
-figure.effect-lexi p {
+  }
+  
+  figure.effect-lexi figcaption::before, figure.effect-lexi p {
     -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
     transition: opacity 0.35s, transform 0.35s;
+  }
+.activity {
+    padding: 30px 200px;
 }
 
+.activity:nth-of-type(3){
+    background-color: var(--color4);
+}
 .actTitle {
-    background-color: white !important;
     color: #56555b;
-}
-
-.actTitle {
-    /* margin-top: 40px; */
-    margin-left: 11%;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 40px
 }
 
 
@@ -270,176 +257,13 @@ figure.effect-lexi p {
     display: flex;
 } */
 
-.activity .actbox {
-    /* border: greenyellow solid 1px; */
-    height: 300px;
-    overflow: hidden;
+.actbox {
+    height: 470px;
 }
 
-.bandAct {
-    display: inline-block;
-    position: relative;
-    left: 11%;
-    margin-right: 40px;
+/* .grid {
+    margin: 20px 78px 20px;
+} */
+.act_sec{
+    /* margin: 500px; */
 }
-
-
-/* RWD------------------------------------------------------------------ */
-
-
-/* @media (min-width: 1430px) {
-    .tm-contact-left { width: 80%; }
-  
-    .container {
-      max-width: 1430px;
-      padding-left: 120px;
-      padding-right: 120px;
-    }
-  }
-  
-  @media (max-width: 1310px) {
-    .tm-bar-2 { max-width: 100%; }
-  }
-  
-  @media (max-width: 1199px) {
-    .tm-logo {
-      width: 300px;
-      height: 300px;
-      top: 25%;
-    }
-  
-    .tm-welcome-content { max-width: 450px; }
-  
-    .tm-top-bar,
-    .tm-welcome-left {
-      max-width: 782px;
-    }
-  
-    .tm-welcome-right { margin-left: -55px; }
-    .tm-section-3-left { padding-bottom: 63px; }
-  
-    .tm-section-3-right {
-      -webkit-clip-path: polygon(0 0, 82% 0, 100% 100%, 15% 100%);
-      clip-path: polygon(0 0, 82% 0, 100% 100%, 15% 100%);
-    }
-  } */
-
-
-/* @media (max-width: 991px) {
-    .tm-welcome { flex-direction: column-reverse; }
-    .tm-logo {
-      top: -250px;
-      left: 0;
-      right: 0;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .tm-welcome-left {
-      max-width: 100%;
-      width: 100%;
-      padding-top: 100px;
-    }
-    .tm-welcome-content {
-      max-width: 100%;
-    }
-    .tm-welcome-icons-container {
-      display: flex;
-      justify-content: center;
-    }
-    .tm-welcome-right {
-      max-width: 100%;
-      width: 100%;
-      height: 250px;
-      transform: skewY(-5deg);
-      margin-bottom: -30px;
-      margin-top: 80px;
-      margin-left: 0;
-    }
-  
-    .tm-section-2-inner {
-      flex-direction: column;
-      margin-left: 0;
-    } */
-
-
-/* 
-    .tm-section-2-right {
-      width: 100%;
-      margin-top: 40px;
-      margin-left: 0;
-    } */
-
-
-/* .tm-section-2-left {
-      width: 100%;
-      height: 560px;
-    }
-  
-    .tm-section-3-inner { flex-direction: column-reverse; }
-  
-    .tm-section-3-left {
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  
-    .tm-section-3-right {
-      width: 100%;
-      height: 560px;
-      margin-bottom: 40px;
-      margin-left: 0;
-    }
-  
-    .tm-welcome-icon { padding: 0 30px 60px 0; }
-  
-    .tm-contact-left {
-      clip-path: none;
-      border-radius: 200px;
-      width: 100%;
-      height: 90%;
-    }
-  
-    figure.effect-lexi figcaption::before {
-      right: -110px;
-      bottom: -80px;
-    }
-  } */
-
-@media (max-width: 960px) {
-    img {
-        width: 100%;
-        float: none;
-    }
-    #shape {
-        width: 100%;
-    }
-}
-
-@media (max-width: 800px) {
-    img {
-        width: 100%;
-        float: none;
-    }
-    #shape {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    img {
-        width: 100%;
-        float: none;
-    }
-    #shape {
-        top: 10px;
-        width: 100%;
-        -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-        padding: 10px;
-    }
-}
-
-@media (max-width: 420px) {
-    /* .tm-section-3-left { padding: 70px 50px 80px 50px; } */
-}
-

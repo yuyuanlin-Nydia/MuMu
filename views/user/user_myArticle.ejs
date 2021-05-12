@@ -13,6 +13,8 @@
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <style>
         a:hover {
             text-decoration: none;
@@ -52,14 +54,19 @@
                 <!-- 左側 開始 -->
                 <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
                     <div class="profile-img  p-1 mt-5 ml-5">
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
-                            <label for="fileToUpload">
+                        <form id="avatar" action="/upload/avatarfile">
+                            <label class="aa">
+                                <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="avatarFile"
+                                    style="display:none;">
+                
                                 <div class="profile-pic">
-                                    <span class="glyphicon glyphicon-camera"></span>
+                                    <div id="avaimg"><img id="testImg" src="../../image/upload/user/<%=session.userinfo.file%>" alt=""></div>
                                     <span>更換圖片</span>
                                 </div>
                             </label>
-                            <input type="File" name="fileToUpload" id="fileToUpload">
+                            <div id="img_sec" class="d-flex flex-wrap">
+                                <p></p>
+                            </div>
                         </form>
                         <h5 class="text-center text-white mt-3 uName">
                             <%= Name%>
@@ -80,18 +87,17 @@
                 </div>
                 <!-- 左側 結束-->
                 <!-- 右側 開始 -->
-                <div class="col-md-8  pl-5">
+                <div class="col-md-8  pl-5 mb-5">
                     <div class="d-flex">
-                    
                         <div class="ml-auto">
                             <a href="/user/myArticle/new">
                                 <button class="btn_tea2 mt-5 ">發表參戰心得</button>
                             </a>
                         </div>
                     </div>
-                    <% if(data[0]){ %>
-                        <div class="col-md-12 mt-2" id="home">
-                            <% data.forEach(function(item,idx){%>
+                    <div class="col-md-12 mt-2" id="home">
+                            <% if(data[0].length!=0){ %>
+                                <% data[0].forEach(function(item,idx){%>
                                 <div class="d-flex flex-wrap p-1 article_card">
                                     <div class="article_box col-md-12">
                                         <div class="float-right m-3">
@@ -130,18 +136,18 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <% }) %>
-                        </div>
-                        <% }else{ %>
-                         
+                                <% }else{ %>
                                 <div class="box">
                                     <p class="text-center">
                                         您目前沒有發表過文章喔! <br>
                                         快點選右上角的<b>發表文章</b> 增加新文章吧!<br><br><br>
                                     </p>
                                 </div>
-                         
-                            <% } %>
+                                 
+                                    <% } %>
+                        </div>
                 </div> 
 
             </div>
@@ -159,18 +165,36 @@
                     $('.delete').each(function (idx, elm) {
                         $(elm).on('click', function () {
                             // 跳出詢問確認移除
-                            confirm("確定要刪除此文章嗎?")
-                            var id = $(elm).attr("data-id");
-                            var data = {
-                                id: id
-                            }
-                            $.ajax({
-                                type: "delete",
-                                url: "/user/myArticle/delete",
-                                data: data
-                            }).then(function () {
-                                location.reload()
+                            swal({
+                              title: "確定要刪除此文章嗎?",
+                              icon: "warning",
+                              buttons: true,
+                              dangerMode: true,
                             })
+                            .then((willDelete) => {
+                              if (willDelete) {
+                                swal("已刪除", {
+                                  icon: "success",
+                                }).then((value) => {
+                                    var id = $(elm).attr("data-id");
+                                var data = {
+                                    id: id
+                                }
+                                $.ajax({
+                                    type: "delete",
+                                    url: "/user/myArticle/delete",
+                                    data: data
+                                }).then(function () {
+                                    location.reload()
+                                })
+                                });
+                                
+                            } else {
+                              swal("文章保留中");
+                            }
+                                });                            
+                            
+                            
                         })
                     })
                 })

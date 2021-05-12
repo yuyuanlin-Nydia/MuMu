@@ -1,4 +1,5 @@
 var express = require("express");
+const { getMaxListeners } = require("../db");
 var router = express.Router()
 var conn = require('../db')
 
@@ -24,7 +25,6 @@ router.get('/', function (req, res) {
     INNER JOIN activityInfo as ai on( ai.activityId =cartdetails.activityId ) 
     INNER JOIN activityPrice ap on( ap.activityId =cartdetails.activityId and ap.categoryId =cartdetails.categoryId) 
     where(ui.userAccount=?);`
-    console.log(sql)
         conn.query(sql,
             [account, account],
             function (err, rows) {
@@ -53,7 +53,7 @@ router.post("/", function (req, res) {
         var sql = `insert IGNORE into cart (userId)values((select userId from userInfo where userAccount=?));
     insert into cartdetails (cartId,activityId,activityDetailId,categoryId,quantity)values((SELECT cartId FROM cart where userId=(select userId from userinfo where userAccount=?)),?,?,?,?),((SELECT cartId FROM cart where userId=(select userId from userinfo where userAccount=?)),?,?,?,?)
     `
-        conn.query(sql, [account, account, req.activityId, req.activityDetailId, req.categoryId1, req.quantity1,account,  req.activityId, req.activityDetailId, req.categoryId2, req.quantity2],
+        conn.query(sql, [ account,account, req.activityId, req.activityDetailId, req.categoryId1, req.quantity1,account, req.activityId, req.activityDetailId, req.categoryId2, req.quantity2],
             function (err, rows) {
                 if (err) {
                     console.log(JSON.stringify(err));
@@ -77,16 +77,30 @@ router.delete("/", function (req, res) {
             res.send("item delete.")
         });
 })
+// 把優惠券加進資料庫
+router.post("/couponAdd", function (req, res) {
+    var account=req.session.userinfo.account;
+    var sql=`update cart set couponId=(SELECT couponId from coupon where couponName=?) where userId=(SELECT userId from userInfo where userAccount=?)`
+    conn.query(sql,[req.body.couponName,account],
+        function (err, rows) {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+            
+        }
+    );
+})
 // 付款頁面
 router.get('/pay', function (req, res) {
     var account = req.session.userinfo.account;
     var sql = `select cart.cartId,cart.userId,cd.activityId,cd.activityDetailId,cd.categoryId ,cd.quantity from cartdetails as cd
     INNER JOIN cart on( cart.cartId =cd.cartId) 
     INNER JOIN userInfo as ui on( ui.userId =cart.userId) 
-    where(ui.userAccount="abc123");
-    select cartId from cart where userId=(select userId from userInfo where userAccount=?);`
+    where(ui.userAccount="?");
+    select cartId,couponId from cart where userId=(select userId from userInfo where userAccount=?);`
     conn.query(sql,
-        [account],
+        [account,account],
         function (err, rows) {
             if (err) {
                 console.log(JSON.stringify(err));
@@ -104,28 +118,32 @@ router.get('/pay', function (req, res) {
 router.post("/order", function (req, res) {
     var r = req.body;
     var account = req.session.userinfo.account;
-    var sql = `insert into orders (userId,ticketPickupId,card1,card2,card3,card4,month,year)values((select userId from userInfo where userAccount=?),?,?,?,?,?,?,?);
-    INSERT INTO orderdetails(orderId,activityId, activitydetailId,categoryId,quantity) SELECT (SELECT max(orderId) from orders),activityId, activitydetailId,categoryId,quantity FROM cartdetails 
+    var d=new Date();
+    var date=d.getFullYear().toString().substring(2,4)+(d.getMonth()+1).toString().padStart(2,"0")+d.getDate().toString().padStart(2,"0")+Math.ceil(Math.random()*899+100)
+    var sql = `insert into orders (orderId ,userId,ticketPickupId,couponId,card1,card2,card3,card4,month,year)values(?,(select userId from userInfo where userAccount=?),?,?,?,?,?,?,?,?);
+    INSERT INTO orderdetails(orderId,activityId, activitydetailId,categoryId,quantity) SELECT (SELECT orderId from orders where orderDate=(SELECT max(orderDate) from orders)),activityId, activitydetailId,categoryId,quantity FROM cartdetails 
     WHERE cartId= (SELECT cartId from cart inner JOIN userinfo as ui on ui.userId=cart.userId WHERE ui.userAccount=?);
     delete from cart where cartId=?;
     delete from cartdetails where cartId=?; 
     `
-    console.log(sql);
+    
     conn.query(sql,
-        [account,r.ticketPickupId, r.card1, r.card2, r.card3, r.card4, r.month, r.year, account,r.cartId, r.cartId],
-        function (err, rows) {
-            if (err) {
-                console.log(JSON.stringify(err));
-                return;
-            }
-        });
+    [date,account,r.ticketPickupId,r.couponId, r.card1, r.card2, r.card3, r.card4, r.month, r.year, account,r.cartId, r.cartId],
+    function (err, rows) {
+        if (err) {
+            console.log(JSON.stringify(err));
+            return;
+        }
+    });
     res.redirect("/cart/finish");
 })
 
+
 //完成付款
+//第一句是明細 第二句是總金額(扣掉優惠)
 router.get("/finish", function (req, res) {
     var account = req.session.userinfo.account;
-    var sql = `SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,ai.performDate,od.quantity,atc.type,orders.orderDate,orders.card1,orders.card2,orders.card3,orders.card4,tp.method FROM orderdetails as od 
+    var sql = `SELECT orders.orderId,ai.activityTitle,ai.activityLocation,d.city,a.town,ai.activityAddress,od.quantity,atc.type,orders.orderDate,orders.card1,orders.card2,orders.card3,orders.card4,tp.method FROM orderdetails as od 
     inner join orders on orders.orderId=od.orderId
     inner join activityinfo as ai on ai.activityId=od.activityId
     inner join area as a on ai.areaId=a.areaId
@@ -134,13 +152,14 @@ router.get("/finish", function (req, res) {
     inner join userinfo as ui on ui.userId=orders.userId
     inner join ticketpickup as tp on tp.ticketpickupId=orders.ticketpickupId
     where ui.userAccount=? order by orderDate DESC LIMIT 0,1;
-    SELECT orders.orderId,od.quantity,ap.unitPrice,quantity*unitPrice as total,SUM(quantity*unitPrice) as sum FROM orderdetails as od 
+    SELECT od.orderDetailsId,od.quantity,ap.unitPrice,(SUM((quantity*unitPrice))-c.discount) as sum FROM orderdetails as od 
     inner join orders on orders.orderId=od.orderId
-    inner join activitydetails as ad on ad. activitydetailId =od. activitydetailId
+    inner join activitydetails as ad on ad.activitydetailId =od.activitydetailId
 	inner JOIN activityprice as ap on ap.activityId=od.activityId and ap.categoryId=od.categoryId
     inner join activityticketcategory as atc on atc.categoryId=od.categoryId
     inner join userinfo as ui on ui.userId=orders.userId
-    where ui.userAccount=?  and orders.orderId=(SELECT MAX(orderId)from orders) order by orderDate DESC
+    inner join coupon as c on c.couponId=orders.couponId
+    WHERE ui.userAccount=? and orders.orderId=(SELECT orderId from orders where orderDate=(SELECT max(orderDate) from orders))
     `
     conn.query(sql,
         [account,account],
@@ -168,7 +187,25 @@ router.post("/coupon",function(req,res){
     })
 
 })
+router.post("/town",function(req,res){
+	conn.query('SELECT town,areaId FROM `area` INNER join district as d on d.districtId=area.districtId where d.districtId=?',
+		[req.body.districtId],function(err,rows){
+		if (err) {
+			console.log(err);
+		}
+		res.send(rows)
+	})
+})
+router.post("/district",function(req,res){
+	conn.query('SELECT * from `district`',
+		[],function(err,rows){
+		if (err) {
+			console.log(err);
+		}
 
+		res.send(rows)
+	})
+})
 
 
 module.exports = router;

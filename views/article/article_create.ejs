@@ -13,8 +13,10 @@
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="../../js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <style>
-        .banner{
+        .banner {
             background-image: url(../../image/banner/article.jpg);
         }
     </style>
@@ -27,23 +29,24 @@
         <!-- 照片資料庫設定    -->
         <!-- 前端要判斷欄位值不能為空 -->
 
-       <main>
+        <main>
             <div class="whole" id="main">
                 <div class="banner">
                     <!-- <img src="../../image/article/article2.png" alt="" class="banner" style="object-fit: cover;"> -->
                     <p class="banner_title ">發表參戰心得</p>
                 </div>
                 <div class="all">
-    
+
                     <!-- <form action="/article/upload" method="post" enctype="multipart/form-data" class="posting"> -->
-                    <input v-model="title" class="form_input" type="text" placeholder="請輸入文章標題">
+                    <input v-model="title" class="form_input" type="text" placeholder="請輸入文章標題" id="myTitle">
                     <br><br>
-    
+
                     <label for=""><b>心得內容:</b></label>
-                    <textarea v-model="content" name="" id="" placeholder="分享你的音樂祭心得" class="article form_input"></textarea>
-    
-                    <label class="btn_blue1">
-                        <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="articleFile"
+                    <textarea v-model="content" name="myContent" id="myContent" placeholder="分享你的音樂祭心得"
+                        class="article form_input"></textarea>
+                        <!-- v-on:change="imageHandler"  -->
+                    <label class="btn_blue1 add_image">
+                        <input type="file" name="myfile" accept="image/*" id="articleFile"
                             style="display:none;" multiple>
                         <i class="fas fa-camera"></i>新增圖片
                     </label><br><br>
@@ -54,23 +57,73 @@
                         <button class="btn_tea1" v-on:click="cxlHandler">取消</button>
                         <button class="btn_tea2" v-on:click="submitHandler">發表</button>
                     </div>
-                    {{image}}
-                    {{title}}
-                    {{content}}
+
                     <!-- </form> -->
                 </div>
             </div>
-       </main>
+        </main>
         <%-include ("../footer.ejs")%>
 
 
             <script>
+                window.addEventListener('keydown', function (e) {
+                    if (e.keyCode == 49) {
+                        document.getElementById('myTitle').value = '2019春浪音樂節'
+                        document.getElementById('myContent').value = `喔 難得在我這邊看到台灣的消息XD
+今年的墾丁春天音樂季又即將開始囉
+看到春浪音樂節的演出名單讓我很心動啊
+五月天、FIR飛兒、蘇打綠、強辯樂團、海洋樂團、張震嶽&free9、陳綺貞、蔡健雅.....
+時間是4/4.5兩天 也就是春假期間耶
+
+是先在五版上看到消息的
+很想去啊 總覺得大學生就要去一次
+不是說大四要放肆的玩嗎(誰說的?)
+所以很想趁最後的半年大玩特玩啊
+還沒去過墾丁音樂季 我想以後應該也沒機會去了吧~
+
+不過這樣門票+交通算一算
+嗯...很驚人的費用啊~
+雖然有看到比較便宜的學生方案
+但加一加也要2000
+再加上其他哩哩摳摳的.......
+很怕沒人要陪我去了.....
+
+總之呢
+等節目單出來再看看要去哪一天
+如果五月天和蘇打綠是同一天就好了
+這樣有屏陪我去的機率就會比較大XD`
+                    }
+                });
                 var vueMain = new Vue({
                     el: "#main",
                     data: {
                         title: "",
                         content: "",
                         image: ""
+                    },
+                    //動態生成的圖片刪除 可以進行刪除
+                    mounted: function () {
+                        this.$nextTick(function () {
+                            // 新增
+                            $('#articleFile').change(function () {
+                                imageHandler();
+                            });
+                            function imageHandler() {
+                                var file = $('#articleFile')[0].files[0];
+                                var reader = new FileReader;
+                                reader.onload = function (e) {
+                                var img = $("<img />").attr('src', e.target.result).addClass("pre_pic");
+                                var deleteBtn = $('<i class="fas fa-trash-alt del_img_icon" v-on:click="deleteImgHandler">刪除</i>');
+                                var newDiv = $("<div style='position:relative'> </div>").append(img).append(deleteBtn)
+                                var y = $('#img_sec').prepend(newDiv);
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                            // 删除
+                            $('#img_sec').on("click", ".del_img_icon", function () {
+                                $(this).parent().remove();
+                            })
+                        })
                     },
                     methods: {
                         submitHandler: function () {
@@ -91,10 +144,9 @@
                                 content: this.content,
                                 image: this.image
                             }
-
                             // 因為圖片文字格式不同  所以使用兩次ajax
                             $.ajax({
-                                url: '/article/upload/file',//請求路徑
+                                url: '/user/upload/file',//請求路徑
                                 type: 'POST',
                                 data: formData,
                                 contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
@@ -106,34 +158,18 @@
                                 }
                             });
                             $.ajax({
-                                type: "post",
                                 url: "/user/upload",
+                                type: "post",
                                 data: newActivity
                             }).then(function () {
-                                alert("已成功上傳文章 回到我的文章去看看吧")
-                                location.href = "/user/myArticle";
+                                swal("文章上傳成功!", "", "success")
+                                    .then((value)=>{
+                                        location.href = "/user/myArticle";
+                                    });
                             })
                         },
                         cxlHandler: function () {
                             location.href = "/user/myArticle";
-                        },
-                        imageHandler: function () {
-                            var file = $('#articleFile')[0].files[0];
-                            var reader = new FileReader;
-                            reader.onload = function (e) {
-                                var img = $("<img />").attr('src', e.target.result).addClass("pre_pic");
-                                var deleteBtn = $('<i class="fas fa-trash-alt del_img_icon" v-on:click="deleteImgHandler">刪除</i>');
-                                var newDiv = $("<div style='position:relative'> </div>").append(img).append(deleteBtn)
-                                var y = $('#img_sec').prepend(newDiv);
-                            };
-                            reader.readAsDataURL(file);
-                        },
-                        // 動態生成的怎麼去再綁定事件
-                        deleteImgHandler: function () {
-                            console.log("aaa")
-                            $("body").on("click",".del_img_icon", function () {
-                                
-                            })
                         }
                     }
                 })

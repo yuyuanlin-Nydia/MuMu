@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <style>
-        .banner{
+        .banner {
             background-image: url(../../image/banner/article.jpg);
         }
     </style>
@@ -32,24 +32,27 @@
             </div>
             <div class="wrapper row3" id="main">
                 <div class="hoc container clear">
-                    <div style="padding-left:10px;">
-                        <a href="" class="tags" v-on:click="portHandler">大港開唱</a>
-                        <a href="" class="tags">覺醒音樂祭</a>
-                    </div>
                     <!-- 搜尋欄 -->
                     <div class="float-right mb-3 mr-4">
                         <input type="text" id="search_input" class="form_input" style="background-color: var(--color4);"
                             placeholder="搜尋相關文章" name="search_text" v-model="search_text">
                         <i class="fas fa-search btn_search" v-on:click="searchHandler"></i>
                     </div>
-    
-    
+
+                    <div style="padding-left:10px;">
+                        <a href="" class="tags" v-on:click="portHandler">大港開唱</a>
+                        <a href="" class="tags">覺醒音樂祭</a>
+                    </div>
+
+
+
                     <ul class="nospace group overview" id="itemContainer">
                         <!-- <articleitem v-bind:item="article" v-for="(article,idx) in articleList"></articleitem> -->
-                        <articleitem id="allArticle"v-bind:item="article" v-for="(article,index) in filteredArticles"></articleitem>
-    
+                        <articleitem id="allArticle" v-bind:item="article" v-for="(article,index) in filteredArticles">
+                        </articleitem>
+
                     </ul>
-    
+
                     <div class="text-center">
                         <% for (i=1;i<=last_page;i++){ %>
                             <a href="/article/<%= i %>" class="text-center">
@@ -77,14 +80,16 @@
                              :src="'../../image/upload/article/'+item.articleFile" alt=""
                                 class="arc_pic"></a>
                         <figcaption>
+                            <!-- g：全域比對（Global match） -->
                             <h6 class="heading"><b>{{item.articleTitle}}</b></h6>
-                            <p>{{item.articleTime.substring(0,10)}}</p>
+                            <p>{{item.articleTime.substring(0,10).replace(/-/g,"/")}}</p>
 
                         </figcaption>
                     </figure>
                 </li>
             </script>
             <script>
+
                 var no = location.href.split('/');
                 var index = no[no.length - 1];
                 Vue.component('articleitem', { //自訂元素的名稱
@@ -119,26 +124,12 @@
                     // 函式
                     methods: {
                         searchHandler: function () {
-                            // var data = {
-                            //     search_text: this.search_text
-                            // }
-                            // $.ajax({
-                            //     url: "/article/search",
-                            //     type: "POST",
-                            //     data: data,
-                            // }).then(function (res) {
-                            //     // this.articleList=res;
-                            //     $.post("/article/search", function (e) {
-                            //         vueMain.articleList = res;
-                            //         console.log(vueMain.articleList)
-                            //     })
-                            // }).catch(err => console.log(err.response))
+                            
                         },
                         portHandler: function () {
                             console.log("a")
                             $.get("/article/search/port", function (e) {
                                 this.articleList = JSON.parse(e)[0];
-                                // alert(e)
                             })
                         }
                     },

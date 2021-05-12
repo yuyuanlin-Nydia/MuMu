@@ -1,195 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="left_div">
+    <p id="getback"><i class="fas fa-chevron-right" style="transform: rotate(180deg);"></i>&nbsp;<span>上一頁</span></p>
+    <br>
+    <b>活動資訊</b>
+    <div class="table_con">
+        <p>day1</p>
+        <p class="date1"></p>
+        <p>day2</p>
+        <p class="date2"></p>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人頁面_我的投稿</title>
-    <link rel="stylesheet" href="../css/user_mainPage.css">
-    <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
-    <script src="../js/jquery.js"></script>
-    <script src="../js/Bootstrap/bootstrap.js"></script>
-    <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
+        <p>預售</p>
+        <p class="sell"></p>
 
-    <style>
-        .article_card {
-            border: 2px solid lightgray;
-            border-radius: 0.5rem;
-        }
+        <p>地點</p>
+        <p class="location"> </p>
 
-        .article_img {
-            width: 100%;
-            height: 130px;
-            object-fit: cover;
-            object-position: 50% 30%;
-        }
-
-        .article_content {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- 導覽列 開始 -->
-
-    <!-- 導覽列 結束 -->
-    <div class="container ">
-        <form method="">
-            <div class="row justify-content-center ">
-                <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
-                <div class="d-none d-md-block col-md-3 emp-profile mr-5">
-                    <div class="profile-img  m-2 p-1">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                            alt="" />
-                        <br>
-                        <br>
-                        <div class="file btn btn-sm btn-primary ">
-                            更改大頭貼
-                            <input type="file" name="file" />
-                        </div>
-                        <h5 class="text-center">林郁媛</h5>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="profile-work ">
-                            <!-- 前面放icon -->
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="ticket" class="user_menu">我的票券</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="myArticle" class="user_menu">我的投稿</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="favorite" class="user_menu">收藏&追蹤</a><br /></div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="profile" class="user_menu">編輯資料</a><br />
-                            </div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="" class="user_menu">登出</a></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 左側 結束-->
-
-                <!-- 右側 開始 -->
-                <div class="col-md-8 emp-profile pl-5">
-                    <div class="d-flex pr-3">
-                        <h4 class="title">我的活動</h4>
-                        <div class="ml-auto">
-                            <a href="/activity/create">
-                                <input type="button" class="btn btn-outline-primary" name="btnAddArticle"
-                                    value="發起活動" />
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-
-                        <% data.forEach((item)=> { %>
-                            <div class="d-flex flex-wrap mb-3 p-2 article_card">
-                                <div class="article_box col-md-12">
-                                    <h5><b>
-                                            <%= item.activityTitle %>
-                                        </b>
-                                        <div class="float-right">
-                                                <span>
-                                                    <a href="/activity/edit/<%= item.activityId %>">
-                                                    <button type="button" class="edit btn-sm btn-secondary"><i
-                                                            class="far fa-edit"></i></button>
-                                                    </a>
-                                                </span>
-                                                <span>
-                                                    <button type="submit" class="del delete btn-sm btn-secondary"><i
-                                                            class="far fa-trash-alt"></i></button>
-                                                </span>
-                                                <input type="hidden" class="activityId" name="activityId" value=<%=item.activityId %>>
-                                                <!-- <input type="submit" class="del"> -->
-                                        </div>
-                                </div>
-                                </h5>
-                                <div class=" d-flex col-md-12">
-                                    <div class=" col-md-4 ">
-                                        <img src="/image/user/op_01.jpg" alt="" class="article_img">
-                                    </div>
-                                    <div class="col-md-8 ">
-                                        <p class="article_content">
-                                            <%= item.activityContent %>
-                                        </p>
-                                        <a href="/activity/single/<%= item.activityId %>" class="float-right">看更多......</a>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <% }) %>
-                                <div class="row">
-
-                                </div>
-                                <div class="row">
-
-                                </div>
-
-
-                    </div>
-                </div>
-
-            </div>
+        <p>地址</p>
+        <p> <span class="area"></span><span class="address"></span> </p>
     </div>
-    <!-- 右側 結束 -->
+    <b>活動票券</b>
+    <div class="table_con">
+        <p>單人票</p>
+        <p class="unitPrice1"></p>
+
+        <p>雙人票</p>
+        <p class="unitPrice2"></p>
+    </div>
+
+</div>
+<!-- 左側的div--end -->
+
+<div class="content_text_div">
+
+    <h5 class="title" style="display: inline-block;"></h5>
 
 
+    <p class="content">
+    </p>
+
+    <hr>
+
+    <h5 class="sub_title">節 目 資 訊</h5>
+    <p>
+    <table style=" display: inline-block;">
+            <tr>
+                <td class="big_title">活動日期：</td>
+                <td class="little_title">第1日</td>
+                <td class="date1"></td>
+            </tr>
+            <tr>
+                <td class="big_title"></td>
+                <td class="little_title">第2日</td>
+                <td class="date2"></td>
+            </tr>
+
+    </table>
+
+    活動地點： <span class="location"></span>
+
+    活動地址： <span class="area"></span><span class="address"></span>
+
+    演出樂團： <span class="checkBand"></span>
+
+    啟售時間： <span class="sell"></span>
+
+    購票方式： MUMU及全台全家便利商店
+    <table style=" display: inline-block;">
+        <tr>
+            <td class="big_title">票數：</td>
+            <td><span class="date1"></span> <span class="ticketAmount"></span>張（剩餘 <span class="ticketAmount emphasize"> </span> 張） </td>
+        </tr>
+        <tr>
+            <td class="big_title"></td>
+            <td><span class="date2"></span> <span class="ticketAmount"></span>張（剩餘 <span class="ticketAmount emphasize"> </span> 張） </td>
+        </tr>
+
+    </table>
+
+    票　　價： 單人票　<span class="unitPrice1 emphasize"></span>　|　雙人票 <span class="unitPrice2 emphasize"></span>
+
+    主辦單位： MUMU、  <span class="cName"></span>
+    </p>
+
+    <form method="POST" action="/cart">
+        <p>選擇場次:</p>
+        <select name="activityDetailId" id="activityDetailId" class="form_input">
+            <option class="date1"></option>
+            <option class="date2"></option>
+        </select>
+
+        <p>單人票</p><input name="quantity" value="0" type="number" class="" min="0">
+
+        <p>雙人票</p><input name="quantity" value="0" type="number" class="" min="0">
 
     </form>
-    </div>
+    <hr>
 
-
-    <!-- 頁尾  開始-->
-
-    <!-- 頁尾  結束-->
-
-    <script>
-        $(function () {
-            
-            // console.log($('.del').closest('form').find('.activityId')[1].value);
-            $('.del').click(function () {
-                var data = $(this).closest('.float-right').find('.activityId')[0].value;   
-                
-                var values = {};
-                values["activityId"] = data;
-                // alert(values.activityId);
-                JSONData = JSON.stringify(values);
-
-
-                $.ajax({
-                    url: "/activity/delete",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSONData,
-                    success: function (res) {
-                        var res = JSON.parse(res)
-                        if (res.errno === 1) {
-                            alert("更新成功!")
-                            // 回到會員頁
-                            location.href = `/activity/text`
-                        } else if (res.errno === 0) {
-                            alert("更新失敗!")
-                        }
-                    },
-                    error: function () {
-                        alert("系統錯誤!")
-                    }
-                })
-                
-
-            });
-
-           
-
-        })
-
-    </script>
-
-
-</body>
-
-</html>
+</div>

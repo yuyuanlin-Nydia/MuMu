@@ -7,14 +7,9 @@ body {
 .campaign_body{
     background-color: var(--color1);
 }
-
 .campaignContent_body{
-    background-color:  var(--color1);
+    background-color: var(--color1);
 }
-a:hover {
-    text-decoration: none;
-}
-
 /* --------------------------第一頁------------------------------- */
 /* --------------------------第一頁------------------------------- */
 /* --------------------------第一頁------------------------------- */
@@ -29,11 +24,9 @@ input.form_input {
     border: 2px solid var(--color1);
 }
 .tag_div .btn_search {
-    /* padding: 0; */
     padding: 0;
     margin-right: 0;
     /* flex: 1 0 20%; */
-    /* border: 1px solid var(--color4); */
 }
 .search_div {
     /* display: flex; */
@@ -151,11 +144,11 @@ input.form_input {
     /* 垂直方向 換行 */
     /* justify-content:space-around; */
     /* align-items:stretch; */
-    align-content: space-around;
+    align-content: start;
     max-width: 100%;
+    min-height: 76vh;
     margin-left: auto;
     padding: 5px;
-    /* padding-top: 8rem; */
     box-sizing: border-box;
     background-color: var(--color5);
 
@@ -214,6 +207,7 @@ input.form_input {
     height: 120px;
     flex: 1 0 25%;
     margin-left: 15px;
+
     /* background-color: #acacac; */
 }
 .campaign_img>img{
@@ -473,11 +467,10 @@ input.form_input {
     /* padding: 0; */
 }
 .table_con {
-    margin-top: 1.5rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 80%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
 
@@ -497,7 +490,7 @@ input.form_input {
 }
 
 .table_con>p:nth-of-type(even) {
-    flex: 1 0 60%;
+    flex: 1 0 70%;
     line-height: 1.5;
     font-weight:lighter;
 }
@@ -863,6 +856,9 @@ input.form_input {
     .back_icon{
         display: none;
     }
-    
+    .emphasize{
+        font-size: 20px;
+        color: var(--color2);
+    }
 
 }

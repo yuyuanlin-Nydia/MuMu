@@ -13,7 +13,9 @@
     <script src="../js/jquery.js"></script>
     <script src="../js/Bootstrap/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
     <style>
        
         a{
@@ -22,13 +24,17 @@
 
         .delBtn{
             position: relative;
-            top:-235px ;
+            top:-238px ;
             left: 170px;
+            cursor: pointer;
         }
         .delBtnb{
             position: relative;
             top:-190px ;
             left: 125px;
+        }
+        .profile-tab p{
+            font-weight: normal;
         }
     </style>
 </head>
@@ -57,7 +63,7 @@
             <div class="banner">
                 <p class="banner_title">會員管理</p>
             </div>
-            <!-- <div class="container "> -->
+  
             <form method="post">
                 <div class="row">
     
@@ -65,18 +71,24 @@
 
                     <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
                         <div class="profile-img   p-1 mt-5 ml-5">
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-                                <label for="fileToUpload">
+                            <form id="avatar" action="/upload/avatarfile">
+                                <label class="aa">
+                                    <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="avatarFile"
+                                        style="display:none;">
+                    
                                     <div class="profile-pic">
-                                        <span class="glyphicon glyphicon-camera"></span>
+                                        <div id="avaimg"><img id="testImg" src="../../image/upload/user/<%=data3[0].userFile%>" alt=""></div>
                                         <span>更換圖片</span>
                                     </div>
                                 </label>
-                                <input type="File" name="fileToUpload" id="fileToUpload">
+                                <div id="img_sec" class="d-flex flex-wrap">
+                                    <p></p>
+                                </div>
+                                <!-- {{image}} -->
                             </form>
                             <h5 class="text-center text-white mt-3"><%= Name%> </h5>
                         </div>
-    
+                        
                         <div class="  p-5 p-md-1 select_left ml-5">
                             <div class="profile-work ">
                                
@@ -98,7 +110,7 @@
                             <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
                                 <li class="nav-item">
                                     <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                        aria-controls="home" aria-selected="true">表演收藏</a>
+                                        aria-controls="home" aria-selected="true">活動收藏</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
@@ -108,28 +120,43 @@
                         </div>
                         <div class="col-md-12 ">
                             <div class="tab-content profile-tab" id="myTabContent">
-                                <button type="button" class="btn btn-warning d-none" id="finishBtn">完成</button>
                                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <% if(data2.length!=0){%>
                                     <div class="d-flex flex-wrap my-3 categoryGroups">
-                                        <% var data2 = JSON.parse(JSON.stringify(data2)) %>
+
+                                        <!-- <% var data2 = JSON.parse(JSON.stringify(data2)) %> -->
                                         <% data2.forEach((item)=> { %>
                                         <div class="col-lg-3 col-sm-5 ">
                                             <a href="/activity/single/<%= item.activityId %>" class=" d-flex justify-content-center flex-wrap" onmouseover="this.style.textDecoration='none';">
                                                 <img src="/image/upload/activity/<%= item.activityFile %>" class="card_img col-12" alt="">
                                                 <p class="text-center"> <%= item.activityTitle %><br> <%= (new Date(item.minDate)).Format("yyyy/MM/dd ~ ")+(new Date(item.maxDate)).Format("yyyy/MM/dd")%> <br> <%= item.activityLocation%></p>
                                             </a>
-                                            <span  class="delBtn " data-id="<%= item.activityId %>">
+                                            <span  class="delBtn p-1" data-id="<%= item.activityId %>">
                                                 <i class="far fa-trash-alt"></i>
                                             </span>
-                                            
                                         </div>
                                         <% }) %>
-                                       
                                     </div>
-    
+                                    <% }else{ %>
+
+                                        <div class="box">
+                                            <p class="text-center">
+                                                目前沒有收藏的活動! <br>
+                                               到<span style="font-weight: 600;">活動列表</span>去看看<br><br><br>
+                                            </p>
+                                            <a href="/activity">
+                                                <div class="text-center">
+                                                    <button class="btn_tea1 ml-4">活動列表</button>
+                                                </div>
+                                            </a>
+                                        </div>
+                                <% } %>
                                 </div>
-                                <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="d-flex flex-wrap my-3">
+                                
+                                     
+                            <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <% if(data.length!=0){%>
+                                <div class="d-flex flex-wrap my-3">
                                         <% data.forEach((item)=> { %>
                                         <div class="m-2">
                                            <a  href="../band/ <%= item.bandId %>" onmouseover="this.style.textDecoration='none'">
@@ -141,9 +168,26 @@
                                             </span>
                                         </div>
                                         <% }) %>
-                                    </div>
+                                        
                                 </div>
-                            </div>
+                                <% }else{ %>                                       
+                                        <div class="box">
+                                            <p class="text-center">
+                                                目前沒有追蹤的樂團! <br>
+                                               到<span style="font-weight: 600;">樂團簡介</span>去看看<br><br><br>
+                                            </p>
+                                            <a href="/band">
+                                                <div class="text-center">
+                                                    <button class="btn_tea1 ml-4" >樂團簡介</button>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                          
+                                </div>
+                                <% } %>
+
+                            </div>           
                         </div>
                     </div>
                     <!-- 右側 結束 -->
@@ -164,55 +208,150 @@
         <!-- 頁尾  開始-->
         <%-include("../footer.ejs")%>
             <!-- 頁尾  結束-->
-            <!-- 一定得放這邊 不能放上面 -->
-            <script src="../plugin/vanilla-toast.js"></script>
-            <script src="../js/user_myFavorite.js"></script>
-        <script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script >
+        //大頭貼上傳 
+        window.onload = function () {
+        var vueMain = new Vue({
+            el: "#avatar",
+            data: {
+                image: ""
+            },
+            methods: {
+                imageHandler: function () {
+                var file = $('#avatarFile')[0].files[0];
+                var reader = new FileReader;
+                reader.onload = function (e) {
+                    $("#testImg").removeAttr('src', "");
+                    $("#testImg").attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+                 //上傳圖片的input
+                 var file = document.getElementById("avatarFile")
+                //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
+                //建立formdata物件
+                var formData = new FormData();
+                //給formdata物件中放入資料(鍵值對的方式)
+                formData.append('file', file.files[0]);
 
+                var Today = new Date();
+                var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+                this.image = date + '-' + formData.get('file').name
+
+                var newAvatar = {
+                    image: this.image
+                }
+
+                // 因為圖片文字格式不同  所以使用兩次ajax
+                // 副檔名
+                $.ajax({
+                    url: '/uploadafile',//請求路徑
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                    processData: false,//同上
+                    success: function (data) {
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+                // 日期+原檔名
+                $.ajax({
+                    type: "post",
+                    url: "/user/avatarUpload",
+                    data: newAvatar
+                }).then(function () {
+                    swal("上傳成功!", "", "success")
+                    .then((value) => {location.reload()});
+                })
+                // 圖片
+                $.ajax({
+                    url: '/user/upload/avatarfile',//請求路徑
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                    processData: false,//同上
+                    success: function (data) {
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            },
+
+        }
+    })
+}
             $(function () {
             $('.delBtn').each(function (idx, elm) {
                 $(elm).on('click', function () {
-                    // 跳出詢問確認移除
-                    var yes =confirm("確定要刪除此收藏嗎?")
-                   
-                    var id=$(elm).attr("data-id");
-                    var data = {
-                        id: id
-                    }
-                    if(yes){
-                    $.ajax({
+                    swal({
+                      title: "確定要取消收藏此活動嗎?",
+                      text: "",
+                      icon: "warning",
+                      buttons: true,
+                      dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                      if (willDelete) {
+                        swal("已取消收藏", {
+                          icon: "success",
+                        });
+                        var id=$(elm).attr("data-id");
+                        var data = {
+                            id: id
+                        }
+                        $.ajax({
                         type: "delete",
                         url: "/user/event/delete",
                         data: data
                     }).then(function () {
                         location.reload('#home')
-                    })}else{
-
-                    }
+                    })
+                      } else {
+                        swal("活動收藏中!");
+                      }            
+                    })
+                    
+                 
                 })
             })
 
             $('.delBtnb').each(function (idx, elm) {
                 $(elm).on('click', function () {
-                    // 跳出詢問確認移除
-                    var yes = confirm("確定要刪除此追蹤嗎?")
-                    var id=$(elm).attr("data-id");
-                    var data = {
-                        id: id
-                    }
-                    if(yes){
-                    $.ajax({
-                        type: "delete",
-                        url: "/user/band/delete",
-                        data: data
-                    }).then(function () {
-                        location.reload('#home')
-                    })}else{
-
-}
+                    swal({
+                      title: "確定要取消追蹤此樂團嗎?",
+                      text: "",
+                      icon: "warning",
+                      buttons: true,
+                      dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                      if (willDelete) {
+                        swal("已取消追蹤", {
+                          icon: "success",
+                        });
+                        var id=$(elm).attr("data-id");
+                        var data = {
+                            id: id
+                        }
+                        $.ajax({
+                            type: "delete",
+                            url: "/user/band/delete",
+                            data: data
+                        }).then(function () {
+                            location.reload('#home')
+                        })
+                      } else {
+                        swal("樂團追蹤中!");
+                      }            
+                    })
                 })
             })
         })
+
+        
         </script>
 
 

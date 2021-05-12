@@ -7,23 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>一般會員登入</title>
     <link rel="icon" href="../../public/image/logoImg-icon.svg" type="image/x-icon">
-</head>
-<script src="../js/jquery.js"></script>
-<link rel="stylesheet" href="../css/mutual.css">
-<link rel="stylesheet" href="../css/login.css">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
+    <script src="../js/jquery.js"></script>
+    <link rel="stylesheet" href="../css/mutual.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    .mynavbar {
-        background-color: #FFF;
-    }
-    span{
-        visibility: hidden;
-    }
-   /* li>b{
-        display: none;
-    } */
-</style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
+
+        span {
+            visibility: hidden;
+        }
+    </style>
 
 </head>
 
@@ -32,33 +27,31 @@
     <%-include ('../nav.ejs') %>
         <main>
             <div id="main_box">
-                <!-- <img id="logo" src="./images/fake.png" alt=""> -->
                 <div class="main_content">
                     <ul class="tab-group">
                         <li class="tab active"><a href="#login">會員登入</a></li>
                         <li class="tab "><a href="#signup">會員註冊</a></li>
                     </ul>
-    
+
                     <div class="tab-content">
                         <!-- 只包含登入&註冊內容 -->
                         <div id="login">
                             <form id="loginForm">
-                                <ul>
+                                <ul class="contentUl">
                                     <!-- 登入 -->
-    
                                     <li>
-                                        <br><input type="text" placeholder="帳號" name="userAccountL" class="username"
-                                            required>
+                                        <br><input type="text" placeholder="帳號" name="userAccountL" id='userAccountL'
+                                            class="username" required>
                                     </li>
                                     <li>
-                                        <br><input type="password" placeholder="密碼" name="userPasswordL" class="password"
-                                            required>
+                                        <br><input type="password" placeholder="密碼" name="userPasswordL"
+                                            id='userPasswordL' class="password" required>
                                     </li>
                                     <br>
                                     <li class="btm_text"> <input type="checkbox"> 記住我</li>
-    
-    
-    
+
+
+
                                 </ul><!-- 登入end -->
                                 <!-- <input type="button" value="登入" class="logIn"> -->
                                 <div class="btndiv"><button type="button" value="Login" id="loginSub"> 登入</button></div>
@@ -70,70 +63,95 @@
                             <br>
                             <br>
                         </div>
-    
-    
+
+
                         <div id="signup">
-    
+
                             <form id="signupForm">
-                                <!--action="/" method="post"-->
-                                <!-- <h1>Join us!</h1> -->
-                                <ul>
+
+                                <ul class="contentUl">
                                     <!-- 註冊 -->
                                     <li>
-                                        <br><input type="text" placeholder="*姓名" name="firstName" required>
+                                        <br><input type="text" placeholder="*姓名" name="firstName" required
+                                            id='firstName'>
                                     </li>
                                     <li>
-                                        <br><input type="email" id="email" placeholder="*Email" name="userEmail" required >
-                                       <span id="if1"><i class='fa fa-exclamation-circle' aria-hidden='true'style="margin: -10px;color:var(--color2)"></i>
-                                        <b >格式有誤</b></span>
+                                        <br><input type="email" id="email" placeholder="*Email" name="userEmail"
+                                            required>
+                                        <span id="if1"><i class='fa fa-exclamation-circle' aria-hidden='true'
+                                                style="margin: -20px;color:var(--color2)"></i>
+                                            <b>格式有誤</b></span>
                                     </li>
-    
-                                    <li>
-                                        <!-- 至少8位英數 -->
-                                        <br><input type="text" placeholder="*帳號" name="userAccount"
-                                           maxlength="15" id="account">
-                                           <span id="if2"> <i class='fa fa-exclamation-circle' aria-hidden='true' style="margin: -10px;color:var(--color2)"></i>
-                                            <b >帳號重複</b></span>
-                                            <!-- <b>至少8位,包含英數</b> -->
-                                    </li>
+
                                     <li>
                                         <!-- 至少8位英數 -->
-                                        <br><input type="password" placeholder="*密碼&nbsp(至少8位,包含英文+數字)" name="userPassword"
-                                             maxlength="15" id="newpw">
-                                           <span id="if3"> <i class='fa fa-exclamation-circle' aria-hidden='true'style="margin: -10px;color:var(--color2)"></i>
-                                            <b>至少8位,包含英數</b></span>
+                                        <br><input type="text" placeholder="*帳號" name="userAccount" maxlength="15"
+                                            id="account">
+                                        <span id="if2"> <i class='fa fa-exclamation-circle' aria-hidden='true'
+                                                style="margin: -20px;color:var(--color2)"></i>
+                                            <b>帳號重複</b></span>
+                                        <!-- <b>至少8位,包含英數</b> -->
+                                    </li>
+                                    <li>
+                                        <!-- 至少8位英數 -->
+                                        <br><input type="password" placeholder="*密碼&nbsp(至少8位英文+數字)" name="userPassword"
+                                            maxlength="15" id="newpw">
+                                        <span id="if3"> <i class='fa fa-exclamation-circle' aria-hidden='true'
+                                                style="margin: -20px;color:var(--color2)"></i>
+                                            <b>至少8位英數</b></span>
                                     </li>
                                     <!-- 要加入確認密碼 -->
                                     <li>
                                         <br><input type="password" placeholder="*確認密碼" name="userPassword"
                                             pattern="[a-zA-Z0-9]{8,}" maxlength="15" id="newpwCfm">
-                                        <span id="if4"><i class='fa fa-exclamation-circle' aria-hidden='true'style="margin: -10px;color:var(--color2)"></i>
-                                            <b >密碼不一致</b></span>
+                                        <span id="if4"><i class='fa fa-exclamation-circle' aria-hidden='true'
+                                                style="margin: -20px;color:var(--color2)"></i>
+                                            <b>密碼不一致</b></span>
                                     </li>
                                     <br>
-                                    <li>* 為必填欄位，請填妥欄位資訊。</li>
                                     <li class="btm_text"><input type="checkbox" required>我同意<a href="#">會員使用條款</a> </li>
+
+                                    <li class="mt-2">* 為必填欄位，請填妥欄位資訊。</li>
                                 </ul><!-- 註冊end -->
-    
-                                <!-- <input type="button" value="加入會員" class="signUp"> -->
-                                <div class="btndiv"> <button type="submit" value="signup" id="signupSub"> 加入會員</button>
+
+
+                                <div class="btndiv"> <button type="button" value="signup" id="signupSub"> 加入會員</button>
                                 </div>
                             </form>
-    
+
                         </div> <!-- signup end -->
-    
+
                     </div><!-- tab-content end -->
-    
-    
+
+
                 </div>
-    
-               
+
+
             </div>
         </main>
         <%-include ('../footer.ejs') %>
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"
                 integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
             <script>
+                window.addEventListener('keydown', function (e) {
+                    if (e.keyCode == 49) {
+                        document.getElementById('userAccountL').value = 'clock520'
+                        document.getElementById('userPasswordL').value = 'aaa520'
+                    } else if (e.keyCode == 50) {
+                        document.getElementById('firstName').value = '林宛如'
+                        document.getElementById('email').value = '584de@'
+                        document.getElementById('email').value = '584de@'
+                        document.getElementById('account').value = 'clock520'
+                        document.getElementById('newpw').value = 'aaa5250'
+                        document.getElementById('newpwCfm').value = 'aaa520'
+                    } else if (e.keyCode == 51) {
+                        document.getElementById('firstName').value = '林宛如'
+                        document.getElementById('email').value = 'alin78214@yahoo.com.tw'
+                        document.getElementById('account').value = 'albee5380'
+                        document.getElementById('newpw').value = 'aaa520'
+                        document.getElementById('newpwCfm').value = 'aaa520'
+                    }
+                }, false);
                 // 登入註冊切換
                 $('.tab a').on('click', function (e) {
 
@@ -152,31 +170,39 @@
 
                 // 註冊
                 $('#signupSub').on('click', function () {
-                    // 序列化表單內容到字串
-                    //console.log($('#loginForm').serializeArray());
+                    // var data = $('#signupForm').serializeArray()
+                    // JSONData = serializeToJSON(data)
 
-                    var data = $('#signupForm').serializeArray()
-                    // console.log(data);
-                    JSONData = serializeToJSON(data)
-                    console.log(JSONData);
+                    // //ajax請求
+                    // $.ajax({
+                    //     url: "/log/signup",
+                    //     type: "POST",
+                    //     contentType: "application/json; charset=utf-8",
+                    //     data: JSONData,
+                    //     success: function (res) {
+                    //         var res = JSON.parse(res)
+                    //         if (res.errno === 1) {
 
-                    //ajax請求
+                    //             swal("註冊成功，請重新登入!","", "success")
+                    //             .then((value)=>{
+                    //                 location.href='/log/login';
+                    //             });
+
+                    //         } else if (res.errno === 0) {
+                    //             swal("註冊失敗", "", "error")
+                    //         }
+                    //     },
+                    //     error: function () {
+                    //         alert("系統錯誤!")
+                    //     }
+                    // })
                     $.ajax({
-                        url: "/log/signup",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        data: JSONData,
-                        success: function (res) {
-                            var res = JSON.parse(res)
-                            if (res.errno === 1) {
-                                alert("註冊成功，請登入!")
-                                location.href = '/log'
-                            } else if (res.errno === 0) {
-                                alert("註冊失敗!")
-                            }
-                        },
-                        error: function () {
-                            alert("系統錯誤!")
+                        url: "/log/email",
+                        type: "post",
+                        data: {
+                            userName: $('#firstName').val(),
+                            email: $('#email').val(),
+                            code:Math.floor(Math.random()*900+100)
                         }
                     })
                 })
@@ -195,11 +221,9 @@
                         success: function (res) {
                             var res = JSON.parse(res)
                             if (res.errno === 1) {
-                                alert("登入成功!")
-
                                 location.href = '/'
                             } else if (res.errno === 0) {
-                                alert("帳號或密碼錯誤，請重新登入!")
+                                swal("帳號或密碼錯誤，請重新登入!", "", "error")
                             }
                         },
                         error: function () {
@@ -208,8 +232,8 @@
                     })
                 })
 
-                                // 轉JSON
-                                function serializeToJSON(data) {
+                // 轉JSON
+                function serializeToJSON(data) {
                     var values = {};
                     for (index in data) {
                         values[data[index].name] = data[index].value;
@@ -218,29 +242,22 @@
                 }
 
                 // mail格式確認
-                $("#email").blur(function(){
-                    var mail =$("#email").val();
+                $("#email").blur(function () {
+                    var mail = $("#email").val();
                     var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-                  if(!regex.test(mail)) {
-                    $("#if1").css('visibility','visible');
-                        } else{ 
-                    $("#if1").css('visibility','hidden')
-                  }
+                    if (!regex.test(mail)) {
+                        $("#if1").css('visibility', 'visible');
+                    } else {
+                        $("#if1").css('visibility', 'hidden')
+                    }
                 })
 
 
                 // 帳號檢查是否重複
                 $('#account').blur(function () {
-                    // var regex = /[a-zA-Z0-9]{8,}/;
-                    // var acc =$("#account").val();
-                    // if(acc!=regex){
-
-                    //         $("li>b").css('display','inline-block');
-                    //         $("#if2 i").css('visibility','visible');
-                    // }else{
                     var dataA = $('#account').serializeArray()
                     JSONData = serializeToJSON(dataA)
-                  
+
                     $.ajax({
                         url: '/log/check',
                         type: 'POST',
@@ -249,13 +266,11 @@
                         success: function (res) {
                             var res = JSON.parse(res)
                             if (res.errno === undefined) {
-                                $("#if2 b:first-of-type").css('visibility','visible');
-                                $("#if2 i").css('visibility','visible');
-                                } else{ 
-                                 $("#if2 b:first-of-type").css('visibility','hidden')
-                                 $("#if2 i").css('visibility','hidden');
-                                //  $("li>b").css('display','none')
-                                //  $("#if2 i").css('visibility','hidden');
+                                $("#if2 b:first-of-type").css('visibility', 'visible');
+                                $("#if2 i").css('visibility', 'visible');
+                            } else {
+                                $("#if2 b:first-of-type").css('visibility', 'hidden')
+                                $("#if2 i").css('visibility', 'hidden');
                             }
                         },
                         error: function () {
@@ -263,38 +278,37 @@
                         }
                     });
                     //  }
-                    
+
                 })
 
                 //密碼格式確認
-                $("#newpw").blur(function(){
-                   
-                    var pw =$("#newpw").val();
+                $("#newpw").blur(function () {
+
+                    var pw = $("#newpw").val();
                     var regex = /[a-zA-Z0-9]{8,}/;
-                  
-                  if(!regex.test(pw)) {
-                    $("#if3").css('visibility','visible');
-                        } else{ 
-                    $("#if3").css('visibility','hidden')
-                  };
-                  
+
+                    if (!regex.test(pw)) {
+                        $("#if3").css('visibility', 'visible');
+                    } else {
+                        $("#if3").css('visibility', 'hidden')
+                    };
+
                 })
 
 
                 // 檢查兩次密碼是否一致
                 $('#newpwCfm').blur(function () {
-                    
                     var newps = $('#newpw').val();
                     var newpsCfm = $('#newpwCfm').val();
-                    if(newps != newpsCfm){
-                        $("#if4").css('visibility','visible');
-                                } else{ 
-                        $("#if4").css('visibility','hidden')
+                    if (newps != newpsCfm) {
+                        $("#if4").css('visibility', 'visible');
+                    } else {
+                        $("#if4").css('visibility', 'hidden')
                     }
                 })
 
 
-              
+
 
             </script>
 

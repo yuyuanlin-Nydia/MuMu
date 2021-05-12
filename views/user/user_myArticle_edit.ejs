@@ -13,6 +13,7 @@
     <script src="/../js/jquery.js"></script>
     <script src="/../js/Bootstrap/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -21,36 +22,30 @@
     <%-include("../nav.ejs")%>
         <!-- 導覽列 結束 -->
 
-        <div class="whole" id="main">
-
-            <div class="all">
-
-                <!-- <form action="/article/upload" method="post" enctype="multipart/form-data" class="posting"> -->
-                <input class="form_input article_title" type="text" value="<%=data[0].articleTitle %>">
-                <br><br>
-
-                <label for=""><b>心得內容:</b></label>
-                <textarea name="" id="" placeholder="分享你的音樂祭心得"
-                    class="article form_input article_content"><%=data[0].articleContent %></textarea>
-
-                <div id="img_sec" class="d-flex flex-wrap">
-                    <p></p>
+        <main>
+            <div class="whole" id="main">
+                <div class="all">
+                    <!-- <form action="/article/upload" method="post" enctype="multipart/form-data" class="posting"> -->
+                    <input class="form_input article_title" type="text" value="<%=data[0].articleTitle %>">
+                    <br><br>
+    
+                    <label for=""><b>心得內容:</b></label>
+                    <textarea name="" id="" placeholder="分享你的音樂祭心得"
+                        class="article form_input article_content"><%=data[0].articleContent %></textarea>
+    
+                    <div id="img_sec" class="d-flex flex-wrap">
+                        <p></p>
+                    </div>
+                    <div style="text-align:right;">
+                        <a href="/user/myArticle"><button class="btn_tea1">取消</button></a>
+                        <button class="btn_tea2" id="edit_btn">編輯完成</button>
+                    </div>
+                    <!-- </form> -->
                 </div>
-                <div style="text-align:right;">
-                    <a href="/user/myArticle"><button class="btn_tea1">取消</button></a>
-                    <button class="btn_tea2" id="edit_btn">編輯完成</button>
-                </div>
-                <!-- </form> -->
             </div>
-        </div>
-
-
+        </main>
         <!-- 右側 結束 -->
 
-
-
-        </form>
-        </div>
 
 
         <!-- 頁尾  開始-->
@@ -65,19 +60,20 @@
                         var id = no[no.length - 1];
                         var editContent = {
                             title: $('.article_title').val(),
-                            content: $('.article_content').text(),
+                            content: $('.article_content').val(),
                             id: id
                         }
-                        // console.log(editContent)
+
                         $.ajax({
                             type: "post",
                             url: "/user/myArticle/edit/success",
                             data: editContent
-                        }).then(function () {
-                            // 跳出Alert 告知使用者編輯完成
-
+                        });
+                        swal("更新成功!", "", "success")
+                        .then((value)=>{
                             location.href = "/user/myArticle"
-                        })
+                        });
+                       
 
                     })
 

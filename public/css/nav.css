@@ -1,0 +1,127 @@
+ul.drop-down-menu{
+    height: 70px;
+    background-color: white;
+    margin-bottom: 0 !important;
+}
+ul.drop-down-menu>li{
+    float: right;
+}
+#nav_logo{
+    float: left ;
+}
+ul.drop-down-menu{
+    background-color: white ;
+}
+/* logo hover不變色 */
+
+#nav_logo>a:hover{
+ background-color: white;
+}
+ul.drop-down-menu li {
+    position: relative;
+    /* white-space: nowrap; */
+}
+ul.drop-down-menu>li>a {
+    color: var(--color3);
+    display: inline-block;
+    padding: 0px 30px;
+    line-height:50px;
+    margin: 10px 0px;
+    font-size: 16px;
+    height:50px;
+    font-weight: 700;
+}
+ul.drop-down-menu2>li>a{
+    color: var(--color3);
+    display: block;
+    line-height:40px;
+    background-color:var(--color5) ;
+    border: 1px solid var(--color4);
+    z-index: 1;
+    position: relative;
+    min-width: 172px;
+    padding-left: 20px;
+}
+ul.drop-down-menu2>li>div {
+    background-color:var(--color5) ;
+}
+ul.drop-down-menu>li>a:not(.nav_logo):hover { 
+    /* 滑鼠滑入按鈕變色*/
+    background-color: var(--color3);
+    color: #fff;
+}
+/* 滑鼠移入次選單上層 按鈕保持變色*/
+ul.drop-down-menu li:hover>a { 
+    background-color: var(--color3);
+    color: #fff;
+}
+ul.drop-down-menu>li:last-of-type>a { 
+    background-color: #fff;
+}
+ul.drop-down-menu ul {
+    position: absolute;
+    z-index: 99;
+    /* left: -1px; */
+    top: 100%;
+}
+ul.drop-down-menu2>li>.drop_list{
+    border-bottom: none;
+    font-size: 14px;
+}
+ul.drop-down-menu2>li>div {
+    border-left:1px solid var(--color4);
+    border-right:1px solid var(--color4);
+}
+ul.drop-down-menu ul ul {
+    /*第三層以後的選單出現位置與第二層不同*/
+    z-index: 999;
+    top: 10px;
+    left: -10%;
+}
+/*隱藏次選單*/
+ul.drop-down-menu ul { 
+    display: none;
+}
+ul.drop-down-menu li:hover>ul {
+    /* 滑鼠滑入展開次選單*/
+     display: block;
+} 
+/*隱藏次選單*/
+ul.drop-down-menu ul {
+    left: 99999px;
+    opacity: 0;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+/* 滑鼠滑入展開次選單*/
+ul.drop-down-menu>li:hover>ul {
+    opacity: 1;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    left: -1px;
+    border-right: 5px;
+}
+/* 滑鼠滑入之後、次選單之後的選單依舊隱藏*/
+ul.drop-down-menu li:hover>ul ul {
+    left: 99999px;
+}
+/* 第二層之後的選單展開位置*/
+ul.drop-down-menu ul li:hover>ul {
+    left: 90%;
+}
+.nav_head{
+width: 45px;
+height: 45px;
+object-fit: cover;
+border-radius: 50%;
+}
+.third_menu{
+    font-size: 14px;
+    display:inline-block;
+    padding: 7px 10px;
+    margin-left: 30px;
+    color: black;
+}
+.third_menu:hover{
+    color: var(--color2);
+}

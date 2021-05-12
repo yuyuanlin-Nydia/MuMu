@@ -4,151 +4,248 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的投稿</title>
+    <title>我的活動</title>
     <link rel="stylesheet" href="../../css/company_mainPage.css">
     <link rel="stylesheet" href="../css/mutual.css">
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
     <script src="../../js/jquery.js"></script>
-    <script src="../js/Bootstrap/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/2b7cfea5bd.js" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
 </head>
 <style>
-    @media (max-width:768px) {
-        .cfmBtn {
-            display: flex;
-            justify-content: center;
-        }
-    }
+    a{
+         color: black;
+     }
 
-    .profile-work div a:nth-of-type(4) {
-        color: var(--color4) !important;
-    }
     .act_img{
-        width: 120px;
-        height: 90px;
+        width: 150px;
+        height: 150px;
         object-fit: cover;
     }
     a:hover{
         text-decoration: none;
     }
+    .campaign_item{
+        padding: 20px 15px 20px 40px;
+        width: 100%;
+    }
+   
 </style>
 
 <body>
     <!-- 導覽列開始 -->
     <%-include("../nav.ejs")%>
     <!-- 導覽列結束 -->
-      <!-- <div class="container "> -->
-        <img src="../../public/image/user/member.png" alt="">
+    <div class="banner">
+        <p class="banner_title">會員管理</p>
+    </div>
+    <% Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份 
+            "d+": this.getDate(), //日 
+            "h+": this.getHours(), //小时 
+            "m+": this.getMinutes(), //分 
+            "s+": this.getSeconds(), //秒 
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+            "S": this.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }%>
+        <!-- <img src="../../public/image/user/member.png" alt=""> -->
         
-            <div class="row ">
-                <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
-                <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
-                    <div class="profile-img  p-1 mt-5 ml-5">
-                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                            alt="" />
-                        <br>
-                        <br> -->
-                        <!-- <div class="file btn btn-sm btn-primary ">
-                            更改大頭貼
-                            <input type="file" name="file" />
-                        </div> -->
-
-                        <form action="upload.php" method="post" enctype="multipart/form-data">
-                            <label for="fileToUpload">
-                                <div class="profile-pic">
-                                    <span class="glyphicon glyphicon-camera"></span>
-                                    <span>更換圖片</span>
-                                </div>
-                            </label>
-                            <input type="File" name="fileToUpload" id="fileToUpload">
-                        </form>
-
-                       
-                    </div>
-
-                    <div class="  p-5 p-md-1 select_left ml-5">
-                        <div class="profile-work ">
-                            <!-- 前面放icon -->
-                            
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/" class="user_menu" style="color: var(--color2)">我的活動</a><br /></div>
-                           
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu">編輯資料</a><br />
+    <main>
+        <div class="row topfix">
+            <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
+            <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+                <div class="profile-img  p-1 mt-5 ml-5">
+                    <form id="avatar" action="/upload/avatarfile">
+                        <label class="aa">
+                            <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="avatarFile"
+                                style="display:none;">
+                            <div class="profile-pic">
+                                <div id="avaimg"><img id="testImg" src="../../image/upload/company/<%= data3[0].companyFile%>" alt=""></div>
+                                <span>更換圖片</span>
                             </div>
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/user/logout" class="user_menu">登　　出</a></div>
+                        </label>
+                        <div id="img_sec" class="d-flex flex-wrap">
+                            <p></p>
                         </div>
-                    </div>
+
+                    </form>
+                    <h5 class="text-center text-white uName">
+                        <%=data3[0].companyName %>
+                    </h5>
                 </div>
-
-                <!-- 左側 結束-->
-
-                <!-- 右側 開始 -->
-                <div class="col-md-8  pl-5">
-                    <div class="d-flex mb-5" style="justify-content: space-between;">
-                        <h4 class="title ml-5">活動列表</h4>
-                        <a href="/activity/create"><button type="button" class="btn_tea2">發起活動</button></a>
-                    </div>
-                   
-                    <% var data=JSON.parse(JSON.stringify(data)) %>
-                    <% data.forEach((item)=> { %>
                     
-                        <div class="campaign_item d-flex" id=<%= item.activityId %>>
-                            <div class="campaign_img d-flex">
-                               <a href="/activity/<%= item.activityId %>">
-                                   <img class="act_img"  src="../image/upload/activity/<%-item.activityFile%>" alt="">
-                               </a>
-                               <div class="campaign_title ml-3">
-                                   <p class="sub_title"><%= item.activityTitle %></p>
-                                   <p>售票日期：　<%= item.sellDate.substring(0,4)+'年'+item.sellDate.substring(5,7)+'月'+item.sellDate.substring(8,10)+'日' %></p>
-                                </div>
-                            </div>
-                            <div>
-                                <span>
-                                    <a href="/activity/edit/<%= item.activityId %>">
-                                    <button type="button" class="edit btn_sm_blue2"><i
-                                            class="far fa-edit"></i>編輯</button>
-                                    </a>
-                                </span>
-                                <span><!-- 有修改的地方 -->
-                                    <form action="" class="deletePost" method="post" style="display: inline-block;">
-                                        <button type="submit" class="del delete edit btn_sm_blue2"><i
-                                                class="far fa-trash-alt"></i>刪除</button>
-                                    </form>
-                                </span>
-                                <input type="hidden" class="activityId" name="activityId" value=<%=item.activityId %>>
+                <div class="  p-5 p-md-1 select_left ml-5">
+                    <div class="profile-work ">
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company" class="user_menu" style="color: var(--color2)">我的活動</a><br /></div>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu">編輯資料</a><br />
                         </div>
-                            
-                            <!-- <div class="campaign_btn"><a class="go_activity" href="/activity/single" >〉</a></div> -->
-   
-                        </div>
-                        <% }) %>
+                        <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
+                    </div>
                 </div>
             </div>
-
-       
-    </div>
-    </div>
-    <!-- 右側 結束 -->
-
-
-
-    </form>
-    </div>
-
+            <!-- 右側開始 -->
+                    <div class="col-md-8 col-sm-12 pb-5 pl-lg-4 right_box">
+                        <div class="profile-head">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist" style="border-bottom: none;">
+                                <li class="nav-item">
+                                    <a class="nav-link active mb-2" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                        aria-controls="home" aria-selected="true">未來活動</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-2" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                        aria-controls="profile" aria-selected="false">過去活動</a>
+                                </li>
+                                <li style="margin-left: auto;">
+                                    <a href="/activity/create">
+                                        <button class="btn_tea2 =">發起活動</button>
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="d-flex flex-wrap my-3 categoryGroups">
+                                        <% if(data.length!=0){%>
+                                        <% var data=JSON.parse(JSON.stringify(data)) %>
+                                        <% data.forEach((item)=> { %>
+                                        <div class="campaign_item d-flex" id="<%= item.activityId %>">
+                                            <div class="campaign_img d-flex">
+                                                <a href="/activity/single/<%= item.activityId %>">
+                                                    <img class="act_img"  src="../image/upload/activity/<%-item.activityFile%>" alt="">
+                                                </a>
+                                                <div class="campaign_title ml-3">
+                                                    <p class="sub_title"><%= item.activityTitle %></p>
+                                                    <div class="contentin">
+                                                        <br>售票日期：<%= item.sellDate.substring(0,4)+'/'+item.sellDate.substring(5,7)+'/'+item.sellDate.substring(8,10) %>
+                                                                 <% weekList=["一","二","三","四","五","六","日"] %>
+                                                                 (<%= weekList[item.sell] %>)
+                                                        <br>活動時間：<%= (new Date(item.minDate)).Format("yyyy/MM/dd")+"("+weekList[item.min]+")~"+(new Date(item.maxDate)).Format("yyyy/MM/dd") +"("+ weekList[item.max]+")" %> 
+                                                        <br>地點：<%= item.activityLocation %> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span>
+                                                    <a href="/activity/edit/<%= item.activityId %>">
+                                                    <button type="button" class="edit btn_sm_blue2"><i
+                                                            class="far fa-edit"></i>編輯</button>
+                                                    </a>
+                                                </span>
+                                                <span><!-- 有修改的地方 -->
+                                                    <form action="" class="deletePost" method="post" style="display: inline-block;">
+                                                        <button type="submit" class="del delete edit btn_sm_blue2"><i
+                                                            class="far fa-trash-alt"></i>刪除</button>
+                                                    </form>
+                                                </span>
+                                                <input type="hidden" class="activityId" name="activityId" value=<%=item.activityId %>>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                        <% }else{ %>
+    
+                                            <div class="box">
+                                                <p class="text-center" style="font-weight: normal;">
+                                                    目前沒有未來活動! <br>
+                                                   點選右上角<span style="font-weight: 600;">發表活動</span>吧!<br><br><br>
+                                                </p>
+                                                
+                                            </div>
+                                    <% } %>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="d-flex flex-wrap my-3 categoryGroups">
+                                        <% if(data2.length!=0){%>
+                                        <% data2.forEach((item)=> { %>
+                                        <div class="campaign_item d-flex" style="background-color: var(--color4);" id="<%= item.activityId %>" >
+                                            <div class="campaign_img d-flex">
+                                                <!-- <a href="/activity/<%= item.activityId %>"> -->
+                                                    <img class="act_img"  src="../image/upload/activity/<%-item.activityFile%>" alt="">
+                                                <!-- </a> -->
+                                                <div class="campaign_title ml-3">
+                                                    <p class="sub_title"><%= item.activityTitle %></p>
+                                                    <div class="contentin">
+                                                        <br>售票日期：<%= (new Date(item.sellDate)).Format("yyyy/MM/dd") %>
+                                                                     <% weekList=["一","二","三","四","五","六","日"] %>
+                                                                     (<%= weekList[item.sell] %>)
+                                                        <br>活動時間：<%= (new Date(item.minDate)).Format("yyyy/MM/dd")+"("+weekList[item.min]+")~"+(new Date(item.maxDate)).Format("yyyy/MM/dd") +"("+ weekList[item.max]+")" %> 
+                                                        <br>地點：<%= item.activityLocation %> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 這是為了讓長度維持相同 -->
+                                            <div class="" style="visibility: hidden;">
+                                                <span>
+                                                    <a href="/activity/edit/<%= item.activityId %>">
+                                                    <button type="button" class="edit btn_sm_blue2"><i
+                                                            class="far fa-edit"></i>編輯</button>
+                                                    </a>
+                                                </span>
+                                                <span><!-- 有修改的地方 -->
+                                                    <form action="" class="deletePost" method="post" style="display: inline-block;">
+                                                        <button type="submit" class="del delete edit btn_sm_blue2"><i
+                                                            class="far fa-trash-alt"></i>刪除</button>
+                                                    </form>
+                                                </span>
+                                                <input type="hidden" class="activityId" name="activityId" value=<%=item.activityId %>>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                        <% }else{ %>
+        
+                                            <div class="box">
+                                                <p class="text-center" style="font-weight: normal;">
+                                                    目前沒有過去活動! <br>
+                                                </p>
+                                                
+                                            </div>
+                                    <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>  
+        </div>
+    </main>
+<!-- 頁尾  開始-->
+<%-include("../footer.ejs")%>
+<!-- 頁尾  結束-->
         
         <script>
             $(function () {
                 // ----HTML有兩個form----
                 // 指定是哪一個form要被送出
                 $( ".deletePost" ).submit(function( event ) {
-                    alert( "Handler for delete.submit() called." );
+                    // alert( "Handler for delete.submit() called." );
                     event.preventDefault();
                     // 阻止冒泡事件
-
-                    var data = $(this).closest('.d-flex').find('.activityId')[0].value;   
-                    // alert(data);
-
+                    swal({
+                      title: "確定要刪除此活動嗎?",
+                      text: "",
+                      icon: "warning",
+                      buttons: true,
+                      dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                      if (willDelete) {
+                        swal("已刪除", {
+                          icon: "success",
+                        })                        
+                        location.reload();
+                        
+                    var data = $(this).closest('.d-flex').find('.activityId')[0].value; 
                     var values = {};
                     values["activityId"] = data;
                     // alert(values.activityId);
@@ -165,24 +262,106 @@
                         success: function (res) {
                             var res = JSON.parse(res)
                             if (res.errno === 1) {
-                                alert("更新成功!")
-                                // 回到會員頁
-                                location.reload()
+                                                       
+                                
                             } else if (res.errno === 0) {
-                                alert("更新失敗!")
+                                swal("刪除失敗!", "", "error");
                             }
                         },
                         error: function () {
-                            alert("系統錯誤!")
+                            swal("系統錯誤!", "", "error");
                         }
                     })
+                      } else {
+                        swal("活動保留中");
+                      }
+                    });     
+
+                  
                 });                
                 
 
-    
+     //大頭貼上傳 
+     var vueMain = new Vue({
+        el: "#avatar",
+        data: {
+            image: ""
+        },
+        methods: {
+
+            imageHandler: function () {
+                var file = $('#avatarFile')[0].files[0];
+                var reader = new FileReader;
+                reader.onload = function (e) {
+                    $("#testImg").removeAttr('src', "");
+                    $("#testImg").attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+                // alert(file)
+
+                 //上傳圖片的input
+                 var file = document.getElementById("avatarFile")
+                //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
+                //建立formdata物件
+                var formData = new FormData();
+                //給formdata物件中放入資料(鍵值對的方式)
+                formData.append('file', file.files[0]);
+
+                var Today = new Date();
+                var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+                this.image = date + '-' + formData.get('file').name
+
+                var newAvatar = {
+                    image: this.image
+                }
+
+                // 因為圖片文字格式不同  所以使用兩次ajax
+                // 副檔名
+                $.ajax({
+                    url: '/uploadafile',//請求路徑
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                    processData: false,//同上
+                    success: function (data) {
+                        // alert(data)
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+                // 日期+原檔名
+                $.ajax({
+                    type: "post",
+                    url: "/company/cavatarUpload",
+                    data: newAvatar
+                }).then(function () {
+                    swal("圖片更新成功!", "", "success")
+                    .then((value)=>{location.reload()})
+                    ;
+                    
+                })
+                // 圖片
+                $.ajax({
+                    url: '/company/upload/cavatarfile',//請求路徑
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                    processData: false,//同上
+                    success: function (data) {
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            },
+
+        }
+    })
                
     
-            })
+})
     
         </script>
     

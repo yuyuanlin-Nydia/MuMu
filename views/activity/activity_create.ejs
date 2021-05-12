@@ -2,281 +2,522 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>活動新增</title>
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../css/activity_create.css">
+    <link rel="stylesheet" href="../../css/activity_all.css">
+    <link rel="stylesheet"href="../css/mutual.css" >
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="../js/jquery.js"></script>
-    <script src="../js/Bootstrap/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+    <style>
+        input[type=number]{
+            border:2px solid var(--color4);
+            border-radius: 0.3rem;
+            padding: 6px;
+            appearance:none;
+            -moz-appearance:none;
+            margin:3px;
+            width: 180px;
+        }
+        select.form_input{
+            width:180px ;
+            margin: 0px;
+        }
+     
+        .form_input{
+            margin: 0;
+            padding: 0;
+        }
+        .mynavbar{
+            background:var(--color5);
+        }
+        .mynavbar>.right{
+            border: 0;
+        }
+        #getback{
+            cursor:context-menu;
+        }
+        .fix_btn_box {
+            position: fixed;
+            z-index: 100;
+            bottom: 160px;
+            right: 23.5vw;
+        }
+    </style>
 
 </head>
 
 <body>
     <%-include("../nav.ejs")%>
     <!-- 導覽列 開始 -->
-    <div class="title_div banner"><img>
-            <p class="banner_title">發起活動</p>
-        <!-- <h4 class="title" style="color: #fff;">發起活動</h4> -->
-    </div>
-
     <!-- 導覽列 結束 -->
-
-        <form id="form" method="POST" action="">
-            <div class="row justify-content-center">
-                <!-- 左側 -->
-                <div class="col-md-3 ml-5 mr-5">
-                    
-                    <div class="form-group row">
-                        <label for="activityTitle" class="col-md-12">音樂會主題</label>
-                        <div class="col-md-12">
-                            <input class="form-control" id="activityTitle" name="activityTitle" type="text">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="sellDate" class="col-md-12">活動時間</label>
-                        <div class="col-md-12 mb-2">
-                            <input class="form-control" id="activityDate1" name="activityDate1" type="datetime-local">
-                        </div>
-                        <div class="col-md-12 mb-2"> 
-                            <input class="form-control" id="activityDate2" name="activityDate2" type="datetime-local">
-                        </div>
-                        <label for="sellDate" class="col-md-12">開始售票</label>
-                        <div class="col-md-12 mb-2">
-                            <input class="form-control" id="sellDate" name="sellDate" type="datetime-local">
-                        </div>
-                        <!-- <label for="update" class="col-md-12">結束售票</label> -->
-                        <div class="col-md-12 mb-2">
-                            <input class="form-control" id="upDated" name="upDated" type="hidden">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="location" class="col-md-6">地點</label>
-                        <label for="address" class="col-md-6">地區</label>
-                        <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="activityLocation">
-                        </div>
-                        
-                        <div class="col-md-6 mb-2">
-                            <select class="form-control" id="areaId" name="areaId">
-                                <option value="1">中正區</option>
-                                <option value="2">大同區</option>
-                                <option value="3">中山區</option>
-                                <option value="4">松山區</option>
-                                <option value="5">大安區</option>
-                                <option value="6">萬華區</option>
-                                <option value="7">信義區</option>
-                                <option value="8">士林區</option>
-                                <option value="9">北投區</option>
-                                <option value="10">內湖區</option>
-                                <option value="11">南港區</option>
-                                <option value="12">文山區</option>
-                                <option value="13">中區</option>
-                                <option value="14">東區</option>
-                                <option value="15">南區</option>
-                                <option value="16">西區</option>
-                                <option value="17">北區</option>
-                                <option value="18">北屯區</option>
-                                <option value="19">西屯區</option>
-                                <option value="20">南屯區</option>
-                                <option value="21">烏日區</option>
-                                <option value="22">豐原區</option>
-                                <option value="23">潭子區</option>
-
-                            </select>
-                        </div>
-                        <label for="activityAddress" class="col-md-12">地址</label>
-                        <div class="col-md-12">
-                            <input class="form-control" type="text" name="activityAddress">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Price1" class="col-md-6">單人票價</label>
-                        <label for="Price2" class="col-md-6">雙人票價</label>
-                        <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="unitPrice1"  pattern="[0-9]+">
-                        </div>
-                        
-                        <div class="col-md-6 mb-2">
-                            <input class="form-control" type="text" name="unitPrice2" pattern="[0-9]+">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                        <label for="maximum" class="col-md-12">人數上限</label>
-                        <div class="col-md-12">
-                            <input class="form-control" type="number" value="50" id="ticketAmount" name="ticketAmount">
-                        </div>
-                    </div>
-
-                </div>
-                <!-- 右側 -->
-                <div class="col-md-5 ml-5 mr-5">
-
-                    <div class="form-group row">
-                        <div class="col-md-10 text-center mb-2" v-if="preview">
-                            <img id="preview_img" :src="preview" alt="">
-                            <input class="form-control" type="file" id="activityFile" name="activityFile" value=""
-                                accept="image/jpeg image/jpg image/png" @change="previewImage">
-                        </div>
-                        
-                    </div>
-                    <div class="form-group  row">
-                        <label for="bandId" class="col-md-12">演出樂團</label>
-                        <div class="col-md-10 mb-2">
-                            &ensp;
-                            <% data.forEach((e)=>{%>
-                            <input type="checkbox" class="bandId" name="bandId" value=<%-e.bandId%> style="appearance:auto;margin-left: 0;"/> <%=e.bandName%>
-                            <%}) %> 
-                            <!-- <input type="checkbox" class="bandId" name="bandId" value="2" style="appearance:auto;margin-left: 0;"/> 美秀集團 -->
-                            <!-- <input type="checkbox" class="bandId" name="bandId" value="3" style="appearance:auto;margin-left: 0;"/> 理想混蛋 -->
-                            <!-- <input type="checkbox" class="bandId" name="bandId" value="4" style="appearance:auto;margin-left: 0;"/> 佛跳牆   -->
-                              
-                        </div>
-                    </div>
-                   
-
-                    <div class="form-group row">
-                        <label for="activities" class="col-md-12">音樂會內容</label>
-                        <div class="col-md-10">
-                            <textarea class="form-control" name="activityContent" id="activityContent"
-                                rows="8"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row ">
-                        <div class="col-md-12">
-                            <br>
-                        </div>
-                        <div class="col-md-10  text-center">
-                            <a href="/company"><input class="btn_tea1" type="button" value="取消"></a>
-                            <input id="submitBtn" class="btn_tea2" type="button" value="發表">
-                        </div>
-                    </div>
-                </div>
+        <main id="main">
+        
+            <div class="title_div banner"><img>
+                <p class="banner_title">發起活動</p>
             </div>
-        </form>
+        
+            <form id="form" method="POST" action="">
+                <div class="row justify-content-center" v-on:dblclick="show()">
+                    <!-- 左側 -->
+                    <div class="col-md-3 ml-5 mr-5" id="rrr">
+
+                        <div class="form-group row" >
+                            <label for="activityTitle" class="col-md-12">音樂會主題</label>
+                            <div class="col-md-12">
+                                <input  v-model="title" class="form-control" id="activityTitle" name="activityTitle" id="activityTitle"type="text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="sellDate" class="col-md-12">活動時間</label>
+                            <div class="col-md-12 mb-2">
+                                <input class="form-control"v-model="date1" id="activityDate1" name="activityDate1" id="activityDate1" type="datetime-local">
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <input class="form-control"v-model="date2" id="activityDate2" name="activityDate2" id="activityDate2"type="datetime-local">
+                            </div>
+                            <label for="sellDate" class="col-md-12">售票時間</label>
+                            <div class="col-md-12 mb-2">
+                                <input class="form-control"v-model="sell" id="sellDate" name="sellDate" type="datetime-local">
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <input class="form-control" id="upDated" name="upDated" type="hidden">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="location" class="col-md-12">地點</label>
+
+                            <div class="col-md-12 mb-2">
+                                <input  v-model="location"  class="form-control" type="text" name="activityLocation" id="activityLocation">
+                            </div>
 
 
-    <!-- 頁尾  開始-->
+                            <label for="activityAddress" class="col-md-12">地址</label>
+                            <div class="col-md-6 mb-2">
+                                <select  class="form-control" name="selected_city" id="selected_city">   
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <select v-model="area" class="form-control" id="areaId" name="areaId">
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <input v-model="address" class="form-control" type="text" name="activityAddress" id="activityAddress">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="Price1" class="col-md-6">單人票價</label>
+                            <label for="Price2" class="col-md-6">雙人票價</label>
+                            <div class="col-md-6 mb-2">
+                                <input v-model="unitPrice1" class="form-control" type="text" name="unitPrice1" id="unitPrice1"pattern="[0-9]+">
+                            </div>
 
-    <!-- 頁尾  結束-->
-    <%-include("../footer.ejs")%>
+                            <div class="col-md-6 mb-2">
+                                <input v-model="unitPrice2" class="form-control" type="text" name="unitPrice2" id="unitPrice2"pattern="[0-9]+">
+                            </div>
+                        </div>
 
-    <script>
-        // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
-        // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
-        Date.prototype.Format = function (fmt) {
-            var o = {
-                "M+": this.getMonth() + 1, //月份 
-                "d+": this.getDate(), //日 
-                "h+": this.getHours(), //小时 
-                "m+": this.getMinutes(), //分 
-                "s+": this.getSeconds(), //秒 
-                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-                "S": this.getMilliseconds() //毫秒 
-            };
-            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-        }
+                        <div class="form-group row">
+                            <label for="maximum" class="col-md-12">人數上限/場</label>
+                            <div class="col-md-12">
+                                <input v-model="ticketAmount" class="form-control" type="number" value="500" id="ticketAmount" name="ticketAmount">
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- 右側 -->
+                    <div class="col-md-5 ml-5 mr-5" id="photo">
+                        <div class="form-group row">
+                            <label for="bandId" class="col-md-12">選擇圖片</label>
+                            <div class="col-md-10 text-center mb-2">
+                                <input class="form-control" type="file" id="activityFile" name="activityFile" value=""
+                                    accept="image/jpeg image/jpg image/png" @change="previewImage">
+                            </div>
+
+                        </div>
+                        <div class="form-group  row">
+                            <label for="bandId" class="col-md-12">演出樂團</label>
+                            <div class="col-md-10 mb-2">
+                                
+                                <% data.forEach((e)=>{%>
+                                    <input v-model="checkBand" type="checkbox" class="bandId" name="bandId" value="<%-e.bandId%>" id="band<%-e.bandId%>"
+                                    style='appearance:auto;margin-left: 0;'> <%=e.bandName%> 
+                                        <%}) %>
+                                
+
+                            </div>
+                        </div>
 
 
-        $(function () {
-            
-            $('#submitBtn').click(function () {
+                        <div class="form-group row">
+                            <label for="activities" class="col-md-12">音樂會內容</label>
+                            <div class="col-md-10">
+                                <textarea v-model="content" class="form-control" name="activityContent" id="activityContent"
+                                    rows="8"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                            <div class="col-md-12">
+                                <br>
+                            </div>
+                            <div id="back_div" class="col-md-10  text-center">
+                                <a href="/company"><input class="btn_tea1" type="button" value="取消"></a>
+                                <!-- <input id="submitBtn" class="btn_tea2" type="button" value="發表">
+                                 -->
+                                 <a href="#mynavbar">
+                                    <input id="hiddenBtn" class="btn_tea2" type="button" value="預覽">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 增加Vue -->
+                <div class="content_img_div" style="display: none;">
+                    <!-- <p>Preview Here:</p> -->
+                    <template v-if="preview">
+                        <img :src="preview" style="height: 100%; width: 100%; object-fit: cover;"/>
+                    </template>
+                </div>
+                <!-- 增加Vue --> 
+                <div  class="fix_btn_box" style="display: none;">
+                    <a href="#back_div"><input type="button" class="btn_tea1 back" width="100%" value="返回"></a>
+                    <input id="submitBtn" class="btn_tea2" type="button" value="發表">    
+                </div>
+            </form>
+            <div class="preview_div" style="display: none;">
+             <%-include("./text.ejs")%>
+            </div>
+        </main>
 
-                var file = document.getElementById("activityFile")
-                //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
-                //建立formdata物件
-                var photoData = new FormData();
-                //給formdata物件中放入資料(鍵值對的方式)
-                photoData.append('file', file.files[0]);
-                // alert(photoData);
+        <!-- 頁尾  開始-->
 
-                // =============================================
+        <!-- 頁尾  結束-->
+        <%-include("../footer.ejs")%>
 
-                var today = new Date();
-                // console.log(today);
+            <script>
+                Date.prototype.Format = function (fmt) {
+                    var o = {
+                        "M+": this.getMonth() + 1, //月份 
+                        "d+": this.getDate(), //日 
+                        "h+": this.getHours(), //小时 
+                        "m+": this.getMinutes(), //分 
+                        "s+": this.getSeconds(), //秒 
+                        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                        "S": this.getMilliseconds() //毫秒 
+                    };
+                    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                    for (var k in o)
+                        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                    return fmt;
+                }
+                function monthString(e){
+                    var month="";
+                    var monthDay =["日","一", "二", "三", "四", "五", "六"];
+                    month = monthDay[new Date(e).getDay()];
+                    return(month);
+                };
 
-                //整理表單資料到變數
-                var data = $('#form').serializeArray();                
-                data[1].value =new Date(data[1].value).Format("yyyy-MM-dd hh:mm:ss");
-                data[2].value =new Date(data[2].value).Format("yyyy-MM-dd hh:mm:ss");
-                data[3].value =new Date(data[3].value).Format("yyyy-MM-dd hh:mm:ss");
-                data[4].value =new Date(today).Format("yyyy-MM-dd hh:mm:ss");
 
-                JSONData = serializeToJSON(data);
-                // alert(JSONData);
-                
-            
-                $.ajax({
-                    url: "/activity/update",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSONData,
-                    success: function (res) {
-                        var res = JSON.parse(res)
-                        if (res.errno === 1) {
-                            alert("更新成功!")
-                            // location.reload()
-                            location.href = `/company`
-                        } else if (res.errno === 0) {
-                            alert("更新失敗!")
+                $(function () {
+                    $('body').removeClass('campaignContent_body');
+                    $('.mynavbar').attr('id','mynavbar');
+                    // cName
+                    $('span').filter('.cName').text('<%- cName %>');
+                    // ----------------Vue.js開始--------------------
+                    // ----------------Vue.js開始--------------------
+                    // ----------------Vue.js開始--------------------
+                    new Vue({
+                        el: "#form",
+                        data: 
+                        function() {
+                            return {
+                            title:'',
+                            date1: '',
+                            date2:'',
+                            sell:'',
+                            location:'',
+                            city:'',
+                            area:'',
+                            address:'',
+                            unitPrice1:'',
+                            unitPrice2:'',
+                            ticketAmount:500,
+                            checkBand:[],
+                            preview: null,//預覽圖片
+                            content:''
+                            };
+                        },
+                        // @change方法
+                        methods: {
+                            // 事件名稱
+                            previewImage: function(event) {
+                            var input = event.target;
+                            if (input.files) {
+                                var reader = new FileReader();
+                                reader.onload = (e) => {
+                                this.preview = e.target.result;
+                                }
+                                reader.readAsDataURL(input.files[0]);
+                                // $('.content_img_div>img').attr('stc',this.preview)
+                            }
+                            },
+                            // 雙擊事件填入value
+                            show:function(){
+                                this.title="草根音樂祭";
+                                this.date1= '2021-07-10T16:00';
+                                this.date2='2021-07-11T14:00';
+                                this.sell='2021-07-01T08:00';
+                                this.location='資策會';
+                                // this.city=8;
+                                // this.area='20';
+                                this.address='公益路二段51號';
+                                this.unitPrice1=900;
+                                this.unitPrice2=1700;
+                                this.ticketAmount=1000;
+                                this.checkBand=[1,2,3,5,8];
+                                this.content=`這裡是南國 這是一個小小的派對
+少了一些都市的壓力 我們用自己的方式過生活
+享受星空 享受大海 也承受落山風
+今晚就是聽音樂 大口吃肉大口喝酒！
+『你有多久沒有赤腳踩在草地上？
+你有多久沒有盡情讓陽光灑落在肌膚上？
+有多久，我們沒能在車水馬龍的喧囂城市見上一面？
+還有多久，沒有這樣一個音樂祭我們可以好好
+看著彼此酒醉的模樣？　』
+『如果人生只有一次，請讓我在草根做回自己。』`
+                            }
+                        },
+                        watch: {
+                            title:function(){
+                            $('.content_text_div>*').filter('.title').text(this.title);
+                            },
+                            area:function(val, oldVal){
+                            console.log(val);
+                            // 這邊目前有問題要再修正
+                            // 這邊目前有問題要再修正
+                            // 這邊目前有問題要再修正
+                            var area = ['中正區','大同區','中山區','松山區','大安區','萬華區','信義區','士林區','北投區','內湖區','南港區','文山區','中區','東區','南區','西區','北區','北屯區','西屯區','南屯區','烏日區','豐原區','潭子區','左營區','三民區','新興區','苓雅區']    
+                            $('span').filter('.area').text(area[val]);
+                            // $('span,p').filter('.location').text('dddddddddddddddd');
+                            },
+                            date1: function(val, oldVal) {
+                            $('td').filter('.date1').text(new Date(val).Format("yyyy/MM/dd")+" ("+monthString(val)+") "+new Date(val).Format("hh:mm"));
+                            $('p,span').filter('.date1').text(new Date(val).Format("yyyy/MM/dd")+" ("+monthString(val)+") ");
+                            $('option').filter('.date1').text(new Date(val).Format("yyyy/MM/dd"));
+                            },
+                            date2: function(val, oldVal) {
+                            $('td').filter('.date2').text(new Date(val).Format("yyyy/MM/dd")+" ("+monthString(val)+") "+new Date(val).Format("hh:mm"));
+                            $('p,span').filter('.date2').text(new Date(val).Format("yyyy/MM/dd")+" ("+monthString(val)+") ");
+                            $('option').filter('.date2').text(new Date(val).Format("yyyy/MM/dd"));
+                            },
+                            sell:function(val, oldVal) {
+                            $('span').filter('.sell').text(new Date(val).Format("yyyy/MM/dd")+" ("+monthString(val)+") "+new Date(val).Format("hh:mm"));
+                            $('p').filter('.sell').text(new Date(val).Format("yyyy/MM/dd")+" ("+monthString(val)+") ");
+                            },
+                            location:function(){
+                            $('span,p').filter('.location').text(this.location);
+                            },
+                            address:function(){
+                            $('span').filter('.address').text(this.address);
+                            },
+                            unitPrice1:function(){
+                            $('span').filter('.unitPrice1').text(this.unitPrice1);
+                            $('p').filter('.unitPrice1').text('NT $'+this.unitPrice1);
+                            },
+                            unitPrice2:function(){
+                            $('span').filter('.unitPrice2').text(this.unitPrice2);
+                            $('p').filter('.unitPrice2').text('NT $'+this.unitPrice2);
+                            },
+                            ticketAmount:function(){
+                            $('span').filter('.ticketAmount').text(this.ticketAmount);
+                            },
+                            checkBand:function(val){
+                                // console.log(typeof(val));
+                                var band = ['告五人' , '美秀集團', '理想混蛋' , '佛跳牆' , '落日飛車' , '東京中央線' , '大地之歌' , 'Theseus忒修斯', '麋先生'];
+                                var result=[];
+                                for (item of val) {
+                                    result += (band[item-1])+" ";
+                                }
+                                $('span').filter('.checkBand').text(result);
+                            },
+                            content:function(){
+                                $('p').filter('.content').text(this.content);
+                            },
+                        },
+                    });
+
+                    // ----------------Vue.js結束--------------------
+                    // ----------------Vue.js結束--------------------
+                    // ----------------Vue.js結束--------------------
+                    var boot = document.getElementsByTagName('link')[0];
+                    // bootstrap連結
+                    
+                    $('#hiddenBtn').click(() => {
+                        // 移除bootstrap連結
+                        document.getElementsByTagName('head')[0].removeChild(boot);
+                        
+
+                        $('body').addClass('campaignContent_body');
+                        $('main>*')
+                            .hide()
+                            .filter('#form').show();
+                        $('main>*')
+                            .filter(".preview_div")
+                            .show();
+                        $('#form>*')
+                            .hide()
+                            .filter('.content_img_div').show();
+                        $('#form>*')
+                            .filter('.fix_btn_box').show();
+
+                    })
+                    
+                    $('.back').click(()=>{
+                        // 復原bootstrap連結
+                        document.getElementsByTagName('head')[0].appendChild(boot);
+
+                        $('body').removeClass('campaignContent_body');
+                        $('main>*')
+                            .show()
+                            .filter(".preview_div")
+                            .hide();
+                        $('#form>*')
+                            .show()
+                            .filter('.content_img_div').hide();
+                        $('#form>*')
+                            .filter('.fix_btn_box').hide();
+                    })
+
+
+
+                    // 地址的選項
+                    function getDistrict() {
+                        $.ajax({
+                            type: "post",
+                            url: "/company/edit/district",
+                        }).then(function (item) {
+                            item.forEach(item => {
+                                $("#selected_city").append(`<option value="${item.districtId}">${item.city}</option>`)
+                            })
+                        })
+                    } getDistrict();
+                    $("#selected_city").change(function () {
+                        $.ajax({
+                            type: "post",
+                            url: "/company/edit/town",
+                            data: {
+                                districtId: $("#selected_city").val()
+                            }
+                        }).then(function (item) {
+                            $("#areaId").empty();
+                            item.forEach(value => {
+                                $("#areaId").append(`<option value="${value.areaId}">${value.town}</option>`)
+                            });
+                        })
+                    });
+
+
+
+                    $('#submitBtn').click(function () {
+
+                        var file = document.getElementById("activityFile")
+                        //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
+                        //建立formdata物件
+                        var photoData = new FormData();
+                        //給formdata物件中放入資料(鍵值對的方式)
+                        photoData.append('file', file.files[0]);
+                        // alert(file.files[0])
+                        // alert(photoData)
+                        // =============================================
+
+                        var today = new Date();
+                        //整理表單資料到變數
+                        var data = $('#form').serializeArray();
+                        data[1].value = new Date(data[1].value).Format("yyyy-MM-dd hh:mm:ss");
+                        data[2].value = new Date(data[2].value).Format("yyyy-MM-dd hh:mm:ss");
+                        data[3].value = new Date(data[3].value).Format("yyyy-MM-dd hh:mm:ss");
+                        data[4].value = new Date(today).Format("yyyy-MM-dd hh:mm:ss");
+
+                        JSONData = serializeToJSON(data);
+                        // alert(JSONData);
+
+                        $.ajax({
+                            url: "/activity/update",
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSONData,
+                            success: function (res) {
+                                var res = JSON.parse(res)
+                                if (res.errno === 1) {
+                                    swal("活動上傳成功!", "", "success")
+                                    .then((value)=>{
+                                        location.href = `/company`
+                                    });
+                                    
+                                   
+                                } else if (res.errno === 0) {
+                                    swal("活動上傳失敗", "", "error");
+                                }
+                            },
+                            error: function () {
+                                alert("系統錯誤!")
+                            }
+                        })
+                        $.ajax({
+                            url: '/activity/upload/file',//請求路徑
+                            type: 'POST',
+                            data: photoData,
+                            contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                            processData: false,//同上
+                            success: function (data) {
+                                // alert('OK!')
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+
+                    });
+
+                    function serializeToJSON(data) {
+                        var activityFileValue = document.getElementById("activityFile").value.split('\\').pop();
+                        var Today = new Date();
+                        var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+                        activityFileValue = date + '-' + activityFileValue;
+                        var band = []
+                        $.each($("input[name='bandId']:checked"), function () {
+                            band.push($(this).val());
+                        });
+                        // alert(band.length)
+                        var bandLength = band.length
+
+                        var values = {};
+                        for (index in data) {
+                            values[data[index].name] = data[index].value;
                         }
-                    },
-                    error: function () {
-                        alert("系統錯誤!")
+
+                        // console.log(values);
+                        // typeof_values = object
+                        values["activityFile"] = activityFileValue;
+                        values["bandId"] = band;
+                        // values["bandIdLength"] = bandLength;
+
+                        // alert(values.activityFile);
+
+                        return JSON.stringify(values)
                     }
                 })
-                $.ajax({
-                       url: '/activity/upload/file',//請求路徑
-                       type: 'POST',
-                       data: photoData,
-                       contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
-                       processData: false,//同上
-                       success: function (data) {
-                       },
-                       error: function (err) {
-                           console.log(err);
-                       }
-                   });
-
-            });
-
-            function serializeToJSON(data) {
-                var activityFileValue = document.getElementById("activityFile").value.split('\\').pop();   
-                var Today = new Date();
-                var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
-                activityFileValue = date + '-' + activityFileValue;
-                var band=[]
-                $.each($("input[name='bandId']:checked"), function(){
-                    band.push($(this).val());
-                });
-                // alert(band.length)
-                var bandLength = band.length
-                
-                var values = {};
-                for (index in data) {
-                    values[data[index].name] = data[index].value;
-                }
-                
-                // console.log(values);
-                // typeof_values = object
-                values["activityFile"] = activityFileValue;
-                values["bandId"] = band;
-                // values["bandIdLength"] = bandLength;
-
-                // alert(values.activityFile);
-
-                return JSON.stringify(values)
-            }
-        })
 
 
-    </script>
+            </script>
 
 </body>
 

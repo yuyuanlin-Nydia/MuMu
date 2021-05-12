@@ -3,6 +3,22 @@
 body{
     background-color: var(--color4);
 }
+input[type=text] {
+    border: 1px solid #E3E8E4;
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid var(--color2) !important;
+}
+select:focus {
+    outline: none;
+    border: 1px solid var(--color2) !important;
+}
+textarea:focus {
+    outline: none;
+    border: 1px solid var(--color2) !important;
+}
 .mynavbar{
     background-color: var(--color5);
 }
@@ -18,4 +34,4 @@ textarea {
 .justify-content-center{
     padding: 30px 0;
     padding-bottom: 130px;
-}
+}   

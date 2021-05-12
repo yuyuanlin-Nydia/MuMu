@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>活動專區</title>
+    <title>活動列表</title>
     <link rel="stylesheet" href="../plugin/zInput/zInput_default_stylesheet.css">
     <link rel="stylesheet" href="../css/Bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/activity_all.css">
@@ -18,12 +18,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     
     <style>
-        .mynavbar{
-            background:var(--color5);
-        }
-        .mynavbar>.right{
-            border: 0;
-        }
         p{
             margin-bottom: 0;
         }
@@ -55,8 +49,9 @@
         <div class="tag_div">
             
             <form id="form" method="POST" action="" >
+                
                 <div class="search_div" id="app">
-                    <input v-model="search" type="text" name="search" class="form_input" style="background-color: var(--color4);" placeholder="Search">
+                    <input v-model="search" type="text" name="search" class="form_input" style="background-color: var(--color4);" placeholder="搜尋相關活動">
                     <button type="submit" id="submitBtn" style="display: none;"><i class="fas fa-search btn_search"></i></button>                   
                     <!-- <input type="submit" id="submitBtn"> -->
                 </div>
@@ -80,7 +75,7 @@
         <div class="campaign_all">
             <div class="campaign_top">
                 <!-- <span class="sub_title">検索結果</span> -->
-                <span>1〜<%=nums_per_page%>件 (總共 <%= total_nums  %> 件)</span>
+                <span>1〜<%=nums_per_page%>項 (總共 <%= total_nums  %> 項)</span>
             </div>        
     
             <%var data=JSON.parse(JSON.stringify(data))%>
@@ -118,7 +113,7 @@
             
             <div class="campaign_top">
                 <% for(var i = 1; i <= last_page; i++) { %>
-                    <a href="/activity/<%=(search!=="undefind"&&districtId!=="undefind")?`search?text=${search}&districtId=${districtId}&page=${i}`:`${i}`%>"><button class="btn_page" style="line-height: 1;<%-(i==curr_page)?"background-color:var(--color2);color:var(--color5)":""%>"><%= i%></button></a>
+                    <a href="/activity/<%=(search!=='undefind'&&districtId!=='undefind')?`search?text=${search}&districtId=${districtId}&page=${i}`:`${i}`%>"><button class="btn_page" style="line-height: 1;<%-(i==curr_page)?'background-color:var(--color2);color:var(--color5)':''%>"><%= i%></button></a>
                 <% } %>
             </div>
    
@@ -131,8 +126,6 @@
        
         var searchName= document.getElementById('name').value;
         searchName=(searchName!=="undefind") ?searchName :"";
-        // console.log(searchName);
-        
 
         var app = new Vue({
         el: '#app',
@@ -147,7 +140,6 @@
             this.value = val;
             }
         }
-        
         // computed: {
         //   htmlLineBreak() {
         //     return this.description.replace(/\r\n|\r|\n/g,"<br />");
@@ -179,9 +171,6 @@
                     $(e).closest('.zInput').attr("onclick", ahref)
                 });
             }).change();
-
-                      
-            
 
 
             //左側導覽列動畫
@@ -228,10 +217,7 @@
             }
         })
 
-
         $('#affected').zInput();//外掛的zInput
-
-
 
     </script>
 </body>

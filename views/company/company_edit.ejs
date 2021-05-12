@@ -1,244 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>企業會員_編輯企業資料</title>
-        <link rel="stylesheet" href="../../css/company_mainPage.css">
-        <link rel="stylesheet" href="../css/mutual.css">
-        <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
-        <script src="../js/jquery.js"></script>
-        <script src="../js/Bootstrap/bootstrap.js"></script>
-        <!-- 不連線測試用 -->
-        <script src="../../public/js/jquery.js"></script>
-        <script src="../../public/js/Bootstrap/bootstrap.js"></script>
-        <link rel="stylesheet" href="../../public/css/mutual.css">
-        <link rel="stylesheet" href="../../public/css/user_mainPage.css">
-        <link rel="stylesheet" href="../../public/css/Bootstrap/bootstrap.css">
-    </head>
-    <style>
-        @media (max-width:768px) {
-            .cfmBtn {
-                display: flex;
-                justify-content: center;
-            }
-        }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企業會員_編輯企業資料</title>
+    <link rel="stylesheet" href="../../css/company_mainPage.css">
+    <link rel="stylesheet" href="../css/mutual.css">
+    <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
+    <script src="../js/jquery.js"></script>
+    <script src="../js/Bootstrap/bootstrap.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-        .profile-work div a:nth-of-type(4) {
-            color: var(--color4) !important;
-        }
-    </style>
+</head>
+<style>
+    a {
+        color: black;
+    }
 
-    <body>
-        <!-- 導覽列開始 -->
-        <%-include("../nav.ejs")%>
-        <!-- 導覽列結束 -->
+    input:focus {
+        outline: none;
+        border: 1px solid var(--color2) !important;
+    }
+
+</style>
+
+<body>
+    <!-- 導覽列開始 -->
+    <%- include("../nav.ejs")%>
         <!-- 導覽列 結束 -->
-        <!-- <div class="container "> -->
-            <img src="../../public/image/user/member.png" alt="">
-            <form method="post">
-                <div class="row ">
-                    <!-- 左側 開始 手機裝置會消失 導覽列上可點選-->
-                    <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
-                        <div class="profile-img  p-1 mt-5 ml-5">
-                            <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                                alt="" />
-                            <br>
-                            <br> -->
-                            <!-- <div class="file btn btn-sm btn-primary ">
-                                更改大頭貼
-                                <input type="file" name="file" />
-                            </div> -->
+        
+        <main>
+            <div class="banner">
+                <p class="banner_title">會員管理</p>
+            </div>
+            <div class="row ">
+                <!-- 左側 開始 -->
+                <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+                    <div class="profile-img  p-1 mt-5 ml-5">
+                        <form id="avatar" action="/upload/cavatarfile">
+                            <label class="aa">
+                                <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*" id="avatarFile"
+                                    style="display:none;">
     
-                             <form action="upload.php" method="post" enctype="multipart/form-data">
-                            <label for="fileToUpload">
                                 <div class="profile-pic">
-                                    <span class="glyphicon glyphicon-camera"></span>
+                                    <div id="avaimg"><img id="testImg"
+                                            src="../../image/upload/company/<%=data[0].companyFile%>" alt=""></div>
                                     <span>更換圖片</span>
                                 </div>
                             </label>
-                            <input type="File" name="fileToUpload" id="fileToUpload">
+                            <div id="img_sec" class="d-flex flex-wrap">
+                                <p></p>
+                            </div>
+                            
                         </form>
-
-                      
+                        <h5 class="text-center text-white ">
+                            <%=data[0].companyName%>
+                        </h5>
                     </div>
-
                     <div class="  p-5 p-md-1 select_left ml-5">
                         <div class="profile-work ">
                             <!-- 前面放icon -->
-                            
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/myArticle" class="user_menu">我的投稿</a><br /></div>
-                           
-                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu" style="color: var(--color2)">編輯資料</a><br />
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company" class="user_menu">我的活動</a><br />
+                            </div>
+    
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu"
+                                    style="color: var(--color2)">編輯資料</a><br />
                             </div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
                         </div>
                     </div>
                 </div>
-
+                <!-- 左側 結束-->
+                <!-- 右側 開始 -->
+                <div class="col-md-8 pl-5 right_box">
+                    <ul class="nav nav-tabs mb-5" style="border-bottom: none;">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#menu1">編輯資料</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#menu2">修改密碼</a>
+                        </li>
+                    </ul>
+                    <div class="col-md-10 pl-5 ">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class=" tab-pane fade show active" id="menu1" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="form-group row">
+                                    <label class="col-md-2 ">統&emsp;&emsp;編:</label>
     
-                    <!-- 左側 結束-->
-
-                    <!-- 右側 開始 -->
-                    <div class="col-md-8 pl-5">
-                        <ul class="nav nav-tabs mb-5">
-                            <li class="nav-item">
-                               <a class="nav-link active" data-toggle="tab" href="#menu1">編輯資料</a>
-                            </li>
-                            <li class="nav-item">
-                               <a class="nav-link" data-toggle="tab" href="#menu2">修改密碼</a>
-                            </li>
-                         </ul>
-                        <div class="col-md-10 pl-5 ">
-                            <div class="tab-content profile-tab" id="myTabContent">
-                                <div class="container tab-pane fade show active" id="menu1" role="tabpanel"
-                                    aria-labelledby="home-tab">
-                                    <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title">統&emsp;&emsp;編:</label>
-                                        
-                                        <div class="col-md-6">
-                                            <%=data[0].companyTaxNo %>
-                                            
-                                        </div>
-                                        
+                                    <div class="col-md-4 col-sm-12">
+                                        <%=data[0].companyTaxNo %>
+    
                                     </div>
-                                 
-                                    <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title" >電子郵件:</label>
-                                        <div class="col-md-6">
-                                            <input class="form-control" type="email" name="e_mail" id="e_mail"  placeholder= <%=data[0].companyEmail %>>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="phone" class="col-md-2 sub_title" >連絡電話:</label>
-                                        <div class="col-md-6">
-                                            <input class="form-control" type="tel" name="phone" id="phone" placeholder= <%=data[0].companyPhone %>>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="city" class="col-md-2 sub_title">地&emsp;&emsp;址:</label>
-
-                                        <div class="col-md-3">
-                                            <select class=" form-control" name="city" id="city">
-                                                <option value="台北市">台北市</option>
-                                                <option value="台中市">台中市</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <select class="form-control" name="town" id="town">
-                                                <option value="南屯區">南屯區</option>
-                                                <option value="潭子區">潭子區</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4" ></div>
-                                        <div class="col-md-2"></div>
-                                        
-                                        <div class="col-md-6 mt-2">
-                                            <input class="form-control" type="text" name="address" placeholder= <%=data[0].companyAddress %>>
-                                        </div>
-                                        
-                                    </div>
-
-                                    <div class="form-group row mt-4">
-                                        <div class="col-md-2">
-                                            <br>
-                                        </div>
-                                         <div class="col-md-6  d-flex" style="justify-content:flex-end;">
-                                            
-                                            <div>
-                                                <button class="btn_blue2">確認修改</button>
-                                                <!-- <input class="btn_blue2" type="submit" value="確認修改"> -->
-                                            </div>
-                                            
-                                            
-                                        </div>
-                                    </div>
-                                       
+    
                                 </div>
-                                <div class="container tab-pane fade show " id="menu2" role="tabpanel"
-                                    aria-labelledby="home-tab">
-
+    
+                                <form id="company_form">
                                     <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title">原始密碼:</label>
+                                        <label class="col-md-2 ">電子郵件:</label>
                                         <div class="col-md-6">
-                                            <input class="form-control" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title">修改密碼:</label>
-                                        <div class="col-md-6">
-                                            <input class="form-control" type="text" name="password" id="password" placeholder= <%=data[0].companyPassword %>>
+                                            <input class="form-control" type="email" name="e_mail" id="e_mail"
+                                                value="<%=data[0].companyEmail %>">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="e_mail" class="col-md-2 sub_title">確認密碼:</label>
+                                        <label for="phone" class="col-md-2 ">連絡電話:</label>
                                         <div class="col-md-6">
-                                            <input class="form-control" type="text" name="password" id="password">
+                                            <input class="form-control" type="tel" name="phone" id="phone"
+                                                value="<%=data[0].companyPhone %>">
                                         </div>
                                     </div>
-                                    <div class="form-group row mt-4">
-                                        <div class="col-md-2">
-                                            <br>
+                                    <div class="form-group row">
+                                        <label for="city" class="col-md-2 ">地&emsp;&emsp;址:</label>
+        
+                                        <div class="col-md-3">
+                                            <select class=" form-control detail" name="city" id="selected_city">
+                                                <option value="<%=data[0].companyDis %>" selected><%=data[0].city %></option>
+        
+                                            </select>
                                         </div>
-                                         <div class="col-md-6  d-flex" style="justify-content:flex-end;">
-                                            
-                                            <div>
-                                                <button class="btn_blue2">確認修改</button>
-                                                <!-- <input class="btn_blue2" type="submit" value="確認修改"> -->
-                                            </div>
-                                            
-                                            
+                                        <div class="col-md-3">
+                                            <select class="form-control detail" name="town" id="town">
+                                                <option value="<%=data[0].companyDis %>" selected><%=data[0].city %>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-2"></div>
+        
+                                        <div class="col-md-6 mt-2">
+                                            <input class="form-control" type="text" name="address"
+                                                value="<%=data[0].companyAddress %>" style="border:1px solid rgba(0, 0, 0, 0.15)">
+                                        </div>
+        
+                                    </div>
+                                </form>
+    
+                                <div class="form-group row mt-4">
+                                    <div class="col-md-2">
+                                        <br>
+                                    </div>
+                                    <div class="col-md-6  d-flex" style="justify-content:flex-end;">
+    
+                                        <div>
+                                            <button type="button" class="btn_blue2" id="submit_btn">確認修改</button>
+    
+                                        </div>
+    
+    
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <div class="container tab-pane fade show " id="menu2" role="tabpanel"
+                            aria-labelledby="home-tab">
+                            
+                            <form id="pwd_section">
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 ">原始密碼:</label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="password" name="password_before" id="password_before">
+                                        </div>
+                                        <span id="cfmLabel_or" class="col-md-3 pwif text-justify"
+                                            style="visibility: hidden;">
+                                            <i class='fa fa-exclamation-circle' aria-hidden='true'
+                                                style="margin:-10px -20px 0px -5px;color:var(--color2)"></i>
+                                            密碼錯誤</span>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 ">修改密碼:</label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="password" name="password_after" id="password_after">
                                         </div>
                                     </div>
-                                       
-                                </div>     
-                            </div>    
+                                    <div class="form-group row">
+                                        <label for="e_mail" class="col-md-2 ">確認密碼:</label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="password" name="password_cfm" id="password_cfm">
+                                        </div>
+                                        <span id="cfmLabel" class="col-md-3 pwif text-justify mb-1"
+                                        style="visibility: hidden;">
+                                        <i class='fa fa-exclamation-circle' aria-hidden='true'
+                                            style="margin:-10px -20px 0px -5px;color:var(--color2)"></i>
+                                        密碼不一致
+                                        </span>
+                                    </div>
+                            </form>
+                                <div class="form-group row mt-4">
+                                    <div class="col-md-2">
+                                        <br>
+                                    </div>
+                                    <div class="col-md-6  d-flex" style="justify-content:flex-end;">
+    
+                                        <div>
+                                            <button type="button" class="btn_blue2" id="submitPassword">確認修改</button>
+    
+                                        </div>
+    
+    
+                                    </div>
+                                </div>
+    
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-        </div>
-        </div>
+            </div>
+        </main>
         <!-- 右側 結束 -->
 
 
 
-        </form>
-        </div>
-
-
         <!-- 頁尾  開始-->
-        <%-include("../footer.ejs")%>
-        <!-- 頁尾  結束-->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script>
-                  //需要知道更改哪個東西所以要使用id單純顯示更改資訊還沒有更改
-        function Edit(id) {
-            $.ajax({
-                url: "/company/edit/detail/",
-                type: "GET",
-                success: function(res) {
-                    // JSON.parse() 方法把會把一個JSON字串轉換成 JavaScript的數值或是物件。另外也可選擇使用reviver函數讓這些數值或是物件在被回傳之前做轉換
-                    // 因為這個JSON.stringify(new Success('update success')),所以回傳到前端的是json格式
-                    var res = JSON.parse(res)
-                    //將數據庫res的回傳的data裡的值傳遞進input標籤裡
-                    $("input[name='e_mail']").val(res.data.companyEmail)
-                    $("input[name='phone']").val(res.data.companyPhone)
-                    // $("input[name='city']").val(res.data.city)
-                    // $("input[name='town']").val(res.data.town)
-                    $("input[name='address']").val(res.data.companyAddress)
-                    
-                },
-                error: function() {
-                    alert("系統錯誤!")
-                },
-            })
-        }
+        <%- include("../footer.ejs")%>
+            <!-- 頁尾  結束-->
+            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <!-- jQuery Modal -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+            <script>
+                // 確認原始密碼
+                $('#password_before').blur(function () {
+                    var dataA = $('#password_before').serializeArray()
+                    JSONData = serializeToJSON(dataA)
 
-        </script>
-    </body>
+                    $.ajax({
+                        url: '/company/checkpw',
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                $("#cfmLabel_or").css('visibility', 'visible');
+                            } else {
+                                $("#cfmLabel_or").css('visibility', 'hidden');
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
+                        }
+                    });
+                })
+                // 密碼一致cfm
+                $('#password_cfm').blur(function () {
+                    var newpw = $('#password_after').val();
+                    var newpwcfm = $('#password_cfm').val();
+                    if (newpw != newpwcfm || newpw == "" || newpwcfm == "") {
+                        $("#cfmLabel").css('visibility', 'visible');
+                    } else {
+                        $("#cfmLabel").css('visibility', 'hidden')
+                    }
+                })
+
+                // 確認更改密碼
+                $('#submitPassword').on('click', function () {
+                    var newpw = $('#password_after').val();
+                    var newpwcfm = $('#password_cfm').val();
+                    if (newpw != newpwcfm || newpw == "" || newpwcfm == "") {
+                        $("#cfmLabel").css('visibility', 'visible');
+                    }
+                    else{
+                        var data = $('#pwd_section').serializeArray()
+                        JSONData = serializeToJSON(data)
+
+                        $.ajax({
+                        url: "/company/edit/password",
+                        type: "post",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                swal("密碼更新成功!", "", "success")
+                                .then((value) => {location.reload()})
+                            } else if (res.errno === 0) {
+                                swal("密碼更新失敗!", "請重新試一次", "error");
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
+                        }
+                    })
+                    }
+                    
+
+                })
+                // 編輯資料確認
+                $('#submit_btn').on('click', function () {
+                    var data = $('#company_form').serializeArray();
+                    JSONData = serializeToJSON(data)
+                    
+                    $.ajax({
+                        url: "/company/edit/detail",
+                        type: "post",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+                                swal("更新成功!", "", "success")
+                                .then((value) => {location.reload()})
+                            } else if (res.errno === 0) {
+                                swal("更新失敗!", "請重新試一次", "error");
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
+                        }
+                    })
+                })
+
+
+                function serializeToJSON(data) {
+                    var values = {};
+                    for (index in data) {
+                        values[data[index].name] = data[index].value;
+                    }
+                    return JSON.stringify(values)
+                }
+
+                // 地區內容
+                $(function () {
+                    function getDistrict() {
+                        $.ajax({
+                            type: "post",
+                            url: "/company/edit/district",
+                        }).then(function (item) {
+                            item.forEach(item => {
+                                $("#selected_city").append(`<option value="${item.districtId}">${item.city}</option>`)
+                            })
+                        })
+                    } getDistrict();
+                    $("#selected_city").change(function () {
+                        $.ajax({
+                            type: "post",
+                            url: "/company/edit/town",
+                            data: {
+                                districtId: $("#selected_city").val()
+                            }
+                        }).then(function (item) {
+                            $("#town").empty();
+                            item.forEach(value => {
+                                $("#town").append(`<option value="${value.areaId}">${value.town}</option>`)
+                            });
+                        })
+                    });
+
+
+
+                    //大頭貼上傳 
+                    var vueMain = new Vue({
+                        el: "#avatar",
+                        data: {
+                            image: ""
+                        },
+                        methods: {
+                            imageHandler: function () {
+                                var file = $('#avatarFile')[0].files[0];
+                                var reader = new FileReader;
+                                reader.onload = function (e) {
+                                    $("#testImg").removeAttr('src', "");
+                                    $("#testImg").attr('src', e.target.result);
+                                };
+                                reader.readAsDataURL(file);
+
+                                //上傳圖片的input
+                                var file = document.getElementById("avatarFile")
+                                //因為準備用post提交，又因為圖片的內容比較大，所以使用formdata來承載資料
+                                //建立formdata物件
+                                var formData = new FormData();
+                                //給formdata物件中放入資料(鍵值對的方式)
+                                formData.append('file', file.files[0]);
+
+                                var Today = new Date();
+                                var date = Today.getFullYear().toString() + (Today.getMonth() + 1).toString().padStart(2, "0") + Today.getDate().toString().padStart(2, "0");
+                                this.image = date + '-' + formData.get('file').name
+
+                                var newAvatar = {
+                                    image: this.image
+                                }
+
+                                // 因為圖片文字格式不同  所以使用兩次ajax
+                                // 副檔名
+                                $.ajax({
+                                    url: '/uploadafile',//請求路徑
+                                    type: 'POST',
+                                    data: formData,
+                                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                                    processData: false,//同上
+                                    success: function (data) {
+
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                });
+                                // 日期+原檔名
+                                $.ajax({
+                                    type: "post",
+                                    url: "/company/cavatarUpload",
+                                    data: newAvatar
+                                }).then(function () {
+                                    swal("圖片更新成功!", "", "success")
+                                .then((value) => {location.href = '/company'})
+                                })
+                                // 圖片
+                                $.ajax({
+                                    url: '/company/upload/cavatarfile',//請求路徑
+                                    type: 'POST',
+                                    data: formData,
+                                    contentType: false,//為了讓瀏覽器根據傳入的formdata來判斷contentType
+                                    processData: false,//同上
+                                    success: function (data) {
+                                        
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                });
+                            },
+
+                        }
+                    })
+
+
+                })
+
+            </script>
+</body>
 
 </html>

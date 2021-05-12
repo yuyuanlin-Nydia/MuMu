@@ -11,6 +11,8 @@
 <script src="../js/jquery.js"></script>
 <link rel="stylesheet" href="../css/mutual.css">
 <link rel="stylesheet" href="../css/login.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Allura&display=swap&family=Noto+Serif+TC:wght@200&display=swap&family=Fraunces&display=swap&family=Homemade+Apple&display=swap');
     /* @import url(./css/login.css); */
@@ -43,14 +45,14 @@
                         <div id="login">
                             <form id="loginForm">
 
-                                <ul>
+                                <ul  class="contentUl">
                                     <!-- 登入 -->
 
                                     <li>
-                                        <br><input type="text" placeholder="帳號" name="companyAccountL">
+                                        <br><input type="text" placeholder="帳號" name="companyAccountL" id="companyAccountL">
                                     </li>
                                     <li>
-                                        <br><input type="password" placeholder="密碼" name="companyPasswordL">
+                                        <br><input type="password" placeholder="密碼" name="companyPasswordL" id="companyPasswordL">
                                     </li>
                                     <br>
                                     <li class="btm_text"> <input type="checkbox"> 記住我</li>
@@ -74,13 +76,13 @@
 
                             <form id="signupForm">
                                 <!-- <h1>Join us!</h1> -->
-                                <ul>
+                                <ul  class="contentUl">
                                     <!-- 註冊 -->
                                     <li>
-                                        <br><input type="text" placeholder="*統一編號" name="companyTaxNo" required>
+                                        <br><input type="text" placeholder="*統一編號" name="companyTaxNo" required id="companyTaxNo">
                                     </li>
                                     <li>
-                                        <br><input type="text" placeholder="*公司名稱" name="companyName" required>
+                                        <br><input type="text" placeholder="*公司名稱" name="companyName" required id="companyName">
                                     </li>
                                     <li>
                                         <br><input type="text" placeholder="*Email" name="companyEmail" required id="email">
@@ -94,10 +96,10 @@
                                                 <b >帳號重複</b></span>
                                     </li>
                                     <li>
-                                        <br><input type="password" placeholder="*密碼&nbsp(至少8位,包含英文+數字)"
+                                        <br><input type="password" placeholder="*密碼&nbsp(至少8位英文+數字)"
                                             name="companyPassword" required id="newpw">
                                             <span id="if3"> <i class='fa fa-exclamation-circle' aria-hidden='true'style="margin: -20px;color:var(--color2)"></i>
-                                                <b>至少8位,包含英數</b></span>
+                                                <b>至少8位英數</b></span>
                                     </li>
                                     <li>
                                         <br><input type="password" placeholder="*確認密碼" name="userPassword"
@@ -112,7 +114,7 @@
                                 </ul><!-- 註冊end -->
 
                                 <!-- <input type="button" value="Get Started"> -->
-                                <div class="btndiv"> <button type="submit" value="signup" id="signupSub_c">
+                                <div class="btndiv"> <button type="button" value="signup" id="signupSub_c">
                                         加入會員</button>
                                 </div>
                             </form>
@@ -126,9 +128,27 @@
             </div>
 
         </main>
-        <%-include ('../footer.ejs') %>
+        <%- include ('../footer.ejs') %>
             <script>
-
+                 window.addEventListener('keydown', function (e) {
+                    if (e.keyCode == 49) {
+                        document.getElementById('companyAccountL').value = 'new5520'
+                        document.getElementById('companyPasswordL').value = 'new5520'
+                    }else if(e.keyCode == 50){
+                        document.getElementById('companyTaxNo').value = '52789452'
+                        document.getElementById('companyName').value = '笑傲音樂'
+                        document.getElementById('email').value = 'de584@d'
+                        document.getElementById('accountC').value = 'new5520'
+                        document.getElementById('newpw').value = 'baa5250'
+                        document.getElementById('newpwCfm').value = 'vaaa520'
+                    }else if(e.keyCode == 51){
+                        document.getElementById('companyName').value = '笑傲音樂'
+                        document.getElementById('email').value = 'alin78214@yahoo.com.tw'
+                        document.getElementById('accountC').value = 'lovemumu520'
+                        document.getElementById('newpw').value = 'lovemumu520'
+                        document.getElementById('newpwCfm').value = 'lovemumu520'
+                    }
+                }, false);
                 $('.tab a').on('click', function (e) {
 
                     e.preventDefault();
@@ -163,10 +183,13 @@
                         success: function (res) {
                             var res = JSON.parse(res)
                             if (res.errno === 1) {
-                                alert("註冊成功，請登入!")
-                                location.href = '/log'
+                                swal("註冊成功，請重新登入!", "", "success")
+                                .then(
+                                    (value)=>location.href = '/log/companyLogin'
+                                );
+                                
                             } else if (res.errno === 0) {
-                                alert("註冊失敗!")
+                                swal("註冊失敗!", "", "error");
                             }
                         },
                         error: function () {
@@ -188,10 +211,10 @@
                         success: function (res) {
                             var res = JSON.parse(res)
                             if (res.errno === 1) {
-                                alert("登入成功!")
+                                // alert("登入成功!")
                                 location.href = '/'
                             } else if (res.errno === 0) {
-                                alert("帳號或密碼錯誤，請重新登入!")
+                                swal("帳號或密碼錯誤，請重新登入!", "", "error");
                             }
                         },
                         error: function () {

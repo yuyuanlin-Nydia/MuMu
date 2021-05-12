@@ -1,17 +1,9 @@
 body {
-    font-family: 'Noto Sans TC', 'serif' !important;
     min-height: 100vh;
 }
 
 .banner {
     background-image: url(../../image/banner/member.png);
-}
-.title{
-    color: var(--color5);
-    position: relative;
-    top: -100px;
-    left: 100px;
-   
 }
 
 #banner_box{
@@ -20,8 +12,7 @@ body {
 /* left----------------------------------------------------------------------- */
 
 .emp-profile {
-   
-    height: 800px;
+
     background: var(--color1);
     margin-left: -60px;
 }

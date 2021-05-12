@@ -1,25 +1,27 @@
 body {
-    font-family: 'Noto Sans TC', 'serif' !important;
     min-height: 100vh;
+}
+
+.banner {
+    background-image: url(../../image/banner/company2.jpg);
 }
 
 /* left----------------------------------------------------------------------- */
 
 .emp-profile {
-    padding: 3% 0%;
-    height: 100vh;
+
     background: var(--color1);
     margin-left: -60px;
 }
 
 .profile-img {
     text-align: center;
-    margin-bottom: 20px;
+    
 }
 
 .profile-img img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -27,8 +29,7 @@ body {
 /* 換頭貼 */
 
 .profile-pic {
-
-    background-image: url('https://dummyimage.com/275x183/000/fff');
+    
     background-size: cover;
     background-position: center;
     /* 圓 */
@@ -47,19 +48,19 @@ body {
 }
 
 .profile-pic:hover {
+    position: relative;
     background-color: rgba(0,0,0,.5);
     z-index: 10000;
     color: #fff;
     transition: all .3s ease;
     text-decoration: none;
+    
+}
+#avaimg{
+    position: relative;
+
 }
 
-/* 更換圖片文字 */
-.profile-pic span {
-    display: inline-block;
-    padding-top: 4.5em;
-    padding-bottom: 4.5em;
-}
 
 /* 隱藏 */
 form input[type="file"] {
@@ -68,25 +69,8 @@ form input[type="file"] {
  }
 
 
-/* btn */
 
-.profile-img .file {
-    position: relative;
-    overflow: hidden;
-    width: 65%;
-    border: none;
-    border-radius: 0;
-    font-size: 15px;
-    background: #212529b8;
-}
-
-.profile-img .file input {
-    position: absolute;
-    opacity: 0;
-    right: 0;
-    top: 0;
-}
-.select_left{
+ .select_left{
     margin: 0 20px;
     
 } 
@@ -108,10 +92,6 @@ form input[type="file"] {
     font-size: 16px;
 }
 
-/* .profile-work div:hover {
-   border-left: 3px solid var(--color2);
-} */
-
 .profile-work a:hover {
     color: var(--color2);
     text-decoration: none;
@@ -122,19 +102,19 @@ form input[type="file"] {
     color: black;
 }
 
-h4.title {
+h4.right_title {
     border-left: 3px solid black;
-    padding-left: 20px;
-    margin-bottom: 20px;
+    /* padding-left: 20px;
+    margin-bottom: 20px; */
 }
-
+/* 前往活動頁面 */
 .campaign_item {
     justify-content: space-between;
-    padding: 40px 50px;
+    padding: 20px 40px;
     border: 2px outset;
 } 
 
-/* 前往活動頁面 */
+
 a.go_activity {
     font-size: 50px; 
     line-height: 120px;
@@ -148,3 +128,15 @@ a.go_activity:hover {
 
 }
 
+.right_box {
+    margin-top: 5%;
+}
+
+.contentin{
+    margin-top: -30px;
+}
+h4.right_title {
+    border-left: 3px solid black;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}

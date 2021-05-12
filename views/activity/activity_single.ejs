@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="../../css/activity_all.css">
     <!-- <link rel="stylesheet" href="../../css/Bootstrap/bootstrap.css"> -->
     <!-- <script src="../../js/Bootstrap/bootstrap.js"></script> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="../../js/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <style>
         input[type=number]{
             border:2px solid var(--color4);
@@ -30,14 +34,8 @@
             margin: 0;
             padding: 0;
         }
-        .mynavbar{
-            background:var(--color5);
-        }
-        .mynavbar>.right{
-            border: 0;
-        }
         #getback{
-            cursor:context-menu;
+            cursor:pointer;
         }
     </style>
 
@@ -63,15 +61,16 @@
     <% var monthDay = ["一", "二", "三", "四", "五", "六", "日"] %> 
     <!-- 左側的div--start -->
     <div class="left_div">
-        <p id="getback">&ensp; &lt;&lt;</p>
+        <p id="getback"><i  class="fas fa-chevron-right" style="transform: rotate(180deg);"></i>&nbsp;<span>上一頁</span></p>
+        <br>
         <b>活動資訊</b>
             <div class="table_con"> <% var activity_day=JSON.parse(JSON.stringify(activity_day)) %> 
                 <% activity_day.forEach((a)=>{ %>                
                 <p class="little_date">日期</p>
-                <p><%= (new Date(a.activityDate)).Format("yyyy/MM/dd (")+monthDay[a.acd]+")" %></p>
+                <p><%= (new Date(a.activityDate)).Format("yyyy/MM/dd (")+monthDay[a.acd]+(new Date(a.activityDate)).Format(") hh:mm") %></p>
                 <%})%>
                 <p>預售</p><% var s=JSON.parse(JSON.stringify(data[0])) %>
-                <p> <%= (new Date(s.sellDate)).Format("yyyy/MM/dd (")+monthDay[s.sell]+")" %></p>
+                <p> <%= (new Date(s.sellDate)).Format("yyyy/MM/dd (")+monthDay[s.sell]+(new Date(s.sellDate)).Format(") hh:mm") %></p>
                 
                 <p>地點</p>
                 <p><%= data[0].activityLocation %> </p>
@@ -94,22 +93,6 @@
     <!-- 活動圖片--start -->
     <div class="content_img_div" style= "background-image: url(../../image/upload/activity/<%-data[0].activityFile%>)">
         <div class="back_icon"><a href="/activity">####</a></div>
-        <!-- <div class="img_icon_top">
-            <div>a</div>
-            <div>b</div>
-            <div>c</div>
-            <div>d</div>
-
-        </div>
-
-        <div class="img_icon_btn">
-
-            <div class="btn_con">
-                <div class="left"></div>
-                <div class="right"></div>
-            </div>
-        </div> -->
-
     </div>
     <!-- 活動圖片--end -->
     <input type="hidden" name="favorates" value=<% favorates.forEach((fav,idx)=>{%><%= (fav.activityId==activityId)?activityId :"" %><% }) %>>
@@ -133,7 +116,6 @@
                 <tr>
                     <td class="big_title">活動日期：</td>
                     <td class="little_title">活動日期：</td>
-                    
                     <td><%= (new Date(a.activityDate)).Format("yyyy/MM/dd (")+monthDay[a.acd]+(new Date(a.activityDate)).Format(") hh:mm") %></td>
                 </tr>
                 <% }) %> 
@@ -143,24 +125,29 @@
 
             活動地址： <%= data[0].city + data[0].town + data[0].activityAddress %> 
             
-            演出樂團： <% band.forEach((b)=>{ %> <%= b.bandName %> <% }) %>
+            演出樂團： <% band.forEach((b)=>{ %> <%= b.bandName %>、 <% }) %>
             <% var s=JSON.parse(JSON.stringify(data[0])) %>
             啟售時間： <%= (new Date(s.sellDate)).Format("yyyy/MM/dd (")+monthDay[s.sell]+(new Date(s.sellDate)).Format(") hh:mm") %>
 
             購票方式： MUMU及全台全家便利商店
-
-            票　　數： <%= data[0].ticketAmount %> （剩餘  張）
-            
-            票　　價： <% data.forEach((item,idx)=>{%><%=item.type + " "+ item.unitPrice +" |" %> <%}) %>
+            <table style=" display: inline-block;"><% activity_day.forEach((a)=>{ %>
+                <tr>
+                    <td class="big_title">票數：</td>
+                    <td><%= (new Date(a.activityDate)).Format("yyyy/MM/dd (")+monthDay[a.acd]+")" %>  <%= a.amount %>張（剩餘 <span class="emphasize"> <%= JSON.stringify(a.rest)=="null"? a.amount:a.rest %></span>  張） </td>
+                </tr>
+                <% }) %> 
+            </table>
+             
+            票　　價： <% data.forEach((item,idx)=>{%><%=item.type  %>&nbsp;&nbsp;<span class="emphasize">NT$<%= item.unitPrice +" |" %> </span><%}) %>
             
             主辦單位： MUMU、 <%= data[0].companyName %> 
         </p>
-        <!-- 更改區域 -->
+
         <form method="POST" action="/cart">
             <p>選擇場次:</p>
                 <select name="activityDetailId" id="activityDetailId" class="form_input"><% var activity_day=JSON.parse(JSON.stringify(activity_day)) %>
                     <% activity_day.forEach((a)=>{  %>
-                    <option value=<%-a.activityDetailId%>> <%= a.activityDate.substring(0,4)+"/"+a.activityDate.substring(5,7)+"/"+a.activityDate.substring(8,10)%></option>
+                    <option value="<%-a.activityDetailId%>"> <%= a.activityDate.substring(0,4)+"/"+a.activityDate.substring(5,7)+"/"+a.activityDate.substring(8,10)%></option>
                     <% })  %>
                 </select>
           
@@ -170,7 +157,7 @@
             <% })  %>
             <input type="hidden"name="activityId" value=<%= id %>>
             <a href="/cart">
-                <input type="submit" class="btn_tea1 ticket_btn" width="100%" value="確定購票">
+                <input type="submit" class="btn_tea2 ticket_btn" id="ticket_btn" width="100%" value="確定購票">
             </a>
            
 
@@ -187,18 +174,25 @@
     <%-include("../footer.ejs")%>
 
     <script>
+        // 快捷搜尋
+        window.addEventListener('keydown', function(e) {
+                if (e.keyCode == 49) {
+                    document.getElementById('search').value = '明年一定要去'
+                }
+            }, false);
         $(function () {
+
             $('#getback').on('click',function(){
                 // 回到上一頁的方法，有下面兩種：
                 // 1.  history.go 方法
-
                 window.history.go(-1); 
                 // 2. history.back 方法
-
                 // window.history.back();
             })
-
+           
+            
             $('.big_title').eq(1).text("");
+            $('.big_title').eq(3).text("");
 
             $('.little_title').each(function(idx,item){
                     $(item).text(`第${idx+1}日－`);    
@@ -228,11 +222,9 @@
                 $('button[name="love"]').attr('name','unlove');
             }
             $('button[name="love"]').on('click',()=>{
-                // alert("已取消收藏!")
                 var movelove = {};
                 movelove["activityId"] = favorates;
                 movelove = JSON.stringify(movelove);
-                // alert(movelove);
                 
                 $.ajax({
                     url: "/activity/movelove",
@@ -242,11 +234,12 @@
                     success: function (res) {
                         var res = JSON.parse(res)
                         if (res.errno === 1) {
-                            alert("已取消收藏!")
-                            // 刷新本頁
-                            location.reload()
+                            swal("已取消收藏!", "", "success")
+                            .then((value)=>{
+                                location.reload()
+                            });
                         } else if (res.errno === 0) {
-                            alert("更新失敗!")
+                            swal("更新失敗", "", "error");
                         }
                     },
                     error: function () {
@@ -255,12 +248,9 @@
                 })
             })
             $('button[name="unlove"]').on('click',()=>{
-                // alert("已加入收藏!")
                 var addlove = {};
                 addlove["activityId"] = activityId;
                 addlove = JSON.stringify(addlove);
-                // alert(addlove);
-
                 $.ajax({
                     url: "/activity/addlove",
                     type: "POST",
@@ -269,12 +259,12 @@
                     success: function (res) {
                         var res = JSON.parse(res)
                         if (res.errno === 1) {
-                            alert("已加入收藏!")
-                            // 刷新本頁
-                            location.reload()
-                            // location.href = `/activity`
+                            swal("已加入收藏!", "", "success")
+                            .then((value)=>{
+                                location.reload()
+                            });
                         } else if (res.errno === 0) {
-                            alert("更新失敗!")
+                            swal("更新失敗!", "", "error")
                         }
                     },
                     error: function () {
@@ -284,15 +274,6 @@
             })
 
         });
-
-        // 連接後端資料庫
-
-        
     </script>
-     
-
-
-
 </body>
-
 </html>

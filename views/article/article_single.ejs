@@ -12,10 +12,10 @@
     <script src="../../js/jquery.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-
+    <script src="../../../node_modules/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
-        .banner{
+        .banner {
             background-image: url(../../image/banner/article.jpg);
         }
     </style>
@@ -24,6 +24,7 @@
 <body>
     <%-include ("../nav.ejs")%>
         <!-- 已解決:內容換行符號 時間顯示處理 最後一篇 下一篇連結消失 發佈留言-->
+        <!-- 待解決: 評論送出後 跳轉到新評論的位置 -->
 
         <!--  留言登入後可以編輯自己的訊息-->
         <!--  沒留言要登入-->
@@ -33,7 +34,7 @@
         </div>
         <div class="container">
             <div id="main">
-                <div class="box">
+                <div class="whole">
                     <!-- 標題/時間/PO文者 -->
                     <div class="d-flex justify-content-between">
                         <p class="sub_title">{{article.articleTitle}}</p>
@@ -41,7 +42,7 @@
                         <div>
                             <img v-if="article.userFile" class="head_img "
                                 :src="'../../image/upload/user/'+article.userFile" alt="">
-                            <span>{{article.lastName}}{{article.firstName}}</span>
+                            <span>{{article.firstName}}</span>
                         </div>
                     </div>
                     <p>{{showDate}}</p>
@@ -57,7 +58,7 @@
                         class="event_pic" alt="">
                     <!-- 留言區 -->
                     <br><br><br><br>
-                    <p class="sub_title">留言</p>
+                    <p class="sub_title" id="msg_box" v-on:click='setText'>留言</p>
                     <div class="ml-5">
                         <p class="msg_no">{{commentNo}}則留言</p>
                     </div>
@@ -67,7 +68,7 @@
                             class="head_img mr-3">
                         <div class="bg-light d">
                             <textarea v-model="comment_text" name="comment_text" v-model="comment_text"
-                                class="form_input" placeholder="新增回應" autofocus cols=50 rows="3"></textarea><br>
+                                class="form_input" placeholder="新增回應" autofocus cols=50 rows="3" id="myComment"></textarea><br>
                             <button class="btn_tea2" v-on:click="submitHandler">發佈</button>
                         </div>
                     </div>
@@ -94,20 +95,21 @@
                     <li class="m-5"><a :href="'/article/item/'+index_next" id="next_arc">下一篇<i
                                 class="fas fa-angle-right"></i></a> </li>
                 </ul>
-                {{index_last}}
             </div>
         </div>
         <%-include ("../footer.ejs")%>
 </body>
 
 <script>
+    // 不知道為何點進來此畫面會進到中間 先用此方式解決
+    window.scrollTo({
+        top: 0,
+    })
     // 去尋找網址列中是否有資料傳遞(QueryString)
     //之後去分割字串把分割後的字串放進陣列中
     var no = location.href.split('/');
     var index = no[no.length - 1];
     $(function () {
-        console.log(parseInt(index))
-        console.log(vueMain.index_next)
         // 第一頁的話  上一篇a連結消失
         if (vueMain.index_last <= 0) {
             $("#last_arc").css('display', "none");
@@ -138,7 +140,6 @@
                 articleTime: "",
                 articleFile: "",
                 firstName: "",
-                lastName: "",
                 userFile: ""
             },
             index_last: 0,
@@ -182,37 +183,35 @@
                     $.get("/article/item/data/" + index, function (e) {
                         this.content = JSON.parse(e);
                         this.comment_text = '';
-                        window.location.reload();//要重整畫面才會出現 暴力方法
-                    })
-                    console.log("a")
+                    });
+                    // $("body").animate({scrollTop: $("#msg_box").offset().top}, 1000);
                 })
+                window.location.reload();//要重整畫面才會出現 暴力方法
             },
+            setText:function(){
+               $('#myComment').val('我也超期待!!')
+            }
         },
         computed: {
             lineBreak: function () {
-                console.log('aaa', this.article.articleContent) //會執行兩次  一次undefined 一次正常
                 return this.article.articleContent.replace(/\n|\r\n/g, "<br />")
             },
             //修改日期格式
             showDate: function () {
                 var time = this.article.articleTime;
                 var d = new Date(time);
-                var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0");
+                var times = d.getFullYear() + '/' + (d.getMonth() + 1).toString().padStart(2, "0") + '/' + d.getDate().toString().padStart(2, "0");
                 return times
             },
             showCommentDate: function () {
-                // const List = this.articleList.map(item => Object.values(item)[4]); 
                 const List = vueMain.comment.map(item => {
                     var d = new Date(Object.values(item)[1])
-                    var times = d.getFullYear() + '-' + (d.getMonth() + 1).toString().padStart(2, "0") + '-' + d.getDate().toString().padStart(2, "0") + ' ' + d.getHours().toString().padStart(2, "0") + ':' + d.getMinutes().toString().padStart(2, "0") + ':' + d.getSeconds().toString().padStart(2, "0");
+                    var times = d.getFullYear() + '/' + (d.getMonth() + 1).toString().padStart(2, "0") + '/' + d.getDate().toString().padStart(2, "0") + ' ' + d.getHours().toString().padStart(2, "0") + ':' + d.getMinutes().toString().padStart(2, "0") + ':' + d.getSeconds().toString().padStart(2, "0");
                     times.toString()
                     return times
                 }); // 0 表示第一個屬性值
                 return List
             },
-        },
-        watch: {
-
         }
 
 
