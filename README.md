@@ -5,7 +5,7 @@
 所以創造了MUMU這個平台，讓企業可以上傳音樂祭活動售票，<br>
 讓使用者可以上傳文章、購票，並對喜愛的樂團跟活動進行收藏!<br>
 
-[youTube_螢幕錄影](https://youtu.be/FghljwBt4tg)
+[youTube_螢幕錄影](https://youtu.be/FghljwBt4tg)<br>
 若想實際操作網站，<br>
 1.匯入mumu.sql檔案至資料庫<br>
 2.下載檔案後終端機切換到該資料夾，輸入:npm install<br>
@@ -21,11 +21,11 @@
 **追蹤樂團、收藏活動**<br>
 **文章增查修刪和評論**<br>
 **購票車增查修刪**<br>
-**更換大頭貼、編輯個人資訊、修改密碼**<br><br><br>
+**更換大頭貼、編輯個人資訊、修改密碼**<br>
 **-企業:**<br> 
 **活動增查修刪和預覽**<br> 
 **查看銷售狀況**<br>
-**更換大頭貼、編輯個人資訊、修改密碼**<br><br><br>
+**更換大頭貼、編輯個人資訊、修改密碼**<br><br>
 
 ![Imgur](https://i.imgur.com/EelIBCQ.png)
 ![Imgur](https://i.imgur.com/gnRAZof.png)
