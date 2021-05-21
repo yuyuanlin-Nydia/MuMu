@@ -85,7 +85,6 @@ router.post('/addlove', function(req, res) {
     var body = req.body;
     var sql = `INSERT INTO userband(bandId,userId)VALUES (?, ?);`
     var data = [parseInt(body.bandId), req.session.userinfo.id];
-    console.log( req.session.userinfo.id);
     conn.query(sql, data, function(error, results, fields) {
         if (results) {
             res.end(

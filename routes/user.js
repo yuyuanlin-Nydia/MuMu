@@ -102,7 +102,6 @@ router.post("/upload", function (req, res) {
                 return;
             }
         })
-        console.log(req.session.userinfo )
     res.send("successfully add new article");
 })
 //上傳圖片
@@ -231,7 +230,6 @@ router.delete("/band/delete", function (req, res) {
 
 //個人資料
 router.get("/profile", login_api, function (req, res) {
-    console.log(req.session.userinfo);
     var session = req.session.userinfo;
     conn.query(`SELECT ui.userId,ui.firstName,ui.userAccount,ui.userPassword,ui.userPhone,ui.userEmail,ui.userFile,ui.userArea,ui.userBirth,ui.userAdd,ui.userDis, district.city, area.town FROM userinfo ui
     left JOIN area ON ui.userArea = area.areaId

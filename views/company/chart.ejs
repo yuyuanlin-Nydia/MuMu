@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/company_mainPage.css">
+    <link rel="stylesheet" href="../css/mutual.css">
+    <link rel="stylesheet" href="../css/Bootstrap/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../js/jquery.js"></script>
+    <title>售票狀況</title>
+    <style>
+        .form-control:focus {
+            border-color: var(--color2) !important;
+        }
+
+        .amount {
+            font-size: medium;
+        }
+
+        #day1,
+        #day2 {
+            margin: 10px 80px 50px;
+            text-align: center;
+        }
+
+        .second {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+        <!-- 導覽列開始 -->
+        <%-include("../nav.ejs")%>
+            <!-- 導覽列 結束 -->
+            <main>
+                <div class="banner">
+                    <p class="banner_title">會員管理</p>
+                </div>
+
+
+                <div class="row ">
+                    <!-- 左側 開始 -->
+                    <div class="d-none d-md-block col-md-3 col-sm-12  emp-profile mr-5 p-1">
+                        <div class="profile-img  p-1 mt-5 ml-5">
+                            <form id="avatar" action="/upload/avatarfile">
+                                <label class="aa">
+                                    <input v-on:change="imageHandler" type="file" name="myfile" accept="image/*"
+                                        id="avatarFile" style="display:none;">
+                                    <div class="profile-pic">
+                                        <div id="avaimg"><img id="testImg"
+                                                src="../../image/upload/company/<%= data2[0].companyFile%>" alt="">
+                                        </div>
+                                        <span>更換圖片</span>
+                                    </div>
+                                </label>
+                                <div id="img_sec" class="d-flex flex-wrap">
+                                    <p></p>
+                                </div>
+
+                            </form>
+                            <h5 class="text-center text-white uName">
+                                <%=data2[0].companyName %>
+
+                            </h5>
+                        </div>
+
+                        <div class="  p-5 p-md-1 select_left ml-5">
+                            <div class="profile-work ">
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company" class="user_menu">我的活動</a><br />
+                                </div>
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/chart" class="user_menu"
+                                        style="color: var(--color2)">售票狀況</a><br /></div>
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit"
+                                        class="user_menu">編輯資料</a><br />
+                                </div>
+                                <div class="mb-2 pl-2 pb-1 pt-1"><a href="/log/logout" class="user_menu">登　　出</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 左側 結束-->
+
+                    <!-- 右側 開始 -->
+
+                    <div class="col-md-8 pl-5 right_box">
+                        <h4 class="right_title"> 售票狀況</h4>
+                        <div> <select name="example" id="select_op" class="form-control example">
+                                <% data2.forEach((item)=> { %>
+
+                                    <option value="<%=item.activityId%>" <%=(item.activityId==8 )?"selected":"" %> >
+                                        <%= item.activityTitle %>
+                                    </option>
+
+                                    <% }) %>
+
+                            </select></div>
+
+
+
+                        <br><b>目前售票狀況:</b>
+
+                        <% var yyyy=data[0].activityDate.toLocaleDateString().slice(0,4)%>
+
+                            <% var MM=(data[0].activityDate.getMonth().toString().padStart(2,"0")) %>
+                                <!-- <% var MM=(data[0].activityDate.getMonth()+1<10 ? '0' : '' )+(data[0].activityDate.getMonth()+1);%> -->
+                                <% var DD=(data[0].activityDate.getDate()+1<10 ? '0' : ''
+                                    )+(data[0].activityDate.getDate());%>
+                                    <% var yyyy1=data[1].activityDate.toLocaleDateString().slice(0,4)%>
+                                        <% var MM1=(data[1].activityDate.getMonth()+1<10 ? '0' : ''
+                                            )+(data[1].activityDate.getMonth()+1);%>
+                                            <% var DD1=(data[1].activityDate.getDate()+1<10 ? '0' : ''
+                                                )+(data[1].activityDate.getDate());%>
+
+                                                <br>
+                                                <div id="days" style="display: flex;">
+
+                                                    <div id="day1">
+
+                                                        <span id="day1_text"><%= yyyy+"/"+MM+"/"+DD %></span>(六)
+                                                            <div class="first">售出比例:<b id="percent1">
+                                                                    <%=((data[0].total) /(data[0].amount)*
+                                                                        100).toFixed(1)+"%" %>
+                                                                </b></div>
+                                                            <div style="width: 100%; margin-top: 20px; ">
+                                                                <div id="chart1_div" style="width: 300px;">
+                                                                    <canvas id="pie" class="first"> </canvas>
+                                                                </div>
+
+                                                            </div>
+
+                                                    </div>
+
+                                                    <div id="day2">
+
+                                                       <span id="day2_text"> <%= yyyy1+"/"+MM1+"/"+DD1 %></span>(日)
+                                                            <div class="first">售出比例:<b id="percent2">
+                                                                    <%=((data[1].total) /(data[1].amount)*
+                                                                        100).toFixed(1)+"%" %>
+                                                                </b></div>
+                                                            <div id="chart2_div" style="width: 100%; margin-top: 20px; ">
+
+                                                                <div style="width: 300px;">
+                                                                    <canvas id="pie2"
+                                                                        class="first"></canvas>
+                                                                </div>
+
+                                                            </div>
+                                                    </div>
+
+                                                </div>
+                    </div>
+
+
+
+                </div>
+
+
+                </div>
+                </div>
+                <!-- 右側 結束 -->
+
+
+
+
+                </div>
+            </main>
+
+
+            <!-- 頁尾  開始-->
+            <%-include("../footer.ejs")%>
+                <!-- 頁尾  結束-->
+
+
+                <script>
+                var total = <%=data[0].total %>;
+                var amount = <%=data[0].amount %>;
+                var total1 = <%=data[1].total %>;
+                var amount1 = <%=data[1].amount %>;
+                var aid =  <%=data[0].activityId %>;
+                var aid1 =  <%=data[1].activityId %>;
+
+
+
+                    // pie1
+                    var lineChartData = {
+                        labels: ["未售出", "已售出"], //顯示區間名稱
+                        datasets: [{
+                            backgroundColor: ["#4bc0c0", "#ffcd56"],
+                            borderWidth: 2,
+                            data: [(amount - total), total], // 資料
+                            title: {
+                                display: true,
+                                text: ''
+                            }
+
+                        },]
+                    };
+                    // pie2
+                    var lineChartData2 = {
+                        labels: ["未售出", "已售出"], //顯示區間名稱
+                        datasets: [{
+                            backgroundColor: ["#4bc0c0", "#ffcd56"],
+                            borderWidth: 2,
+                            data: [(amount1 - total1), total1], // 資料
+
+                        },]
+                    };
+
+                    function drawLineCanvas(ctx, data) {
+                        window.myLine = new Chart(ctx, {  //先建立一個 chart
+                            type: 'pie', // 型態
+                            data: data,
+                            options: {
+                                responsive: true,
+                                legend: { //是否要顯示圖示
+                                    display: true,
+                                },
+                                tooltips: {
+                                    enabled: true,
+                                }
+
+                            }
+                        });
+                    };
+
+                    window.onload = function () {
+                        var ctx = document.getElementById("pie").getContext("2d");
+                        drawLineCanvas(ctx, lineChartData);
+                        var ctx2 = document.getElementById("pie2").getContext("2d");
+                        drawLineCanvas(ctx2, lineChartData2);
+                    };
+
+                    // select場次
+                    $('#select_op').change(function () {
+                        $("#chart1_div").empty();
+                        $("#chart2_div").empty();
+                        $("#chart1_div").append(`<canvas id="pie1" class="first"></canvas>`);
+                        $("#chart2_div").append(`<canvas id="pie2" class="first"></canvas>`);
+
+                       
+                        
+                        var data = $('#select_op').serializeArray()
+                        JSONData = serializeToJSON(data)
+                        $.ajax({
+                            url: '/company/chart/count',
+                            type: 'POST',
+                            data: JSONData,
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                var res = JSON.parse(res)
+                                // 更換日期
+                                var d1=new Date(res[0].activityDate)
+                                var d2=new Date(res[1].activityDate)
+                                $("#day1_text").text(d1.getFullYear()+ "/"+(d1.getMonth()+1).toString().padStart(2,"0")+"/"+(d1.getDate()+1).toString().padStart(2,"0"))
+                                $("#day2_text").text(d2.getFullYear()+ "/"+(d2.getMonth()+1).toString().padStart(2,"0")+"/"+(d2.getDate()+1).toString().padStart(2,"0"))
+                                var newdata1=[res[0].amount - res[0].total-500, res[0].total];
+                                var ctx = document.getElementById("pie1");
+                                // 更換售出比例   
+                                var pt1=res[0].total
+                                var pa1=res[0].amount
+                                var pt2=res[1].total
+                                var pa2=res[1].amount
+                                $("#percent1").text(((pt1 /pa1*100).toFixed(1))+"%" )
+                                $("#percent2").text(((pt2 /pa2*100).toFixed(1))+"%" ) 
+                                // 更換圓餅圖
+                                var pieChart = new Chart(ctx, {
+                                    type: "pie",
+                                    data: {
+                                        labels: ["未售出", "已售出"],
+                                        datasets: [
+                                            {
+                                                data: newdata1,
+                                                backgroundColor: ["#4bc0c0", "#ffcd56"],                                            }
+                                        ]
+                                    },
+                                })
+
+                                var newdata2=[res[1].amount - res[1].total, res[1].total];
+                                var ctx2 = document.getElementById("pie2");
+                                var pieChart = new Chart(ctx2, {
+                                    type: "pie",
+                                    data: {
+                                        labels: ["未售出", "已售出"],
+                                        datasets: [
+                                            {
+                                                data: newdata2,
+                                                backgroundColor: ["#4bc0c0", "#ffcd56"],                                            }
+                                        ]
+                                    },
+                                })
+                            },
+                            error: function () {
+                                alert("系統錯誤!")
+
+                            }
+                        });
+                    })
+                    function serializeToJSON(data) {
+                        var values = {};
+                        for (index in data) {
+                            values[data[index].name] = data[index].value;
+                        }
+                        return JSON.stringify(values)
+                    }
+                </script>
+    </body>
+</html>

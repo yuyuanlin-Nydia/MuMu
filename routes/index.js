@@ -7,7 +7,7 @@ var connection = require("../db");
 
 
 let sql = `
-SELECT activityId,activityTitle,upDated,activityContent FROM activityInfo ORDER BY upDated DESC limit 0,5;
+SELECT activityId,activityTitle,upDated,activityContent FROM activityInfo where del=0 ORDER BY upDated DESC  limit 0,5;
 SELECT bandName,bandFile,bandId FROM bandinfo limit 0,5;
 SELECT  articleId,articleFile,articleTime,articleTitle,articleContent from articleInfo where articleDelete=0 ORDER BY articleTime DESC limit 0,4;
 SELECT activityTitle,upDated,activityFile,activityId FROM activityInfo where activityId in (9,2,10) ;

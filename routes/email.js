@@ -16,6 +16,6 @@ module.exports = function (mail){
       if(error) {
         return console.log(error);
       }
-      console.log('訊息發送:', info.response);
+      // console.log('訊息發送:', info.response);
     });
   };

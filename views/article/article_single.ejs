@@ -101,6 +101,12 @@
 </body>
 
 <script>
+    // 快捷搜尋
+    window.addEventListener('keydown', function(e) {
+                if (e.keyCode == 49) {
+                    document.getElementById('myComment').value = '明年好想去.....'
+                }
+            }, false);
     // 不知道為何點進來此畫面會進到中間 先用此方式解決
     window.scrollTo({
         top: 0,

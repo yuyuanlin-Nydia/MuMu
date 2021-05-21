@@ -64,7 +64,8 @@
                             <!-- 前面放icon -->
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company" class="user_menu">我的活動</a><br />
                             </div>
-    
+                            
+                            <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/chart" class="user_menu">售票狀況</a><br /></div>
                             <div class="mb-2 pl-2 pb-1 pt-1"><a href="/company/edit" class="user_menu"
                                     style="color: var(--color2)">編輯資料</a><br />
                             </div>
@@ -129,7 +130,7 @@
                                         <div class="col-md-2"></div>
         
                                         <div class="col-md-6 mt-2">
-                                            <input class="form-control" type="text" name="address"
+                                            <input class="form-control" type="text" name="address" id="address"
                                                 value="<%=data[0].companyAddress %>" style="border:1px solid rgba(0, 0, 0, 0.15)">
                                         </div>
         
@@ -222,6 +223,29 @@
             <link rel="stylesheet"
                 href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
             <script>
+                // 快捷搜尋
+                window.addEventListener('keydown', function(e) {
+                    if (e.keyCode == 49) {
+                        document.getElementById('phone').value = '04-28657892';
+                        document.getElementById('address').value = '市政北二路238號';
+                    }
+                }, false);
+                window.addEventListener('keydown', function(e) {
+                    if (e.keyCode == 50) {
+                        document.getElementById('password_before').value = 'angle28378';
+                        document.getElementById('password_after').value = 'angle28375';
+                        document.getElementById('password_cfm').value = 'angle28376';
+                        
+                    }
+                }, false);
+                window.addEventListener('keydown', function(e) {
+                    if (e.keyCode == 51) {
+                        document.getElementById('password_before').value = 'angle2837';
+                        document.getElementById('password_after').value = 'angle28375';
+                        document.getElementById('password_cfm').value = 'angle28375';
+                        
+                    }
+                }, false);
                 // 確認原始密碼
                 $('#password_before').blur(function () {
                     var dataA = $('#password_before').serializeArray()

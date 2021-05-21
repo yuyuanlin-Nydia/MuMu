@@ -5,7 +5,8 @@ const multer = require('multer');
 var { Success, Error } = require('./response');
 // var {  old_check, new_check } = require('./middleware/ifpassword');
 // const { response } = require("express");
-var { login_render, login_api } = require('./middleware/iflogin_c')
+var { login_render, login_api } = require('./middleware/iflogin_c');
+const e = require("express");
 
 router.get("/",login_render, function (req, res) {
 	function dateString(e) {
@@ -222,6 +223,66 @@ router.post("/town/user", function (req, res) {
 			res.send(rows)
 		})
 	})
+
+
+// 第一個指令:選擇活動編號8的票總數、售出總數、日期、
+// 第二個指令:登入公司未來即將舉辦得活動	
+router.get("/chart", login_api, function (req, res) {
+	var id = req.session.companyinfo.cid;
+	var sql = `SELECT od.activityId,sum(categoryId*quantity) as total,od.activityDetailId,activityDate,ai.companyId,amount FROM orders o
+	INNER JOIN orderdetails od
+	ON od.orderId=o.orderId 
+    INNER JOIN activitydetails ad
+    ON ad.activitydetailId = od.activitydetailId
+    INNER JOIN activityinfo ai
+    ON ai.activityId = od.activityId
+ 	WHERE od.activityId =8 GROUP BY activityDetailId;
+	
+	 SELECT a.activityId,activityTitle,companyFile, companyName,c.companyId,sellDate FROM companyinfo c
+	 INNER JOIN activityinfo a ON c.companyId = a.companyId
+		INNER JOIN (SELECT activityId,MIN(activityDate)as minDate,MAX(activityDate) as maxDate   
+	 FROM activitydetails GROUP BY activityId) as b ON(a.activityId=b.activityId)
+	 WHERE c.companyId = ? and b.minDate>now() and del=0 ORDER BY minDate ;
+`
+	conn.query(sql,[id,id] ,function (error, rows) {
+		if (error) {
+			console.log(error);
+		}
+		res.render('./company/chart.ejs', {
+			data: rows[0],
+			data2:rows[1],
+		});
+	})
+})
+
+
+router.post("/chart/count", function (req, res) {
+	var sql = `
+	SELECT od.activityId,sum(categoryId*quantity) as total,od.activityDetailId,activityDate,ai.companyId,amount FROM orders o
+	INNER JOIN orderdetails od
+	ON od.orderId=o.orderId 
+    INNER JOIN activitydetails ad
+    ON ad.activitydetailId = od.activitydetailId
+    INNER JOIN activityinfo ai
+    ON ai.activityId = od.activityId
+ 	WHERE od.activityId = ?  GROUP BY activityDetailId;
+`
+
+	// console.log(req.body.example);
+	conn.query(sql,[req.body.example], function (error, results, rows) {
+		if (results[0]) {
+			res.end(
+				JSON.stringify(results),
+			)
+			
+		} else {
+			res.end(
+				JSON.stringify(new Success('false')),
+			)
+		}
+	})
+
+})
 
 
 module.exports = router;

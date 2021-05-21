@@ -127,7 +127,6 @@
                             
                         },
                         portHandler: function () {
-                            console.log("a")
                             $.get("/article/search/port", function (e) {
                                 this.articleList = JSON.parse(e)[0];
                             })

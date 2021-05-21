@@ -79,7 +79,6 @@ router.post("/comment", function (req, res) {
 			if (err) {
 				console.log(JSON.stringify(err))
 			}
-			console.log(rows);
 		}
 	res.send("row inserted.")
 })
@@ -116,8 +115,6 @@ router.get("/item/data/:no", function (req, res) {
 			return;
 		}
 		res.send(JSON.stringify(rows));
-		console.log(sql)
-
 	});
 })
 

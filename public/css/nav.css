@@ -114,6 +114,7 @@ width: 45px;
 height: 45px;
 object-fit: cover;
 border-radius: 50%;
+vertical-align: middle;
 }
 .third_menu{
     font-size: 14px;

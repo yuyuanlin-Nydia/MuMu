@@ -98,10 +98,6 @@ router.get("/single/:id([0-9]+)", function (req, res) {
             if (error) {
                 console.log(error);
             }
-            // var y = JSON.parse(JSON.stringify(rows[0]))
-            // y.forEach((x) => {
-            //     console.log((new Date(x.sellDate)).Format("yyyy/MM/dd (")+monthDay[x.sell]+(new Date(x.sellDate)).Format(") hh:mm"));
-            // })
             res.render('./activity/activity_single.ejs', {
                 data: rows[0],
                 activity_day: rows[1],
@@ -112,7 +108,7 @@ router.get("/single/:id([0-9]+)", function (req, res) {
                 activityId: req.params.id,
                 rest:rest
             });
-            //console.log(typeof(rows));
+
         })
 
 
@@ -121,7 +117,9 @@ router.get("/single/:id([0-9]+)", function (req, res) {
 
 // 創建新活動畫面get
 router.get("/create", function (req, res) {
-    sql = `SELECT bandId,bandName FROM bandinfo;SELECT companyName FROM companyinfo WHERE companyId =?;`
+    sql = `SELECT bandId,bandName FROM bandinfo;
+    SELECT companyName FROM companyinfo WHERE companyId =?;
+    SELECT city as value FROM district;SELECT town as value FROM area;`
     var cid= 5;
     //先預設值為1方便測試
     if(req.session.companyinfo){
@@ -133,11 +131,16 @@ router.get("/create", function (req, res) {
         if (error) {
             console.log(error);
         }
+
         res.render('./activity/activity_create.ejs', {
             data: rows[0],
-            cName: rows[1][0].companyName
+            cName: rows[1][0].companyName,
+            city:rows[2],//object
+            town:rows[3]//object
         });
+       
     })
+   
 
 })
 // 編輯活動畫面get

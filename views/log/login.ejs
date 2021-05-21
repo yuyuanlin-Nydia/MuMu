@@ -170,41 +170,33 @@
 
                 // 註冊
                 $('#signupSub').on('click', function () {
-                    // var data = $('#signupForm').serializeArray()
-                    // JSONData = serializeToJSON(data)
+                    var data = $('#signupForm').serializeArray()
+                    JSONData = serializeToJSON(data)
 
-                    // //ajax請求
-                    // $.ajax({
-                    //     url: "/log/signup",
-                    //     type: "POST",
-                    //     contentType: "application/json; charset=utf-8",
-                    //     data: JSONData,
-                    //     success: function (res) {
-                    //         var res = JSON.parse(res)
-                    //         if (res.errno === 1) {
-
-                    //             swal("註冊成功，請重新登入!","", "success")
-                    //             .then((value)=>{
-                    //                 location.href='/log/login';
-                    //             });
-
-                    //         } else if (res.errno === 0) {
-                    //             swal("註冊失敗", "", "error")
-                    //         }
-                    //     },
-                    //     error: function () {
-                    //         alert("系統錯誤!")
-                    //     }
-                    // })
+                    //ajax請求
                     $.ajax({
-                        url: "/log/email",
-                        type: "post",
-                        data: {
-                            userName: $('#firstName').val(),
-                            email: $('#email').val(),
-                            code:Math.floor(Math.random()*900+100)
+                        url: "/log/signup",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSONData,
+                        success: function (res) {
+                            var res = JSON.parse(res)
+                            if (res.errno === 1) {
+
+                                swal("註冊成功，請重新登入!","", "success")
+                                .then((value)=>{
+                                    location.href='/log/login';
+                                });
+
+                            } else if (res.errno === 0) {
+                                swal("註冊失敗", "", "error")
+                            }
+                        },
+                        error: function () {
+                            alert("系統錯誤!")
                         }
                     })
+                   
                 })
 
 

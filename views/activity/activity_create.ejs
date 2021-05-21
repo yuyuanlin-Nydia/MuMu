@@ -102,7 +102,7 @@
 
                             <label for="activityAddress" class="col-md-12">地址</label>
                             <div class="col-md-6 mb-2">
-                                <select  class="form-control" name="selected_city" id="selected_city">   
+                                <select v-model="city" class="form-control" name="selected_city" id="selected_city">   
                                 </select>
                             </div>
                             <div class="col-md-6 mb-2">
@@ -203,6 +203,23 @@
         <%-include("../footer.ejs")%>
 
             <script>
+                var cityArr = <%- JSON.stringify(city) %>;
+                var townArr = <%- JSON.stringify(town) %>;
+                // 鄉鎮Array
+                function cityTown(e){
+                    var total =[];
+                    var val = e;
+                    e.forEach((elm,idx) => {     
+                        var z = elm.value
+                        total.push(z);
+                    });
+                    return(total);
+                }
+                cityArr =cityTown(cityArr);
+                townArr =cityTown(townArr)
+         
+     
+                // 轉換時間
                 Date.prototype.Format = function (fmt) {
                     var o = {
                         "M+": this.getMonth() + 1, //月份 
@@ -275,10 +292,10 @@
                                 this.date1= '2021-07-10T16:00';
                                 this.date2='2021-07-11T14:00';
                                 this.sell='2021-07-01T08:00';
-                                this.location='資策會';
+                                this.location='勤美廣場';
                                 // this.city=8;
                                 // this.area='20';
-                                this.address='公益路二段51號';
+                                this.address='公益路68號';
                                 this.unitPrice1=900;
                                 this.unitPrice2=1700;
                                 this.ticketAmount=1000;
@@ -299,14 +316,12 @@
                             title:function(){
                             $('.content_text_div>*').filter('.title').text(this.title);
                             },
+                            city:function(val,oldVal){
+                            // 這邊目前有問題要再修正
+                            $('span').filter('.city').text(cityArr[val-1]); 
+                            },
                             area:function(val, oldVal){
-                            console.log(val);
-                            // 這邊目前有問題要再修正
-                            // 這邊目前有問題要再修正
-                            // 這邊目前有問題要再修正
-                            var area = ['中正區','大同區','中山區','松山區','大安區','萬華區','信義區','士林區','北投區','內湖區','南港區','文山區','中區','東區','南區','西區','北區','北屯區','西屯區','南屯區','烏日區','豐原區','潭子區','左營區','三民區','新興區','苓雅區']    
-                            $('span').filter('.area').text(area[val]);
-                            // $('span,p').filter('.location').text('dddddddddddddddd');
+                            $('span').filter('.area').text(townArr[val-1]); 
                             },
                             date1: function(val, oldVal) {
                             $('td').filter('.date1').text(new Date(val).Format("yyyy/MM/dd")+" ("+monthString(val)+") "+new Date(val).Format("hh:mm"));

@@ -200,7 +200,7 @@ router.post('/email',function(req,res){
 		subject: "mumu音樂祭平台 [啟用信箱賬號]",  
 		html: `<p>${r.userName}  您好: <br>
 		<br>
-		點選連結即可啟用您的Mumu帳號，<a href="http://localhost:3000/"style="color:blue;cursor:pointer">http://localhost:3000/checkCode?name=${r.userName}&code=${r.code}</a>，謝謝您成為Mumu的一員。<br>本郵件由系統自動發出，請勿直接回復！
+		點選連結即可啟用您的Mumu帳號，<a href="http://localhost:3000/log/companyLogin"style="color:blue;cursor:pointer">http://localhost:3000/checkCode?name=${r.userName}&code=${r.code}</a>，謝謝您成為Mumu的一員。<br>本郵件由系統自動發出，請勿直接回復！
 		<br><br><br><br>
 		Mumu敬啟</p>
 		`

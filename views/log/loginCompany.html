@@ -136,18 +136,22 @@
                         document.getElementById('companyPasswordL').value = 'new5520'
                     }else if(e.keyCode == 50){
                         document.getElementById('companyTaxNo').value = '52789452'
-                        document.getElementById('companyName').value = '笑傲音樂'
+                        document.getElementById('companyName').value = '角頭音樂'
                         document.getElementById('email').value = 'de584@d'
-                        document.getElementById('accountC').value = 'new5520'
-                        document.getElementById('newpw').value = 'baa5250'
+                        document.getElementById('accountC').value = 'fhjkur178283'
+                        document.getElementById('newpw').value = 'angle237'
                         document.getElementById('newpwCfm').value = 'vaaa520'
                     }else if(e.keyCode == 51){
-                        document.getElementById('companyName').value = '笑傲音樂'
-                        document.getElementById('email').value = 'alin78214@yahoo.com.tw'
-                        document.getElementById('accountC').value = 'lovemumu520'
-                        document.getElementById('newpw').value = 'lovemumu520'
-                        document.getElementById('newpwCfm').value = 'lovemumu520'
+                        document.getElementById('companyName').value = '角頭音樂'
+                        document.getElementById('email').value = 'mumufortest01@gmail.com'
+                        document.getElementById('accountC').value = 'angle2837'
+                        document.getElementById('newpw').value = 'angle2837'
+                        document.getElementById('newpwCfm').value = 'angle2837'
+                    }else if(e.keyCode == 52){
+                        document.getElementById('companyAccountL').value = 'angle2837'
+                        document.getElementById('companyPasswordL').value = 'angle2837'
                     }
+                    
                 }, false);
                 $('.tab a').on('click', function (e) {
 
@@ -171,8 +175,6 @@
                     var data = $('#signupForm').serializeArray()
                     // console.log(data);
                     JSONData = serializeToJSON(data)
-                    console.log(JSONData);
-
 
                     //ajax請求
                     $.ajax({
@@ -183,7 +185,7 @@
                         success: function (res) {
                             var res = JSON.parse(res)
                             if (res.errno === 1) {
-                                swal("註冊成功，請重新登入!", "", "success")
+                                swal("註冊成功，請到信箱收取註冊確認信!", "", "success")
                                 .then(
                                     (value)=>location.href = '/log/companyLogin'
                                 );
@@ -194,6 +196,15 @@
                         },
                         error: function () {
                             alert("系統錯誤!")
+                        }
+                    })
+                    $.ajax({
+                        url: "/log/email",
+                        type: "post",
+                        data: {
+                            userName: $('#companyName').val(),
+                            email: $('#email').val(),
+                            code:Math.floor(Math.random()*900+100)
                         }
                     })
                 })
